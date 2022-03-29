@@ -10,12 +10,11 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
 
 	print('###############################')
-#print("Topic: "+msg.topic+" Payload: "+str(msg.payload)+" QoS: "+msg.qos)
 	print('topic: %s' % msg.topic + '\npayload: %s' % msg.payload + '\nQoS: %d' % msg.qos)
 
 
 def main():
-	client = mqtt.Client(client_id='iot', clean_session=False)
+	client = mqtt.Client(client_id='cloud', clean_session=False)
 	client.on_connect = on_connect
 	client.on_message = on_message
 	client.connect("localhost", 1883, 60)
