@@ -25,7 +25,7 @@ def on_message(client, userdata, message):
 	client2.on_connect = on_connect_pub
 	client2.on_publish = on_publish
 	 
-	client2.connect(host="mqtt.fluux.io", port=1883)
+	client2.connect(host="broker-cloud", port=1883)
 	client2.loop_start()
 	client2.publish(message.topic,message.payload.decode("utf-8"),2)
 	time.sleep(3)
@@ -47,7 +47,7 @@ def main():
     client.on_publish = on_publish
     
     # subscriptor de IoT
-    client.connect(host='localhost', port=1883)
+    client.connect(host='broker-edge', port=1883)
     
     # publisher de cloud
     

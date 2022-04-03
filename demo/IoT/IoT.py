@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt
 import time
 
 # creamos el publicador
-client = mqtt.Client(client_id='IoT', clean_session=False)
+client = mqtt.Client(client_id='127.0.0.1', clean_session=False)
 
 # callback después de publicar
 def on_publish(client,userdata,result):
@@ -18,7 +18,7 @@ client.on_publish = on_publish
 client.on_connect = on_connect
 
 # indicamos host donde correremos el subscriptor y el puerto de comunicación
-host       = "localhost"
+host       = "0.0.0.0"
 port       = 1883
 
 # Establecemos conexión

@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  broker-edge:
+    build: ./broker
+    expose: 
+      - 1883
+    ports:
+      - 1883:1883
+    networks:
+      - common-network
+    restart: on-failure
+
+  broker-cloud:
+    build: ./broker
+    expose: 
+      - 1883
+    networks:
+      - common-network
+    restart: on-failure
+    
+  cloud-service:
+    build: ./cloud
+    depends_on:
+      - broker-cloud
+      - broker-edge
+    networks:
+      - common-network
+    environment:
+        PYTHONUNBUFFERED: 1
+    restart: on-failure
+
+  edge-service:
+    build: ./edge
+    depends_on:
+      - broker-cloud
+      - broker-edge
+    networks:
+      - common-network
+    environment:
+        PYTHONUNBUFFERED: 1
+    restart: on-failure
+
+networks:
+  common-network:

@@ -24,7 +24,7 @@ def main():
     client.on_message = on_message
     
     # establecemos connexión
-    client.connect(host="mqtt.fluux.io", port=1883)
+    client.connect(host="broker-cloud", port=1883)
     client.loop_forever()
 
 if __name__ == '__main__':
