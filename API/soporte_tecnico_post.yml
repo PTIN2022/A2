@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: API soporte técnico
+  version: '1.0'
+paths:
+  /soporte:
+    post:
+      summary: Inserta una nueva petición a soporte tecnico
+      tags: 
+      - Soporte tecnico
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id_usuario
+                - descripcion_problema
+                - fecha_problema
+              properties:
+                id_usuario:
+                  type: integer
+                descripcion_problema:
+                  type: string
+                fecha_problema:
+                  type: string
+            example:
+              id_usuario: 001
+              fecha_problema: "20/04/2022"
+              descripcion_problema: "Problema con la aplicación movil"
+      responses:
+        '200':
+            description: Peticion correcta
+            content: 
+              application/json:
+                examples:
+                  Insertar petición a soporte tecnico:
+                    value:  >-
+                        {
+                          "id_usuario": "001",
+                          "fecha_problema": "20/04/2022",
+                          "descripcion_problema": "Problema con la aplicación móvil"
+                        }
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al hacer la petición al soporte técnico:
+                    value: "{\"error\": \"Malformed request syntax.\"}"
+              
+
+
