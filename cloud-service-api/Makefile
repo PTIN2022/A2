@@ -9,8 +9,16 @@ env: ## Configura el virtualenv
 	source venv/bin/activate && pip install -Ur requirements/requirements.txt > /dev/null
 
 dev-env: env ## Configura el virtualenv de desarrollo
-	test -d venv || python3 -m virtualenv venv || virtualenv venv
 	source venv/bin/activate && pip install -Ur requirements/requirements-dev.txt > /dev/null
+
+freeze: clean env
+	source venv/bin/activate && pip freeze > requirements/requirements.txt
+
+freeze-dev: clean dev-env
+	source venv/bin/activate && pip freeze > requirements/requirements-dev.txt
+    
+test: dev-env
+	source venv/bin/activate && pytest --cov-report term --cov=./ -s
 
 clean: ## Elimina los ficheros basura del proyecto
 	rm -rf venv
