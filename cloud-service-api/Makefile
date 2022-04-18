@@ -21,6 +21,6 @@ test: dev-env
 	source venv/bin/activate && pytest --cov-report term --cov=./ -s
 
 clean: ## Elimina los ficheros basura del proyecto
-	rm -rf venv
-	rm -rf __pycache__
+	rm -rf .pytest_cache venv
 	find -iname "*.pyc" -delete
+	find -type d -iname "__pycache__" -delete
