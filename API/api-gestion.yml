@@ -2,6 +2,9 @@ openapi: 3.0.0
 info:
   title: API portal de gestion
   version: '1.0'
+servers:
+  - url: http://127.0.0.1:5000/
+    description: Developments
 paths:
   # incidencias
   /incidencias:
@@ -100,7 +103,7 @@ paths:
                     value: >- 
                       {"error": "Malformed request syntax."}
                   
-  /incidencias/{estacion}:
+  /incidencias/byname/{estacion}:
     # pedimos una lista de incidencias por una estacion dada
     get:
       summary: Obtiene una lista de incidencias para una estacion dada
@@ -186,6 +189,7 @@ paths:
                   error:
                     value: >-
                         {"error": "User not authenticated."}
+
           '404':
             description: Not found
             content:
@@ -193,7 +197,8 @@ paths:
                 examples:
                   error:
                     value: >-
-                      {"error: "Incidencia not found."}
+                        {"error": "Incidencia not found."}
+                        
       # editar incidencia
       put:
           summary: Modificar incidencia
@@ -564,3 +569,4 @@ paths:
                       {"error": "User not found."}
                     
 #########################################################################################
+
