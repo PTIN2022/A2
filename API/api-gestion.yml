@@ -44,7 +44,8 @@ paths:
             application/json:
               examples:
                 error:
-                  value: "{\"error\": \"User not authenticated.\"}"
+                  value: >-
+                    {"error": "User not authenticated."}
     # mandamos/resolvemos 1 incidencia]
     post:
         summary: Inserta una nueva incidencia
@@ -96,7 +97,8 @@ paths:
               application/json:
                 examples:
                   Error al meter incidencia:
-                    value: "{\"error\": \"Malformed request syntax.\"}"
+                    value: >- 
+                      {"error": "Malformed request syntax."}
                   
   /incidencias/{estacion}:
     # pedimos una lista de incidencias por una estacion dada
@@ -129,7 +131,7 @@ paths:
                           },
                           {
                             "incidenciaId": 2,
-                            "estación": "VG2",
+                            "estacion": "VG2",
                             "direccion": "Av.Victor Balaguer 2",
                             "fecha_averia": "18/04/2022 ",
                             "estado": false,
@@ -144,7 +146,8 @@ paths:
             application/json:
               examples:
                 error:
-                  value: "{\"error\": \"User not authenticated.\"}"
+                  value: >- 
+                    {"error": "User not authenticated."}
   /incidencias/{id}:
       # pedimos una incidencia, dado su id
       get:
@@ -181,14 +184,16 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not authenticated.\"}"
+                    value: >-
+                        {"error": "User not authenticated."}
           '404':
             description: Not found
             content:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"Incidencia not found.\"}"
+                    value: >-
+                      {"error: "Incidencia not found."}
       # editar incidencia
       put:
           summary: Modificar incidencia
@@ -249,14 +254,16 @@ paths:
                 application/json:
                   examples:
                     Error al meter incidencia:
-                      value: "{\"error\": \"Malformed request syntax.\"}"
+                      value: >- 
+                        {"error": "Malformed request syntax."}
             '404':
               description: Not Found
               content:
                 application/json:
                   examples:
                     error:
-                      value: "{\"error\": \"incidencia not found.\"}"
+                      value: >-
+                        {"error": "incidencia not found."}
       #borrar incidencia
       delete:
         summary: Elimina incidencia por ID 
@@ -284,14 +291,16 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not authenticated.\"}"
+                    value: >-
+                      {"error": "User not authenticated."}
           '404':
             description: Not Found
             content:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"Incidencia not found.\"}" 
+                    value: >-
+                      {"error": "Indicencia not found."}
 
 #########################################################################################
 
@@ -339,10 +348,11 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not authenticated.\"}"
+                    value: >-
+                      {"error": "User not authenticated."}
   /estaciones/{id}:
       get:
-        summary: Obtiene información de una estacion y sus surtidores 
+        summary: Obtiene informacion de una estacion y sus surtidores 
         tags: 
         - Estaciones
         parameters:
@@ -406,14 +416,16 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not authenticated.\"}"
+                    value: >-
+                        {"error": "User not authenticated."}
           '404':
             description: Not Found
             content:
               application/json:
                 examples:
-                  error:
-                    value: "{\"error\": \"Station not found.\"}"
+                  error: 
+                    value: >-
+                      {"error": "Station not found."}
 #borrar incidencia
   /estaciones/{id}/{id_plaza}:
       delete:
@@ -438,7 +450,8 @@ paths:
               application/json:
                 examples:
                   Estaciones:
-                    value: "{\"msg\": \"Data deleted correctly.\"}"
+                    value: >-
+                      {"msg": "Data deleted correctly."}
                   Estaciones no encontrada:
                     value: '[]'
           '401':
@@ -447,14 +460,16 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not authenticated.\"}"
+                    value: >- 
+                      {"error": "User not authenticated."}
           '404':
             description: Not Found
             content:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"Incidencia not found.\"}" 
+                    value: >- 
+                      {"error": "Incidencia not found."}
 #########################################################################################
 
   /trabajadores:
@@ -501,7 +516,8 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not authenticated.\"}"
+                    value: >- 
+                      {"error": "User not authenticated."}
   /trabajadores/{id}:
       # pedimos un trabajador, dado su id.
       get:
@@ -536,13 +552,15 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not authenticated.\"}"
+                    value: >- 
+                      {"error": "User not authenticated."}
           '404':
             description: Not Found
             content:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not found.\"}"
+                    value: >- 
+                      {"error": "User not found."}
                     
 #########################################################################################
