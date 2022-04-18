@@ -21,4 +21,4 @@ jobs:
           
       - name: Lint with flake8
         run: |
-          flake8 --statistics
+          flake8 --statistics --config .flake8
