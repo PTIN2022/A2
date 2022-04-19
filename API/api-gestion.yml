@@ -1,0 +1,425 @@
+openapi: 3.0.0
+info:
+  title: API portal de gestion
+  version: '0.1'
+paths:
+  # incidencias
+  /incidencias:
+    # pedimos una lista de las incidencias
+    get:
+      summary: Obtiene una lista de incidencias
+      tags: 
+      - Incidencias
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con incidencias:
+                  value: "[{\n\t\t\"incidencia_id\": 1,\n\t\t\"estacion\": \"VG1\",\n\t\t\"direccion\": \"Av.Victor Balaguer 2\",\n\t\t\"fecha_averia\": \"18 Mar 2022 \",\n\t\t\"estado\": false,\n\t\t\"descripción\": \"El cargador de la planta 2 m plaza 1 no funciona\"\n\t},\n\t{\n\t\t\"incidenciaId\": 2,\n\t\t\"estación\": \"VG2\",\n\t\t\"direccion\": \"Av.Victor Balaguer 2\",\n\t\t\"fecha_averia\": \"18 Mar 2022 \",\n\t\t\"estado\": false,\n\t\t\"descripcion\": \"El cargador de la planta 2 m plaza 1 no funciona\"\n\t}\n]"
+                Sin incidencias:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: "{\"error\": \"User not authenticated.\"}"
+    # mandamos/resolvemos 1 incidencia
+    post:
+        summary: Inserta una nueva incidencia
+        tags:
+        - Incidencias
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Meter incidencia:
+                    value: >-
+                      { "estacion": "VG1", "direccion": "Av.Victor Balaguer 2",
+                      "fecha_averia": "18 Mar 2022", "descripcion": "El cargador de la planta 2 m plaza 1 no funciona" }
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: "{\"error\": \"Malformed request syntax.\"}"
+                  
+  /incidencias/{estacion}:
+    # pedimos una lista de incidencias por una estacion dada
+    get:
+      summary: Obtiene una lista de incidencias para una estacion dada
+      tags: 
+      - Incidencias
+      parameters:
+        - in: path
+          name: estacion
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Obtiene un lista de incidencias
+          content:
+            application/json:
+              examples:
+                Con incidencias:
+                  value: "[{\n\t\t\"incidencia_id\": 1,\n\t\t\"estacion\": \"VG1\",\n\t\t\"direccion\": \"Av.Victor Balaguer 2\",\n\t\t\"fecha_averia\": \"18 Mar 2022 \",\n\t\t\"estado\": false,\n\t\t\"descripción\": \"El cargador de la planta 2 m plaza 1 no funciona\"\n\t},\n\t{\n\t\t\"incidencia_id\": 2,\n\t\t\"estacion\": \"VG1\",\n\t\t\"direccion\": \"Av.Victor Balaguer 2\",\n\t\t\"fecha_averia\": \"18 Mar 2022 \",\n\t\t\"estado\": false,\n\t\t\"descripcion\": \"El cargador de la planta 2 m plaza 1 no funciona\"\n\t}\n]"
+                Sin incidencias:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: "{\"error\": \"User not authenticated.\"}"
+  /incidencias/{id}:
+      # pedimos una incidencia, dado su id
+      get:
+        summary: Obtiene una incidencia por un id dado
+        tags: 
+          - Incidencias
+        parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Default error sample response
+            content:
+              application/json:
+                examples:
+                  Incidencias:
+                    value: "{\n\t\t\"incidencia_id\": 1,\n\t\t\"estacion\": \"VG1\",\n\t\t\"direccion\": \"Av.Victor Balaguer 2\",\n\t\t\"fecha_averia\": \"18 Mar 2022 \",\n\t\t\"estado\": false,\n\t\t\"descripcion\": \"El cargador de la planta 2 m plaza 1 no funciona\"\n\t}"
+                  Incidencia no encontrada:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: "{\"error\": \"User not authenticated.\"}"
+          '404':
+            description: Not found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: "{\"error\": \"Incidencia not found.\"}"
+      # editar incidencia
+      post:
+          summary: Modificar incidencia
+          tags:
+          - Incidencias
+          parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+          responses:
+            #respuesta correcta
+            '200':
+              description: Peticion correcta
+              content:
+                application/json:
+                  examples:
+                    Actualizar estado incidencia:
+                      value: >-
+                        { "estado": "true" }
+                    Actualizar estacion:
+                      value: >-
+                        { "estacion": "VG1" }
+                    Actualizar descripcion:
+                      value: >-
+                        { "descripcion": "El cargador de la planta 2 m plaza 1 funciona" }
+                    Actualizar todo:
+                      value: >-
+                        {"estacion": "VG1", "direccion": "Av.Victor Balaguer 2","fecha_averia": "18 Mar 2022", "estado": "true", "descripcion": "El cargador de la planta 2 m plaza 1 funciona"}
+            '400':
+              description: Peticion incorrecta
+              content:
+                application/json:
+                  examples:
+                    Error al meter incidencia:
+                      value: "{\"error\": \"Malformed request syntax.\"}"
+            '404':
+              description: Not Found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: "{\"error\": \"incidencia not found.\"}"
+      #borrar incidencia
+      delete:
+        summary: Elimina incidencia por ID 
+        tags:
+          - Incidencias
+        parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Eliminado delete
+            content:
+              application/json:
+                examples:
+                  Incidencias:
+                    value: "{\"msg\": \"Data deleted correctly.\"}"
+                  Incidencia no encontrada:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: "{\"error\": \"User not authenticated.\"}"
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: "{\"error\": \"Incidencia not found.\"}" 
+
+#########################################################################################
+
+  /estaciones:
+      # pedimos una lista de las estaciones
+      get:
+        summary: Obtiene una lista de estaciones
+        tags: 
+        - Estaciones
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Con estaciones:
+                    value: >- 
+                      [{"estacion":"VG1","direccion":"Av.Victor Balaguer 2","kwh_max":720,"kwh_now":75,"ocupation_max":32,"ocupation_now":20,"surface_in_meters":130,"boss":"Alfredo Manresa"}, {"estacion":"VG2","direccion":"Calle de les Empúries 2","kwh_max":640,"kwh_now":20,"ocupation_max":32,"ocupation_now":5,"surface_in_meters":130,"boss":"Pere Roca"}]
+                  Sin estaciones:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: "{\"error\": \"User not authenticated.\"}"
+
+#########################################################################################
+
+  /trabajadores:
+      # pedimos una lista de trabajadores
+      get:
+        summary: Obtiene una lista de trabajadores
+        tags: 
+        - Trabajadores
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Trabajadores:
+                    value: >- 
+                      [{"name":"Pere Roca","rol":"dueño","last_access":-1}, {"name":"Pere Alberto","rol":"trabajador","last_access":0}, {"name":"Sergi Garcia","rol":"Developer","ultimo_acceso": 45},{"name":"Pere Juanjo","rol":"esclavo","last_access": 90}]
+                  Sin trabajadores:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: "{\"error\": \"User not authenticated.\"}"
+  /trabajadores/{id}:
+      # pedimos un trabajador, dado su id.
+      get:
+        summary: Obtiene información de un trabajador por su ID
+        tags: 
+        - Trabajadores
+        parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Trabajador:
+                    value: >- 
+                      {"name":"Pere", "lastname":"Roca","rol":"dueño", "DNI": "08522662N", "email": "pere.roca@boss.com", "telf": 622554433}
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: "{\"error\": \"User not authenticated.\"}"
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: "{\"error\": \"User not found.\"}"
+                    
+#########################################################################################
+
+  /soporte:
+	# Creacion de una ayuda o ticket al soporte tecnico
+    post:
+      summary: Consulta una petición a soporte tecnico
+      tags:
+        - Soporte tecnico
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id_usuario
+                - descripcion_problema
+                - fecha_problema
+              properties:
+                id_usuario:
+                  type: integer
+                descripcion_problema:
+                  type: string
+                fecha_problema:
+                  type: string
+            example:
+              id_usuario: 1
+              fecha_problema: 20/04/2022
+              descripcion_problema: Problema con la aplicación movil
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: |-
+                    {
+                      "id_usuario": "001",
+                      "fecha_problema": "20/04/2022",
+                      "descripcion_problema": "Problema con la aplicación móvil"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"code": "400", "info" :"Malformed request syntax."}'
+  #Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
+  /soporte/userid:
+    get:
+      tags:
+        - Soporte tecnico
+      summary: Encontrar el ticket/la peticion de soporte del usuario
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: |-
+                    {
+                      "Usuario/cliente id": "0123456789",
+                      "Descripción del problema": "No se porque no carga mi coche",
+                      "Fecha": "01/02/20222",
+                      "Estado": false,
+                      "Registro de mensajes de chat": [ {
+                          "Usuario emisor id": "0123456789",
+                          "Mensaje": "No se porque no carga mi coche",
+                          "Fecha" : "01/02/20222"
+                        },
+                        {
+                          "Usuario emisor id": "000000111",
+                          "Mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
+                          "Fecha" : "01/02/20222"
+                        },
+                        {
+                          "Usuario emisor id": "0123456789",
+                          "Mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
+                          "Fecha" : "01/02/20222"
+                        }
+                      ]
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"code": "400", "info" :"ID ususario no valido."}'
+        '404':
+          description: Peticion no encontrado
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"code": "404", "info" :"ID ususario no valido."}'
+ 	# Eliminacion del ticket o peticion al soporte tecnico
+	delete:
+      tags:
+        - Soporte tecnico
+      summary: Eliminar un ticket/una peticion del soporte del usuario
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: |-
+                    {
+                      "code": 200,
+                      "id": "unknown",
+                      "message": "1"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"code": "400", "info" :"ID ususario no valido."}'
+        '404':
+          description: Peticion no encontrado
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"code": "404", "info" : "ID ususario no encontrado."}'
+        '410':
+          description: Peticion no encontrado
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"code": "410", "info" :"ID ususario eliminado."}'
+#######################################################################################################
