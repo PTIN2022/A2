@@ -1,7 +1,10 @@
 openapi: 3.0.0
 info:
   title: API portal de gestion
-  version: '0.1'
+  version: '1.0'
+servers:
+  - url: http://127.0.0.1:5000/
+    description: Developments
 paths:
   # incidencias
   /incidencias:
@@ -17,7 +20,25 @@ paths:
             application/json:
               examples:
                 Con incidencias:
-                  value: "[{\n\t\t\"incidencia_id\": 1,\n\t\t\"estacion\": \"VG1\",\n\t\t\"direccion\": \"Av.Victor Balaguer 2\",\n\t\t\"fecha_averia\": \"18 Mar 2022 \",\n\t\t\"estado\": false,\n\t\t\"descripción\": \"El cargador de la planta 2 m plaza 1 no funciona\"\n\t},\n\t{\n\t\t\"incidenciaId\": 2,\n\t\t\"estación\": \"VG2\",\n\t\t\"direccion\": \"Av.Victor Balaguer 2\",\n\t\t\"fecha_averia\": \"18 Mar 2022 \",\n\t\t\"estado\": false,\n\t\t\"descripcion\": \"El cargador de la planta 2 m plaza 1 no funciona\"\n\t}\n]"
+                  value: [
+                          {
+                            "incidenciaId": 1,
+                            "estación": "VG1",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "fecha_averia": "18/04/2022",
+                            "estado": false,
+                            "descripción": "El cargador de la planta 2 m plaza 1 no funciona"
+                          },
+                          {
+                            "incidenciaId": 2,
+                            "estación": "VG2",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "fecha_averia": "18/04/2022 ",
+                            "estado": false,
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                          }
+                        ]
+                  
                 Sin incidencias:
                   value: '[]'
         '401':
@@ -26,12 +47,38 @@ paths:
             application/json:
               examples:
                 error:
-                  value: "{\"error\": \"User not authenticated.\"}"
-    # mandamos/resolvemos 1 incidencia
+                  value: >-
+                    {"error": "User not authenticated."}
+    # mandamos/resolvemos 1 incidencia]
     post:
         summary: Inserta una nueva incidencia
         tags:
         - Incidencias
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - estacion
+                  - direccion
+                  - fecha_averia
+                  - descripcion
+                properties:
+                  estacion:
+                    type: string
+                  direccion:
+                    type: string
+                  fecha_averia:
+                    type: string
+                  descripcion:
+                    type: string
+                example:
+                  estacion: VG1
+                  direccion: "Av.Victor Balaguer 2"
+                  fecha_averia: "18/04/2022"
+                  descripcion: "El cargador de la planta 2 m plaza 1 no funciona"
         responses:
           '200':
             description: Peticion correcta
@@ -39,18 +86,24 @@ paths:
               application/json:
                 examples:
                   Meter incidencia:
-                    value: >-
-                      { "estacion": "VG1", "direccion": "Av.Victor Balaguer 2",
-                      "fecha_averia": "18 Mar 2022", "descripcion": "El cargador de la planta 2 m plaza 1 no funciona" }
+                    value:  >-
+                        {
+                          "estacion": "VG1",
+                          "direccion": "Av.Victor Balaguer 2",
+                          "fecha_averia": "18/04/2022",
+                          "estado": "true",
+                          "descripcion": "El cargador de la planta 2 m plaza 1 funciona"
+                        }
           '400':
             description: Peticion incorrecta
             content:
               application/json:
                 examples:
                   Error al meter incidencia:
-                    value: "{\"error\": \"Malformed request syntax.\"}"
+                    value: >- 
+                      {"error": "Malformed request syntax."}
                   
-  /incidencias/{estacion}:
+  /incidencias/byname/{estacion}:
     # pedimos una lista de incidencias por una estacion dada
     get:
       summary: Obtiene una lista de incidencias para una estacion dada
@@ -69,7 +122,25 @@ paths:
             application/json:
               examples:
                 Con incidencias:
-                  value: "[{\n\t\t\"incidencia_id\": 1,\n\t\t\"estacion\": \"VG1\",\n\t\t\"direccion\": \"Av.Victor Balaguer 2\",\n\t\t\"fecha_averia\": \"18 Mar 2022 \",\n\t\t\"estado\": false,\n\t\t\"descripción\": \"El cargador de la planta 2 m plaza 1 no funciona\"\n\t},\n\t{\n\t\t\"incidencia_id\": 2,\n\t\t\"estacion\": \"VG1\",\n\t\t\"direccion\": \"Av.Victor Balaguer 2\",\n\t\t\"fecha_averia\": \"18 Mar 2022 \",\n\t\t\"estado\": false,\n\t\t\"descripcion\": \"El cargador de la planta 2 m plaza 1 no funciona\"\n\t}\n]"
+                  value: >-
+                        [
+                          {
+                            "incidenciaId": 1,
+                            "estación": "VG1",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "fecha_averia": "18/04/2022 ",
+                            "estado": false,
+                            "descripción": "El cargador de la planta 2 m plaza 1 no funciona"
+                          },
+                          {
+                            "incidenciaId": 2,
+                            "estacion": "VG2",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "fecha_averia": "18/04/2022 ",
+                            "estado": false,
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                          }
+                        ]
                 Sin incidencias:
                   value: '[]'
         '401':
@@ -78,7 +149,8 @@ paths:
             application/json:
               examples:
                 error:
-                  value: "{\"error\": \"User not authenticated.\"}"
+                  value: >- 
+                    {"error": "User not authenticated."}
   /incidencias/{id}:
       # pedimos una incidencia, dado su id
       get:
@@ -98,7 +170,15 @@ paths:
               application/json:
                 examples:
                   Incidencias:
-                    value: "{\n\t\t\"incidencia_id\": 1,\n\t\t\"estacion\": \"VG1\",\n\t\t\"direccion\": \"Av.Victor Balaguer 2\",\n\t\t\"fecha_averia\": \"18 Mar 2022 \",\n\t\t\"estado\": false,\n\t\t\"descripcion\": \"El cargador de la planta 2 m plaza 1 no funciona\"\n\t}"
+                    value: >- 
+                          {
+                            "incidencia_id": 1,
+                            "estacion": "VG1",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "fecha_averia": "18/04/2022",
+                            "estado": false,
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                          }
                   Incidencia no encontrada:
                     value: '[]'
           '401':
@@ -107,19 +187,48 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not authenticated.\"}"
+                    value: >-
+                        {"error": "User not authenticated."}
+
           '404':
             description: Not found
             content:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"Incidencia not found.\"}"
+                    value: >-
+                        {"error": "Incidencia not found."}
+                        
       # editar incidencia
-      post:
+      put:
           summary: Modificar incidencia
           tags:
           - Incidencias
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required:
+                    - incidencia_id
+                  properties:
+                    estacion:
+                      type: string
+                    direccion:
+                      type: string
+                    fecha_averia:
+                      type: string
+                    descripcion:
+                      type: string
+                    estado:
+                      type: boolean
+                  example:
+                    estacion: VG1
+                    direccion: "Av.Victor Balaguer 2"
+                    fecha_averia: "18/04/022"
+                    descripcion: "El cargador de la planta 2 m plaza 1 no funciona"
+                    estado: false
           parameters:
           - in: path
             name: id
@@ -129,36 +238,37 @@ paths:
           responses:
             #respuesta correcta
             '200':
-              description: Peticion correcta
+              description: Incidencia actualizada
               content:
                 application/json:
                   examples:
-                    Actualizar estado incidencia:
+                    Incidencia actualizada:
                       value: >-
-                        { "estado": "true" }
-                    Actualizar estacion:
-                      value: >-
-                        { "estacion": "VG1" }
-                    Actualizar descripcion:
-                      value: >-
-                        { "descripcion": "El cargador de la planta 2 m plaza 1 funciona" }
-                    Actualizar todo:
-                      value: >-
-                        {"estacion": "VG1", "direccion": "Av.Victor Balaguer 2","fecha_averia": "18 Mar 2022", "estado": "true", "descripcion": "El cargador de la planta 2 m plaza 1 funciona"}
+                          {
+                            "incidencia_id": 1,
+                            "estacion": "VG1",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "fecha_averia": "18/04/2022",
+                            "estado": false,
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                          }
+
             '400':
               description: Peticion incorrecta
               content:
                 application/json:
                   examples:
                     Error al meter incidencia:
-                      value: "{\"error\": \"Malformed request syntax.\"}"
+                      value: >- 
+                        {"error": "Malformed request syntax."}
             '404':
               description: Not Found
               content:
                 application/json:
                   examples:
                     error:
-                      value: "{\"error\": \"incidencia not found.\"}"
+                      value: >-
+                        {"error": "incidencia not found."}
       #borrar incidencia
       delete:
         summary: Elimina incidencia por ID 
@@ -186,14 +296,16 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not authenticated.\"}"
+                    value: >-
+                      {"error": "User not authenticated."}
           '404':
             description: Not Found
             content:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"Incidencia not found.\"}" 
+                    value: >-
+                      {"error": "Indicencia not found."}
 
 #########################################################################################
 
@@ -211,7 +323,28 @@ paths:
                 examples:
                   Con estaciones:
                     value: >- 
-                      [{"estacion":"VG1","direccion":"Av.Victor Balaguer 2","kwh_max":720,"kwh_now":75,"ocupation_max":32,"ocupation_now":20,"surface_in_meters":130,"boss":"Alfredo Manresa"}, {"estacion":"VG2","direccion":"Calle de les Empúries 2","kwh_max":640,"kwh_now":20,"ocupation_max":32,"ocupation_now":5,"surface_in_meters":130,"boss":"Pere Roca"}]
+                      [
+                        {
+                          "estacion": "VG1",
+                          "direccion": "Av.Victor Balaguer 2",
+                          "kwh_max": 720,
+                          "kwh_now": 75,
+                          "ocupation_max": 32,
+                          "ocupation_now": 20,
+                          "surface_in_meters": 130,
+                          "boss": "Alfredo Manresa"
+                        },
+                        {
+                          "estacion": "VG2",
+                          "direccion": "Calle de les Empúries 2",
+                          "kwh_max": 640,
+                          "kwh_now": 20,
+                          "ocupation_max": 32,
+                          "ocupation_now": 5,
+                          "surface_in_meters": 130,
+                          "boss": "Pere Roca"
+                        }
+                      ]
                   Sin estaciones:
                     value: '[]'
           '401':
@@ -220,8 +353,128 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not authenticated.\"}"
-
+                    value: >-
+                      {"error": "User not authenticated."}
+  /estaciones/{id}:
+      get:
+        summary: Obtiene informacion de una estacion y sus surtidores 
+        tags: 
+        - Estaciones
+        parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  estacion:
+                    value: >- 
+                          {
+                            "estacion": "VG3",
+                            "cordenadas": {
+                              "latitud": 41.224115,
+                              "longitud": 1.730610
+                            },
+                            "imagen": "http://?????????/estacion/VG3.png",
+                            "kwh_max": 20000,
+                            "ocupation_max": 8,
+                            "ocupation_now": 4,
+                            "plaza": [
+                              {
+                                "id": 1,
+                                "kwh_usage": 372,
+                                "battery_status": 372,
+                                "battery_max": 800,
+                                "cliente": "peroivi"
+                              },
+                              {
+                                "id": 7,
+                                "kwh_usage": 372,
+                                "battery_status": 372,
+                                "battery_max": 800,
+                                "cliente": "peroivi"
+                              },
+                              {
+                                "id": 3,
+                                "kwh_usage": 372,
+                                "battery_status": 372,
+                                "battery_max": 800,
+                                "cliente": "peroivi"
+                              },
+                              {
+                                "id": 6,
+                                "kwh_usage": 372,
+                                "battery_status": 372,
+                                "battery_max": 800,
+                                "cliente": "peroivi"
+                              }
+                            ]
+                          }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error: 
+                    value: >-
+                      {"error": "Station not found."}
+#borrar incidencia
+  /estaciones/{id}/{id_plaza}:
+      delete:
+        summary: Liberas la plaza ocupada 
+        tags:
+          - Estaciones
+        parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+          - in: path
+            name: id_plaza
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Eliminado delete
+            content:
+              application/json:
+                examples:
+                  Estaciones:
+                    value: >-
+                      {"msg": "Data deleted correctly."}
+                  Estaciones no encontrada:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authenticated."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "Incidencia not found."}
 #########################################################################################
 
   /trabajadores:
@@ -238,7 +491,28 @@ paths:
                 examples:
                   Trabajadores:
                     value: >- 
-                      [{"name":"Pere Roca","rol":"dueño","last_access":-1}, {"name":"Pere Alberto","rol":"trabajador","last_access":0}, {"name":"Sergi Garcia","rol":"Developer","ultimo_acceso": 45},{"name":"Pere Juanjo","rol":"esclavo","last_access": 90}]
+                      [
+                        {
+                            "name": "Pere Roca",
+                            "rol": "dueño",
+                            "last_access": -1
+                        },
+                        {
+                            "name": "Pere Alberto",
+                            "rol": "trabajador",
+                            "last_access": 0
+                        },
+                        {
+                            "name": "Pere Garcia",
+                            "rol": "Developer",
+                            "ultimo_acceso": 45
+                        },
+                        {
+                            "name": "Pere Juanjo",
+                            "rol": "esclavo",
+                            "last_access": 90
+                        }
+                      ]
                   Sin trabajadores:
                     value: '[]'
           '401':
@@ -247,7 +521,8 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not authenticated.\"}"
+                    value: >- 
+                      {"error": "User not authenticated."}
   /trabajadores/{id}:
       # pedimos un trabajador, dado su id.
       get:
@@ -268,21 +543,30 @@ paths:
                 examples:
                   Trabajador:
                     value: >- 
-                      {"name":"Pere", "lastname":"Roca","rol":"dueño", "DNI": "08522662N", "email": "pere.roca@boss.com", "telf": 622554433}
+                      {
+                        "name": "Pere",
+                        "lastname": "Roca",
+                        "rol": "dueño",
+                        "DNI": "08522662N",
+                        "email": "pere.roca@boss.com",
+                        "telf": 622554433
+                      }
           '401':
             description: Not login
             content:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not authenticated.\"}"
+                    value: >- 
+                      {"error": "User not authenticated."}
           '404':
             description: Not Found
             content:
               application/json:
                 examples:
                   error:
-                    value: "{\"error\": \"User not found.\"}"
+                    value: >- 
+                      {"error": "User not found."}
                     
 #########################################################################################
 
