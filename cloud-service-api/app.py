@@ -11,7 +11,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 
 app.register_blueprint(incidencias)
 
-
 db.init_app(app)
 with app.app_context():
     db.create_all()
