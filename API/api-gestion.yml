@@ -569,9 +569,8 @@ paths:
                       {"error": "User not found."}
                     
 #########################################################################################
-
   /soporte:
-	# Creacion de una ayuda o ticket al soporte tecnico
+  # Creacion de una ayuda o ticket al soporte tecnico
     post:
       summary: Consulta una petición a soporte tecnico
       tags:
@@ -583,7 +582,7 @@ paths:
             schema:
               type: object
               required:
-                - id_usuario
+                - ticket_id
                 - descripcion_problema
                 - fecha_problema
               properties:
@@ -617,12 +616,18 @@ paths:
               examples:
                 Error al meter incidencia:
                   value: '{"code": "400", "info" :"Malformed request syntax."}'
-  #Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
-  /soporte/userid:
+#Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
+  /soporte/{ticket_id}:
     get:
+      summary: Encontrar el ticket/la peticion de soporte del usuario
       tags:
         - Soporte tecnico
-      summary: Encontrar el ticket/la peticion de soporte del usuario
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
           description: Peticion correcta
@@ -632,7 +637,7 @@ paths:
                 Insertar petición a soporte tecnico:
                   value: |-
                     {
-                      "Usuario/cliente id": "0123456789",
+                      "TicketId": "0123456789",
                       "Descripción del problema": "No se porque no carga mi coche",
                       "Fecha": "01/02/20222",
                       "Estado": false,
@@ -667,11 +672,17 @@ paths:
               examples:
                 Error al meter incidencia:
                   value: '{"code": "404", "info" :"ID ususario no valido."}'
- 	# Eliminacion del ticket o peticion al soporte tecnico
-	delete:
+  # Eliminacion del ticket o peticion al soporte tecnico
+    delete:
+      summary: Eliminar un ticket/una peticion del soporte del usuario
       tags:
         - Soporte tecnico
-      summary: Eliminar un ticket/una peticion del soporte del usuario
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
           description: Peticion correcta
@@ -700,7 +711,7 @@ paths:
                 Error al meter incidencia:
                   value: '{"code": "404", "info" : "ID ususario no encontrado."}'
         '410':
-          description: Peticion no encontrado
+          description: Peticion eliminada
           content:
             application/json:
               examples:
