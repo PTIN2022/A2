@@ -9,8 +9,10 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db" # TODO: Pass to mysql 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 
+## ROUTES ##
 app.register_blueprint(incidencias)
 app.register_blueprint(trabajador)
+############
 
 db.init_app(app)
 with app.app_context():

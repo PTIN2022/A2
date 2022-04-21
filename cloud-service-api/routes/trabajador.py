@@ -20,8 +20,7 @@ def post_trabajador():
     
 
     t = control.post_trabajador(DNI, name, lastname, telf, email, rol, last_access, picture)
-
-    return jsonify(json.loads(t))
+    return jsonify(t)
     
     '''print("holi")
     print(request.form.to_dict())

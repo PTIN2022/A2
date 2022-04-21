@@ -1,5 +1,4 @@
 from utils.db import db
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 class Trabajador(db.Model):
 
@@ -22,8 +21,6 @@ class Trabajador(db.Model):
         self.last_access = last_access
         self.picture = picture
 
-class TrabajadorSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Trabajador
+    def to_dict (self):
+        return { "DNI": self.DNI, "name": self.name, "lastname": self.lastname, "telf": self.telf, "email": self.email, "rol": self.rol, "last_access": int(self.last_access), "picture": self.picture} 
 
-trabajador_schema=TrabajadorSchema(many=True)
