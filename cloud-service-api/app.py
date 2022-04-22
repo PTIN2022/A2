@@ -1,8 +1,8 @@
 from utils.db import db
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
 from routes.incidencias import incidencias
+from routes.estaciones import estaciones
 
 app = Flask(__name__)
 
@@ -10,6 +10,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db" # TODO: Pass to
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 
 app.register_blueprint(incidencias)
+app.register_blueprint(estaciones)
 
 db.init_app(app)
 with app.app_context():
