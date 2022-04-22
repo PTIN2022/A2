@@ -11,7 +11,7 @@ incidencias = Blueprint('incidencias', __name__)
 @incidencias.route('/incidencias', methods=['GET'])
 def get_incidencias():
     respuesta = control.get_all_incidencias()
-    return jsonify(json.loads(respuesta))
+    return jsonify(respuesta)
 
 
 @incidencias.route('/incidencias', methods=['POST'])
@@ -51,8 +51,11 @@ def modify_incidencia(id):
     if "direccion" in request.json:
         direccion = request.json["direccion"]
     if "fecha_averia" in request.json:
-        fecha_averia = request.json["fecha_averia"]
-        fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%d/%m/%y'))
+        try: 
+            fecha_averia = request.json["fecha_averia"]
+            fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%d/%m/%Y'))
+        except:
+            return jsonify({"error": "malformed date"})
 
     if "descripcion" in request.json:
         descripcion = request.json["descripcion"]
@@ -78,7 +81,7 @@ def get_incidencia_by_estacio(estacion):
 
 @incidencias.route('/incidencias/<id>', methods=["DELETE"])
 def deleted_incidencias(id):
-    deleted = control.deleted_incidencias(id)
+    deleted = control.remove_incidencia(id)
     if deleted:
         return jsonify({"msg": "Data deleted correctly."}), 200
     else:
