@@ -22,6 +22,9 @@ class Trabajador(db.Model):
         self.last_access = last_access
         self.picture = picture
 
+    def to_dict (self):
+        return { "DNI": self.DNI, "name": self.name, "lastname": self.lastname, "telf": self.telf, "email": self.email, "rol": self.rol, "last_access": int(self.last_access), "picture": self.picture}
+    
 class TrabajadorSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Trabajador
