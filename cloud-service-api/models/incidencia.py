@@ -18,5 +18,3 @@ class Incidencia(db.Model):
 class IncidenciaSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Incidencia
-
-incidencia_schema=IncidenciaSchema(many=True)
