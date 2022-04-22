@@ -586,14 +586,14 @@ paths:
                 - descripcion_problema
                 - fecha_problema
               properties:
-                id_usuario:
+                ticket_id:
                   type: integer
                 descripcion_problema:
                   type: string
                 fecha_problema:
                   type: string
             example:
-              id_usuario: 1
+              ticket_id: 1
               fecha_problema: 20/04/2022
               descripcion_problema: Problema con la aplicación movil
       responses:
@@ -605,7 +605,7 @@ paths:
                 Insertar petición a soporte tecnico:
                   value: |-
                     {
-                      "id_usuario": "001",
+                      "ticket_id": 1,
                       "fecha_problema": "20/04/2022",
                       "descripcion_problema": "Problema con la aplicación móvil"
                     }
@@ -615,7 +615,7 @@ paths:
             application/json:
               examples:
                 Error al meter incidencia:
-                  value: '{"code": "400", "info" :"Malformed request syntax."}'
+                  value: '{"code": "400", "info" :"La sintaxis de la peticion esta mal formada."}'
 #Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
   /soporte/{ticket_id}:
     get:
@@ -637,7 +637,7 @@ paths:
                 Insertar petición a soporte tecnico:
                   value: |-
                     {
-                      "TicketId": "0123456789",
+                      "ticket_id": 123456789,
                       "Descripción del problema": "No se porque no carga mi coche",
                       "Fecha": "01/02/20222",
                       "Estado": false,
@@ -693,8 +693,8 @@ paths:
                   value: |-
                     {
                       "code": 200,
-                      "id": "unknown",
-                      "message": "1"
+                      "ticket_id": 1,
+                      "message": "Ticket ha sido eliminado"
                     }
         '400':
           description: Peticion incorrecta
@@ -702,19 +702,19 @@ paths:
             application/json:
               examples:
                 Error al meter incidencia:
-                  value: '{"code": "400", "info" :"ID ususario no valido."}'
+                  value: '{"code": "400", "info" :"ID ticket no valido."}'
         '404':
           description: Peticion no encontrado
           content:
             application/json:
               examples:
                 Error al meter incidencia:
-                  value: '{"code": "404", "info" : "ID ususario no encontrado."}'
+                  value: '{"code": "404", "info" : "ID ticket no encontrado."}'
         '410':
           description: Peticion eliminada
           content:
             application/json:
               examples:
                 Error al meter incidencia:
-                  value: '{"code": "410", "info" :"ID ususario eliminado."}'
+                  value: '{"code": "410", "info" :"ID ticket eliminado."}'
 #######################################################################################################
