@@ -1,7 +1,7 @@
 import controller.incidenciaController as control
 
-from utils import utils
 from datetime import datetime
+from utils import utils, errors
 from flask import Blueprint, jsonify, request
 
 incidencias = Blueprint('incidencias', __name__)
@@ -15,16 +15,19 @@ def get_incidencias():
 
 @incidencias.route('/incidencias', methods=['POST'])
 def post_incidencias():
-    estacion = request.json["estacion"]
-    direccion = request.json["direccion"]
-    fecha_averia = request.json["fecha_averia"]
-    fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%d/%m/%Y'))
-    descripcion = request.json["descripcion"]
+    try:
+        estacion = request.json["estacion"]
+        direccion = request.json["direccion"]
+        fecha_averia = request.json["fecha_averia"]
+        fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%d/%m/%Y'))
+        descripcion = request.json["descripcion"]
+        id = control.post_incidencia(estacion, direccion, fecha_averia, descripcion)
 
-    id = control.post_incidencia(estacion, direccion, fecha_averia, descripcion)
+        respuesta = control.get_incidencias_id(id)
+        return jsonify(respuesta)
 
-    respuesta = control.get_incidencias_id(id)
-    return jsonify(respuesta)
+    except KeyError:
+        return jsonify(errors.malformed_error()), 400
 
 
 @incidencias.route('/incidencias/<id>', methods=["GET"])

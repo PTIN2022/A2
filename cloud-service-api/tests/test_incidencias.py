@@ -34,6 +34,7 @@ headers = {
     'Accept': mimetype
 }
 
+
 def test_get_all_incidencias_empty(client):
     response = client.get("/incidencias")
     assert response.status_code == 200

@@ -15,4 +15,3 @@ def client():
     with app.test_client() as client:
         init_db()
         yield client
-
