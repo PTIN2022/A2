@@ -1,11 +1,10 @@
 from utils.db import db
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from routes.incidencias import incidencias
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db" # TODO: Pass to mysql 
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/test.db"  # TODO: Pass to mysql
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 
 app.register_blueprint(incidencias)

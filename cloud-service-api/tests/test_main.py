@@ -1,7 +1,6 @@
 import pytest
 
 from main import app
-from flask import url_for
 
 
 @pytest.fixture
@@ -16,4 +15,4 @@ def test_get_all_incidencias(client):
     response = client.get("/incidencias")
     assert response.status_code == 200
 
-    assert response.json == True
+    assert response.json is True

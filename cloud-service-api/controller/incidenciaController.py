@@ -1,6 +1,6 @@
-import json
 from utils.db import db
 from models.incidencia import Incidencia, IncidenciaSchema
+
 
 def get_all_incidencias():
     i = Incidencia.query.all()
@@ -27,7 +27,7 @@ def post_incidencia(estacion, direccion, fecha, descripcion, estado=False):
 def remove_incidencia(id):
     i = Incidencia.query.filter(Incidencia.id == id).one_or_none()
     if i:
-        a = db.session.delete(i)
+        db.session.delete(i)
         db.session.commit()
         return True
     return False
@@ -51,4 +51,3 @@ def modify_incidencia(id, estacion=None, direccion=None, fecha_averia=None, desc
         return IncidenciaSchema().dumps(i)
 
     return None
-
