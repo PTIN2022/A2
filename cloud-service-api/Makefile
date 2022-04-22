@@ -2,23 +2,23 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 run: env ## Arranca el flask (.venv) en modo desarrollo. Server correra en: 127.0.0.1:5000
-	source .venv/bin/activate && python app.py 
+	. .venv/bin/activate && python app.py 
 
 env: ## Configura el virtualenv
 	test -d .venv || python3 -m virtualenv .venv || virtualenv .venv
-	source .venv/bin/activate && pip install -Ur requirements/requirements.txt > /dev/null
+	. .venv/bin/activate && pip install -Ur requirements/requirements.txt > /dev/null
 
 dev-env: env ## Configura el virtualenv de desarrollo
-	source .venv/bin/activate && pip install -Ur requirements/requirements-dev.txt > /dev/null
+	. .venv/bin/activate && pip install -Ur requirements/requirements-dev.txt > /dev/null
 
 freeze: clean env
-	source .venv/bin/activate && pip freeze > requirements/requirements.txt
+	. .venv/bin/activate && pip freeze > requirements/requirements.txt
 
 freeze-dev: clean dev-env
-	source .venv/bin/activate && pip freeze > requirements/requirements-dev.txt
+	. .venv/bin/activate && pip freeze > requirements/requirements-dev.txt
     
 test: dev-env
-	source .venv/bin/activate && pytest --cov-report term --cov=./ -s
+	. .venv/bin/activate && pytest --cov-report term --cov=./ -s
 
 clean: ## Elimina los ficheros basura del proyecto
 	rm -rf .pytest_cache .venv
