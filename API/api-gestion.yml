@@ -303,7 +303,7 @@ paths:
                 - fecha_problema
               properties:
                 id_usuario:
-                  type: string
+                  type: integer
                 descripcion_problema:
                   type: string
                 fecha_problema:
@@ -351,9 +351,9 @@ paths:
             - fecha
           properties:
             ticket_id:
-              type: string
+              type: integer
             usuario_emisor_id:
-              type: string
+              type: integer
             mensaje:
               type: string
             fecha:
@@ -413,7 +413,7 @@ paths:
         name: ticket_id
         required: true
         schema:
-          type: string
+          type: integer
       responses:
         '200':
           description: Peticion correcta
