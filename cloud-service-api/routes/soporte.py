@@ -1,4 +1,3 @@
-import json
 import controller.soporteController as control
 from flask import Blueprint, jsonify, request
 
@@ -20,15 +19,14 @@ def post_soporte():
     ticket_id = request.form.to_dict()["ticket_id"]
     fecha = request.form.to_dict()["fecha"]
     descripcion = request.form.to_dict()["descripcion"]
-    
-
     s = control.post_soporte(user_id, ticket_id, fecha, descripcion)
     return jsonify(s)
-   
+
+
 @soporte.route('/soporte/ticket_id/<user_id>', methods=['POST'])
 def post_soporte_ticket_id_user_id(user_id):
     ticket_id = request.form.to_dict()["ticket_id"]
-    user_id = request.form.to_dict()["user_id"] 
+    user_id = request.form.to_dict()["user_id"]
     descripcion = request.form.to_dict()["descripcion"]
     fecha = request.form.to_dict()["fecha"]
     estado = request.form.to_dict()["estado"]
@@ -44,5 +42,4 @@ def delete_soporte_ticket_id(ticket_id):
     if deleted:
         return jsonify({"msg": "User deleted succesfully"}), 200
     else:
-        return jsonify({"error": "User not found."}), 404 #falatara tratar mas errores
-
+        return jsonify({"error": "User not found."}), 404
