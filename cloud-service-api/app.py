@@ -2,6 +2,7 @@ from utils.db import db
 from flask import Flask
 from routes.incidencias import incidencias
 from routes.trabajador import trabajador
+from routes.soporte import soporte
 
 app = Flask(__name__)
 
@@ -10,6 +11,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 
 app.register_blueprint(incidencias)
 app.register_blueprint(trabajador)
+app.register_blueprint(soporte)
 
 db.init_app(app)
 with app.app_context():
