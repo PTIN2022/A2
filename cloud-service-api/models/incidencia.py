@@ -1,6 +1,7 @@
 from utils.db import db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
+
 class Incidencia(db.Model):
 
     id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
@@ -15,8 +16,7 @@ class Incidencia(db.Model):
         self.fecha = fecha
         self.id_estacion = id_estacion
 
+
 class IncidenciaSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Incidencia
-
-incidencia_schema=IncidenciaSchema(many=True)
