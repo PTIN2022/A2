@@ -48,7 +48,7 @@ paths:
               examples:
                 error:
                   value: >-
-                    {"error": "User not authenticated."}
+                    {"error": "User not authorized."}
     # mandamos/resolvemos 1 incidencia]
     post:
         summary: Inserta una nueva incidencia
@@ -150,7 +150,7 @@ paths:
               examples:
                 error:
                   value: >- 
-                    {"error": "User not authenticated."}
+                    {"error": "User not authorized."}
   /incidencias/{id}:
       # pedimos una incidencia, dado su id
       get:
@@ -188,7 +188,7 @@ paths:
                 examples:
                   error:
                     value: >-
-                        {"error": "User not authenticated."}
+                        {"error": "User not authorized."}
 
           '404':
             description: Not found
@@ -297,7 +297,7 @@ paths:
                 examples:
                   error:
                     value: >-
-                      {"error": "User not authenticated."}
+                      {"error": "User not authorized."}
           '404':
             description: Not Found
             content:
@@ -354,7 +354,7 @@ paths:
                 examples:
                   error:
                     value: >-
-                      {"error": "User not authenticated."}
+                      {"error": "User not authorized."}
   /estaciones/{id}:
       get:
         summary: Obtiene informacion de una estacion y sus surtidores 
@@ -422,7 +422,7 @@ paths:
                 examples:
                   error:
                     value: >-
-                        {"error": "User not authenticated."}
+                        {"error": "User not authorized."}
           '404':
             description: Not Found
             content:
@@ -466,7 +466,7 @@ paths:
                 examples:
                   error:
                     value: >- 
-                      {"error": "User not authenticated."}
+                      {"error": "User not authorized."}
           '404':
             description: Not Found
             content:
@@ -478,44 +478,78 @@ paths:
 #########################################################################################
 
   /trabajador:
-      # pedimos una lista de trabajadores
-      get:
-        summary: Obtiene una lista de trabajadores
-        tags: 
-        - Trabajadores
-        responses:
-          '200':
-            description: Peticion correcta
+  # insertamos un trabajor a la lista de trabajadores
+    post:
+      summary: Inserta un nuevo trabajador
+      tags:
+      - Trabajadores
+      requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                required:
+                  - name
+                  - lastname
+                  - telf
+                  - email
+                  - rol
+                  - dni
+                  - password
+                properties:
+                  dni:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+                  email:
+                    type: string
+                  telf:
+                    type: integer
+                  rol:
+                    type: string
+                  password:
+                    type: string                    
+                  profileImage:
+                    type: string 
+                    format: binary
+
+                example:
+                  name: "Pere"
+                  lastname: "Roca"
+                  telf: 622554433
+                  email: "pere.roca@boss.com"
+                  rol: "Dueño"
+                  password: "proca"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Meter trabajador:
+                  value: >-
+                    {
+                      "DNI": "60748880S",
+                      "name": "Pere",
+                      "lastname": "Roca",
+                      "telf": "622554433",
+                      "email": "pere.roca@boss.com",
+                      "rol": "dueño",
+                      "last_access": -1,
+                      "picture": "http://?????????/trabajadores/PereRoca.png"
+                    }
+        '400':
+            description: Peticion incorrecta
             content:
               application/json:
                 examples:
-                  Trabajadores:
-                    value: >- 
-                      [
-                        {
-                            "name": "Pere Roca",
-                            "rol": "dueño",
-                            "last_access": -1
-                        },
-                        {
-                            "name": "Pere Alberto",
-                            "rol": "trabajador",
-                            "last_access": 0
-                        },
-                        {
-                            "name": "Pere Garcia",
-                            "rol": "Developer",
-                            "ultimo_acceso": 45
-                        },
-                        {
-                            "name": "Pere Juanjo",
-                            "rol": "esclavo",
-                            "last_access": 90
-                        }
-                      ]
-                  Sin trabajadores:
-                    value: '[]'
-          '401':
+                  Error al meter incidencia:
+                    value: "{\"error\": \"Malformed request syntax.\"}"
+
+        '401':
             description: Not login
             content:
               application/json:
@@ -523,86 +557,7 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
-      
-      post:
-        summary: Inserta un nuevo trabajador
-        tags:
-        - Trabajadores
-        requestBody:
-            required: true
-            content:
-              multipart/form-data:
-                schema:
-                  type: object
-                  required:
-                    - name
-                    - lastname
-                    - telf
-                    - email
-                    - rol
-                    - dni
-                    - password
-                  properties:
-                    dni:
-                      type: string
-                    name:
-                      type: string
-                    lastname:
-                      type: string
-                    email:
-                      type: string
-                    telf:
-                      type: string
-                    rol:
-                      type: string
-                    password:
-                      type: string                    
-                    profileImage:
-                      type: string 
-                      format: binary
-  
-                  example:
-                    name: "Pere"
-                    lastname: "Roca"
-                    telf: "622554433"
-                    email: "pere.roca@boss.com"
-                    rol: "Dueño"
-                    password: "proca"
-        responses:
-          '200':
-            description: Peticion correcta
-            content:
-              application/json:
-                examples:
-                  Meter trabajador:
-                    value: >-
-                      {
-                        "dni": "60748880S",
-                        "name": "Pere",
-                        "lastname": "Roca",
-                        "telf": "622554433",
-                        "email": "pere.roca@boss.com",
-                        "rol": "dueño",
-                        "last_access": -1,
-                        "picture": "http://?????????/trabajadores/PereRoca.png"
-                      }
-          '400':
-              description: Peticion incorrecta
-              content:
-                application/json:
-                  examples:
-                    Error al meter incidencia:
-                      value: "{\"error\": \"Malformed request syntax.\"}"
-  
-          '401':
-              description: Not login
-              content:
-                application/json:
-                  examples:
-                    error:
-                      value: >- 
-                        {"error": "User not authorized."}    
-  /trabajador/{dni}:
+  /trabajadores/{dni}:
       # pedimos un trabajador, dado su id.
       get:
         summary: Obtiene información de un trabajador por su ID
@@ -623,7 +578,7 @@ paths:
                   Trabajador:
                     value: >- 
                       {
-                        "dni": "60748880S",
+                        "DNI": "60748880S",
                         "name": "Pere",
                         "lastname": "Roca",
                         "telf": "622554433",
@@ -648,136 +603,97 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not found."}
-
-
-      # modificar trabajador de la lista de trabajadores
-      put:
-        summary: Modifica un trabajador
-        tags:
-          - Trabajadores
-        parameters:
-        - in: path
-          name: dni
-          required: true
-          schema:
-            type: string
-        requestBody:
-          required: true
-          content:
-            multipart/form-data:
-              schema:
-                type: object
-                required:
-                  - name
-                  - lastname
-                  - telf
-                  - email
-                  - rol
-                  - dni
-                  - password 
-                properties:
-                  dni:
-                    type: string
-                  name:
-                    type: string
-                  lastname:
-                    type: string
-                  email:
-                    type: string
-                  telf:
-                    type: string
-                  rol:
-                    type: string
-                  password:
-                    type: string
-                  profileImage:
-                    type: string 
-                    format: binary
                     
-                example:
-                  name: "Pere"
-                  lastname: "Roca"
-                  telf: "622554433"
-                  email: "pere.roca@boss.com"
-                  rol: "Dueño"
-                  password: "proca"
-        responses:
-          '200':
-            description: Peticion correcta
-            content:
-              application/json:
-                examples:
-                  Trabajador actualizado: 
-                    value: >-
-                      {
-                        "dni": "60748880S",
-                        "name": "Pere",
-                        "lastname": "Roca",
-                        "telf": "622554433",
-                        "email": "pere.roca@boss.com",
-                        "rol": "dueño",
-                        "last_access": -1,
-                        "picture": "http://?????????/trabajadores/PereRoca.png"
-                      }
-          '400':
-            description: Peticion incorrecta
-            content:
-              application/json:
-                examples:
-                  Error al meter trabajador:
-                    value: "{\"error\": \"Malformed request syntax.\"}"
-          '404':
-            description: Not Found
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: "{\"error\": \"Trabajador not found.\"}"
-      
-      
-      delete:
-        summary: Eliminar un trabajador por su ID
-        tags: 
-          - Trabajadores
-        parameters:
-          - in: path
-            name: dni
-            required: true
-            schema:
-              type: string
-        responses:
-            '200':
-              description: Peticion correcta
-              content:
-                application/json:
-                  examples:
-                    Trabajador:
-                      value: >- 
-                        {"msg": "User deleted succesfully"}
-                        
-            '401':
-              description: Not login
-              content:
-                application/json:
-                  examples:
-                    error:
-                      value: >- 
-                        {"error": "User not authorized."}
-            '404':
-              description: Not Found
-              content:
-                application/json:
-                  examples:
-                    error:
-                      value: >- 
-                        {"error": "User not found."}
-#########################################################################################
-  /soporte:
-  # Creacion de una ayuda o ticket al soporte tecnico
-    post:
-      summary: Consulta una petición a soporte tecnico
+  /trabajador/{dni}:
+  # modificar trabajador de la lista de trabajadores
+    put:
+      summary: Modifica un trabajador
       tags:
-        - Soporte tecnico
+        - Trabajadores
+      parameters:
+      - in: path
+        name: dni
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - name
+                - lastname
+                - telf
+                - email
+                - rol
+                - dni
+                - password 
+              properties:
+                dni:
+                  type: string
+                name:
+                  type: string
+                lastname:
+                  type: string
+                email:
+                  type: string
+                telf:
+                  type: integer
+                rol:
+                  type: string
+                password:
+                  type: string
+                profileImage:
+                  type: string 
+                  format: binary
+                  
+              example:
+                name: "Pere"
+                lastname: "Roca"
+                telf: 622554433
+                email: "pere.roca@boss.com"
+                rol: "Dueño"
+                password: "proca"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Trabajador actualizado: 
+                  value: >-
+                    {
+                      "DNI": "60748880S",
+                      "name": "Pere",
+                      "lastname": "Roca",
+                      "telf": "622554433",
+                      "email": "pere.roca@boss.com",
+                      "rol": "dueño",
+                      "last_access": -1,
+                      "picture": "http://?????????/trabajadores/PereRoca.png"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter trabajador:
+                  value: "{\"error\": \"Malformed request syntax.\"}"
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: "{\"error\": \"Trabajador not found.\"}"
+#########################################################################################
+  /login:
+    post:
+      summary: Login en el sistema
+      tags: 
+      - Autenticacion
       requestBody:
         required: true
         content:
@@ -785,204 +701,56 @@ paths:
             schema:
               type: object
               required:
-                - descripcion
-                - fecha
+                - email
+                - password
               properties:
-                descripcion:
+                email:
                   type: string
-                fecha:
+                password:
                   type: string
-            example:
-              fecha: 20/04/2022
-              descripcion: Problema con la aplicación movil
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Insertar petición a soporte tecnico:
-                  value: |-
-                    {
-                      "user_id": 1,
-                      "ticket_id": 2,
-                      "fecha": "20/04/2022",
-                      "descripcion": "Problema con la aplicación móvil"
-                    }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error" :"Malformed request syntax."}'
 
-  /soporte/ticket_id/{user_id}:
-    post:
-      summary: Encontrar el ticket/la peticion de soporte del usuario
-      tags:
-        - Soporte tecnico
-      parameters:
-      - in: path
-        name: user_id
-        required: true
-        schema:
-          type: integer
-          required:
-            - ticket_id
-            - user_id
-            - mensaje
-            - fecha
-          properties:
-            ticket_id:
-              type: integer
-            user_id:
-              type: integer
-            mensaje:
-              type: string
-            fecha:
-              type: string
+              example:
+                email: "meh@meh.com"
+                password: "supersegura"
       responses:
         '200':
           description: Peticion correcta
           content:
             application/json:
               examples:
-                Insertar petición a soporte tecnico:
-                  value: {
-                        "ticket_id": 0123456789,
-                        "user_id":  0123456789,
-                        "descripcion": "No se porque no carga mi coche",
-                        "fecha": "01/02/20222",
-                        "estado": false,
-                        "chat": [ {
-                            "user_id": 0123456789,
-                            "mensaje": "No se porque no carga mi coche",
-                            "fecha" : "01/02/20222"
-                          },
-                          {
-                            "user_id": 111,
-                            "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
-                            "fecha" : "01/02/20222"
-                          },
-                          {
-                            "user_id": 123456789,
-                            "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
-                            "fecha" : "01/02/20222"
-                          }
-                        ]
-                      }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error" :"ID ususario no valido."}'
-        '404':
-          description: Peticion no encontrado
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error" :"ID ususario no valido."}'
-#Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
-  /soporte/{ticket_id}:
-    get:
-      summary: Encontrar el ticket/la peticion de soporte del usuario
-      tags:
-        - Soporte tecnico
-      parameters:
-      - in: path
-        name: ticket_id
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Insertar petición a soporte tecnico:
-                  value: {
-                      "ticket_id": 0123456789,
-                      "user_id": 0123456789,
-                      "descripcion": "No se porque no carga mi coche",
-                      "fecha": "01/02/20222",
-                      "estado": false,
-                      "chat": [ {
-                          "user_id": 123456789,
-                          "mensaje": "No se porque no carga mi coche",
-                          "fecha" : "01/02/20222"
-                        },
-                        {
-                          "user_id": 111,
-                          "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
-                          "fecha" : "01/02/20222"
-                        },
-                        {
-                          "user_id": 123456789,
-                          "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
-                          "fecha" : "01/02/20222"
-                        }
-                      ]
-                    }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error": "peticion mal formada."}'
-        '404':
-          description: Peticion no encontrado
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error": "ID ususario no encontrado."}'
-  # Eliminacion del ticket o peticion al soporte tecnico
-    delete:
-      summary: Eliminar un ticket/una peticion del soporte del usuario
-      tags:
-        - Soporte tecnico
-      parameters:
-      - in: path
-        name: ticket_id
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Insertar petición a soporte tecnico:
-                  value: |-
+                Success Login: 
+                  value: >-
                     {
-                      "info": "Ticket ha sido eliminado"
+                      "token": "tokencito.jwt"
                     }
         '400':
           description: Peticion incorrecta
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error" :"ID ususario no valido."}'
-        '404':
-          description: Peticion no encontrado
+                error:
+                  value: "{\"error\": \"Malformed request syntax.\"}"
+  /logout:
+    get:
+      summary: "Log Out"
+      tags:
+      - Autenticacion
+      responses:
+        '200':
+          description: Peticion correcta
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error" : "ID ususario no encontrado."}'
-        '410':
-          description: Peticion eliminada
+                Success Login: 
+                  value: >-
+                    {
+                      "msg": "Success logout"
+                    }
+        '400':
+          description: Peticion incorrecta
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error": "ID ususario eliminado."}'
-#######################################################################################################
+                error:
+                  value: "{\"error\": \"Malformed request syntax.\"}"
+
