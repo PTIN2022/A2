@@ -603,91 +603,90 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not found."}
+                      
+    # modificar trabajador de la lista de trabajadores
+      put:
+        summary: Modifica un trabajador
+        tags:
+          - Trabajadores
+        parameters:
+        - in: path
+          name: dni
+          required: true
+          schema:
+            type: string
+        requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                required:
+                  - name
+                  - lastname
+                  - telf
+                  - email
+                  - rol
+                  - dni
+                  - password 
+                properties:
+                  dni:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+                  email:
+                    type: string
+                  telf:
+                    type: integer
+                  rol:
+                    type: string
+                  password:
+                    type: string
+                  profileImage:
+                    type: string 
+                    format: binary
                     
-  /trabajador/{dni}:
-  # modificar trabajador de la lista de trabajadores
-    put:
-      summary: Modifica un trabajador
-      tags:
-        - Trabajadores
-      parameters:
-      - in: path
-        name: dni
-        required: true
-        schema:
-          type: string
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              required:
-                - name
-                - lastname
-                - telf
-                - email
-                - rol
-                - dni
-                - password 
-              properties:
-                dni:
-                  type: string
-                name:
-                  type: string
-                lastname:
-                  type: string
-                email:
-                  type: string
-                telf:
-                  type: integer
-                rol:
-                  type: string
-                password:
-                  type: string
-                profileImage:
-                  type: string 
-                  format: binary
-                  
-              example:
-                name: "Pere"
-                lastname: "Roca"
-                telf: 622554433
-                email: "pere.roca@boss.com"
-                rol: "Dueño"
-                password: "proca"
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Trabajador actualizado: 
-                  value: >-
-                    {
-                      "DNI": "60748880S",
-                      "name": "Pere",
-                      "lastname": "Roca",
-                      "telf": "622554433",
-                      "email": "pere.roca@boss.com",
-                      "rol": "dueño",
-                      "last_access": -1,
-                      "picture": "http://?????????/trabajadores/PereRoca.png"
-                    }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter trabajador:
-                  value: "{\"error\": \"Malformed request syntax.\"}"
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              examples:
-                error:
-                  value: "{\"error\": \"Trabajador not found.\"}"
+                example:
+                  name: "Pere"
+                  lastname: "Roca"
+                  telf: 622554433
+                  email: "pere.roca@boss.com"
+                  rol: "Dueño"
+                  password: "proca"
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Trabajador actualizado: 
+                    value: >-
+                      {
+                        "DNI": "60748880S",
+                        "name": "Pere",
+                        "lastname": "Roca",
+                        "telf": "622554433",
+                        "email": "pere.roca@boss.com",
+                        "rol": "dueño",
+                        "last_access": -1,
+                        "picture": "http://?????????/trabajadores/PereRoca.png"
+                      }
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter trabajador:
+                    value: "{\"error\": \"Malformed request syntax.\"}"
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: "{\"error\": \"Trabajador not found.\"}"
 #########################################################################################
   /login:
     post:
@@ -753,4 +752,5 @@ paths:
               examples:
                 error:
                   value: "{\"error\": \"Malformed request syntax.\"}"
+
 
