@@ -478,6 +478,51 @@ paths:
 #########################################################################################
 
   /trabajador:
+      # pedimos una lista de trabajadores
+    get:
+      summary: Obtiene una lista de trabajadores
+      tags: 
+      - Trabajadores
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Trabajadores:
+                  value: >- 
+                    [
+                      {
+                          "name": "Pere Roca",
+                          "rol": "dueño",
+                          "last_access": -1
+                      },
+                      {
+                          "name": "Pere Alberto",
+                          "rol": "trabajador",
+                          "last_access": 0
+                      },
+                      {
+                          "name": "Pere Garcia",
+                          "rol": "Developer",
+                          "ultimo_acceso": 45
+                      },
+                      {
+                          "name": "Pere Juanjo",
+                          "rol": "esclavo",
+                          "last_access": 90
+                      }
+                    ]
+                Sin trabajadores:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not authorized."}
   # insertamos un trabajor a la lista de trabajadores
     post:
       summary: Inserta un nuevo trabajador
