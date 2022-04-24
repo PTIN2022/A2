@@ -1,6 +1,7 @@
 from utils.db import db
 from flask import Flask
 from routes.incidencias import incidencias
+from routes.trabajador import trabajador
 
 
 def init_db():
@@ -16,6 +17,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
 
 app.register_blueprint(incidencias)
+app.register_blueprint(trabajador)
 
 if app.config["TESTING"] is False:
     init_db()
