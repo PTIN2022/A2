@@ -2,6 +2,7 @@ from utils.db import db
 from flask import Flask
 from routes.incidencias import incidencias
 from routes.trabajador import trabajador
+from routes.estaciones import estaciones
 
 
 def init_db():
@@ -18,6 +19,7 @@ app.config["TESTING"] = False
 
 app.register_blueprint(incidencias)
 app.register_blueprint(trabajador)
+app.register_blueprint(estaciones)
 
 if app.config["TESTING"] is False:
     init_db()
