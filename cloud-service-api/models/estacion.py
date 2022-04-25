@@ -1,4 +1,5 @@
 from utils.db import db
+from models.plaza import PlazaSchema
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
