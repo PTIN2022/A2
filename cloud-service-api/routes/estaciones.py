@@ -1,16 +1,15 @@
-import json
 import controller.estacionesController as control
+from flask import Blueprint, jsonify
 
-from utils import utils
-from datetime import datetime
-from flask import Blueprint, jsonify, request
 
 estaciones = Blueprint('estaciones', __name__)
+
 
 @estaciones.route('/estaciones', methods=['GET'])
 def get_estaciones():
     respuesta = control.get_all_estaciones()
     return jsonify(respuesta)
+
 
 @estaciones.route('/estaciones/<id>', methods=["GET"])
 def get_estacion_by_id(id):
@@ -19,6 +18,7 @@ def get_estacion_by_id(id):
         return jsonify(respuesta), 200
     else:
         return jsonify({"error": "Estacion not found"}), 404
+
 
 @estaciones.route('/estaciones/<id>/<id_plaza>', methods=["DELETE"])
 def delete_plaza(id, id_plaza):

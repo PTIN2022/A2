@@ -1,17 +1,16 @@
 import os
 from utils.db import db
-from utils.utils import fake_data
 from flask import Flask
 from routes.incidencias import incidencias
 from routes.estaciones import estaciones
-from models.plaza import Plaza, PlazaSchema
-from models.estacion import Estacion, EstacionSchema
+from models.plaza import Plaza
+from models.estacion import Estacion
+
 
 def init_db():
     db.init_app(app)
     with app.app_context():
         db.create_all()
-
 
 
 app = Flask(__name__)
@@ -34,12 +33,11 @@ if app.config["TESTING"] is False:
         db.session.commit()
 
         print(e)
-        p1 = Plaza(23,23,23,"mario", e.id)
-        p2 = Plaza(30,23,40,"mario", e.id)
+        p1 = Plaza(23, 23, 23, "mario", e.id)
+        p2 = Plaza(30, 23, 40, "mario", e.id)
         db.session.add(p1)
         db.session.add(p2)
         db.session.commit()
-        
 
 
 if __name__ == "__main__":
@@ -47,3 +45,4 @@ if __name__ == "__main__":
     print("Test me on: http://ptin2022.github.io/A2/")
     print("=========================================")
     app.run(host="0.0.0.0")
+    
