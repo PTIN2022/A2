@@ -1,5 +1,5 @@
 from utils.db import db
-import models.plaza  # flake8: noqa
+import models.plaza  # pyflakes.ignore
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
