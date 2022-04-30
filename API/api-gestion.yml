@@ -773,3 +773,470 @@ paths:
                         {"error": "User not found."}
 #########################################################################################
 
+  /soporte:
+  # Creacion de una ayuda o ticket al soporte tecnico
+    post:
+      summary: Consulta una petición a soporte tecnico
+      tags:
+        - Soporte tecnico
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - descripcion
+                - fecha
+              properties:
+                descripcion:
+                  type: string
+                fecha:
+                  type: string
+            example:
+              fecha: 20/04/2022
+              descripcion: Problema con la aplicación movil
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: |-
+                    {
+                      "user_id": 1,
+                      "ticket_id": 2,
+                      "fecha": "20/04/2022",
+                      "descripcion": "Problema con la aplicación móvil"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"error" :"Malformed request syntax."}'
+
+  /soporte/ticket_id/{user_id}:
+    post:
+      summary: Encontrar el ticket/la peticion de soporte del usuario
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          type: integer
+          required:
+            - ticket_id
+            - user_id
+            - mensaje
+            - fecha
+          properties:
+            ticket_id:
+              type: integer
+            user_id:
+              type: integer
+            mensaje:
+              type: string
+            fecha:
+              type: string
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: {
+                        "ticket_id": 0123456789,
+                        "user_id":  0123456789,
+                        "descripcion": "No se porque no carga mi coche",
+                        "fecha": "01/02/20222",
+                        "estado": false,
+                        "chat": [ {
+                            "user_id": 0123456789,
+                            "mensaje": "No se porque no carga mi coche",
+                            "fecha" : "01/02/20222"
+                          },
+                          {
+                            "user_id": 111,
+                            "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
+                            "fecha" : "01/02/20222"
+                          },
+                          {
+                            "user_id": 123456789,
+                            "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
+                            "fecha" : "01/02/20222"
+                          }
+                        ]
+                      }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"error" :"ID ususario no valido."}'
+        '404':
+          description: Peticion no encontrado
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"error" :"ID ususario no valido."}'
+#Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
+  /soporte/{ticket_id}:
+    get:
+      summary: Encontrar el ticket/la peticion de soporte del usuario
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: {
+                      "ticket_id": 0123456789,
+                      "user_id": 0123456789,
+                      "descripcion": "No se porque no carga mi coche",
+                      "fecha": "01/02/20222",
+                      "estado": false,
+                      "chat": [ {
+                          "user_id": 123456789,
+                          "mensaje": "No se porque no carga mi coche",
+                          "fecha" : "01/02/20222"
+                        },
+                        {
+                          "user_id": 111,
+                          "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
+                          "fecha" : "01/02/20222"
+                        },
+                        {
+                          "user_id": 123456789,
+                          "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
+                          "fecha" : "01/02/20222"
+                        }
+                      ]
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"error": "peticion mal formada."}'
+        '404':
+          description: Peticion no encontrado
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"error": "ID ususario no encontrado."}'
+  # Eliminacion del ticket o peticion al soporte tecnico
+    delete:
+      summary: Eliminar un ticket/una peticion del soporte del usuario
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: |-
+                    {
+                      "info": "Ticket ha sido eliminado"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"error" :"ID ususario no valido."}'
+        '404':
+          description: Peticion no encontrado
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"error" : "ID ususario no encontrado."}'
+        '410':
+          description: Peticion eliminada
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: '{"error": "ID ususario eliminado."}'
+                  
+  ###################################################################################################
+  /reservas:
+    get:
+      summary: Obtener los datos de una lista reservas
+      tags:
+        - Reservas
+      responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Reservas:
+                    value: >- 
+                      [
+                        {
+                            "id_reserva": 1,
+                            "estacion": 1,
+                            "desde": "10:20",
+                            "hasta": "11:00",
+                            "matricula": "8157YLR",
+                            "fecha": "30/04/2022",
+                            "DNI": "92688065C"
+                        },
+                        {
+                            "id_reserva": 2,
+                            "estacion": 2,
+                            "desde": "12:20",
+                            "hasta": "14:00",
+                            "matricula": "2650ZQW",
+                            "fecha": "02/05/2022",
+                            "DNI": "12787468C"
+                        },
+                        {
+                            "id_reserva": 3,
+                            "estacion": 3,
+                            "desde": "13:00",
+                            "hasta": "14:00",
+                            "matricula": "7895QDL",
+                            "fecha": "04/05/2022",
+                            "DNI": "29245478N"
+                        },
+                        {
+                            "id_reserva": 4,
+                            "estacion": 4,
+                            "desde": "14:00",
+                            "hasta": "14:40",
+                            "matricula": "9502CQW",
+                            "fecha": "08/05/2022",
+                            "DNI": "41636807E"
+                        }
+                      ]
+                  Sin reservas:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+                      
+  /reservas/{estacion}:
+    # pedimos una lista de reservas por una estacion dada
+    get:
+      summary: Obtiene una lista de reservas para una estacion dada
+      tags: 
+      - Reservas
+      parameters:
+        - in: path
+          name: estacion
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Obtiene un lista de reservas
+          content:
+            application/json:
+              examples:
+                Con reservas:
+                  value: >-
+                        [
+                          {
+                            "id_reserva": 1,
+                            "estacion": 1,
+                            "desde": "10:20",
+                            "hasta": "11:00",
+                            "matricula": "8157YLR",
+                            "fecha": "30/04/2022",
+                            "DNI": "92688065C"
+                        },
+                        {
+                            "id_reserva": 2,
+                            "estacion": 2,
+                            "desde": "12:20",
+                            "hasta": "14:00",
+                            "matricula": "2650ZQW",
+                            "fecha": "02/05/2022",
+                            "DNI": "12787468C"
+                        },
+                        {
+                            "id_reserva": 3,
+                            "estacion": 3,
+                            "desde": "13:00",
+                            "hasta": "14:00",
+                            "matricula": "7895QDL",
+                            "fecha": "04/05/2022",
+                            "DNI": "29245478N"
+                        },
+                        {
+                            "id_reserva": 4,
+                            "estacion": 4,
+                            "desde": "14:00",
+                            "hasta": "14:40",
+                            "matricula": "9502CQW",
+                            "fecha": "08/05/2022",
+                            "DNI": "41636807E"
+                        }
+                        ]
+                Sin reservas:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not authenticated."}
+                    
+                    
+  /reservas/{dni}:
+
+      get:
+        summary: Obtiene las reservas por un dni dado
+        tags: 
+          - Reservas
+        parameters:
+          - in: path
+            name: dni
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Default error sample response
+            content:
+              application/json:
+                examples:
+                  Reservas:
+                    value: >- 
+                          {
+                            "id_reserva": 4,
+                            "estacion": 4,
+                            "desde": "14:00",
+                            "hasta": "14:40",
+                            "matricula": "9502CQW",
+                            "fecha": "08/05/2022",
+                            "DNI": "41636807E"
+                          }
+                  Sin reservas:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+                        
+  /reservas/{id_reserva}:
+
+    get:
+      summary: Obtiene la reserva por un id dado
+      tags: 
+        - Reservas
+      parameters:
+        - in: path
+          name: id_reserva
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                Reservas:
+                  value: >- 
+                        {
+                          "id_reserva": 4,
+                          "estacion": 4,
+                          "desde": "14:00",
+                          "hasta": "14:40",
+                          "matricula": "9502CQW",
+                          "fecha": "08/05/2022",
+                          "DNI": "41636807E"
+                        }
+                Sin reservas:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "User not authenticated."}
+                        
+    delete:
+      summary: Elimina reserva por ID 
+      tags:
+        - Reservas
+      parameters:
+        - in: path
+          name: id_reserva
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Eliminado delete
+          content:
+            application/json:
+              examples:
+                Rerservas:
+                  value: "{\"msg\": \"Data deleted correctly.\"}"
+                Reserva no encontrada:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Reserva not found."}
+  
+    
+      
+      
