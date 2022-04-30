@@ -1,5 +1,5 @@
 from utils.db import db
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, fields
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
 class Incidencia(db.Model):
