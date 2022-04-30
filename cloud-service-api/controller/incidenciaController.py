@@ -14,7 +14,7 @@ def get_incidencias_id(id):
 
 def get_incidencias_estacion(estacion):
     i = Incidencia.query.filter(Incidencia.id_estacion == estacion)
-    return IncidenciaSchema().dump(i)
+    return IncidenciaSchema(many=True).dump(i)
 
 
 def post_incidencia(estacion, direccion, fecha, descripcion, estado=False):
@@ -38,8 +38,6 @@ def modify_incidencia(id, estacion=None, direccion=None, fecha_averia=None, desc
     if i:
         if estacion:
             i.estacion = estacion
-        if direccion:
-            i.direccion = direccion
         if fecha_averia:
             i.fecha_averia = fecha_averia
         if descripcion:
@@ -48,6 +46,6 @@ def modify_incidencia(id, estacion=None, direccion=None, fecha_averia=None, desc
             i.estado = estado
 
         db.session.commit()
-        return IncidenciaSchema().dumps(i)
+        return IncidenciaSchema().dump(i)
 
     return None

@@ -25,7 +25,7 @@ paths:
                             "incidenciaId": 1,
                             "estación": "VG1",
                             "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "18/04/2022",
+                            "fecha_averia": "2022-04-18",
                             "estado": false,
                             "descripción": "El cargador de la planta 2 m plaza 1 no funciona"
                           },
@@ -33,7 +33,7 @@ paths:
                             "incidenciaId": 2,
                             "estación": "VG2",
                             "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "18/04/2022 ",
+                            "fecha_averia": "2022-04-18 ",
                             "estado": false,
                             "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
                           }
@@ -77,7 +77,7 @@ paths:
                 example:
                   estacion: VG1
                   direccion: "Av.Victor Balaguer 2"
-                  fecha_averia: "18/04/2022"
+                  fecha_averia: "2022-04-18"
                   descripcion: "El cargador de la planta 2 m plaza 1 no funciona"
         responses:
           '200':
@@ -90,7 +90,7 @@ paths:
                         {
                           "estacion": "VG1",
                           "direccion": "Av.Victor Balaguer 2",
-                          "fecha_averia": "18/04/2022",
+                          "fecha_averia": "2022-04-18",
                           "estado": "true",
                           "descripcion": "El cargador de la planta 2 m plaza 1 funciona"
                         }
@@ -128,7 +128,7 @@ paths:
                             "incidenciaId": 1,
                             "estación": "VG1",
                             "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "18/04/2022 ",
+                            "fecha_averia": "2022-04-18 ",
                             "estado": false,
                             "descripción": "El cargador de la planta 2 m plaza 1 no funciona"
                           },
@@ -136,7 +136,7 @@ paths:
                             "incidenciaId": 2,
                             "estacion": "VG2",
                             "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "18/04/2022 ",
+                            "fecha_averia": "2022-04-18 ",
                             "estado": false,
                             "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
                           }
@@ -175,7 +175,7 @@ paths:
                             "incidencia_id": 1,
                             "estacion": "VG1",
                             "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "18/04/2022",
+                            "fecha_averia": "2022-04-18",
                             "estado": false,
                             "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
                           }
@@ -248,7 +248,7 @@ paths:
                             "incidencia_id": 1,
                             "estacion": "VG1",
                             "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "18/04/2022",
+                            "fecha_averia": "2022-04-18",
                             "estado": false,
                             "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
                           }
@@ -305,7 +305,7 @@ paths:
                 examples:
                   error:
                     value: >-
-                      {"error": "Indicencia not found."}
+                      {"error": "Incidencia not found."}
 
 #########################################################################################
 

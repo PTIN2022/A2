@@ -18,7 +18,7 @@ freeze-dev: clean dev-env
 	. .venv/bin/activate && pip freeze > requirements/requirements-dev.txt
     
 test: dev-env
-	. .venv/bin/activate && pytest --cov-report term --cov=./ -s -vv
+	. .venv/bin/activate && pytest --cov-report term-missing --cov=./ -s -vv
 
 clean: ## Elimina los ficheros basura del proyecto
 	rm -rf .pytest_cache .venv

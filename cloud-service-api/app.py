@@ -20,7 +20,7 @@ app.register_blueprint(incidencias)
 if app.config["TESTING"] is False:
     init_db()
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     print("=========================================")
     print("Test me on: http://ptin2022.github.io/A2/")
     print("=========================================")
