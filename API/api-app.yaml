@@ -12,7 +12,7 @@ paths:
     get:
       summary: Obtiene una lista de reservas
       tags: 
-      - Reservas
+      - Reservas (más para web)
       responses:
         '200':
           description: Peticion correcta
@@ -27,7 +27,7 @@ paths:
                             "desde": "10:20",
                             "hasta": "11:20",
                             "matricula": "LKE1237",
-                            "data": "28-02-2020",
+                            "data": "28/02/2020",
                             "DNI": "1236712N"
                           },
                           {
@@ -36,7 +36,7 @@ paths:
                             "desde": "13:20",
                             "hasta": "14:20",
                             "matricula": "LKJ1237",
-                            "data": "28-02-2020",
+                            "data": "28/02/2020",
                             "DNI": "90129301N"
                           },
                           {
@@ -45,7 +45,7 @@ paths:
                             "desde": "17:20",
                             "hasta": "18:20",
                             "matricula": "LKS1237",
-                            "data": "28-02-2020",
+                            "data": "28/02/2020",
                             "DNI": "81293N"
                           }
                         ]
@@ -64,7 +64,7 @@ paths:
     post:
         summary: Inserta una nueva reserva
         tags:
-        - Reservas
+        - Reservas (más para web)
         requestBody:
           required: true
           content:
@@ -96,7 +96,7 @@ paths:
                   desde: "10:20"
                   hasta: "11:00"
                   matricula: "LKE2378"
-                  data: "18/04/022"
+                  data: "18/04/22"
                   DNI: "1238712N"
         responses:
           '200':
@@ -112,7 +112,7 @@ paths:
                           "desde": "10:20",
                           "hasta": "11:20",
                           "matricula": "LKE1237",
-                          "data": "28-02-2020",
+                          "data": "28/02/2020",
                           "DNI": "1236712N"
                         }
           '400':
@@ -151,7 +151,7 @@ paths:
                             "desde": "10:20",
                             "hasta": "11:20",
                             "matricula": "LKE1237",
-                            "data": "28-02-2020",
+                            "data": "28/02/2020",
                             "DNI": "1236712N"
                           },
                           {
@@ -160,7 +160,107 @@ paths:
                             "desde": "13:20",
                             "hasta": "14:20",
                             "matricula": "LKE1237",
-                            "data": "28-02-2020",
+                            "data": "28/02/2020",
+                            "DNI": "1236712N"
+                          }
+                        ]
+                Sin reservas:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not authenticated."}
+  /reservas/bydni/{dni}:
+    # pedimos una lista de reservas por un dni dado
+    get:
+      summary: Obtiene una lista de reservas para un dni dado
+      tags: 
+      - Reservas (más para web)
+      parameters:
+        - in: path
+          name: dni
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Obtiene un lista de reservas
+          content:
+            application/json:
+              examples:
+                Con reservas:
+                  value: >-
+                        [
+                          {
+                            "reserva_id": 1,
+                            "estacion": "VG1",
+                            "desde": "10:20",
+                            "hasta": "11:20",
+                            "matricula": "LKE1237",
+                            "data": "28/02/2020",
+                            "DNI": "1236712N"
+                          },
+                          {
+                            "reserva_id": 2,
+                            "estacion": "VG1",
+                            "desde": "13:20",
+                            "hasta": "14:20",
+                            "matricula": "LKE1237",
+                            "data": "28/02/2020",
+                            "DNI": "1236712N"
+                          }
+                        ]
+                Sin reservas:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not authenticated."}
+  /reservas/bymatricula/{matricula}:
+    # pedimos una lista de reservas por una matriculña dada
+    get:
+      summary: Obtiene una lista de reservas para una matricula dada
+      tags: 
+      - Reservas
+      parameters:
+        - in: path
+          name: matricula
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Obtiene un lista de reservas
+          content:
+            application/json:
+              examples:
+                Con reservas:
+                  value: >-
+                        [
+                          {
+                            "reserva_id": 1,
+                            "estacion": "VG1",
+                            "desde": "10:20",
+                            "hasta": "11:20",
+                            "matricula": "LKE1237",
+                            "data": "28/02/2020",
+                            "DNI": "1236712N"
+                          },
+                          {
+                            "reserva_id": 2,
+                            "estacion": "VG1",
+                            "desde": "13:20",
+                            "hasta": "14:20",
+                            "matricula": "LKE1237",
+                            "data": "28/02/2020",
                             "DNI": "1236712N"
                           }
                         ]
@@ -199,7 +299,7 @@ paths:
                           "desde": "10:20",
                           "hasta": "11:20",
                           "matricula": "LKE1237",
-                          "data": "28-02-2020",
+                          "data": "28/02/2020",
                           "DNI": "1236712N"
                         }
                   Reserva no encontrada:
@@ -253,7 +353,7 @@ paths:
                     desde: "10:20"
                     hasta: "11:00"
                     matricula: "LKE2378"
-                    data: "18/04/022"
+                    data: "18/04/22"
                     DNI: "1238712N"
           parameters:
           - in: path
