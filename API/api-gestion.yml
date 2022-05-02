@@ -6,6 +6,28 @@ servers:
   - url: http://127.0.0.1:5000/
     description: Developments
 paths:
+  /edge/{coordenada}:
+    get: 
+      summary: Obtiene el edge mas cercano
+      tags:
+        - MiddleWare 
+      parameters:
+        - in: path
+          name: coordenada
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                EdgeMasCercano:
+                  value: {
+                            "name": "edge_1",
+                            "url": "1.1.1.1:5673"
+                          }
   # incidencias
   /incidencias:
     # pedimos una lista de las incidencias

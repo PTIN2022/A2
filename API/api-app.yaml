@@ -11,7 +11,7 @@ paths:
     # pedimos una lista de las reservas
     get:
       summary: Obtiene una lista de reservas
-      tags: 
+      tags:
       - Reservas (más para web)
       responses:
         '200':
@@ -49,7 +49,7 @@ paths:
                             "DNI": "81293N"
                           }
                         ]
-                  
+
                 Sin reservas:
                   value: '[]'
         '401':
@@ -75,7 +75,7 @@ paths:
                     - estacion
                     - desde
                     - hasta
-                    - matricula 
+                    - matricula
                     - data
                     - DNI
                 properties:
@@ -121,14 +121,14 @@ paths:
               application/json:
                 examples:
                   Error al meter reserva:
-                    value: >- 
+                    value: >-
                       {"error": "Malformed request syntax."}
-                  
+
   /reservas/byname/{estacion}:
     # pedimos una lista de reservas por una estacion dada
     get:
       summary: Obtiene una lista de reservas para una estacion dada
-      tags: 
+      tags:
       - Reservas
       parameters:
         - in: path
@@ -172,13 +172,13 @@ paths:
             application/json:
               examples:
                 error:
-                  value: >- 
+                  value: >-
                     {"error": "User not authenticated."}
   /reservas/bydni/{dni}:
     # pedimos una lista de reservas por un dni dado
     get:
       summary: Obtiene una lista de reservas para un dni dado
-      tags: 
+      tags:
       - Reservas (más para web)
       parameters:
         - in: path
@@ -222,13 +222,13 @@ paths:
             application/json:
               examples:
                 error:
-                  value: >- 
+                  value: >-
                     {"error": "User not authenticated."}
   /reservas/bymatricula/{matricula}:
     # pedimos una lista de reservas por una matriculña dada
     get:
       summary: Obtiene una lista de reservas para una matricula dada
-      tags: 
+      tags:
       - Reservas
       parameters:
         - in: path
@@ -272,13 +272,13 @@ paths:
             application/json:
               examples:
                 error:
-                  value: >- 
+                  value: >-
                     {"error": "User not authenticated."}
   /reservas/{id}:
       # pedimos una reserva, dado su id
       get:
         summary: Obtiene una reserva por un id dado
-        tags: 
+        tags:
           - Reservas
         parameters:
           - in: path
@@ -321,7 +321,7 @@ paths:
                   error:
                     value: >-
                         {"error": "Reserva not found."}
-                        
+
       # editar reserva
       put:
           summary: Modificar reserva
@@ -381,7 +381,7 @@ paths:
                 application/json:
                   examples:
                     Error al meter reserva:
-                      value: >- 
+                      value: >-
                         { "error": "Malformed request syntax."}
             '404':
               description: Not Found
@@ -393,7 +393,7 @@ paths:
                         {"error": "Reserva not found."}
       #borrar reserva
       delete:
-        summary: Elimina reserva por ID 
+        summary: Elimina reserva por ID
         tags:
           - Reservas
         parameters:

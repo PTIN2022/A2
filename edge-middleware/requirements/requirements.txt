@@ -1,0 +1,3 @@
+sqlalchemy
+marshmallow_sqlalchemy
+paho-mqtt
