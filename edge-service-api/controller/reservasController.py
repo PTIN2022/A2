@@ -1,4 +1,3 @@
-from routes import reservas
 from utils.db import db
 from models.reserva import Reserva, ReservaSchema
 
@@ -17,13 +16,16 @@ def get_reservas_estacion(estacion):
     i = Reserva.query.filter(Reserva.id_estacion == estacion)
     return ReservaSchema(many=True).dump(i)
 
+
 def get_reservas_matricula(matricula):
     i = Reserva.query.filter(Reserva.matricula == matricula)
     return ReservaSchema(many=True).dump(i)
 
+
 def get_reservas_dni(dni):
     i = Reserva.query.filter(Reserva.DNI == dni)
     return ReservaSchema(many=True).dump(i)
+
 
 def post_reserva(id_estacion, desde, hasta, matricula, data, DNI):
     i = Reserva(id_estacion, desde, hasta, matricula, data, DNI)

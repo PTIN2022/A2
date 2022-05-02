@@ -1,7 +1,6 @@
 import controller.reservasController as control
-
+from utils import errors
 from datetime import datetime
-from utils import utils, errors
 from flask import Blueprint, jsonify, request
 
 reservas = Blueprint('reservas', __name__)
@@ -20,8 +19,8 @@ def post_reservas():
         desde = request.json["desde"]
         hasta = request.json["hasta"]
         data = request.json["data"]
-        #data_str = datetime.strptime(data, '%d/%m/%Y').date()
-        #print(type(data_str))
+        data_str = datetime.date(datetime.strptime(data, '%d/%m/%Y'))
+        print(type(data_str))
         matricula = request.json["matricula"]
         DNI = request.json["DNI"]
         id = control.post_reserva(estacion, desde, hasta, matricula, data, DNI)
@@ -86,6 +85,7 @@ def get_reserva_by_estacio(estacion):
     else:
         return jsonify({"error": "Reserva not found."}), 404
 
+
 @reservas.route('/reservas/bymatricula/<matricula>', methods=["GET"])
 def get_reserva_by_matricula(matricula):
     respuesta = control.get_reservas_matricula(matricula)
@@ -94,6 +94,7 @@ def get_reserva_by_matricula(matricula):
     else:
         return jsonify({"error": "Reserva not found."}), 404
 
+
 @reservas.route('/reservas/bydni/<dni>', methods=["GET"])
 def get_reserva_by_dni(dni):
     respuesta = control.get_reservas_dni(dni)
@@ -101,6 +102,7 @@ def get_reserva_by_dni(dni):
         return jsonify(respuesta), 200
     else:
         return jsonify({"error": "Reserva not found."}), 404
+
 
 @reservas.route('/reservas/<id>', methods=["DELETE"])
 def deleted_reservas(id):
