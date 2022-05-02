@@ -1050,7 +1050,7 @@ paths:
                     value: >- 
                       {"error": "User not authorized."}
                       
-  /reservas/{estacion}:
+  /reservas/byname/{estacion}:
     # pedimos una lista de reservas por una estacion dada
     get:
       summary: Obtiene una lista de reservas para una estacion dada
@@ -1120,7 +1120,7 @@ paths:
                     {"error": "User not authenticated."}
                     
                     
-  /reservas/{dni}:
+  /reservas/bydni/{dni}:
 
       get:
         summary: Obtiene las reservas por un dni dado
