@@ -523,26 +523,60 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
-  /trabajadores/{dni}:
-      # pedimos un trabajador, dado su id.
-      get:
-        summary: Obtiene información de un trabajador por su ID
-        tags: 
+                    
+      post:
+        summary: Inserta un nuevo trabajador
+        tags:
         - Trabajadores
-        parameters:
-        - in: path
-          name: dni
-          required: true
-          schema:
-            type: integer
+        requestBody:
+            required: true
+            content:
+              multipart/form-data:
+                schema:
+                  type: object
+                  required:
+                    - name
+                    - lastname
+                    - telf
+                    - email
+                    - rol
+                    - dni
+                    - password
+                  properties:
+                    dni:
+                      type: string
+                    name:
+                      type: string
+                    lastname:
+                      type: string
+                    email:
+                      type: string
+                    telf:
+                      type: integer
+                    rol:
+                      type: string
+                    password:
+                      type: string                    
+                    profileImage:
+                      type: string 
+                      format: binary
+  
+                  example:
+                    name: "Pere"
+                    dni: "X9918321"
+                    lastname: "Roca"
+                    telf: 622554433
+                    email: "pere.roca@boss.com"
+                    rol: "Dueño"
+                    password: "proca"
         responses:
           '200':
             description: Peticion correcta
             content:
               application/json:
                 examples:
-                  Trabajador:
-                    value: >- 
+                  Meter trabajador:
+                    value: >-
                       {
                         "DNI": "60748880S",
                         "name": "Pere",
@@ -553,77 +587,43 @@ paths:
                         "last_access": -1,
                         "picture": "http://?????????/trabajadores/PereRoca.png"
                       }
+          '400':
+              description: Peticion incorrecta
+              content:
+                application/json:
+                  examples:
+                    Error al meter incidencia:
+                      value: >- 
+                        {"error": "Malformed request syntax."}
+  
           '401':
-            description: Not login
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >- 
-                      {"error": "User not authorized."}
-          '404':
-            description: Not Found
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >- 
-                      {"error": "User not found."}
-                    
-  /trabajador:
-  # insertamos un trabajor a la lista de trabajadores
-    post:
-      summary: Inserta un nuevo trabajador
-      tags:
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >- 
+                        {"error": "User not authorized."}
+  /trabajador/{dni}:
+  # modificar trabajador de la lista de trabajadores
+    get:
+      summary: Obtiene información de un trabajador por su ID
+      tags: 
       - Trabajadores
-      requestBody:
-          required: true
-          content:
-            multipart/form-data:
-              schema:
-                type: object
-                required:
-                  - name
-                  - lastname
-                  - telf
-                  - email
-                  - rol
-                  - dni
-                  - password
-                properties:
-                  dni:
-                    type: string
-                  name:
-                    type: string
-                  lastname:
-                    type: string
-                  email:
-                    type: string
-                  telf:
-                    type: integer
-                  rol:
-                    type: string
-                  password:
-                    type: string                    
-                  profileImage:
-                    type: string 
-                    format: binary
-
-                example:
-                  name: "Pere"
-                  lastname: "Roca"
-                  telf: 622554433
-                  email: "pere.roca@boss.com"
-                  rol: "Dueño"
-                  password: "proca"
+      parameters:
+      - in: path
+        name: dni
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
           description: Peticion correcta
           content:
             application/json:
               examples:
-                Meter trabajador:
-                  value: >-
+                Trabajador:
+                  value: >- 
                     {
                       "DNI": "60748880S",
                       "name": "Pere",
@@ -634,25 +634,22 @@ paths:
                       "last_access": -1,
                       "picture": "http://?????????/trabajadores/PereRoca.png"
                     }
-        '400':
-            description: Peticion incorrecta
-            content:
-              application/json:
-                examples:
-                  Error al meter incidencia:
-                    value: "{\"error\": \"Malformed request syntax.\"}"
-
         '401':
-            description: Not login
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >- 
-                      {"error": "User not authorized."}
-
-  /trabajador/{dni}:
-  # modificar trabajador de la lista de trabajadores
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not authorized."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not found."}
     put:
       summary: Modifica un trabajador
       tags:
@@ -727,14 +724,16 @@ paths:
             application/json:
               examples:
                 Error al meter trabajador:
-                  value: "{\"error\": \"Malformed request syntax.\"}"
+                  value: >- 
+                      {"error": "Malformed request syntax."}
         '404':
           description: Not Found
           content:
             application/json:
               examples:
                 error:
-                  value: "{\"error\": \"Trabajador not found.\"}"
+                  value: >- 
+                      {"error": "Trabajador not found."}
 #########################################################################################
   /login:
     post:
@@ -776,7 +775,8 @@ paths:
             application/json:
               examples:
                 error:
-                  value: "{\"error\": \"Malformed request syntax.\"}"
+                  value: >- 
+                    {"error": "Malformed request syntax."}
   /logout:
     get:
       summary: "Log Out"
@@ -799,4 +799,5 @@ paths:
             application/json:
               examples:
                 error:
-                  value: "{\"error\": \"Malformed request syntax.\"}"
+                  value: >- 
+                      {"error": "Malformed request syntax."}
