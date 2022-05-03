@@ -11,7 +11,7 @@ paths:
     # pedimos una lista de las incidencias
     get:
       summary: Obtiene una lista de incidencias
-      tags: 
+      tags:
       - Incidencias
       responses:
         '200':
@@ -38,7 +38,7 @@ paths:
                             "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
                           }
                         ]
-                  
+
                 Sin incidencias:
                   value: '[]'
         '401':
@@ -100,14 +100,14 @@ paths:
               application/json:
                 examples:
                   Error al meter incidencia:
-                    value: >- 
+                    value: >-
                       {"error": "Malformed request syntax."}
-                  
+
   /incidencias/byname/{estacion}:
     # pedimos una lista de incidencias por una estacion dada
     get:
       summary: Obtiene una lista de incidencias para una estacion dada
-      tags: 
+      tags:
       - Incidencias
       parameters:
         - in: path
@@ -149,13 +149,13 @@ paths:
             application/json:
               examples:
                 error:
-                  value: >- 
+                  value: >-
                     {"error": "User not authenticated."}
   /incidencias/{id}:
       # pedimos una incidencia, dado su id
       get:
         summary: Obtiene una incidencia por un id dado
-        tags: 
+        tags:
           - Incidencias
         parameters:
           - in: path
@@ -170,7 +170,7 @@ paths:
               application/json:
                 examples:
                   Incidencias:
-                    value: >- 
+                    value: >-
                           {
                             "incidencia_id": 1,
                             "estacion": "VG1",
@@ -197,7 +197,7 @@ paths:
                   error:
                     value: >-
                         {"error": "Incidencia not found."}
-                        
+
       # editar incidencia
       put:
           summary: Modificar incidencia
@@ -257,7 +257,7 @@ paths:
                 application/json:
                   examples:
                     Error al meter incidencia:
-                      value: >- 
+                      value: >-
                         {"error": "Malformed request syntax."}
             '404':
               description: Not Found
@@ -269,7 +269,7 @@ paths:
                         {"error": "incidencia not found."}
       #borrar incidencia
       delete:
-        summary: Elimina incidencia por ID 
+        summary: Elimina incidencia por ID
         tags:
           - Incidencias
         parameters:
@@ -310,7 +310,7 @@ paths:
       # pedimos una lista de las estaciones
       get:
         summary: Obtiene una lista de estaciones
-        tags: 
+        tags:
         - Estaciones
         responses:
           '200':
@@ -319,7 +319,7 @@ paths:
               application/json:
                 examples:
                   Con estaciones:
-                    value: >- 
+                    value: >-
                       [
                         {
                           "estacion": "VG1",
@@ -354,8 +354,8 @@ paths:
                       {"error": "User not authenticated."}
   /estaciones/{id}:
       get:
-        summary: Obtiene informacion de una estacion y sus surtidores 
-        tags: 
+        summary: Obtiene informacion de una estacion y sus surtidores
+        tags:
         - Estaciones
         parameters:
         - in: path
@@ -370,7 +370,7 @@ paths:
               application/json:
                 examples:
                   estacion:
-                    value: >- 
+                    value: >-
                           {
                             "estacion": "VG3",
                             "cordenadas": {
@@ -425,13 +425,13 @@ paths:
             content:
               application/json:
                 examples:
-                  error: 
+                  error:
                     value: >-
                       {"error": "Station not found."}
 #borrar incidencia
   /estaciones/{id}/{id_plaza}:
       delete:
-        summary: Liberas la plaza ocupada 
+        summary: Liberas la plaza ocupada
         tags:
           - Estaciones
         parameters:
@@ -462,7 +462,7 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: >- 
+                    value: >-
                       {"error": "User not authenticated."}
           '404':
             description: Not Found
@@ -470,229 +470,18 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: >- 
+                    value: >-
                       {"error": "Incidencia not found."}
 #########################################################################################
-  /soporte:
-  # Creacion de una ayuda o ticket al soporte tecnico
-    post:
-      summary: Consulta una petición a soporte tecnico
-      tags:
-        - Soporte tecnico
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - descripcion
-                - fecha
-              properties:
-                descripcion:
-                  type: string
-                fecha:
-                  type: string
-            example:
-              fecha: 20/04/2022
-              descripcion: Problema con la aplicación movil
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Insertar petición a soporte tecnico:
-                  value: |-
-                    {
-                      "user_id": 1,
-                      "ticket_id": 2,
-                      "fecha": "20/04/2022",
-                      "descripcion": "Problema con la aplicación móvil"
-                    }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error" :"Malformed request syntax."}'
 
-  /soporte/ticket_id/{user_id}:
-    post:
-      summary: Encontrar el ticket/la peticion de soporte del usuario
-      tags:
-        - Soporte tecnico
-      parameters:
-      - in: path
-        name: user_id
-        required: true
-        schema:
-          type: integer
-          required:
-            - ticket_id
-            - user_id
-            - mensaje
-            - fecha
-          properties:
-            ticket_id:
-              type: integer
-            user_id:
-              type: integer
-            mensaje:
-              type: string
-            fecha:
-              type: string
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Insertar petición a soporte tecnico:
-                  value: {
-                        "ticket_id": 0123456789,
-                        "user_id":  0123456789,
-                        "descripcion": "No se porque no carga mi coche",
-                        "fecha": "01/02/20222",
-                        "estado": false,
-                        "chat": [ {
-                            "user_id": 0123456789,
-                            "mensaje": "No se porque no carga mi coche",
-                            "fecha" : "01/02/20222"
-                          },
-                          {
-                            "user_id": 111,
-                            "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
-                            "fecha" : "01/02/20222"
-                          },
-                          {
-                            "user_id": 123456789,
-                            "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
-                            "fecha" : "01/02/20222"
-                          }
-                        ]
-                      }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error" :"ID ususario no valido."}'
-        '404':
-          description: Peticion no encontrado
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error" :"ID ususario no valido."}'
-#Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
-  /soporte/{ticket_id}:
-    get:
-      summary: Encontrar el ticket/la peticion de soporte del usuario
-      tags:
-        - Soporte tecnico
-      parameters:
-      - in: path
-        name: ticket_id
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Insertar petición a soporte tecnico:
-                  value: {
-                      "ticket_id": 0123456789,
-                      "user_id": 0123456789,
-                      "descripcion": "No se porque no carga mi coche",
-                      "fecha": "01/02/20222",
-                      "estado": false,
-                      "chat": [ {
-                          "user_id": 123456789,
-                          "mensaje": "No se porque no carga mi coche",
-                          "fecha" : "01/02/20222"
-                        },
-                        {
-                          "user_id": 111,
-                          "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
-                          "fecha" : "01/02/20222"
-                        },
-                        {
-                          "user_id": 123456789,
-                          "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
-                          "fecha" : "01/02/20222"
-                        }
-                      ]
-                    }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error": "peticion mal formada."}'
-        '404':
-          description: Peticion no encontrado
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error": "ID ususario no encontrado."}'
-  # Eliminacion del ticket o peticion al soporte tecnico
-    delete:
-      summary: Eliminar un ticket/una peticion del soporte del usuario
-      tags:
-        - Soporte tecnico
-      parameters:
-      - in: path
-        name: ticket_id
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Insertar petición a soporte tecnico:
-                  value: |-
-                    {
-                      "info": "Ticket ha sido eliminado"
-                    }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error" :"ID ususario no valido."}'
-        '404':
-          description: Peticion no encontrado
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error" : "ID ususario no encontrado."}'
-        '410':
-          description: Peticion eliminada
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error": "ID ususario eliminado."}'
+
 #######################################################################################################
 #########################################################################################
   /trabajador:
       # pedimos una lista de trabajadores
       get:
         summary: Obtiene una lista de trabajadores
-        tags: 
+        tags:
         - Trabajadores
         responses:
           '200':
@@ -701,7 +490,7 @@ paths:
               application/json:
                 examples:
                   Trabajadores:
-                    value: >- 
+                    value: >-
                       [
                         {
                             "name": "Pere Roca",
@@ -732,9 +521,9 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: >- 
+                    value: >-
                       {"error": "Trabajador not authorized."}
-      
+
       post:
         summary: Inserta un nuevo trabajador
         tags:
@@ -767,11 +556,11 @@ paths:
                     rol:
                       type: string
                     password:
-                      type: string                    
+                      type: string
                     profileImage:
-                      type: string 
+                      type: string
                       format: binary
-  
+
                   example:
                     name: "Pere"
                     lastname: "Roca"
@@ -804,20 +593,20 @@ paths:
                   examples:
                     Error al meter incidencia:
                       value: {"error": "Malformed request syntax."}
-  
+
           '401':
               description: Not login
               content:
                 application/json:
                   examples:
                     error:
-                      value: >- 
-                        {"error": "Trabajador not authorized."}    
+                      value: >-
+                        {"error": "Trabajador not authorized."}
   /trabajador/{dni}:
       # pedimos un trabajador, dado su id.
       get:
         summary: Obtiene información de un trabajador por su ID
-        tags: 
+        tags:
         - Trabajadores
         parameters:
         - in: path
@@ -832,7 +621,7 @@ paths:
               application/json:
                 examples:
                   Trabajador:
-                    value: >- 
+                    value: >-
                       {
                         "dni": "60748880S",
                         "name": "Pere",
@@ -849,7 +638,7 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: >- 
+                    value: >-
                       {"error": "Trabajdor not authorized."}
           '404':
             description: Not Found
@@ -857,7 +646,7 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: >- 
+                    value: >-
                       {"error": "Trabajador not found."}
       # modificar trabajador de la lista de trabajadores
       put:
@@ -892,9 +681,9 @@ paths:
                   password:
                     type: string
                   profileImage:
-                    type: string 
+                    type: string
                     format: binary
-                    
+
                 example:
                   name: "Pere"
                   lastname: "Roca"
@@ -908,7 +697,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Trabajador actualizado: 
+                  Trabajador actualizado:
                     value: >-
                       {
                         "dni": "60748880S",
@@ -934,11 +723,11 @@ paths:
                 examples:
                   error:
                     value: {"error": "Trabajador not found."}
-      
-      
+
+
       delete:
         summary: Eliminar un trabajador por su ID
-        tags: 
+        tags:
           - Trabajadores
         parameters:
           - in: path
@@ -953,16 +742,16 @@ paths:
                 application/json:
                   examples:
                     Trabajador:
-                      value: >- 
+                      value: >-
                         {"msg": "Trabajdor deleted succesfully"}
-                        
+
             '401':
               description: Not login
               content:
                 application/json:
                   examples:
                     error:
-                      value: >- 
+                      value: >-
                         {"error": "Trabajador not authorized."}
             '404':
               description: Not Found
@@ -970,12 +759,9 @@ paths:
                 application/json:
                   examples:
                     error:
-                      value: >- 
+                      value: >-
                         {"error": "Trabajador not found."}
 #########################################################################################
-<<<<<<< HEAD
-  
-=======
   /soporte:
   # Creacion de una ayuda o ticket al soporte tecnico
     post:
@@ -1020,6 +806,7 @@ paths:
               examples:
                 Error al meter incidencia:
                   value: '{"error" :"Malformed request syntax."}'
+
 
   /soporte/ticket_id/{user_id}:
     post:
@@ -1146,6 +933,7 @@ paths:
               examples:
                 Error al meter incidencia:
                   value: '{"error": "ID ususario no encontrado."}'
+
   # Eliminacion del ticket o peticion al soporte tecnico
     delete:
       summary: Eliminar un ticket/una peticion del soporte del usuario
@@ -1189,5 +977,6 @@ paths:
               examples:
                 Error al meter incidencia:
                   value: '{"error": "ID ususario eliminado."}'
+
 #######################################################################################################
->>>>>>> main
+
