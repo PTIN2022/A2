@@ -1,4 +1,3 @@
-
 # https://stackoverflow.com/questions/42248342/yes-no-prompt-in-python3-using-strtobool
 def strtobool(val):
     """Convert a string representation of truth to true (1) or false (0).

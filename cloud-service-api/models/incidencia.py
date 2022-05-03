@@ -6,14 +6,14 @@ class Incidencia(db.Model):
 
     id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     id_estacion = db.Column(db.String(20), nullable=False)  # TODO: foreing key
-    fecha = db.Column(db.Date, nullable=False)
+    fecha_averia = db.Column(db.Date, nullable=False)
     estado = db.Column(db.Boolean, nullable=False)
     descripcion = db.Column(db.String(200))
 
     def __init__(self, id_estacion, fecha, estado, descripcion):
         self.descripcion = descripcion
         self.estado = estado
-        self.fecha = fecha
+        self.fecha_averia = fecha
         self.id_estacion = id_estacion
 
 
