@@ -17,13 +17,15 @@ def post_reservas():
     try:
         estacion = request.json["estacion"]
         desde = request.json["desde"]
-        hasta = request.json["hasta"]
-        data = request.json["data"]
-        data_str = datetime.date(datetime.strptime(data, '%d-%m-%Y'))
+        hasta = request.json["hasta"] # Dia y hora
+        data = request.json["data_inicio"] # Dia y hora
+        data_inicio_str = datetime.date(datetime.strptime(data, '%d-%m-%Y'))
+        data = request.json["data_final"] # Dia y hora
+        data_final_str = datetime.date(datetime.strptime(data, '%d-%m-%Y'))
         print(type(data_str))
         matricula = request.json["matricula"]
         DNI = request.json["DNI"]
-        id = control.post_reserva(estacion, desde, hasta, matricula, data, DNI)
+        id = control.post_reserva(estacion, desde, hasta, matricula, data_inicio_str, data_final_str, DNI)
         respuesta = control.get_reservas_id(id)
         return jsonify(respuesta)
 

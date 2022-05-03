@@ -13,6 +13,8 @@ def get_reservas_id(id):
 
 
 def get_reservas_estacion(estacion):
+    # TODO: pillar todos los cargadores de la estacion
+    # TODO: enviar json con horas ocupadas apartir de ahora, 
     i = Reserva.query.filter(Reserva.id_estacion == estacion)
     return ReservaSchema(many=True).dump(i)
 
@@ -27,10 +29,15 @@ def get_reservas_dni(dni):
     return ReservaSchema(many=True).dump(i)
 
 
-def post_reserva(id_estacion, desde, hasta, matricula, data, DNI):
+def post_reserva(id_estacion, desde, hasta, matricula, data_inicio, data_final, DNI):
+    # TODO: Get cargadores de una estacion
+    # TODO: ver disponibilidad de esos cargadores en desde hasta
+    # TODO: de los disponibles crear una reserva
+    # Gardar reserva
     i = Reserva(id_estacion, desde, hasta, matricula, data, DNI)
     db.session.add(i)
     db.session.commit()
+    # TODO: Push reserva al cloud
     return i.id
 
 
