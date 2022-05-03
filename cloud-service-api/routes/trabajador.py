@@ -1,4 +1,3 @@
-import json
 import controller.trabajadorController as control
 from flask import Blueprint, jsonify, request
 
@@ -64,11 +63,6 @@ def modify_trabajador(dni):
         print("INNNNNNN")
     if "dni" in request.form.to_dict():
         dni_change = request.form.to_dict()["dni"]
-
-
-    print(request.form.to_dict())
-
-    print(picture)
 
     respuesta = control.modify_trabajador(dni, dni_change, name, lastname, telf, email, rol, last_access, picture)
 

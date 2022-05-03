@@ -39,10 +39,10 @@ def modify_trabajador(DNI, dni_change=None, name=None, lastname=None, telf=None,
             t.picture = picture
         if dni_change:
             t.dni = dni_change
-        
+
         db.session.commit()
         return TrabajadorSchema().dump(t)
-        
+
     return None
 
 
