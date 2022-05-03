@@ -37,6 +37,10 @@ def modify_trabajador(DNI, name=None, lastname=None, telf=None, email=None, rol=
             t.last_access = last_access
         if picture:
             t.picture = picture
+        
+        db.session.commit()
+        return trabajador_schema.dumps(t)
+        
     return None
 
 

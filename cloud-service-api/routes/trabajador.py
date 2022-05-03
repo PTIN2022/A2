@@ -18,7 +18,7 @@ def get_trabajadores_dni(dni):
     if respuesta:
         return jsonify(respuesta), 200
     else:
-        return jsonify({"error": "User not found."}), 404
+        return jsonify({"error": "Trabajador not found."}), 404
 # habra que meter el error 401
 
 
@@ -67,7 +67,7 @@ def modify_trabajador(dni):
     if respuesta:
         return jsonify(respuesta), 200
     else:
-        return jsonify({"error": "User not found."}), 404
+        return jsonify({"error": "Trabajador not found."}), 404
 # habra que hacer error 400
 
 
@@ -75,7 +75,7 @@ def modify_trabajador(dni):
 def deleted_trabajador(dni):
     deleted = control.delete_trabajador(dni)
     if deleted:
-        return jsonify({"msg": "User deleted succesfully"}), 200
+        return jsonify({"msg": "Trabajador deleted succesfully"}), 200
     else:
-        return jsonify({"error": "User not found."}), 404
+        return jsonify({"error": "Trabajador not found."}), 404
 # habra que hacer error 401
