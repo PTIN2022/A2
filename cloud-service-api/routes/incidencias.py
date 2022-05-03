@@ -1,7 +1,7 @@
 import controller.incidenciaController as control
 
-from utils import utils
 from datetime import datetime
+from utils import utils, errors
 from flask import Blueprint, jsonify, request
 
 incidencias = Blueprint('incidencias', __name__)
@@ -15,16 +15,21 @@ def get_incidencias():
 
 @incidencias.route('/incidencias', methods=['POST'])
 def post_incidencias():
-    estacion = request.json["estacion"]
-    direccion = request.json["direccion"]
-    fecha_averia = request.json["fecha_averia"]
-    fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%d/%m/%Y'))
-    descripcion = request.json["descripcion"]
+    try:
+        estacion = request.json["estacion"]
+        direccion = request.json["direccion"]
+        fecha_averia = request.json["fecha_averia"]
+        fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%d/%m/%Y'))
+        descripcion = request.json["descripcion"]
+        id = control.post_incidencia(estacion, direccion, fecha_averia, descripcion)
 
-    id = control.post_incidencia(estacion, direccion, fecha_averia, descripcion)
+        respuesta = control.get_incidencias_id(id)
+        return jsonify(respuesta)
 
-    respuesta = control.get_incidencias_id(id)
-    return jsonify(respuesta)
+    except ValueError:
+        return jsonify(errors.malformed_error()), 400
+    except KeyError:
+        return jsonify(errors.malformed_error()), 400
 
 
 @incidencias.route('/incidencias/<id>', methods=["GET"])
@@ -33,7 +38,7 @@ def get_incidencia_by_id(id):
     if respuesta:
         return jsonify(respuesta), 200
     else:
-        return jsonify({"error": "Incidencia not found"}), 404
+        return jsonify({"error": "Incidencia not found."}), 404
 
 
 @incidencias.route('/incidencias/<id>', methods=["PUT"])
@@ -47,14 +52,12 @@ def modify_incidencia(id):
     # TODO: mirar bien si hay algo que no se esperaba o algo asi...
     if "estacion" in request.json:
         estacion = request.json["estacion"]
-    if "direccion" in request.json:
-        direccion = request.json["direccion"]
     if "fecha_averia" in request.json:
         try:
             fecha_averia = request.json["fecha_averia"]
             fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%d/%m/%Y'))
         except ValueError:
-            return jsonify({"error": "malformed date"})
+            return jsonify({"error": "Malformed request syntax."}), 400
 
     if "descripcion" in request.json:
         descripcion = request.json["descripcion"]
@@ -66,7 +69,7 @@ def modify_incidencia(id):
     if respuesta:
         return jsonify(respuesta), 200
     else:
-        return jsonify({"error": "Incidencia not found"}), 404
+        return jsonify({"error": "Incidencia not found."}), 404
 
 
 @incidencias.route('/incidencias/byname/<estacion>', methods=["GET"])
@@ -75,7 +78,7 @@ def get_incidencia_by_estacio(estacion):
     if respuesta:
         return jsonify(respuesta), 200
     else:
-        return jsonify({"error": "Incidencia not found"}), 404
+        return jsonify({"error": "Incidencia not found."}), 404
 
 
 @incidencias.route('/incidencias/<id>', methods=["DELETE"])
@@ -84,4 +87,4 @@ def deleted_incidencias(id):
     if deleted:
         return jsonify({"msg": "Data deleted correctly."}), 200
     else:
-        return jsonify({"error": "Incidencia not found"}), 404
+        return jsonify({"error": "Incidencia not found."}), 404
