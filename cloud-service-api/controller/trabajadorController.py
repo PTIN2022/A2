@@ -20,7 +20,7 @@ def post_trabajador(DNI, name, lastname, telf, email, rol, last_access, picture)
 
 
 # habra que mojararlo (last_access, picture...)
-def modify_trabajador(DNI, name=None, lastname=None, telf=None, email=None, rol=None, last_access=None, picture=None):
+def modify_trabajador(DNI, dni_change=None, name=None, lastname=None, telf=None, email=None, rol=None, last_access=None, picture=None):
     t = Trabajador.query.filter(Trabajador.dni == DNI).one_or_none()
     if t:
         if name:
@@ -37,6 +37,8 @@ def modify_trabajador(DNI, name=None, lastname=None, telf=None, email=None, rol=
             t.last_access = last_access
         if picture:
             t.picture = picture
+        if dni_change:
+            t.dni = dni_change
         
         db.session.commit()
         return TrabajadorSchema().dump(t)

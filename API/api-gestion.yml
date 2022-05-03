@@ -876,14 +876,6 @@ paths:
             multipart/form-data:
               schema:
                 type: object
-                required:
-                  - name
-                  - lastname
-                  - telf
-                  - email
-                  - rol
-                  - dni
-                  - password 
                 properties:
                   dni:
                     type: string
