@@ -1,0 +1,257 @@
+openapi: 3.0.0
+info:
+  title: API portal de gestion
+  version: '1.0'
+servers:
+  - url: http://127.0.0.1:5000/
+    description: Developments
+paths:
+  # estaciones
+  /estaciones/Area/{idArea}:
+    # pedimos una lista de las incidencias
+    get:
+      summary: Obtiene una lista de las estaciones en el area que se encuentre
+      tags: 
+      - Estaciones
+      parameters:
+      - in: path
+        name: idArea
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con incidencias:
+                  value: [
+                          {
+                          "estacion": "VG1",
+                          "coordenadas":"  latitud:41.2209328,longitud: 1.7299029",
+                          "direccion": "Av.Victor Balaguer 2",
+                          "imagen": "fakeimagen.png",
+                          "cargadores_totales": "32",
+                          "cargadores_libres": "4"
+                          },
+                          {
+                          "estacion": "VG2",
+                          "coordenadas":"latitud: 41.2209328,longitud: 1.7299029",
+                          "direccion": "Av.Victor Balaguer 2",
+                          "imagen": "fakeimagen.png",
+                          "cargadores_totales": "32",
+                          "cargadores_libres": "0"
+                        }
+                        ]
+                  
+                Sin incidencias:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Estaciones disponibles not found."}
+
+  /estaciones:
+    # pedimos una lista de las incidencias
+    get:
+      summary: Obtiene una lista de las estaciones 
+      tags: 
+      - Estaciones
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con incidencias:
+                  value: [
+                          {
+                          "estacion": "VG1",
+                          "coordenadas":"  latitud:41.2209328,longitud: 1.7299029",
+                          "direccion": "Av.Victor Balaguer 2",
+                          "imagen": "fakeimagen.png",
+                          "cargadores_totales": "32",
+                          "cargadores_libres": "4"
+                          },
+                          {
+                          "estacion": "VG2",
+                          "coordenadas":"latitud: 41.2209328,longitud: 1.7299029",
+                          "direccion": "Av.Victor Balaguer 2",
+                          "imagen": "fakeimagen.png",
+                          "cargadores_totales": "32",
+                          "cargadores_libres": "0"
+                        }
+                        ]
+                  
+                Sin incidencias:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Estaciones disponibles not found."}
+  /estaciones/disponible:
+    # pedimos una lista de las incidencias
+    get:
+      summary: Obtiene una lista de las estaciones disponibles en el area que se encuentre
+      tags: 
+      - Estaciones
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con incidencias:
+                  value: [
+                          {
+                          "estacion": "VG1",
+                          "coordenadas":"  latitud:41.2209328,longitud: 1.7299029",
+                          "direccion": "Av.Victor Balaguer 2",
+                          "imagen": "fakeimagen.png",
+                          "cargadores_totales": "32",
+                          "cargadores_libres": "4"
+                          }
+                        ]
+                  
+                Sin incidencias:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Estaciones disponibles not found."}
+                      
+  /estaciones/Disponible/Area/{idArea}:
+    # pedimos una lista de las incidencias
+    get:
+      summary: Obtiene una lista de las estaciones en el area que se encuentre
+      tags: 
+      - Estaciones
+      parameters:
+      - in: path
+        name: idArea
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con incidencias:
+                  value: [
+                          {
+                          "estacion": "VG1",
+                          "coordenadas":"  latitud:41.2209328,longitud: 1.7299029",
+                          "direccion": "Av.Victor Balaguer 2",
+                          "imagen": "fakeimagen.png",
+                          "cargadores_totales": "32",
+                          "cargadores_libres": "4"
+                          },
+                        ]
+                  
+                Sin incidencias:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Estaciones disponibles not found."}
+  /estaciones/byreserva/{idreserva}:
+    # pedimos una lista de las incidencias
+    get:
+      summary: Obtiene una lista de las estaciones en el area que se encuentre
+      tags: 
+      - Estaciones
+      parameters:
+      - in: path
+        name: idreserva
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con incidencias:
+                  value: [
+                          {
+                          "estacion": "VG1",
+                          "coordenadas":"  latitud:41.2209328,longitud: 1.7299029",
+                          "direccion": "Av.Victor Balaguer 2",
+                          "imagen": "fakeimagen.png",
+                          "cargadores_totales": "32",
+                          "cargadores_libres": "4"
+                          },
+                        ]
+                  
+                Sin incidencias:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Reserva not found."}                    
+  
+  
