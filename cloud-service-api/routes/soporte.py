@@ -43,5 +43,4 @@ def delete_soporte_ticket_id(ticket_id):
         return jsonify({"msg": "User deleted succesfully"}), 200
     else:
         return jsonify({"error": "User not found."}), 404
-
-
+        

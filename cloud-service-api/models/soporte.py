@@ -1,5 +1,5 @@
 from utils.db import db
-import models.mensaje # noqa: F401
+import models.mensaje  # noqa: F401
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
