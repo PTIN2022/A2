@@ -1,9 +1,10 @@
 import os
 from utils.db import db
 from flask import Flask
-from routes.incidencias import incidencias
-from routes.estaciones import estaciones
 from models.plaza import Plaza
+from routes.trabajador import trabajador
+from routes.estaciones import estaciones
+from routes.incidencias import incidencias
 from models.estacion import Estacion
 
 
@@ -21,6 +22,7 @@ app.config["TESTING"] = False
 
 app.register_blueprint(incidencias)
 app.register_blueprint(estaciones)
+app.register_blueprint(trabajador)
 
 if app.config["TESTING"] is False:
     if os.path.exists("./test.db"):
@@ -40,7 +42,7 @@ if app.config["TESTING"] is False:
         db.session.commit()
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     print("=========================================")
     print("Test me on: http://ptin2022.github.io/A2/")
     print("=========================================")
