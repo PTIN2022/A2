@@ -5,7 +5,7 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 class Mensaje(db.Model):
     mensaje_id = db.Column(db.Integer, nullable=False, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
-    ticket_id = db.Column(db.Integer, db.ForeingKey("soporte.ticket_id"), nullable=False)
+    ticket_id = db.Column(db.Integer, db.ForeignKey("soporte.ticket_id"), nullable=False)
     contenido = db.Column(db.String(500), nullable=False)
 
     def __init__(self, user_id, ticket_id, contenido):
