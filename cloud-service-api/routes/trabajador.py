@@ -8,7 +8,7 @@ trabajador = Blueprint('trabajadores', __name__)
 @trabajador.route('/trabajador', methods=['GET'])
 def get_trabajadores():
     respuesta = control.get_all_trabajadores()
-    return jsonify(json.loads(respuesta))
+    return jsonify(respuesta)
 # habra que hacer el error 401
 
 

@@ -1,22 +1,22 @@
-from models.trabajador import Trabajador, trabajador_schema
+from models.trabajador import Trabajador, TrabajadorSchema
 from utils.db import db
 
 
 def get_all_trabajadores():
     t = Trabajador.query.all()
-    return trabajador_schema.dumps(t)
+    return TrabajadorSchema(many=True).dump(t)
 
 
 def get_trabajador_dni(dni):
     t = Trabajador.query.filter(Trabajador.dni == dni).one_or_none()
-    return t.to_dict()
+    return TrabajadorSchema().dump(t)
 
 
 def post_trabajador(DNI, name, lastname, telf, email, rol, last_access, picture):
     t = Trabajador(DNI, name, lastname, telf, email, rol, int(last_access), picture)
     db.session.add(t)
     db.session.commit()
-    return t.to_dict()
+    return TrabajadorSchema().dump(t)
 
 
 # habra que mojararlo (last_access, picture...)
@@ -39,7 +39,7 @@ def modify_trabajador(DNI, name=None, lastname=None, telf=None, email=None, rol=
             t.picture = picture
         
         db.session.commit()
-        return trabajador_schema.dumps(t)
+        return TrabajadorSchema().dump(t)
         
     return None
 
