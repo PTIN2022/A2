@@ -47,8 +47,8 @@ def get_reservas_dni(dni):
 def post_reserva(id_estacion, desde, hasta, matricula, data, DNI, id_plaza):
     # TODO: Get cargadores de una estacion
     i = Estacion.query.filter(Estacion.estacion == id_estacion).one_or_none()
+    plaza_encontrada=False
     if i:
-        plaza_encontrada=False
         for plaza in i.plazas:
             if not plaza_encontrada:
                 plaza_ocupada=False
@@ -66,10 +66,10 @@ def post_reserva(id_estacion, desde, hasta, matricula, data, DNI, id_plaza):
                     db.session.add(i)
                     db.session.commit()
                     plaza_encontrada=True
-                
+                    return i.id
+    if not plaza_encontrada:
+        return None
     # TODO: Push reserva al cloud ??? 
-
-    return i.id
 
 
 def remove_reserva(id):
