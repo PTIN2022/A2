@@ -9,8 +9,6 @@ jobs:
   test_swagger_editor_validator_remote:
     runs-on: ubuntu-latest
     name: Swagger Editor Validator Remote
-
-
     steps:
       - uses: actions/checkout@v2
       - name: Validate API WEB
