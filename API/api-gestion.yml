@@ -3,8 +3,10 @@ info:
   title: API portal de gestion
   version: '1.0'
 servers:
-  - url: http://127.0.0.1:5000/
-    description: Developments
+  - url: http://127.0.0.1:5000/api
+    description: Development
+  - url: craaxkvm.epsevg.upc.es:23601/api
+    description: Production
 paths:
   # incidencias
   /incidencias:

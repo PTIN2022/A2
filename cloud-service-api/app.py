@@ -20,9 +20,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"  # TODO: Pass to mys
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
 
-app.register_blueprint(incidencias)
-app.register_blueprint(estaciones)
-app.register_blueprint(trabajador)
+app.register_blueprint(incidencias, url_prefix='/api')
+app.register_blueprint(estaciones, url_prefix='/api')
+app.register_blueprint(trabajador, url_prefix='/api')
 
 if app.config["TESTING"] is False:
     if os.path.exists("./test.db"):

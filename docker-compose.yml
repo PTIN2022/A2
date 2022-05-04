@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  api:
+    build: ./cloud-service-api
+    expose:
+      - 5000
+
+  front:
+    build: ../GeSyS-Front
+    expose:
+      - 3000
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+      - front
+
