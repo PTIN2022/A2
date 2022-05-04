@@ -18,14 +18,14 @@ def post_reservas():
         estacion = request.json["estacion"]
         desde = request.json["desde"]
         hasta = request.json["hasta"] # Dia y hora
-        data = request.json["data_inicio"] # Dia y hora
-        data_inicio_str = datetime.date(datetime.strptime(data, '%d-%m-%Y'))
-        data = request.json["data_final"] # Dia y hora
-        data_final_str = datetime.date(datetime.strptime(data, '%d-%m-%Y'))
-        print(type(data_str))
+        data = request.json["data"] # Dia y hora
+        data_str = datetime.date(datetime.strptime(data, '%d-%m-%Y'))
+        # data = request.json["data_final"] # Dia y hora
+        # data_final_str = datetime.date(datetime.strptime(data, '%d-%m-%Y'))
         matricula = request.json["matricula"]
         DNI = request.json["DNI"]
-        id = control.post_reserva(estacion, desde, hasta, matricula, data_inicio_str, data_final_str, DNI)
+        plaza = request.json["plaza"]
+        id = control.post_reserva(estacion, desde, hasta, matricula, data_str, DNI, int(plaza))
         respuesta = control.get_reservas_id(id)
         return jsonify(respuesta)
 
@@ -70,8 +70,9 @@ def modify_reserva(id):
             return jsonify({"error": "Malformed request syntax."}), 400
     if "DNI" in request.json:
         DNI = request.json["DNI"]
-
-    respuesta = control.modify_reserva(id, estacion, desde, hasta, matricula, data, DNI)
+    if "plaza" in request.json:
+        plaza = request.json["plaza"]
+    respuesta = control.modify_reserva(id, estacion, desde, hasta, matricula, data, DNI, plaza)
     if respuesta:
         return jsonify(respuesta), 200
     else:

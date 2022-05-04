@@ -91,6 +91,8 @@ paths:
                     type: string
                   DNI:
                     type: string
+                  plaza:
+                    type: integer
                 example:
                   estacion: VG1
                   desde: "10:20"
@@ -98,6 +100,7 @@ paths:
                   matricula: "LKE2378"
                   data: "18-04-2022"
                   DNI: "1238712N"
+                  plaza: 1
         responses:
           '200':
             description: Peticion correcta
@@ -348,6 +351,8 @@ paths:
                       type: string
                     DNI:
                       type: string
+                    plaza: 
+                      type: integer
                   example:
                     estacion: VG1
                     desde: "10:20"
@@ -355,6 +360,7 @@ paths:
                     matricula: "LKE2378"
                     data: "18-04-2022"
                     DNI: "1238712N"
+                    plaza: 1
           parameters:
           - in: path
             name: id

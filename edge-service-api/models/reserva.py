@@ -9,16 +9,18 @@ class Reserva(db.Model):
     desde = db.Column(db.String(5), nullable=False)
     hasta = db.Column(db.String(5), nullable=False)
     matricula = db.Column(db.String(7), nullable=False)  # TODO: foreing key
-    data = db.Column(db.String(10), nullable=False)
+    data = db.Column(db.Date, nullable=False)
     DNI = db.Column(db.String(9), nullable=False)  # TODO: foreing key
+    plaza_id = db.Column(db.Integer, db.ForeignKey("plaza.id"), nullable=False)
 
-    def __init__(self, id_estacion, desde, hasta, matricula, data, DNI):
+    def __init__(self, id_estacion, desde, hasta, matricula, data, DNI, id_plaza):
         self.desde = desde
         self.hasta = hasta
         self.matricula = matricula
         self.data = data
         self.DNI = DNI
         self.id_estacion = id_estacion
+        self.plaza_id = id_plaza
 
 
 class ReservaSchema(SQLAlchemyAutoSchema):
