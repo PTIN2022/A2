@@ -4,6 +4,9 @@ help:
 run: env ## Arranca el flask (.venv) en modo desarrollo. Server correra en: 127.0.0.1:5000
 	. .venv/bin/activate && python app.py 
 
+run-solo:  ## Arranca el flask (.venv) en modo desarrollo. Server correra en: 127.0.0.1:5000
+	. .venv/bin/activate && python app.py 
+
 run-gunicorn: env ## Arranca el flask (.venv) en modo desarrollo. Server correra en: 127.0.0.1:5000
 	. .venv/bin/activate && gunicorn -b 0.0.0.0:8080 app:app
 
