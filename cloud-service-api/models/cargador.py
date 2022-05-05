@@ -9,7 +9,6 @@ class Cargador(db.Model):
     id_cargador = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     estado = db.Column(db.String(30), nullable=False)
     posicion = db.Column(db.String(80), nullable=False)
-    
     estacion_id = db.Column(db.Integer, db.ForeignKey("estacion.id_estacion"), nullable=False)
     reservas = db.relationship("Reserva",  backref="cargador")
     horas = db.relationship("Horas",  backref="cargador")
@@ -24,4 +23,3 @@ class CargadorSchema(SQLAlchemyAutoSchema):
     # estacion= fields.Nested(EstacionSchema)
     class Meta:
         model = Cargador
-
