@@ -34,3 +34,29 @@ def remove_reserva(id_reserva):
         db.session.commit()
         return True
     return False
+    
+def modify_reserva(id_reserva, estacion = None, desde = None, hasta = None, matricula = None, fecha = None, DNI = None):
+	r = Reserva.query.filter(Reserva.id_reserva == id_reserva).one_or_none()
+	if r:
+		if estacion:
+			r.estacion = estacion
+		if desde:
+			r.desde = desde
+		if hasta:
+			r.hasta = hasta
+		if matricula:
+			r.matricula = matricula
+		if fecha:
+			r.fecha = fecha
+		if DNI:
+			r.DNI = DNI
+		
+		db.session.commit()
+		return ReservaSchema().dumps(r)
+		
+def post_reserva(estacion, desde, hasta, matricula, fecha, DNI)
+	r = Reserva(estacion, desde, hasta, matricula, fecha, DNI)
+	db.session.add(r)
+	db.session.commit()
+	return r.id_reserva
+		
