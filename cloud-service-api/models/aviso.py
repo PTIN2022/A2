@@ -11,7 +11,7 @@ class Aviso(db.Model):
     id_reserva = db.Column(db.Integer, db.ForeignKey("reserva.id_reserva"), nullable=False)
     id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
 
-    def __init__(self, tipo,texto, hora, id_reserva,id_cliente): #need 
+    def __init__(self, tipo, texto, hora, id_reserva, id_cliente):  # need
         self.tipo = tipo
         self.texto = texto
         self.hora = hora

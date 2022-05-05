@@ -3,6 +3,7 @@ from models.reserva import Reserva
 from models.cliente import Cliente
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
+
 class Pago(db.Model):
     id_pago = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     id_reserva = db.Column('id_reserva', db.ForeignKey('reserva.id_reserva'), nullable=False)
@@ -12,11 +13,12 @@ class Pago(db.Model):
         {},
     )
     estado = db.Column(db.String(30), nullable=False)
-   
+
     def __init__(self, id_reserva, id_cliente, estado):
         self.id_reserva = id_reserva
         self.id_cliente = id_cliente
         self.estado = estado
+
 
 class PagoSchema(SQLAlchemyAutoSchema):
     class Meta:

@@ -23,7 +23,7 @@ def get_estacion_by_id(id):
 
 
 def delete_plaza(id, id_plaza):
-    i = Plaza.query.filter(Plaza.id == id_plaza).one_or_none()
+    i = Cargador.query.filter(Cargador.id == id_plaza).one_or_none()
     if i:
         db.session.delete(i)
         db.session.commit()

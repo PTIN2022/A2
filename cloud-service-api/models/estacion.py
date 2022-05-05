@@ -3,6 +3,7 @@ import models.cargador  # noqa: F401
 import models.promocion  # noqa: F401
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
+
 class Estacion(db.Model):
 
     id_estacion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
@@ -17,9 +18,7 @@ class Estacion(db.Model):
     latitud = db.Column(db.Integer, nullable=False)
     longitud = db.Column(db.Integer, nullable=False)
     imagen = db.Column(db.String(320), nullable=False)
-    
     cargadores = db.relationship("Cargador",  backref="estacion")
-
 
     def __init__(self, estacion, direccion, kwh_max, kwh_now, ocupation_max, ocupation_now, surface_in_meters, boss, latitud, longitud, imagen):
         self.nombre_est = estacion

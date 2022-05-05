@@ -3,6 +3,7 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 import models.reserva
 import models.horas
 
+
 class Cargador(db.Model):
 
     id_cargador = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
@@ -23,3 +24,4 @@ class CargadorSchema(SQLAlchemyAutoSchema):
     # estacion= fields.Nested(EstacionSchema)
     class Meta:
         model = Cargador
+

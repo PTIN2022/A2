@@ -3,6 +3,7 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from sqlalchemy.dialects.mysql import FLOAT
 import models.aviso
 
+
 class Usuari_t(db.Model):
 
     id_usuari = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
@@ -16,8 +17,7 @@ class Usuari_t(db.Model):
     username = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(30), nullable=False)
 
-
-    def __init__(self, tipo, nombre, apellido, email,dni, foto, telefono, username,password):
+    def __init__(self, tipo, nombre, apellido, email, dni, foto, telefono, username, password):
         self.tipo = tipo
         self.nombre = nombre
         self.apellido = apellido
@@ -27,6 +27,7 @@ class Usuari_t(db.Model):
         self.telefono = telefono
         self.username = username
         self.password = password
+
 
 class Usuari_tSchema(SQLAlchemyAutoSchema):
     # estacion= fields.Nested(EstacionSchema)
