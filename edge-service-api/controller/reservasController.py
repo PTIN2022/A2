@@ -51,8 +51,8 @@ def post_reserva(id_estacion, matricula, fecha_inicio_str, fecha_final_str, DNI)
                 for reserva in cargador.reservas:
                     if not cargador_ocupado:
                         reserva=ReservaSchema().dump(reserva)
-                        reserva_inicio_data=datetime.strptime(reserva["fecha_inicio"], '%Y-%m-%dT%H:%M:%S')
-                        reserva_final_data=datetime.strptime(reserva["fecha_fin"], '%Y-%m-%dT%H:%M:%S')
+                        reserva_inicio_data=datetime.strptime(reserva["fecha_entrada"], '%Y-%m-%dT%H:%M:%S')
+                        reserva_final_data=datetime.strptime(reserva["fecha_salida"], '%Y-%m-%dT%H:%M:%S')
 
                         if reserva_inicio_data <= fecha_inicio_str < reserva_final_data or reserva_inicio_data < fecha_final_str <= reserva_final_data:
                             cargador_ocupado=True
