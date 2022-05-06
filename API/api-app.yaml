@@ -3,46 +3,18 @@ info:
   title: API portal de gestion
   version: '1.0'
 servers:
-  - url: http://127.0.0.1:5000/
+  - url: http://127.0.0.1:8080/
     description: Developments
+  - url: http://craaxkvm.epsevg.upc.es:23701/
+    description: Server
 paths:
   # reservas
   /reservas:
-    # mandamos/resolvemos 1 reserva]
-    post:
-        summary: Inserta una nueva reserva
-        tags:
+    get:
+      summary: Obtiene todas las reservas de todos los clientes (no me uses)
+      tags:
         - Reservas
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                    - id_estacion
-                    - fecha_inicio
-                    - fecha_final
-                    - id_vehiculo
-                    - id_cliente
-                properties:
-                  id_estacion:
-                    type: integer
-                  fecha_inicio:
-                    type: string
-                  fecha_final:
-                    type: string
-                  id_vehiculo:
-                    type: string
-                  id_cliente:
-                    type: string
-                example:
-                  id_estacion: 1
-                  fecha_inicio: "18-04-2022 11:00"
-                  fecha_final: "18-04-2022 18:00"
-                  id_vehiculo: "LKE2378"
-                  id_cliente: "1238712N"
-        responses:
+      responses:
           '200':
             description: Peticion correcta
             content:
@@ -50,15 +22,16 @@ paths:
                 examples:
                   Meter reserva:
                     value:  >-
-                        {
-                          "id_cliente": "1238712N",
-                          "fecha_entrada": "2022-04-18T18:00:00",
-                          "fecha_salida": "2022-04-18T11:00:00",
-                          "id_reserva": 1,
-                          "id_estacion": 1,
-                          "id_vehiculo": "LKE2378",
-                          "id_cargador": 2
-                        }
+                        [
+                          {
+                            "fecha_entrada": "2022-04-18T11:00:00",
+                            "fecha_salida": "2022-04-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
+                          }
+                        ]
           '400':
             description: Peticion incorrecta
             content:
@@ -67,6 +40,66 @@ paths:
                   Error al meter reserva:
                     value: >-
                       {"error": "Malformed request syntax."}
+                      
+    # mandamos/resolvemos 1 reserva]
+    post:
+      summary: Inserta una nueva reserva
+      tags:
+      - Reservas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                  - id_estacion
+                  - fecha_inicio
+                  - fecha_final
+                  - id_vehiculo
+                  - id_cliente
+              properties:
+                id_estacion:
+                  type: integer
+                fecha_inicio:
+                  type: string
+                fecha_final:
+                  type: string
+                id_vehiculo:
+                  type: string
+                id_cliente:
+                  type: string
+              example:
+                id_estacion: 1
+                fecha_inicio: "18-04-2022 11:00"
+                fecha_final: "18-04-2022 18:00"
+                id_vehiculo: "LKE2378"
+                id_cliente: "1238712N"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Meter reserva:
+                  value:  >-
+                      {
+                        "id_cliente": "1238712N",
+                        "fecha_entrada": "2022-04-18T18:00:00",
+                        "fecha_salida": "2022-04-18T11:00:00",
+                        "id_reserva": 1,
+                        "id_estacion": 1,
+                        "id_vehiculo": "LKE2378",
+                        "id_cargador": 2
+                      }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter reserva:
+                  value: >-
+                    {"error": "Malformed request syntax."}
 
   /reservas/estacion/{id_estacion}:
     # pedimos una lista de reservas por una estacion dada
@@ -276,7 +309,7 @@ paths:
               application/json:
                 examples:
                   Reservas:
-                    value: "{\"msg\": \"Data deleted correctly.\"}"
+                    value: {"msg": "Data deleted correctly."}
                   Reserva no encontrada:
                     value: '[]'
           '401':
@@ -297,5 +330,6 @@ paths:
                       {"error": "Reserva not found."}
 
 #########################################################################################
+
 
 
