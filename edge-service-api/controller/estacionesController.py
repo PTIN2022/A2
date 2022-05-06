@@ -1,5 +1,5 @@
 from models.estacion import Estacion, EstacionSchema
-from models.plaza import Plaza, PlazaSchema
+from models.cargador import Cargador, CargadorSchema
 from utils.db import db
 
 
@@ -9,21 +9,21 @@ def get_all_estaciones():
 
 
 def get_estacion_by_id(id):
-    i = Estacion.query.filter(Estacion.id == id).one_or_none()
+    i = Estacion.query.filter(Estacion.id_estacion == id).one_or_none()
     if i:
         estacion_dict = EstacionSchema().dump(i)
 
-        estacion_dict["plazas"] = []
-        for plaza in i.plazas:
-            estacion_dict["plazas"].append(PlazaSchema().dump(plaza))
+        estacion_dict["cargadores"] = []
+        for Cargador in i.Cargadors:
+            estacion_dict["cargadores"].append(CargadorSchema().dump(Cargador))
 
         return estacion_dict
 
     return None
 
 
-def delete_plaza(id, id_plaza):
-    i = Plaza.query.filter(Plaza.id == id_plaza).one_or_none()
+def delete_cargador(id, id_Cargador):
+    i = Cargador.query.filter(Cargador.id_cargador == id_Cargador).one_or_none()
     if i:
         db.session.delete(i)
         db.session.commit()

@@ -15,13 +15,16 @@ def get_reservas():
 @reservas.route('/reservas', methods=['POST'])
 def post_reservas():
     try:
-        estacion = request.json["estacion"]
+        print(request.json)
+        estacion = int(request.json["id_estacion"])
         fecha_inicio = request.json["fecha_inicio"] # Dia y hora
         fecha_final = request.json["fecha_final"]
         fecha_final_str = datetime.strptime(fecha_final, '%d-%m-%Y %H:%M')
         fecha_inicio_str = datetime.strptime(fecha_inicio, '%d-%m-%Y %H:%M')
-        matricula = request.json["matricula"]
-        DNI = request.json["DNI"]
+        matricula = request.json["id_vehiculo"]
+        DNI = request.json["id_cliente"]
+    
+        #TODO: comprobar fecha final es mayor fecha inicial
         id = control.post_reserva(estacion, matricula, fecha_inicio_str, fecha_final_str, DNI)
         respuesta = control.get_reservas_id(id)
         return jsonify(respuesta)
@@ -43,66 +46,22 @@ def get_reserva_by_id(id):
         return jsonify({"error": "Reserva not found."}), 404
 
 
-@reservas.route('/reservas/<id>', methods=["PUT"])
-def modify_reserva(id):
-    estacion = None
-    desde = None
-    hasta = None
-    matricula = None
-    data = None
-    DNI = None
-
-    # TODO: mirar bien si hay algo que no se esperaba o algo asi...
-    if "estacion" in request.json:
-        estacion = request.json["estacion"]
-    if "desde" in request.json:
-        desde = request.json["desde"]
-    if "hasta" in request.json:
-        hasta = request.json["hasta"]
-    if "matricula" in request.json:
-        matricula = request.json["matricula"]
-    if "data" in request.json:
-        try:
-            data = request.json["data"]
-            data = datetime.date(datetime.strptime(data, '%d-%m-%Y'))
-        except ValueError:
-            return jsonify({"error": "Malformed request syntax."}), 400
-    if "DNI" in request.json:
-        DNI = request.json["DNI"]
-    if "plaza" in request.json:
-        plaza = request.json["plaza"]
-    respuesta = control.modify_reserva(id, estacion, desde, hasta, matricula, data, DNI, plaza)
-    if respuesta:
-        return jsonify(respuesta), 200
-    else:
-        return jsonify({"error": "Reserva not found."}), 404
-
-
-@reservas.route('/reservas/byname/<estacion>', methods=["GET"])
-def get_reserva_by_estacio(estacion):
-    respuesta = control.get_reservas_estacion(estacion)
-    if respuesta:
-        return jsonify(respuesta), 200
-    else:
-        return jsonify({"error": "Reserva not found."}), 404
+@reservas.route('/reservas/estacion/<id_estacion>', methods=["GET"])
+def get_reserva_by_estacio(id_estacion):
+    respuesta = control.get_reservas_estacion(id_estacion)
+    return jsonify(respuesta), 200
 
 
 @reservas.route('/reservas/bymatricula/<matricula>', methods=["GET"])
 def get_reserva_by_matricula(matricula):
     respuesta = control.get_reservas_matricula(matricula)
-    if respuesta:
-        return jsonify(respuesta), 200
-    else:
-        return jsonify({"error": "Reserva not found."}), 404
+    return jsonify(respuesta), 200
 
 
 @reservas.route('/reservas/bydni/<dni>', methods=["GET"])
 def get_reserva_by_dni(dni):
     respuesta = control.get_reservas_dni(dni)
-    if respuesta:
-        return jsonify(respuesta), 200
-    else:
-        return jsonify({"error": "Reserva not found."}), 404
+    return jsonify(respuesta), 200
 
 
 @reservas.route('/reservas/<id>', methods=["DELETE"])

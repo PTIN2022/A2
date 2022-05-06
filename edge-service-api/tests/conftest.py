@@ -1,6 +1,11 @@
 import os
 import pytest
+from routes.reservas import reservas
+from routes.estaciones import estaciones
+from models.plaza import Plaza
+from models.estacion import Estacion
 
+from utils.db import db
 from app import app, init_db
 
 
@@ -14,4 +19,15 @@ def client():
 
     with app.test_client() as client:
         init_db()
+        with app.app_context():
+            e = Estacion("VG3", "mi casa", 720, 85, 23, 20, 130, "Alfredo_Manresa", 1300, 2000, "url")
+            db.session.add(e)
+            db.session.commit()
+        
+            print(e)
+            p1 = Plaza(23, 23, 23, "mario", e.id)
+            p2 = Plaza(30, 23, 40, "mario", e.id)
+            db.session.add(p1)
+            db.session.add(p2)
+            db.session.commit()
         yield client

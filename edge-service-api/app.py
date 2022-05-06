@@ -3,7 +3,7 @@ from utils.db import db
 from flask import Flask
 from routes.reservas import reservas
 from routes.estaciones import estaciones
-from models.plaza import Plaza
+from models.cargador import Cargador
 from models.estacion import Estacion
 
 
@@ -22,22 +22,21 @@ app.config["TESTING"] = False
 app.register_blueprint(reservas)
 app.register_blueprint(estaciones)
 
-if app.config["TESTING"] is False:
-    if os.path.exists("./test.db"):
-        os.remove("./test.db")
+if os.path.exists("./test.db"):
+    os.remove("./test.db")
 
-    init_db()
-    with app.app_context():
-        e = Estacion("VG3", "mi casa", 720, 85, 23, 20, 130, "Alfredo_Manresa", 1300, 2000, "url")
-        db.session.add(e)
-        db.session.commit()
+init_db()
+with app.app_context():
+    e = Estacion("VG3", "mi casa", 720, 85, 23, 20, 130, "Alfredo_Manresa", 1300, 2000, "url")
+    db.session.add(e)
+    db.session.commit()
 
-        print(e)
-        p1 = Plaza(23, 23, 23, "mario", e.id)
-        p2 = Plaza(30, 23, 40, "mario", e.id)
-        db.session.add(p1)
-        db.session.add(p2)
-        db.session.commit()
+    print(e)
+    p1 = Cargador("cargando", "coordenada", e.id_estacion)
+    p2 = Cargador("cargadon", "cordenada", e.id_estacion)
+    db.session.add(p1)
+    db.session.add(p2)
+    db.session.commit()
 
 if __name__ == "__main__":  # pragma: no cover
     print("=========================================")

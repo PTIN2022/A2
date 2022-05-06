@@ -8,63 +8,11 @@ servers:
 paths:
   # reservas
   /reservas:
-    # pedimos una lista de las reservas
-    get:
-      summary: Obtiene una lista de reservas
-      tags:
-      - Reservas (más para web)
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Con reservas:
-                  value: [
-                          {
-                            "reserva_id": 1,
-                            "estacion": "VG1",
-                            "desde": "10:20",
-                            "hasta": "11:20",
-                            "matricula": "LKE1237",
-                            "data": "28-02-2020",
-                            "DNI": "1236712N"
-                          },
-                          {
-                            "reserva_id": 2,
-                            "estacion": "VG1",
-                            "desde": "13:20",
-                            "hasta": "14:20",
-                            "matricula": "LKJ1237",
-                            "data": "28-02-2020",
-                            "DNI": "90129301N"
-                          },
-                          {
-                            "reserva_id": 3,
-                            "estacion": "VG2",
-                            "desde": "17:20",
-                            "hasta": "18:20",
-                            "matricula": "LKS1237",
-                            "data": "28-02-2020",
-                            "DNI": "81293N"
-                          }
-                        ]
-
-                Sin reservas:
-                  value: '[]'
-        '401':
-          description: Not login
-          content:
-            application/json:
-              examples:
-                error:
-                  value: >-
-                    {"error": "User not authenticated."}
     # mandamos/resolvemos 1 reserva]
     post:
         summary: Inserta una nueva reserva
         tags:
-        - Reservas (más para web)
+        - Reservas
         requestBody:
           required: true
           content:
@@ -72,35 +20,28 @@ paths:
               schema:
                 type: object
                 required:
-                    - estacion
-                    - desde
-                    - hasta
-                    - matricula
-                    - data
-                    - DNI
+                    - id_estacion
+                    - fecha_inicio
+                    - fecha_final
+                    - id_vehiculo
+                    - id_cliente
                 properties:
-                  estacion:
-                    type: string
-                  desde:
-                    type: string
-                  hasta:
-                    type: string
-                  matricula:
-                    type: string
-                  data:
-                    type: string
-                  DNI:
-                    type: string
-                  plaza:
+                  id_estacion:
                     type: integer
+                  fecha_inicio:
+                    type: string
+                  fecha_final:
+                    type: string
+                  id_vehiculo:
+                    type: string
+                  id_cliente:
+                    type: string
                 example:
-                  estacion: VG1
-                  desde: "10:20"
-                  hasta: "11:00"
-                  matricula: "LKE2378"
-                  data: "18-04-2022"
-                  DNI: "1238712N"
-                  plaza: 1
+                  id_estacion: 1
+                  fecha_inicio: "18-04-2022 11:00"
+                  fecha_final: "18-04-2022 18:00"
+                  id_vehiculo: "LKE2378"
+                  id_cliente: "1238712N"
         responses:
           '200':
             description: Peticion correcta
@@ -110,13 +51,13 @@ paths:
                   Meter reserva:
                     value:  >-
                         {
-                          "reserva_id": 1,
-                          "estacion": "VG1",
-                          "desde": "10:20",
-                          "hasta": "11:20",
-                          "matricula": "LKE1237",
-                          "data": "28-02-2020",
-                          "DNI": "1236712N"
+                          "id_cliente": "1238712N",
+                          "fecha_entrada": "2022-04-18T18:00:00",
+                          "fecha_salida": "2022-04-18T11:00:00",
+                          "id_reserva": 1,
+                          "id_estacion": 1,
+                          "id_vehiculo": "LKE2378",
+                          "id_cargador": 2
                         }
           '400':
             description: Peticion incorrecta
@@ -127,21 +68,21 @@ paths:
                     value: >-
                       {"error": "Malformed request syntax."}
 
-  /reservas/byname/{estacion}:
+  /reservas/estacion/{id_estacion}:
     # pedimos una lista de reservas por una estacion dada
     get:
-      summary: Obtiene una lista de reservas para una estacion dada
+      summary: Obtiene una lista de reservas para una estacion dada obtiene solo las reservas desde ahora al futuro
       tags:
       - Reservas
       parameters:
         - in: path
-          name: estacion
+          name: id_estacion
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
-          description: Obtiene un lista de reservas
+          description: Obtiene un lista de reservas por estacion desde la fecha actual al futuro
           content:
             application/json:
               examples:
@@ -149,22 +90,20 @@ paths:
                   value: >-
                         [
                           {
-                            "reserva_id": 1,
-                            "estacion": "VG1",
-                            "desde": "10:20",
-                            "hasta": "11:20",
-                            "matricula": "LKE1237",
-                            "data": "28-02-2020",
-                            "DNI": "1236712N"
+                            "fecha_entrada": "2022-07-18T11:00:00",
+                            "fecha_salida": "2022-07-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
                           },
                           {
-                            "reserva_id": 2,
-                            "estacion": "VG1",
-                            "desde": "13:20",
-                            "hasta": "14:20",
-                            "matricula": "LKE1237",
-                            "data": "28-02-2020",
-                            "DNI": "1236712N"
+                            "fecha_entrada": "2022-07-18T12:00:00",
+                            "fecha_salida": "2022-07-18T115:00:00",
+                            "id_cargador": 2,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 2,
+                            "id_vehiculo": "LKE2378"
                           }
                         ]
                 Sin reservas:
@@ -182,7 +121,7 @@ paths:
     get:
       summary: Obtiene una lista de reservas para un dni dado
       tags:
-      - Reservas (más para web)
+      - Reservas
       parameters:
         - in: path
           name: dni
@@ -199,22 +138,20 @@ paths:
                   value: >-
                         [
                           {
-                            "reserva_id": 1,
-                            "estacion": "VG1",
-                            "desde": "10:20",
-                            "hasta": "11:20",
-                            "matricula": "LKE1237",
-                            "data": "28-02-2020",
-                            "DNI": "1236712N"
+                            "fecha_entrada": "2022-07-18T11:00:00",
+                            "fecha_salida": "2022-07-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
                           },
                           {
-                            "reserva_id": 2,
-                            "estacion": "VG1",
-                            "desde": "13:20",
-                            "hasta": "14:20",
-                            "matricula": "LKE1237",
-                            "data": "28-02-2020",
-                            "DNI": "1236712N"
+                            "fecha_entrada": "2022-07-18T12:00:00",
+                            "fecha_salida": "2022-07-18T115:00:00",
+                            "id_cargador": 2,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 2,
+                            "id_vehiculo": "LKE2378"
                           }
                         ]
                 Sin reservas:
@@ -249,22 +186,20 @@ paths:
                   value: >-
                         [
                           {
-                            "reserva_id": 1,
-                            "estacion": "VG1",
-                            "desde": "10:20",
-                            "hasta": "11:20",
-                            "matricula": "LKE1237",
-                            "data": "28-02-2020",
-                            "DNI": "1236712N"
+                            "fecha_entrada": "2022-07-18T11:00:00",
+                            "fecha_salida": "2022-07-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
                           },
                           {
-                            "reserva_id": 2,
-                            "estacion": "VG1",
-                            "desde": "13:20",
-                            "hasta": "14:20",
-                            "matricula": "LKE1237",
-                            "data": "28-02-2020",
-                            "DNI": "1236712N"
+                            "fecha_entrada": "2022-07-18T12:00:00",
+                            "fecha_salida": "2022-07-18T115:00:00",
+                            "id_cargador": 2,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 2,
+                            "id_vehiculo": "LKE2378"
                           }
                         ]
                 Sin reservas:
@@ -298,15 +233,13 @@ paths:
                   Reservas:
                     value:  >-
                         {
-                          "estacion": "VG1",
-                          "desde": "10:20",
-                          "hasta": "11:20",
-                          "matricula": "LKE1237",
-                          "data": "28-02-2020",
-                          "DNI": "1236712N"
+                          "fecha_entrada": "2022-04-18T11:00:00",
+                          "fecha_salida": "2022-04-18T18:00:00",
+                          "id_cargador": 1,
+                          "id_cliente": "1238712N",
+                          "id_reserva": 1,
+                          "id_vehiculo": "LKE2378"
                         }
-                  Reserva no encontrada:
-                    value: '[]'
           '401':
             description: Not login
             content:
@@ -325,78 +258,6 @@ paths:
                     value: >-
                         {"error": "Reserva not found."}
 
-      # editar reserva
-      put:
-          summary: Modificar reserva
-          tags:
-          - Reservas
-          requestBody:
-            required: true
-            content:
-              application/json:
-                schema:
-                  type: object
-                  required:
-                    - reserva_id
-                  properties:
-                    estacion:
-                      type: string
-                    desde:
-                      type: string
-                    hasta:
-                      type: string
-                    matricula:
-                      type: string
-                    data:
-                      type: string
-                    DNI:
-                      type: string
-                    plaza: 
-                      type: integer
-                  example:
-                    estacion: VG1
-                    desde: "10:20"
-                    hasta: "11:00"
-                    matricula: "LKE2378"
-                    data: "18-04-2022"
-                    DNI: "1238712N"
-                    plaza: 1
-          parameters:
-          - in: path
-            name: id
-            required: true
-            schema:
-              type: integer
-          responses:
-            #respuesta correcta
-            '200':
-              description: Reserva actualizada
-              content:
-                application/json:
-                  examples:
-                    Reserva actualizada:
-                      value: >-
-                          {
-                            "succes": "True",
-                            "plaza/cargador": 3
-                          }
-
-            '400':
-              description: Peticion incorrecta
-              content:
-                application/json:
-                  examples:
-                    Error al meter reserva:
-                      value: >-
-                        { "error": "Malformed request syntax."}
-            '404':
-              description: Not Found
-              content:
-                application/json:
-                  examples:
-                    error:
-                      value: >-
-                        {"error": "Reserva not found."}
       #borrar reserva
       delete:
         summary: Elimina reserva por ID
@@ -436,4 +297,5 @@ paths:
                       {"error": "Reserva not found."}
 
 #########################################################################################
+
 
