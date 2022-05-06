@@ -4,6 +4,7 @@ from models.reserva import Reserva, ReservaSchema
 from models.estacion import Estacion, EstacionSchema
 from models.plaza import Plaza, PlazaSchema
 from datetime import datetime
+import paho.mqtt.publish as publish
 
 def get_all_reservas():
     i = Reserva.query.all()
@@ -44,8 +45,7 @@ def get_reservas_dni(dni):
     return ReservaSchema(many=True).dump(i)
 
 
-def post_reserva(id_estacion, desde, hasta, matricula, data, DNI, id_plaza):
-    # TODO: Get cargadores de una estacion
+def post_reserva(id_estacion, matricula, fecha_inicio_str, fecha_final_str, DNI):
     i = Estacion.query.filter(Estacion.estacion == id_estacion).one_or_none()
     plaza_encontrada=False
     if i:
@@ -53,23 +53,28 @@ def post_reserva(id_estacion, desde, hasta, matricula, data, DNI, id_plaza):
             if not plaza_encontrada:
                 plaza_ocupada=False
                 for reserva in plaza.reservas:
-                    print("2"+str(plaza_ocupada))
                     if not plaza_ocupada:
                         reserva=ReservaSchema().dump(reserva)
-                        reserva_data=datetime.strptime(reserva["data"], "%Y-%m-%d").date()
-                        # TODO: Deberia mirar de ofrecer las horas libres o de cuadrar horas. Asi es simple
-                        if reserva["desde"] == desde and reserva["hasta"] == hasta and reserva_data == data:
-                            plaza_ocupada=True
+                        print("hola")
+                        print(reserva)
+                        reserva_inicio_data=datetime.strptime(reserva["fecha_inicio"], '%Y-%m-%dT%H:%M:%S')
+                        reserva_final_data=datetime.strptime(reserva["fecha_fin"], '%Y-%m-%dT%H:%M:%S')
+                        if reserva_inicio_data <= fecha_inicio_str < reserva_final_data or reserva_inicio_data < fecha_final_str <= reserva_final_data:
+                            # Comprobando que las fechas que recibimos no este en una reserva
+                            if fecha_inicio_str <= reserva_inicio_data < fecha_final_str and fecha_inicio_str < reserva_final_data <= fecha_final_str:
+                                # Comprobamos que no haya reservas en la franja horaria de la reserva solicitante
+                                plaza_ocupada=True
                 if not plaza_ocupada:
                     pl=PlazaSchema().dump(plaza)
-                    i = Reserva(id_estacion, desde, hasta, matricula, data, DNI, pl["id"])
+                    i = Reserva(id_estacion, matricula, fecha_inicio_str, fecha_final_str, DNI, pl["id"])
                     db.session.add(i)
                     db.session.commit()
+                    print(ReservaSchema().dump(i))
+                    publish.single("estacion/"+str(id_estacion)+"/cargador/"+str(pl["id"])+"/reserva", str(ReservaSchema().dump(i)), hostname="test.mosquitto.org", port=1883)
                     plaza_encontrada=True
                     return i.id
     if not plaza_encontrada:
         return None
-    # TODO: Push reserva al cloud ??? 
 
 
 def remove_reserva(id):

@@ -7,7 +7,6 @@ estaciones = Blueprint('estaciones', __name__)
 
 @estaciones.route('/estaciones', methods=['GET'])
 def get_estaciones():
-    print("hola")
     respuesta = control.get_all_estaciones()
     return jsonify(respuesta)
 

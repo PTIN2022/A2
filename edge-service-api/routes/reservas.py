@@ -16,22 +16,21 @@ def get_reservas():
 def post_reservas():
     try:
         estacion = request.json["estacion"]
-        desde = request.json["desde"]
-        hasta = request.json["hasta"] # Dia y hora
-        data = request.json["data"] # Dia y hora
-        data_str = datetime.date(datetime.strptime(data, '%d-%m-%Y'))
-        # data = request.json["data_final"] # Dia y hora
-        # data_final_str = datetime.date(datetime.strptime(data, '%d-%m-%Y'))
+        fecha_inicio = request.json["fecha_inicio"] # Dia y hora
+        fecha_final = request.json["fecha_final"]
+        fecha_final_str = datetime.strptime(fecha_final, '%d-%m-%Y %H:%M')
+        fecha_inicio_str = datetime.strptime(fecha_inicio, '%d-%m-%Y %H:%M')
         matricula = request.json["matricula"]
         DNI = request.json["DNI"]
-        plaza = request.json["plaza"]
-        id = control.post_reserva(estacion, desde, hasta, matricula, data_str, DNI, int(plaza))
+        id = control.post_reserva(estacion, matricula, fecha_inicio_str, fecha_final_str, DNI)
         respuesta = control.get_reservas_id(id)
         return jsonify(respuesta)
 
-    except ValueError:
+    except ValueError as e:
+        print(e)
         return jsonify(errors.malformed_error()), 400
-    except KeyError:
+    except KeyError as e:
+        print(e)
         return jsonify(errors.malformed_error()), 400
 
 
