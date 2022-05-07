@@ -687,7 +687,6 @@ paths:
                 Error al meter incidencia:
                   value: '{"error": "ID ususario eliminado."}'
 #######################################################################################################
-#########################################################################################
   /trabajador:
       # pedimos una lista de trabajadores
       get:
@@ -973,3 +972,67 @@ paths:
                       value: >- 
                         {"error": "Trabajador not found."}
 #########################################################################################
+  /login:
+    post:
+      summary: Login en el sistema
+      tags: 
+      - Autenticacion
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+
+              example:
+                email: "meh@meh.com"
+                password: "supersegura"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Success Login: 
+                  value: >-
+                    {
+                      "token": "tokencito.jwt"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: {"error": "Malformed request syntax."}
+  /logout:
+    get:
+      summary: "Log Out"
+      tags:
+      - Autenticacion
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Success Login: 
+                  value: >-
+                    {
+                      "msg": "Success logout"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: {"error": "Malformed request syntax."}

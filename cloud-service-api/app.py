@@ -6,6 +6,7 @@ from routes.trabajador import trabajador
 from routes.estaciones import estaciones
 from routes.incidencias import incidencias
 from models.estacion import Estacion
+from routes.login import login
 
 
 def init_db():
@@ -23,6 +24,7 @@ app.config["TESTING"] = False
 app.register_blueprint(incidencias)
 app.register_blueprint(estaciones)
 app.register_blueprint(trabajador)
+app.register_blueprint(login)
 
 if app.config["TESTING"] is False:
     if os.path.exists("./test.db"):

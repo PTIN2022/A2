@@ -9,16 +9,18 @@ class Trabajador(db.Model):
     telf = db.Column(db.String(15), nullable=False)
     email = db.Column(db.String(320), nullable=False)
     rol = db.Column(db.String(20), nullable=False)
+    password = db.Column(db.String(20), nullable=False)
     last_access = db.Column(db.Integer, nullable=False)
     picture = db.Column(db.String(300), nullable=False)
 
-    def __init__(self, dni, name, lastname, telf, email, rol, last_access, picture):
+    def __init__(self, dni, name, lastname, telf, email, rol, password, last_access, picture):
         self.dni = dni
         self.name = name
         self.lastname = lastname
         self.telf = telf
         self.email = email
         self.rol = rol
+        self.password = password
         self.last_access = last_access
         self.picture = picture
 

@@ -29,10 +29,11 @@ def post_trabajador():
     telf = request.form.to_dict()["telf"]
     email = request.form.to_dict()["email"]
     rol = request.form.to_dict()["rol"]
+    password = request.form.to_dict()["password"]
     last_access = -1
     picture = "https://editor.swagger.io/"
 
-    t = control.post_trabajador(dni, name, lastname, telf, email, rol, last_access, picture)
+    t = control.post_trabajador(dni, name, lastname, telf, email, rol, password, last_access, picture)
     return jsonify(t)
 
 
@@ -45,6 +46,7 @@ def modify_trabajador(dni):
     rol = None
     last_access = None
     picture = None
+    password = None
 
     if "name" in request.form.to_dict():
         name = request.form.to_dict()["name"]
@@ -60,11 +62,12 @@ def modify_trabajador(dni):
         last_access = -1
     if "picture" in request.form.to_dict():
         picture = "https://editor.swagger.io/"
-        print("INNNNNNN")
     if "dni" in request.form.to_dict():
         dni_change = request.form.to_dict()["dni"]
+    if "password" in request.form.to_dict():
+        password = request.form.to_dict()["password"]
 
-    respuesta = control.modify_trabajador(dni, dni_change, name, lastname, telf, email, rol, last_access, picture)
+    respuesta = control.modify_trabajador(dni, dni_change, name, lastname, telf, email, rol, last_access, picture, password)
 
     if respuesta:
         return jsonify(respuesta), 200
