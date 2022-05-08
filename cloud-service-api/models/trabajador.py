@@ -10,7 +10,7 @@ class Trabajador(db.Model):
     email = db.Column(db.String(320), nullable=False)
     rol = db.Column(db.String(20), nullable=False)
     password = db.Column(db.String(20), nullable=False)
-    last_access = db.Column(db.Integer, nullable=False)
+    last_access = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(300), nullable=False)
 
     def __init__(self, dni, name, lastname, telf, email, rol, password, last_access, picture):

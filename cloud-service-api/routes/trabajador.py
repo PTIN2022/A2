@@ -1,10 +1,12 @@
 import controller.trabajadorController as control
 from flask import Blueprint, jsonify, request
+from utils.utils import token_required
 
 trabajador = Blueprint('trabajadores', __name__)
 
 
 @trabajador.route('/trabajador', methods=['GET'])
+@token_required
 def get_trabajadores():
     respuesta = control.get_all_trabajadores()
     return jsonify(respuesta)
@@ -30,7 +32,7 @@ def post_trabajador():
     email = request.form.to_dict()["email"]
     rol = request.form.to_dict()["rol"]
     password = request.form.to_dict()["password"]
-    last_access = -1
+    last_access = '-1'
     picture = "https://editor.swagger.io/"
 
     t = control.post_trabajador(dni, name, lastname, telf, email, rol, password, last_access, picture)
@@ -58,8 +60,6 @@ def modify_trabajador(dni):
         email = request.form.to_dict()["email"]
     if "rol" in request.form.to_dict():
         rol = request.form.to_dict()["rol"]
-    if "last_access" in request.form.to_dict():
-        last_access = -1
     if "picture" in request.form.to_dict():
         picture = "https://editor.swagger.io/"
     if "dni" in request.form.to_dict():
@@ -67,7 +67,7 @@ def modify_trabajador(dni):
     if "password" in request.form.to_dict():
         password = request.form.to_dict()["password"]
 
-    respuesta = control.modify_trabajador(dni, dni_change, name, lastname, telf, email, rol, last_access, picture, password)
+    respuesta = control.modify_trabajador(dni, dni_change, name, lastname, telf, email, rol, picture, password)
 
     if respuesta:
         return jsonify(respuesta), 200

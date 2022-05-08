@@ -20,7 +20,7 @@ def post_trabajador(DNI, name, lastname, telf, email, rol, password, last_access
 
 
 # habra que mojararlo (last_access, picture...)
-def modify_trabajador(DNI, dni_change=None, name=None, lastname=None, telf=None, email=None, rol=None, last_access=None, picture=None, password=None):
+def modify_trabajador(DNI, dni_change=None, name=None, lastname=None, telf=None, email=None, rol=None, picture=None, password=None):
     t = Trabajador.query.filter(Trabajador.dni == DNI).one_or_none()
     if t:
         if name:
@@ -33,8 +33,6 @@ def modify_trabajador(DNI, dni_change=None, name=None, lastname=None, telf=None,
             t.email = email
         if rol:
             t.rol = rol
-        if last_access:
-            t.last_access = last_access
         if picture:
             t.picture = picture
         if dni_change:

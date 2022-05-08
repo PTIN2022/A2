@@ -6,7 +6,8 @@ from routes.trabajador import trabajador
 from routes.estaciones import estaciones
 from routes.incidencias import incidencias
 from models.estacion import Estacion
-from routes.login import login
+from routes.login import login, logout
+import jwt
 
 
 def init_db():
@@ -20,11 +21,12 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"  # TODO: Pass to mysql
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
-
+app.config['SECRET_KEY']='004f2af45d3a4e161a7dd2d17fdae47f'
 app.register_blueprint(incidencias)
 app.register_blueprint(estaciones)
 app.register_blueprint(trabajador)
 app.register_blueprint(login)
+app.register_blueprint(logout)
 
 if app.config["TESTING"] is False:
     if os.path.exists("./test.db"):
