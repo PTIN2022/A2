@@ -7,7 +7,7 @@ trabajador = Blueprint('trabajadores', __name__)
 
 @trabajador.route('/trabajador', methods=['GET'])
 @token_required
-def get_trabajadores():
+def get_trabajadores(current_user):
     respuesta = control.get_all_trabajadores()
     return jsonify(respuesta)
 # habra que hacer el error 401
@@ -36,7 +36,10 @@ def post_trabajador():
     picture = "https://editor.swagger.io/"
 
     t = control.post_trabajador(dni, name, lastname, telf, email, rol, password, last_access, picture)
-    return jsonify(t)
+    if t:
+        return jsonify(t)
+    else:
+        return jsonify({"error": "Trabajador already exists."})
 
 
 @trabajador.route('/trabajador/<dni>', methods=["PUT"])

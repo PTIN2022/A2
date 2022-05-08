@@ -801,6 +801,9 @@ paths:
                         "last_access": -1,
                         "picture": "http://?????????/trabajadores/PereRoca.png"
                       }
+                  Trabajador ya existe:
+                    value: >-
+                      {"error": "Trabajador already exists."}
           '400':
               description: Peticion incorrecta
               content:
@@ -1045,7 +1048,7 @@ paths:
 components:
  parameters:
    AccessToken:
-      name: "x-access-token"
+      name: "x-access-tokens"
       in: header
       description: Access Token.
       required: true

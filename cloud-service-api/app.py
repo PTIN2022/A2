@@ -21,7 +21,16 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"  # TODO: Pass to mysql
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
-app.config['SECRET_KEY']='004f2af45d3a4e161a7dd2d17fdae47f'
+
+# secrets.token_hex(32) TODO: regenerate with a real secret on the server
+app.config['SECRET_KEY']='bf9d91da2b703c30e770279ee82b17692def66a956b25b7c2d92f4088dfea293'
+
+# salt = os.urandom(32) TODO: regenerate with a real secret on the servers
+app.config['SALT']='\xd2\x1f\xca\x0c\xc5\xe6:)\xa9\xeb<\x07j\r\xb6\xef\xda$\xb8\xc5XJak\xab\x9d\x0e\x99\xaf\xc7\x94\xba'.encode("utf-8")
+app.config["EXPIRE_TOKEN_TIME"] = 2*60  # mins
+
+
+
 app.register_blueprint(incidencias)
 app.register_blueprint(estaciones)
 app.register_blueprint(trabajador)
