@@ -13,9 +13,9 @@ def get_estacion_by_id(id):
     if i:
         estacion_dict = EstacionSchema().dump(i)
 
-        estacion_dict["plazas"] = []
-        for plaza in i.plazas:
-            estacion_dict["plazas"].append(PlazaSchema().dump(plaza))
+        estacion_dict["Cargadores"] = []
+        for cargador in i.Cargadores:
+            estacion_dict["Cargadores"].append(PlazaSchema().dump(cargador))
 
         return estacion_dict
 

@@ -11,6 +11,7 @@ from models.cargador import Cargador
 from routes.trabajador import trabajador
 from routes.estaciones import estaciones
 from routes.incidencias import incidencias
+from routes.reservas import reservas
 
 
 def init_db():
@@ -77,6 +78,7 @@ with app.app_context():
 app.register_blueprint(incidencias, url_prefix='/api')
 app.register_blueprint(estaciones, url_prefix='/api')
 app.register_blueprint(trabajador, url_prefix='/api')
+app.register_blueprint(reservas, url_prefix='/api')
 
 if app.config["TESTING"] is False:
     if os.path.exists("./test.db"):
