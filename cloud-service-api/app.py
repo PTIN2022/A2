@@ -4,6 +4,7 @@ from flask import Flask
 from models.plaza import Plaza
 from routes.trabajador import trabajador
 from routes.soporte import soporte
+from models.chat import Chat
 from routes.estaciones import estaciones
 from routes.incidencias import incidencias
 from models.estacion import Estacion

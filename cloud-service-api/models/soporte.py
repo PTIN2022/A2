@@ -1,5 +1,5 @@
 from utils.db import db
-import models.mensaje  # noqa: F401
+import models.chat  # noqa: F401
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
@@ -9,24 +9,15 @@ class Soporte(db.Model):
     descripcion = db.Column(db.String(200), nullable=False)
     fecha = db.Column(db.String(15), nullable=False)
     estado = db.Column(db.Boolean, nullable=False)
-    mensaje = db.Column(db.String(200), nullable=False)
-    mensajes = db.relationship("Mensaje", backref="soporte")
+    chat = db.relationship("Chat", backref="soporte")
 
-    def __init__(self, ticket_id, user_id, descripcion, fecha, email, rol, estado, mensaje):
-        self.ticket_id = ticket_id
+    def __init__(self, user_id, descripcion, fecha, estado):
         self.user_id = user_id
         self.descripcion = descripcion
         self.fecha = fecha
         self.estado = estado
-        self.mensaje = mensaje
-
-    def to_dict(self):
-        return {"ticket_id": self.ticket_id, "user_id": self.user_id, "descripcion": self.descripcion, "fecha": self.fecha, "estado": self.estado, "mensaje": self.mensaje}
 
 
 class SoporteSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Soporte
-
-
-soporte_schema = SoporteSchema(many=True)
