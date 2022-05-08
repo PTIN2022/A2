@@ -13,17 +13,17 @@ def get_estacion_by_id(id):
     if i:
         estacion_dict = EstacionSchema().dump(i)
 
-        estacion_dict["Cargadores"] = []
-        for cargador in i.cargadores:
-            estacion_dict["Cargadores"].append(CargadorSchema().dump(cargador))
+        estacion_dict["cargadores"] = []
+        for cargador in i.Cargadors:
+            estacion_dict["cargadores"].append(CargadorSchema().dump(cargador))
 
         return estacion_dict
 
     return None
 
 
-def delete_plaza(id, id_plaza):
-    i = Cargador.query.filter(Cargador.id == id_plaza).one_or_none()
+def delete_cargador(id, id_Cargador):
+    i = Cargador.query.filter(Cargador.id_cargador == id_Cargador).one_or_none()
     if i:
         db.session.delete(i)
         db.session.commit()
