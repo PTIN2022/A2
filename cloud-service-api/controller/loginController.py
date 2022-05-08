@@ -19,7 +19,7 @@ def post_login(email, password):
         if t.password == password:
             t.last_access = 'connected'
             db.session.commit()
-            return jwt.encode({"email": t.email, "rol": t.rol, "exp": app.config['EXPIRE_TOKEN_TIME']}, app.config['SECRET_KEY'], algorithm="HS256")
+            return jwt.encode({"email": t.email, "rol": t.rol, "exp": expire_date(app.config['EXPIRE_TOKEN_TIME'])}, app.config['SECRET_KEY'], algorithm="HS256")
 
     return None
 
