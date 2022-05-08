@@ -3,11 +3,21 @@
         <script src="https://unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
         <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@3/swagger-ui.css"/>
         <title>My New API</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     </head>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <body>
+        <div>
+            <button style="width: 50%; float:left" type="button" class="btn btn-primary btn-lg" onclick="web()"> WEB </button>
+            <button style="width: 50%; float:left" type="button" class="btn btn-secondary btn-lg" onclick="app()"> APP </button>
+            <br style="clear:both;"/>
+        </div>
         <div id="swagger-ui"></div>
         <script>
-            window.onload = function () {
+            function web () {
                 const ui = SwaggerUIBundle({
                     url: "./API/api-gestion.yml",
                     dom_id: '#swagger-ui',
@@ -22,6 +32,26 @@
                 })
                 window.ui = ui
             }
+            function app () {
+                const ui = SwaggerUIBundle({
+                    url: "./API/api-app.yml",
+                    dom_id: '#swagger-ui',
+                    deepLinking: true,
+                    presets: [
+                        SwaggerUIBundle.presets.apis,
+                        SwaggerUIBundle.SwaggerUIStandalonePreset
+                    ],
+                    plugins: [
+                        SwaggerUIBundle.plugins.DownloadUrl
+                    ],
+                })
+                window.ui = ui
+            }
         </script>
     </body>
+    <style>
+        body {
+            margin-top:10px
+        }
+    </style>
 </html>
