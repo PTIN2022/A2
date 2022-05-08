@@ -31,11 +31,11 @@ app.config["EXPIRE_TOKEN_TIME"] = 2*60  # mins
 
 
 
-app.register_blueprint(incidencias)
-app.register_blueprint(estaciones)
-app.register_blueprint(trabajador)
-app.register_blueprint(login)
-app.register_blueprint(logout)
+app.register_blueprint(incidencias, url_prefix='/api')
+app.register_blueprint(estaciones, url_prefix='/api')
+app.register_blueprint(trabajador, url_prefix='/api')
+app.register_blueprint(login, url_prefix='/api')
+app.register_blueprint(logout, url_prefix='/api')
 
 if app.config["TESTING"] is False:
     if os.path.exists("./test.db"):

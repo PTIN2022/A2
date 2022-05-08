@@ -1,0 +1,13429 @@
+cscope 15 $HOME/Documentos/PTIN-GESYS/A2/cloud-service-api -q 0000000573 0000076205
+	@.venv/include/site/python3.10/greenlet/greenlet.h
+
+5 #i‚de‡
+Py_GREENLETOBJECT_H
+
+
+6 
+	#Py_GREENLETOBJECT_H
+
+
+	)
+
+8 
+	~<Pyth⁄.h
+>
+
+10 #ifde‡
+__˝lu•lus
+
+
+15 
+	#GREENLET_VERSION
+ "1.0.0"
+
+	)
+
+17 
+	s_gªíÀt
+ {
+
+18 
+PyObje˘_HEAD
+
+
+19 * 
+°ack_°¨t
+;
+
+20 * 
+°ack_°›
+;
+
+21 * 
+°ack_c›y
+;
+
+22 
+öçå_t
+ 
+°ack_ßved
+;
+
+23 
+_gªíÀt
+* 
+°ack_¥ev
+;
+
+24 
+_gªíÀt
+* 
+∑ª¡
+;
+
+25 
+PyObje˘
+* 
+run_öfo
+;
+
+26 
+_‰ame
+* 
+t›_‰ame
+;
+
+27 
+ªcursi⁄_dïth
+;
+
+28 
+PyObje˘
+* 
+wókªÊi°
+;
+
+29 #i‡
+PY_VERSION_HEX
+ >= 0x030700A3
+
+30 
+_PyEº_SèckIãm
+* 
+exc_öfo
+;
+
+31 
+_PyEº_SèckIãm
+ 
+exc_°©e
+;
+
+33 
+PyObje˘
+* 
+exc_ty≥
+;
+
+34 
+PyObje˘
+* 
+exc_vÆue
+;
+
+35 
+PyObje˘
+* 
+exc_åa˚back
+;
+
+37 
+PyObje˘
+* 
+di˘
+;
+
+38 #i‡
+PY_VERSION_HEX
+ >= 0x030700A3
+
+39 
+PyObje˘
+* 
+c⁄ãxt
+;
+
+41 #i‡
+PY_VERSION_HEX
+ >= 0x30A00B1
+
+42 
+CFøme
+* 
+c‰ame
+;
+
+44 } 
+	tPyGªíÀt
+;
+
+46 
+	#PyGªíÀt_Check
+(
+›
+Ë
+	`PyObje˘_Ty≥Check
+(›, &
+PyGªíÀt_Ty≥
+)
+
+	)
+
+47 
+	#PyGªíÀt_MAIN
+(
+›
+Ë(((
+PyGªíÀt
+*)(›))->
+°ack_°›
+ =(*)-1)
+
+	)
+
+48 
+	#PyGªíÀt_STARTED
+(
+›
+Ë(((
+PyGªíÀt
+*)(›))->
+°ack_°›
+ !
+NULL
+)
+
+	)
+
+49 
+	#PyGªíÀt_ACTIVE
+(
+›
+Ë(((
+PyGªíÀt
+*)(›))->
+°ack_°¨t
+ !
+NULL
+)
+
+	)
+
+50 
+	#PyGªíÀt_GET_PARENT
+(
+›
+Ë(((
+PyGªíÀt
+*)(›))->
+∑ª¡
+)
+
+	)
+
+55 
+	#PyGªíÀt_API_poöãrs
+ 8
+
+	)
+
+57 
+	#PyGªíÀt_Ty≥_NUM
+ 0
+
+	)
+
+58 
+	#PyExc_GªíÀtEº‹_NUM
+ 1
+
+	)
+
+59 
+	#PyExc_GªíÀtExô_NUM
+ 2
+
+	)
+
+61 
+	#PyGªíÀt_New_NUM
+ 3
+
+	)
+
+62 
+	#PyGªíÀt_GëCuºít_NUM
+ 4
+
+	)
+
+63 
+	#PyGªíÀt_Throw_NUM
+ 5
+
+	)
+
+64 
+	#PyGªíÀt_Swôch_NUM
+ 6
+
+	)
+
+65 
+	#PyGªíÀt_SëP¨ít_NUM
+ 7
+
+	)
+
+67 #i‚de‡
+GREENLET_MODULE
+
+
+69 ** 
+_PyGªíÀt_API
+ = 
+NULL
+;
+
+71 
+	#PyGªíÀt_Ty≥
+ \
+
+72 (*(
+PyTy≥Obje˘
+*)
+_PyGªíÀt_API
+[
+PyGªíÀt_Ty≥_NUM
+])
+
+	)
+
+74 
+	#PyExc_GªíÀtEº‹
+ \
+
+75 ((
+PyObje˘
+*)
+_PyGªíÀt_API
+[
+PyExc_GªíÀtEº‹_NUM
+])
+
+	)
+
+77 
+	#PyExc_GªíÀtExô
+ \
+
+78 ((
+PyObje˘
+*)
+_PyGªíÀt_API
+[
+PyExc_GªíÀtExô_NUM
+])
+
+	)
+
+85 
+	#PyGªíÀt_New
+ \
+
+86 (*(
+PyGªíÀt
+ * (*)(
+PyObje˘
+ * 
+run
+, PyGªíÀà* 
+∑ª¡
+)) \
+
+87 
+_PyGªíÀt_API
+[
+PyGªíÀt_New_NUM
+])
+
+	)
+
+94 
+	#PyGªíÀt_GëCuºít
+ \
+
+95 (*(
+PyGªíÀt
+ * (*)()Ë
+_PyGªíÀt_API
+[
+PyGªíÀt_GëCuºít_NUM
+])
+
+	)
+
+106 
+	#PyGªíÀt_Throw
+ \
+
+107 (*(
+PyObje˘
+ * (*)(
+PyGªíÀt
+ * 
+£lf
+, \
+
+108 
+PyObje˘
+ * 
+typ
+, \
+
+109 
+PyObje˘
+ * 
+vÆ
+, \
+
+110 
+PyObje˘
+ * 
+tb
+)) \
+
+111 
+_PyGªíÀt_API
+[
+PyGªíÀt_Throw_NUM
+])
+
+	)
+
+118 
+	#PyGªíÀt_Swôch
+ \
+
+119 (*(
+PyObje˘
+ * \
+
+120 (*)(
+PyGªíÀt
+ * 
+gªíÀt
+, 
+PyObje˘
+ * 
+¨gs
+, PyObje˘ * 
+kw¨gs
+)) \
+
+121 
+_PyGªíÀt_API
+[
+PyGªíÀt_Swôch_NUM
+])
+
+	)
+
+128 
+	#PyGªíÀt_SëP¨ít
+ \
+
+129 (*((*)(
+PyGªíÀt
+ * 
+gªíÀt
+, PyGªíÀà* 
+≈¨ít
+)) \
+
+130 
+_PyGªíÀt_API
+[
+PyGªíÀt_SëP¨ít_NUM
+])
+
+	)
+
+136 
+	#PyGªíÀt_Imp‹t
+() \
+
+138 
+_PyGªíÀt_API
+ = (**)
+	`PyC≠suÀ_Imp‹t
+("greenlet._C_API", 0); \
+
+139 }
+
+	)
+
+143 #ifde‡
+__˝lu•lus
+
+
+	@.venv/lib/python3.10/site-packages/greenlet/greenlet.c
+
+9 
+	#GREENLET_MODULE
+
+
+	)
+
+11 
+	~"gªíÀt.h
+"
+
+13 
+	~"°ru˘membî.h
+"
+
+15 #ifde‡
+__˛™g__
+
+
+16 #¥agm®
+˛™g
+ 
+dügno°ic
+ 
+push
+
+
+17 #¥agm®
+˛™g
+ 
+dügno°ic
+ 
+ign‹ed
+ "-Wunused-parameter"
+
+18 #¥agm®
+˛™g
+ 
+dügno°ic
+ 
+ign‹ed
+ "-Wmissing-field-initializers"
+
+91 
+PyTy≥Obje˘
+ 
+PyGªíÀt_Ty≥
+;
+
+93 #i‡
+PY_VERSION_HEX
+ >= 0x030700A3
+
+94 
+	#GREENLET_PY37
+ 1
+
+	)
+
+96 
+	#GREENLET_PY37
+ 0
+
+	)
+
+99 #i‡
+PY_VERSION_HEX
+ >= 0x30A00B1
+
+105 
+	#TSTATE_USE_TRACING
+(
+t°©e
+Ë—°©e->
+c‰ame
+->
+u£_åacög
+)
+
+	)
+
+106 
+	#GREENLET_USE_CFRAME
+ 1
+
+	)
+
+108 
+	#TSTATE_USE_TRACING
+(
+t°©e
+Ë—°©e->
+u£_åacög
+)
+
+	)
+
+109 
+	#GREENLET_USE_CFRAME
+ 0
+
+	)
+
+112 #i‚de‡
+Py_SET_REFCNT
+
+
+115 
+	#Py_SET_REFCNT
+(
+obj
+, 
+ªf˙t
+Ë
+	`Py_REFCNT
+(objË‘ef˙t)
+
+	)
+
+118 #i‚de‡
+_Py_DEC_REFTOTAL
+
+
+122 #ifde‡
+Py_REF_DEBUG
+
+
+123 
+	#_Py_DEC_REFTOTAL
+ 
+_Py_RefTŸÆ
+--
+
+	)
+
+125 
+	#_Py_DEC_REFTOTAL
+
+
+	)
+
+130 
+PyGªíÀt
+* vﬁ©ûê
+	gts_èrgë
+ = 
+NULL
+;
+
+132 
+PyGªíÀt
+* vﬁ©ûê
+	gts_‹igö
+ = 
+NULL
+;
+
+134 
+PyGªíÀt
+* vﬁ©ûê
+	gts_cuºít
+ = 
+NULL
+;
+
+136 
+PyObje˘
+* vﬁ©ûê
+	gts_∑sßround_¨gs
+ = 
+NULL
+;
+
+137 
+PyObje˘
+* vﬁ©ûê
+	gts_∑sßround_kw¨gs
+ = 
+NULL
+;
+
+140 #i‡
+GREENLET_USE_CFRAME
+
+
+141 vﬁ©ûê
+	gts__g_swôch°ack_u£_åacög
+ = 0;
+
+147 
+	#STATE_OK
+ \
+
+148 (
+ts_cuºít
+->
+run_öfo
+ =
+	`PyThªadSèã_GET
+()->
+di˘
+ || \
+
+149 !
+	`gªí_upd©ecuºít
+())
+
+	)
+
+151 
+PyObje˘
+* 
+	gts_curkey
+;
+
+152 
+PyObje˘
+* 
+	gts_dñkey
+;
+
+153 
+PyObje˘
+* 
+	gts_åa˚key
+;
+
+154 
+PyObje˘
+* 
+	gts_evít_swôch
+;
+
+155 
+PyObje˘
+* 
+	gts_evít_throw
+;
+
+156 
+PyObje˘
+* 
+	gPyExc_GªíÀtEº‹
+;
+
+157 
+PyObje˘
+* 
+	gPyExc_GªíÀtExô
+;
+
+158 
+PyObje˘
+* 
+	gts_em±y_tu∂e
+;
+
+159 
+PyObje˘
+* 
+	gts_em±y_di˘
+;
+
+161 
+	#GREENLET_GC_FLAGS
+ 
+Py_TPFLAGS_HAVE_GC
+
+
+	)
+
+162 
+	#GREENLET_ç_Æloc
+ 
+PyTy≥_GíîicAŒoc
+
+
+	)
+
+163 
+	#GREENLET_ç_‰ì
+ 
+PyObje˘_GC_Dñ
+
+
+	)
+
+164 
+	#GREENLET_ç_åavî£
+ 
+gªí_åavî£
+
+
+	)
+
+165 
+	#GREENLET_ç_˛ór
+ 
+gªí_˛ór
+
+
+	)
+
+166 
+	#GREENLET_ç_is_gc
+ 
+gªí_is_gc
+
+
+	)
+
+169 
+	$gªí_˛ór_exc
+(
+PyGªíÀt
+* 
+g
+)
+
+171 #i‡
+GREENLET_PY37
+
+
+172 
+g
+->
+exc_öfo
+ = 
+NULL
+;
+
+173 
+g
+->
+exc_°©e
+.
+exc_ty≥
+ = 
+NULL
+;
+
+174 
+g
+->
+exc_°©e
+.
+exc_vÆue
+ = 
+NULL
+;
+
+175 
+g
+->
+exc_°©e
+.
+exc_åa˚back
+ = 
+NULL
+;
+
+176 
+g
+->
+exc_°©e
+.
+¥evious_ôem
+ = 
+NULL
+;
+
+178 
+g
+->
+exc_ty≥
+ = 
+NULL
+;
+
+179 
+g
+->
+exc_vÆue
+ = 
+NULL
+;
+
+180 
+g
+->
+exc_åa˚back
+ = 
+NULL
+;
+
+182 
+	}
+}
+
+184 
+PyGªíÀt
+*
+
+185 
+	$gªí_¸óã_maö
+()
+
+187 
+PyGªíÀt
+* 
+gmaö
+;
+
+188 
+PyObje˘
+* 
+di˘
+ = 
+	`PyThªadSèã_GëDi˘
+();
+
+189 i‡(
+di˘
+ =
+NULL
+) {
+
+190 i‡(!
+	`PyEº_Occuºed
+()) {
+
+191 
+	`PyEº_NoMem‹y
+();
+
+193  
+NULL
+;
+
+197 
+gmaö
+ = (
+PyGªíÀt
+*)
+	`PyTy≥_GíîicAŒoc
+(&
+PyGªíÀt_Ty≥
+, 0);
+
+198 i‡(
+gmaö
+ =
+NULL
+) {
+
+199  
+NULL
+;
+
+201 
+gmaö
+->
+°ack_°¨t
+ = (*)1;
+
+202 
+gmaö
+->
+°ack_°›
+ = (*)-1;
+
+204 
+gmaö
+->
+run_öfo
+ = 
+di˘
+;
+
+205 
+	`Py_INCREF
+(
+di˘
+);
+
+206  
+gmaö
+;
+
+207 
+	}
+}
+
+210 
+	$gªí_upd©ecuºít
+()
+
+212 
+PyObje˘
+ *
+exc
+, *
+vÆ
+, *
+tb
+;
+
+213 
+PyThªadSèã
+* 
+t°©e
+;
+
+214 
+PyGªíÀt
+* 
+cuºít
+;
+
+215 
+PyGªíÀt
+* 
+¥evious
+;
+
+216 
+PyObje˘
+* 
+dñëeme
+;
+
+218 
+gªí_upd©ecuºít_ª°¨t
+:
+
+220 
+	`PyEº_Fëch
+(&
+exc
+, &
+vÆ
+, &
+tb
+);
+
+223 
+t°©e
+ = 
+	`PyThªadSèã_GET
+();
+
+224 i‡(
+t°©e
+->
+di˘
+ &&
+
+225 (
+cuºít
+ = (
+PyGªíÀt
+*)
+	`PyDi˘_GëIãm
+(
+t°©e
+->
+di˘
+, 
+ts_curkey
+))) {
+
+227 
+	`Py_INCREF
+(
+cuºít
+);
+
+228 
+	`PyDi˘_DñIãm
+(
+t°©e
+->
+di˘
+, 
+ts_curkey
+);
+
+232 
+cuºít
+ = 
+	`gªí_¸óã_maö
+();
+
+233 i‡(
+cuºít
+ =
+NULL
+) {
+
+234 
+	`Py_XDECREF
+(
+exc
+);
+
+235 
+	`Py_XDECREF
+(
+vÆ
+);
+
+236 
+	`Py_XDECREF
+(
+tb
+);
+
+240 
+	`as£π
+(
+cuºít
+->
+run_öfo
+ =
+t°©e
+->
+di˘
+);
+
+242 
+gªí_upd©ecuºít_ªåy
+:
+
+244 
+	`Py_INCREF
+(
+cuºít
+);
+
+245 
+¥evious
+ = 
+ts_cuºít
+;
+
+246 
+ts_cuºít
+ = 
+cuºít
+;
+
+249 i‡(
+	`PyDi˘_SëIãm
+(
+¥evious
+->
+run_öfo
+, 
+ts_curkey
+, (
+PyObje˘
+*)previous)) {
+
+250 
+	`Py_DECREF
+(
+¥evious
+);
+
+251 
+	`Py_DECREF
+(
+cuºít
+);
+
+252 
+	`Py_XDECREF
+(
+exc
+);
+
+253 
+	`Py_XDECREF
+(
+vÆ
+);
+
+254 
+	`Py_XDECREF
+(
+tb
+);
+
+257 
+	`Py_DECREF
+(
+¥evious
+);
+
+261 
+dñëeme
+ = 
+	`PyDi˘_GëIãm
+(
+t°©e
+->
+di˘
+, 
+ts_dñkey
+);
+
+262 i‡(
+dñëeme
+ !
+NULL
+) {
+
+268 
+	`PyLi°_SëSli˚
+(
+dñëeme
+, 0, 
+INT_MAX
+, 
+NULL
+);
+
+271 i‡(
+ts_cuºít
+ !
+cuºít
+) {
+
+275 
+	`PyDi˘_DñIãm
+(
+t°©e
+->
+di˘
+, 
+ts_curkey
+);
+
+276 
+gªí_upd©ecuºít_ªåy
+;
+
+280 
+	`Py_DECREF
+(
+cuºít
+);
+
+282 
+	`PyEº_Re°‹e
+(
+exc
+, 
+vÆ
+, 
+tb
+);
+
+286 i‡(
+ts_cuºít
+->
+run_öfo
+ !
+t°©e
+->
+di˘
+) {
+
+287 
+gªí_upd©ecuºít_ª°¨t
+;
+
+290 
+	}
+}
+
+292 
+PyObje˘
+*
+
+293 
+	$gªí_°©edi˘
+(
+PyGªíÀt
+* 
+g
+)
+
+295 !
+	`PyGªíÀt_STARTED
+(
+g
+)) {
+
+296 
+g
+ = g->
+∑ª¡
+;
+
+297 i‡(
+g
+ =
+NULL
+) {
+
+299  
+NULL
+;
+
+302  
+g
+->
+run_öfo
+;
+
+303 
+	}
+}
+
+317 #i‡
+deföed
+(
+__GNUC__
+) && \
+
+318 (
+	g__GNUC__
+ > 3 || (__GNUC__ =3 && 
+__GNUC_MINOR__
+ >= 4))
+
+319 
+	#GREENLET_NOINLINE_SUPPORTED
+
+
+	)
+
+320 
+	#GREENLET_NOINLINE
+(
+«me
+Ë
+	`__©åibuã__
+((
+noölöe
+)Ë
+	)
+name
+
+321 #ñi‡
+deföed
+(
+_MSC_VER
+) && (_MSC_VER >= 1300)
+
+322 
+	#GREENLET_NOINLINE_SUPPORTED
+
+
+	)
+
+323 
+	#GREENLET_NOINLINE
+(
+«me
+Ë
+	`__de˛•ec
+(
+noölöe
+Ë
+	)
+name
+
+326 #ifde‡
+GREENLET_NOINLINE_SUPPORTED
+
+
+328 
+	$GREENLET_NOINLINE
+(
+¶p_ª°‹e_°©e
+)();
+
+329 
+	$GREENLET_NOINLINE
+(
+¶p_ßve_°©e
+)(*);
+
+330 #i‡!(
+	`deföed
+(
+MS_WIN64
+Ë&& deföed(
+_M_X64
+))
+
+331 
+	$GREENLET_NOINLINE
+(
+¶p_swôch
+)();
+
+333 
+	$GREENLET_NOINLINE
+(
+g_öôül°ub
+)(*);
+
+334 
+	#GREENLET_NOINLINE_INIT
+() \
+
+336 
+	}
+} 0)
+
+	)
+
+339 (*
+¶p_ª°‹e_°©e
+)();
+
+340 (*
+¶p_ßve_°©e
+)(*);
+
+341 (*
+¶p_swôch
+)();
+
+342 (*
+g_öôül°ub
+)(*);
+
+343 
+	#GREENLET_NOINLINE
+(
+«me
+Ë
+ˇ¬Ÿ_ölöe_
+##
+	)
+name
+
+344 
+	#GREENLET_NOINLINE_INIT
+() \
+
+346 
+¶p_ª°‹e_°©e
+ = 
+	`GREENLET_NOINLINE
+(slp_restore_state); \
+
+347 
+¶p_ßve_°©e
+ = 
+	`GREENLET_NOINLINE
+(slp_save_state); \
+
+348 
+¶p_swôch
+ = 
+	`GREENLET_NOINLINE
+(slp_switch); \
+
+349 
+g_öôül°ub
+ = 
+	`GREENLET_NOINLINE
+(g_initialstub); \
+
+350 
+	}
+} 0)
+
+	)
+
+358 
+	#SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+) \
+
+359 
+°ackªf
+ +
+STACK_MAGIC
+; \
+
+360 i‡(
+	`¶p_ßve_°©e
+((*)
+°ackªf
+)) \
+
+362 i‡(!
+	`PyGªíÀt_ACTIVE
+(
+ts_èrgë
+)) \
+
+364 
+°sizediff
+ = 
+ts_èrgë
+->
+°ack_°¨t
+ - (*)
+°ackªf
+
+
+	)
+
+366 
+	#SLP_RESTORE_STATE
+(Ë
+	`¶p_ª°‹e_°©e
+()
+
+	)
+
+368 
+	#SLP_EVAL
+
+
+	)
+
+369 
+	#¶p_swôch
+ 
+	`GREENLET_NOINLINE
+(
+¶p_swôch
+)
+
+	)
+
+370 
+	~"¶p_∂©f‹m£À˘.h
+"
+
+371 #unde‡
+¶p_swôch
+
+
+373 #i‚de‡
+STACK_MAGIC
+
+
+378 #ifde‡
+EXTERNAL_ASM
+
+
+384 
+öçå_t
+
+
+385 
+	$¶p_ßve_°©e_asm
+(
+öçå_t
+* 
+ªf
+)
+
+387 
+öçå_t
+ 
+diff
+;
+
+388 
+	`SLP_SAVE_STATE
+(
+ªf
+, 
+diff
+);
+
+389  
+diff
+;
+
+390 
+	}
+}
+
+393 
+	$¶p_ª°‹e_°©e_asm
+()
+
+395 
+	`SLP_RESTORE_STATE
+();
+
+396 
+	}
+}
+
+399 
+¶p_swôch
+();
+
+406 
+	$g_ßve
+(
+PyGªíÀt
+* 
+g
+, * 
+°›
+)
+
+420 
+öçå_t
+ 
+sz1
+ = 
+g
+->
+°ack_ßved
+;
+
+421 
+öçå_t
+ 
+sz2
+ = 
+°›
+ - 
+g
+->
+°ack_°¨t
+;
+
+422 
+	`as£π
+(
+g
+->
+°ack_°¨t
+ !
+NULL
+);
+
+423 i‡(
+sz2
+ > 
+sz1
+) {
+
+424 * 
+c
+ = (*)
+	`PyMem_RóŒoc
+(
+g
+->
+°ack_c›y
+, 
+sz2
+);
+
+425 i‡(!
+c
+) {
+
+426 
+	`PyEº_NoMem‹y
+();
+
+429 
+	`mem˝y
+(
+c
+ + 
+sz1
+, 
+g
+->
+°ack_°¨t
+ + sz1, 
+sz2
+ - sz1);
+
+430 
+g
+->
+°ack_c›y
+ = 
+c
+;
+
+431 
+g
+->
+°ack_ßved
+ = 
+sz2
+;
+
+434 
+	}
+}
+
+436 
+	$GREENLET_NOINLINE
+(
+¶p_ª°‹e_°©e
+)()
+
+438 
+PyGªíÀt
+* 
+g
+ = 
+ts_èrgë
+;
+
+439 
+PyGªíÀt
+* 
+ow√r
+ = 
+ts_cuºít
+;
+
+441 #ifde‡
+SLP_BEFORE_RESTORE_STATE
+
+
+442 
+	`SLP_BEFORE_RESTORE_STATE
+();
+
+446 i‡(
+g
+->
+°ack_ßved
+ != 0) {
+
+447 
+	`mem˝y
+(
+g
+->
+°ack_°¨t
+, g->
+°ack_c›y
+, g->
+°ack_ßved
+);
+
+448 
+	`PyMem_Fªe
+(
+g
+->
+°ack_c›y
+);
+
+449 
+g
+->
+°ack_c›y
+ = 
+NULL
+;
+
+450 
+g
+->
+°ack_ßved
+ = 0;
+
+452 i‡(
+ow√r
+->
+°ack_°¨t
+ =
+NULL
+) {
+
+453 
+ow√r
+ = ow√r->
+°ack_¥ev
+;
+
+455 
+ow√r
+ && ow√r->
+°ack_°›
+ <
+g
+->stack_stop) {
+
+456 
+ow√r
+ = ow√r->
+°ack_¥ev
+;
+
+458 
+g
+->
+°ack_¥ev
+ = 
+ow√r
+;
+
+459 
+	}
+}
+
+461 
+	$GREENLET_NOINLINE
+(
+¶p_ßve_°©e
+)(* 
+°ackªf
+)
+
+464 * 
+èrgë_°›
+ = 
+ts_èrgë
+->
+°ack_°›
+;
+
+465 
+PyGªíÀt
+* 
+ow√r
+ = 
+ts_cuºít
+;
+
+466 
+	`as£π
+(
+ow√r
+->
+°ack_ßved
+ == 0);
+
+467 i‡(
+ow√r
+->
+°ack_°¨t
+ =
+NULL
+) {
+
+468 
+ow√r
+ = ow√r->
+°ack_¥ev
+;
+
+471 
+ow√r
+->
+°ack_°¨t
+ = 
+°ackªf
+;
+
+474 #ifde‡
+SLP_BEFORE_SAVE_STATE
+
+
+475 
+	`SLP_BEFORE_SAVE_STATE
+();
+
+478 
+ow√r
+->
+°ack_°›
+ < 
+èrgë_°›
+) {
+
+480 i‡(
+	`g_ßve
+(
+ow√r
+, ow√r->
+°ack_°›
+)) {
+
+483 
+ow√r
+ = ow√r->
+°ack_¥ev
+;
+
+485 i‡(
+ow√r
+ !
+ts_èrgë
+) {
+
+486 i‡(
+	`g_ßve
+(
+ow√r
+, 
+èrgë_°›
+)) {
+
+491 
+	}
+}
+
+522 
+	$g_swôch°ack
+()
+
+524 
+îr
+;
+
+526 
+PyGªíÀt
+* 
+cuºít
+ = 
+ts_cuºít
+;
+
+527 
+PyThªadSèã
+* 
+t°©e
+ = 
+	`PyThªadSèã_GET
+();
+
+528 
+cuºít
+->
+ªcursi⁄_dïth
+ = 
+t°©e
+->recursion_depth;
+
+529 
+cuºít
+->
+t›_‰ame
+ = 
+t°©e
+->
+‰ame
+;
+
+530 #i‡
+GREENLET_PY37
+
+
+531 
+cuºít
+->
+c⁄ãxt
+ = 
+t°©e
+->context;
+
+533 #i‡
+GREENLET_PY37
+
+
+534 
+cuºít
+->
+exc_öfo
+ = 
+t°©e
+->exc_info;
+
+535 
+cuºít
+->
+exc_°©e
+ = 
+t°©e
+->exc_state;
+
+537 
+cuºít
+->
+exc_ty≥
+ = 
+t°©e
+->exc_type;
+
+538 
+cuºít
+->
+exc_vÆue
+ = 
+t°©e
+->exc_value;
+
+539 
+cuºít
+->
+exc_åa˚back
+ = 
+t°©e
+->exc_traceback;
+
+541 #i‡
+GREENLET_USE_CFRAME
+
+
+552 
+cuºít
+->
+c‰ame
+ = 
+t°©e
+->cframe;
+
+553 
+ts__g_swôch°ack_u£_åacög
+ = 
+t°©e
+->
+c‰ame
+->
+u£_åacög
+;
+
+557 
+îr
+ = 
+	`¶p_swôch
+();
+
+559 i‡(
+îr
+ < 0) {
+
+560 
+PyGªíÀt
+* 
+cuºít
+ = 
+ts_cuºít
+;
+
+561 
+cuºít
+->
+t›_‰ame
+ = 
+NULL
+;
+
+562 #i‡
+GREENLET_PY37
+
+
+563 
+	`gªí_˛ór_exc
+(
+cuºít
+);
+
+565 
+cuºít
+->
+exc_ty≥
+ = 
+NULL
+;
+
+566 
+cuºít
+->
+exc_vÆue
+ = 
+NULL
+;
+
+567 
+cuºít
+->
+exc_åa˚back
+ = 
+NULL
+;
+
+570 
+	`as£π
+(
+ts_‹igö
+ =
+NULL
+);
+
+571 
+ts_èrgë
+ = 
+NULL
+;
+
+574 
+PyGªíÀt
+* 
+èrgë
+ = 
+ts_èrgë
+;
+
+575 
+PyGªíÀt
+* 
+‹igö
+ = 
+ts_cuºít
+;
+
+576 
+PyThªadSèã
+* 
+t°©e
+ = 
+	`PyThªadSèã_GET
+();
+
+577 
+t°©e
+->
+ªcursi⁄_dïth
+ = 
+èrgë
+->recursion_depth;
+
+578 
+t°©e
+->
+‰ame
+ = 
+èrgë
+->
+t›_‰ame
+;
+
+579 
+èrgë
+->
+t›_‰ame
+ = 
+NULL
+;
+
+581 #i‡
+GREENLET_PY37
+
+
+582 
+t°©e
+->
+c⁄ãxt
+ = 
+èrgë
+->context;
+
+583 
+èrgë
+->
+c⁄ãxt
+ = 
+NULL
+;
+
+586 
+t°©e
+->
+c⁄ãxt_vî
+++;
+
+589 #i‡
+GREENLET_PY37
+
+
+590 
+t°©e
+->
+exc_°©e
+ = 
+èrgë
+->exc_state;
+
+591 
+t°©e
+->
+exc_öfo
+ =
+
+592 
+èrgë
+->
+exc_öfo
+ ?Å¨gë->exc_öfÿ: &
+t°©e
+->
+exc_°©e
+;
+
+594 
+t°©e
+->
+exc_ty≥
+ = 
+èrgë
+->exc_type;
+
+595 
+t°©e
+->
+exc_vÆue
+ = 
+èrgë
+->exc_value;
+
+596 
+t°©e
+->
+exc_åa˚back
+ = 
+èrgë
+->exc_traceback;
+
+598 
+	`gªí_˛ór_exc
+(
+èrgë
+);
+
+600 #i‡
+GREENLET_USE_CFRAME
+
+
+601 
+t°©e
+->
+c‰ame
+ = 
+èrgë
+->cframe;
+
+608 
+t°©e
+->
+c‰ame
+->
+u£_åacög
+ = 
+ts__g_swôch°ack_u£_åacög
+;
+
+611 
+	`as£π
+(
+ts_‹igö
+ =
+NULL
+);
+
+612 
+	`Py_INCREF
+(
+èrgë
+);
+
+613 
+ts_cuºít
+ = 
+èrgë
+;
+
+614 
+ts_‹igö
+ = 
+‹igö
+;
+
+615 
+ts_èrgë
+ = 
+NULL
+;
+
+617  
+îr
+;
+
+618 
+	}
+}
+
+621 
+	$g_ˇŒåa˚
+(
+PyObje˘
+* 
+åa˚func
+, PyObje˘* 
+evít
+, 
+PyGªíÀt
+* 
+‹igö
+,
+
+622 
+PyGªíÀt
+* 
+èrgë
+)
+
+624 
+PyObje˘
+* 
+ªtvÆ
+;
+
+625 
+PyObje˘
+ *
+exc_ty≥
+, *
+exc_vÆ
+, *
+exc_tb
+;
+
+626 
+PyThªadSèã
+* 
+t°©e
+;
+
+627 
+	`PyEº_Fëch
+(&
+exc_ty≥
+, &
+exc_vÆ
+, &
+exc_tb
+);
+
+628 
+t°©e
+ = 
+	`PyThªadSèã_GET
+();
+
+629 
+t°©e
+->
+åacög
+++;
+
+630 
+	`TSTATE_USE_TRACING
+(
+t°©e
+) = 0;
+
+631 
+ªtvÆ
+ = 
+	`PyObje˘_CÆlFun˘i⁄
+(
+åa˚func
+, "O(OO)", 
+evít
+, 
+‹igö
+, 
+èrgë
+);
+
+632 
+t°©e
+->
+åacög
+--;
+
+633 
+	`TSTATE_USE_TRACING
+(
+t°©e
+) =
+
+634 (
+t°©e
+->
+åacög
+ <= 0 &&
+
+635 ((
+t°©e
+->
+c_åa˚func
+ !
+NULL
+Ë|| (t°©e->
+c_¥ofûefunc
+ != NULL)));
+
+636 i‡(
+ªtvÆ
+ =
+NULL
+) {
+
+638 i‡(
+	`PyDi˘_GëIãm
+(
+t°©e
+->
+di˘
+, 
+ts_åa˚key
+)) {
+
+639 
+	`PyDi˘_DñIãm
+(
+t°©e
+->
+di˘
+, 
+ts_åa˚key
+);
+
+641 
+	`Py_XDECREF
+(
+exc_ty≥
+);
+
+642 
+	`Py_XDECREF
+(
+exc_vÆ
+);
+
+643 
+	`Py_XDECREF
+(
+exc_tb
+);
+
+647 
+	`Py_DECREF
+(
+ªtvÆ
+);
+
+649 
+	`PyEº_Re°‹e
+(
+exc_ty≥
+, 
+exc_vÆ
+, 
+exc_tb
+);
+
+651 
+	}
+}
+
+653 
+PyObje˘
+*
+
+654 
+	$g_swôch
+(
+PyGªíÀt
+* 
+èrgë
+, 
+PyObje˘
+* 
+¨gs
+, PyObje˘* 
+kw¨gs
+)
+
+658 
+îr
+ = 0;
+
+659 
+PyObje˘
+* 
+run_öfo
+;
+
+662 i‡(!
+STATE_OK
+) {
+
+663 
+	`Py_XDECREF
+(
+¨gs
+);
+
+664 
+	`Py_XDECREF
+(
+kw¨gs
+);
+
+665  
+NULL
+;
+
+667 
+run_öfo
+ = 
+	`gªí_°©edi˘
+(
+èrgë
+);
+
+668 i‡(
+run_öfo
+ =
+NULL
+ ||Ñun_öfÿ!
+ts_cuºít
+->run_info) {
+
+669 
+	`Py_XDECREF
+(
+¨gs
+);
+
+670 
+	`Py_XDECREF
+(
+kw¨gs
+);
+
+671 
+	`PyEº_SëSåög
+(
+PyExc_GªíÀtEº‹
+,
+
+672 
+run_öfo
+ ?
+
+675  
+NULL
+;
+
+678 
+ts_∑sßround_¨gs
+ = 
+¨gs
+;
+
+679 
+ts_∑sßround_kw¨gs
+ = 
+kw¨gs
+;
+
+683 
+èrgë
+) {
+
+684 i‡(
+	`PyGªíÀt_ACTIVE
+(
+èrgë
+)) {
+
+685 
+ts_èrgë
+ = 
+èrgë
+;
+
+686 
+îr
+ = 
+	`g_swôch°ack
+();
+
+689 i‡(!
+	`PyGªíÀt_STARTED
+(
+èrgë
+)) {
+
+690 * 
+dummym¨kî
+;
+
+691 
+ts_èrgë
+ = 
+èrgë
+;
+
+692 
+îr
+ = 
+	`g_öôül°ub
+(&
+dummym¨kî
+);
+
+693 i‡(
+îr
+ == 1) {
+
+698 
+èrgë
+ =Å¨gë->
+∑ª¡
+;
+
+705 
+¨gs
+ = 
+ts_∑sßround_¨gs
+;
+
+706 
+ts_∑sßround_¨gs
+ = 
+NULL
+;
+
+707 
+kw¨gs
+ = 
+ts_∑sßround_kw¨gs
+;
+
+708 
+ts_∑sßround_kw¨gs
+ = 
+NULL
+;
+
+709 i‡(
+îr
+ < 0) {
+
+711 
+	`as£π
+(
+ts_‹igö
+ =
+NULL
+);
+
+712 
+	`Py_CLEAR
+(
+kw¨gs
+);
+
+713 
+	`Py_CLEAR
+(
+¨gs
+);
+
+716 
+PyGªíÀt
+* 
+‹igö
+;
+
+717 
+PyGªíÀt
+* 
+cuºít
+;
+
+718 
+PyObje˘
+* 
+åa˚func
+;
+
+719 
+‹igö
+ = 
+ts_‹igö
+;
+
+720 
+ts_‹igö
+ = 
+NULL
+;
+
+721 
+cuºít
+ = 
+ts_cuºít
+;
+
+722 i‡((
+åa˚func
+ = 
+	`PyDi˘_GëIãm
+(
+cuºít
+->
+run_öfo
+, 
+ts_åa˚key
+)Ë!
+NULL
+) {
+
+723 
+	`Py_INCREF
+(
+åa˚func
+);
+
+724 i‡(
+	`g_ˇŒåa˚
+(
+åa˚func
+,
+
+725 
+¨gs
+ ? 
+ts_evít_swôch
+ : 
+ts_evít_throw
+,
+
+726 
+‹igö
+,
+
+727 
+cuºít
+) < 0) {
+
+729 
+	`Py_CLEAR
+(
+kw¨gs
+);
+
+730 
+	`Py_CLEAR
+(
+¨gs
+);
+
+732 
+	`Py_DECREF
+(
+åa˚func
+);
+
+735 
+	`Py_DECREF
+(
+‹igö
+);
+
+744 i‡(
+kw¨gs
+ =
+NULL
+) {
+
+745  
+¨gs
+;
+
+747 i‡(
+	`PyDi˘_Size
+(
+kw¨gs
+) == 0) {
+
+748 
+	`Py_DECREF
+(
+kw¨gs
+);
+
+749  
+¨gs
+;
+
+751 i‡(
+	`PySequí˚_Lígth
+(
+¨gs
+) == 0) {
+
+752 
+	`Py_DECREF
+(
+¨gs
+);
+
+753  
+kw¨gs
+;
+
+756 
+PyObje˘
+* 
+tu∂e
+ = 
+	`PyTu∂e_New
+(2);
+
+757 i‡(
+tu∂e
+ =
+NULL
+) {
+
+758 
+	`Py_DECREF
+(
+¨gs
+);
+
+759 
+	`Py_DECREF
+(
+kw¨gs
+);
+
+760  
+NULL
+;
+
+762 
+	`PyTu∂e_SET_ITEM
+(
+tu∂e
+, 0, 
+¨gs
+);
+
+763 
+	`PyTu∂e_SET_ITEM
+(
+tu∂e
+, 1, 
+kw¨gs
+);
+
+764  
+tu∂e
+;
+
+766 
+	}
+}
+
+768 
+PyObje˘
+*
+
+769 
+	$g_h™dÀ_exô
+(
+PyObje˘
+* 
+ªsu…
+)
+
+771 i‡(
+ªsu…
+ =
+NULL
+ && 
+	`PyEº_Ex˚±i⁄M©ches
+(
+PyExc_GªíÀtExô
+)) {
+
+773 
+PyObje˘
+ *
+exc
+, *
+vÆ
+, *
+tb
+;
+
+774 
+	`PyEº_Fëch
+(&
+exc
+, &
+vÆ
+, &
+tb
+);
+
+775 i‡(
+vÆ
+ =
+NULL
+) {
+
+776 
+	`Py_INCREF
+(
+Py_N⁄e
+);
+
+777 
+vÆ
+ = 
+Py_N⁄e
+;
+
+779 
+ªsu…
+ = 
+vÆ
+;
+
+780 
+	`Py_DECREF
+(
+exc
+);
+
+781 
+	`Py_XDECREF
+(
+tb
+);
+
+783 i‡(
+ªsu…
+ !
+NULL
+) {
+
+785 
+PyObje˘
+* 
+r
+ = 
+ªsu…
+;
+
+786 
+ªsu…
+ = 
+	`PyTu∂e_New
+(1);
+
+787 i‡(
+ªsu…
+) {
+
+788 
+	`PyTu∂e_SET_ITEM
+(
+ªsu…
+, 0, 
+r
+);
+
+791 
+	`Py_DECREF
+(
+r
+);
+
+794  
+ªsu…
+;
+
+795 
+	}
+}
+
+797 
+	$GREENLET_NOINLINE
+(
+g_öôül°ub
+)(* 
+m¨k
+)
+
+799 
+îr
+;
+
+800 
+PyObje˘
+ *
+o
+, *
+run
+;
+
+801 
+PyObje˘
+ *
+exc
+, *
+vÆ
+, *
+tb
+;
+
+802 
+PyObje˘
+* 
+run_öfo
+;
+
+803 
+PyGªíÀt
+* 
+£lf
+ = 
+ts_èrgë
+;
+
+804 
+PyObje˘
+* 
+¨gs
+ = 
+ts_∑sßround_¨gs
+;
+
+805 
+PyObje˘
+* 
+kw¨gs
+ = 
+ts_∑sßround_kw¨gs
+;
+
+806 #i‡
+GREENLET_USE_CFRAME
+
+
+813 
+CFøme
+ 
+åa˚_öfo
+;
+
+816 
+	`PyEº_Fëch
+(&
+exc
+, &
+vÆ
+, &
+tb
+);
+
+818 
+run
+ = 
+	`PyObje˘_GëAârSåög
+((
+PyObje˘
+*)
+£lf
+, "run");
+
+819 i‡(
+run
+ =
+NULL
+) {
+
+820 
+	`Py_XDECREF
+(
+exc
+);
+
+821 
+	`Py_XDECREF
+(
+vÆ
+);
+
+822 
+	`Py_XDECREF
+(
+tb
+);
+
+826 
+	`PyEº_Re°‹e
+(
+exc
+, 
+vÆ
+, 
+tb
+);
+
+829 i‡(!
+STATE_OK
+) {
+
+830 
+	`Py_DECREF
+(
+run
+);
+
+835 
+run_öfo
+ = 
+	`gªí_°©edi˘
+(
+£lf
+);
+
+836 i‡(
+run_öfo
+ =
+NULL
+ ||Ñun_öfÿ!
+ts_cuºít
+->run_info) {
+
+837 
+	`Py_DECREF
+(
+run
+);
+
+838 
+	`PyEº_SëSåög
+(
+PyExc_GªíÀtEº‹
+,
+
+839 
+run_öfo
+ ?
+
+848 i‡(
+	`PyGªíÀt_STARTED
+(
+£lf
+)) {
+
+849 
+	`Py_DECREF
+(
+run
+);
+
+850 
+ts_∑sßround_¨gs
+ = 
+¨gs
+;
+
+851 
+ts_∑sßround_kw¨gs
+ = 
+kw¨gs
+;
+
+855 #i‡
+GREENLET_USE_CFRAME
+
+
+857 
+åa˚_öfo
+ = *
+	`PyThªadSèã_GET
+()->
+c‰ame
+;
+
+859 
+£lf
+->
+c‰ame
+ = &
+åa˚_öfo
+;
+
+864 
+£lf
+->
+c‰ame
+->
+¥evious
+ = &
+	`PyThªadSèã_GET
+()->
+roŸ_c‰ame
+;
+
+867 
+£lf
+->
+°ack_°¨t
+ = 
+NULL
+;
+
+868 
+£lf
+->
+°ack_°›
+ = (*)
+m¨k
+;
+
+869 i‡(
+ts_cuºít
+->
+°ack_°¨t
+ =
+NULL
+) {
+
+871 
+£lf
+->
+°ack_¥ev
+ = 
+ts_cuºít
+->stack_prev;
+
+874 
+£lf
+->
+°ack_¥ev
+ = 
+ts_cuºít
+;
+
+876 
+£lf
+->
+t›_‰ame
+ = 
+NULL
+;
+
+877 
+	`gªí_˛ór_exc
+(
+£lf
+);
+
+878 
+£lf
+->
+ªcursi⁄_dïth
+ = 
+	`PyThªadSèã_GET
+()->recursion_depth;
+
+881 
+ts_èrgë
+ = 
+£lf
+;
+
+882 
+ts_∑sßround_¨gs
+ = 
+¨gs
+;
+
+883 
+ts_∑sßround_kw¨gs
+ = 
+kw¨gs
+;
+
+886 
+îr
+ = 
+	`g_swôch°ack
+();
+
+892 i‡(
+îr
+ == 1) {
+
+894 
+PyGªíÀt
+* 
+‹igö
+;
+
+895 
+PyObje˘
+* 
+åa˚func
+;
+
+896 
+PyObje˘
+* 
+ªsu…
+;
+
+897 
+PyGªíÀt
+* 
+∑ª¡
+;
+
+898 
+£lf
+->
+°ack_°¨t
+ = (*)1;
+
+901 
+‹igö
+ = 
+ts_‹igö
+;
+
+902 
+ts_‹igö
+ = 
+NULL
+;
+
+905 
+o
+ = 
+£lf
+->
+run_öfo
+;
+
+906 
+£lf
+->
+run_öfo
+ = 
+	`gªí_°©edi˘
+(£lf->
+∑ª¡
+);
+
+907 
+	`Py_INCREF
+(
+£lf
+->
+run_öfo
+);
+
+908 
+	`Py_XDECREF
+(
+o
+);
+
+910 i‡((
+åa˚func
+ = 
+	`PyDi˘_GëIãm
+(
+£lf
+->
+run_öfo
+, 
+ts_åa˚key
+)Ë!
+NULL
+) {
+
+911 
+	`Py_INCREF
+(
+åa˚func
+);
+
+912 i‡(
+	`g_ˇŒåa˚
+(
+åa˚func
+,
+
+913 
+¨gs
+ ? 
+ts_evít_swôch
+ : 
+ts_evít_throw
+,
+
+914 
+‹igö
+,
+
+915 
+£lf
+) < 0) {
+
+917 
+	`Py_CLEAR
+(
+kw¨gs
+);
+
+918 
+	`Py_CLEAR
+(
+¨gs
+);
+
+920 
+	`Py_DECREF
+(
+åa˚func
+);
+
+923 
+	`Py_DECREF
+(
+‹igö
+);
+
+925 i‡(
+¨gs
+ =
+NULL
+) {
+
+927 
+ªsu…
+ = 
+NULL
+;
+
+931 
+ªsu…
+ = 
+	`PyObje˘_CÆl
+(
+run
+, 
+¨gs
+, 
+kw¨gs
+);
+
+932 
+	`Py_DECREF
+(
+¨gs
+);
+
+933 
+	`Py_XDECREF
+(
+kw¨gs
+);
+
+935 
+	`Py_DECREF
+(
+run
+);
+
+936 
+ªsu…
+ = 
+	`g_h™dÀ_exô
+(result);
+
+939 
+£lf
+->
+°ack_°¨t
+ = 
+NULL
+;
+
+940 
+∑ª¡
+ = 
+£lf
+->∑ª¡;Ö¨íà!
+NULL
+;Öarent =Öarent->parent) {
+
+941 
+ªsu…
+ = 
+	`g_swôch
+(
+∑ª¡
+,Ñesu…, 
+NULL
+);
+
+946 
+	`as£π
+(
+ªsu…
+ =
+NULL
+);
+
+949 
+	`PyEº_WrôeUƒaißbÀ
+((
+PyObje˘
+*)
+£lf
+);
+
+950 
+	`Py_F©ÆEº‹
+("greenlets cannot continue");
+
+953 i‡(
+îr
+ < 0) {
+
+955 
+£lf
+->
+°ack_°¨t
+ = 
+NULL
+;
+
+956 
+£lf
+->
+°ack_°›
+ = 
+NULL
+;
+
+957 
+£lf
+->
+°ack_¥ev
+ = 
+NULL
+;
+
+959  
+îr
+;
+
+960 
+	}
+}
+
+964 
+PyObje˘
+*
+
+965 
+	$gªí_√w
+(
+PyTy≥Obje˘
+* 
+ty≥
+, 
+PyObje˘
+* 
+¨gs
+, PyObje˘* 
+kwds
+)
+
+967 
+PyObje˘
+* 
+o
+ =
+
+968 
+PyBa£Obje˘_Ty≥
+.
+	`ç_√w
+(
+ty≥
+, 
+ts_em±y_tu∂e
+, 
+ts_em±y_di˘
+);
+
+969 i‡(
+o
+ !
+NULL
+) {
+
+970 i‡(!
+STATE_OK
+) {
+
+971 
+	`Py_DECREF
+(
+o
+);
+
+972  
+NULL
+;
+
+974 
+	`Py_INCREF
+(
+ts_cuºít
+);
+
+975 ((
+PyGªíÀt
+*)
+o
+)->
+∑ª¡
+ = 
+ts_cuºít
+;
+
+976 #i‡
+GREENLET_USE_CFRAME
+
+
+1018 ((
+PyGªíÀt
+*)
+o
+)->
+c‰ame
+ = &
+	`PyThªadSèã_GET
+()->
+roŸ_c‰ame
+;
+
+1021  
+o
+;
+
+1022 
+	}
+}
+
+1025 
+gªí_£åun
+(
+PyGªíÀt
+* 
+£lf
+, 
+PyObje˘
+* 
+ƒun
+, * 
+c
+);
+
+1027 
+gªí_£ç¨ít
+(
+PyGªíÀt
+* 
+£lf
+, 
+PyObje˘
+* 
+≈¨ít
+, * 
+c
+);
+
+1030 
+	$gªí_öô
+(
+PyGªíÀt
+* 
+£lf
+, 
+PyObje˘
+* 
+¨gs
+, PyObje˘* 
+kw¨gs
+)
+
+1032 
+PyObje˘
+* 
+run
+ = 
+NULL
+;
+
+1033 
+PyObje˘
+* 
+≈¨ít
+ = 
+NULL
+;
+
+1034 * 
+kwli°
+[] = {"run", "parent", 0};
+
+1035 i‡(!
+	`PyArg_P¨£Tu∂eAndKeyw‹ds
+(
+
+1036 
+¨gs
+, 
+kw¨gs
+, "|OO:gªí", 
+kwli°
+, &
+run
+, &
+≈¨ít
+)) {
+
+1040 i‡(
+run
+ !
+NULL
+) {
+
+1041 i‡(
+	`gªí_£åun
+(
+£lf
+, 
+run
+, 
+NULL
+)) {
+
+1045 i‡(
+≈¨ít
+ !
+NULL
+ &&Ç∑ª¡ !
+Py_N⁄e
+) {
+
+1046  
+	`gªí_£ç¨ít
+(
+£lf
+, 
+≈¨ít
+, 
+NULL
+);
+
+1049 
+	}
+}
+
+1052 
+	$kûl_gªíÀt
+(
+PyGªíÀt
+* 
+£lf
+)
+
+1056 i‡(
+£lf
+->
+run_öfo
+ =
+	`PyThªadSèã_GET
+()->
+di˘
+) {
+
+1060 
+PyObje˘
+* 
+ªsu…
+;
+
+1061 
+PyGªíÀt
+* 
+ﬁd∑ª¡
+;
+
+1062 
+PyGªíÀt
+* 
+tmp
+;
+
+1063 i‡(!
+STATE_OK
+) {
+
+1066 
+ﬁd∑ª¡
+ = 
+£lf
+->
+∑ª¡
+;
+
+1067 
+£lf
+->
+∑ª¡
+ = 
+ts_cuºít
+;
+
+1068 
+	`Py_INCREF
+(
+£lf
+->
+∑ª¡
+);
+
+1070 
+	`PyEº_SëN⁄e
+(
+PyExc_GªíÀtExô
+);
+
+1071 
+ªsu…
+ = 
+	`g_swôch
+(
+£lf
+, 
+NULL
+, NULL);
+
+1072 
+tmp
+ = 
+£lf
+->
+∑ª¡
+;
+
+1073 
+£lf
+->
+∑ª¡
+ = 
+ﬁd∑ª¡
+;
+
+1074 
+	`Py_XDECREF
+(
+tmp
+);
+
+1075 i‡(
+ªsu…
+ =
+NULL
+) {
+
+1078 
+	`Py_DECREF
+(
+ªsu…
+);
+
+1084 
+PyObje˘
+* 
+l°
+;
+
+1085 
+l°
+ = 
+	`PyDi˘_GëIãm
+(
+£lf
+->
+run_öfo
+, 
+ts_dñkey
+);
+
+1086 i‡(
+l°
+ =
+NULL
+) {
+
+1087 
+l°
+ = 
+	`PyLi°_New
+(0);
+
+1088 i‡(
+l°
+ =
+NULL
+
+
+1089 || 
+	`PyDi˘_SëIãm
+(
+£lf
+->
+run_öfo
+, 
+ts_dñkey
+, 
+l°
+) < 0) {
+
+1097 
+	`Py_DECREF
+(
+l°
+);
+
+1099 i‡(
+	`PyLi°_Aµíd
+(
+l°
+, (
+PyObje˘
+*)
+£lf
+) < 0) {
+
+1102 i‡(!
+STATE_OK
+) {
+
+1107 
+	}
+}
+
+1110 
+	$gªí_åavî£
+(
+PyGªíÀt
+* 
+£lf
+, 
+visô¥oc
+ 
+visô
+, * 
+¨g
+)
+
+1118 
+	`Py_VISIT
+((
+PyObje˘
+*)
+£lf
+->
+∑ª¡
+);
+
+1119 
+	`Py_VISIT
+(
+£lf
+->
+run_öfo
+);
+
+1120 #i‡
+GREENLET_PY37
+
+
+1121 
+	`Py_VISIT
+(
+£lf
+->
+c⁄ãxt
+);
+
+1123 #i‡
+GREENLET_PY37
+
+
+1124 
+	`Py_VISIT
+(
+£lf
+->
+exc_°©e
+.
+exc_ty≥
+);
+
+1125 
+	`Py_VISIT
+(
+£lf
+->
+exc_°©e
+.
+exc_vÆue
+);
+
+1126 
+	`Py_VISIT
+(
+£lf
+->
+exc_°©e
+.
+exc_åa˚back
+);
+
+1128 
+	`Py_VISIT
+(
+£lf
+->
+exc_ty≥
+);
+
+1129 
+	`Py_VISIT
+(
+£lf
+->
+exc_vÆue
+);
+
+1130 
+	`Py_VISIT
+(
+£lf
+->
+exc_åa˚back
+);
+
+1132 
+	`Py_VISIT
+(
+£lf
+->
+di˘
+);
+
+1134 
+	}
+}
+
+1137 
+	$gªí_is_gc
+(
+PyGªíÀt
+* 
+£lf
+)
+
+1142 i‡(
+	`PyGªíÀt_MAIN
+(
+£lf
+Ë|| !
+	`PyGªíÀt_ACTIVE
+(self)) {
+
+1146 
+	}
+}
+
+1149 
+	$gªí_˛ór
+(
+PyGªíÀt
+* 
+£lf
+)
+
+1156 
+	`Py_CLEAR
+(
+£lf
+->
+∑ª¡
+);
+
+1157 
+	`Py_CLEAR
+(
+£lf
+->
+run_öfo
+);
+
+1158 #i‡
+GREENLET_PY37
+
+
+1159 
+	`Py_CLEAR
+(
+£lf
+->
+c⁄ãxt
+);
+
+1161 #i‡
+GREENLET_PY37
+
+
+1162 
+	`Py_CLEAR
+(
+£lf
+->
+exc_°©e
+.
+exc_ty≥
+);
+
+1163 
+	`Py_CLEAR
+(
+£lf
+->
+exc_°©e
+.
+exc_vÆue
+);
+
+1164 
+	`Py_CLEAR
+(
+£lf
+->
+exc_°©e
+.
+exc_åa˚back
+);
+
+1166 
+	`Py_CLEAR
+(
+£lf
+->
+exc_ty≥
+);
+
+1167 
+	`Py_CLEAR
+(
+£lf
+->
+exc_vÆue
+);
+
+1168 
+	`Py_CLEAR
+(
+£lf
+->
+exc_åa˚back
+);
+
+1170 
+	`Py_CLEAR
+(
+£lf
+->
+di˘
+);
+
+1172 
+	}
+}
+
+1175 
+	$gªí_dóŒoc
+(
+PyGªíÀt
+* 
+£lf
+)
+
+1177 
+PyObje˘
+ *
+îr‹_ty≥
+, *
+îr‹_vÆue
+, *
+îr‹_åa˚back
+;
+
+1178 
+Py_ssize_t
+ 
+ªf˙t
+;
+
+1180 
+	`PyObje˘_GC_UnTøck
+(
+£lf
+);
+
+1182 i‡(
+	`PyGªíÀt_ACTIVE
+(
+£lf
+Ë&& sñf->
+run_öfo
+ !
+NULL
+ &&
+
+1183 !
+	`PyGªíÀt_MAIN
+(
+£lf
+)) {
+
+1186 
+	`as£π
+(
+	`Py_REFCNT
+(
+£lf
+) == 0);
+
+1187 
+	`Py_SET_REFCNT
+(
+£lf
+, 1);
+
+1189 
+	`PyEº_Fëch
+(&
+îr‹_ty≥
+, &
+îr‹_vÆue
+, &
+îr‹_åa˚back
+);
+
+1190 i‡(
+	`kûl_gªíÀt
+(
+£lf
+) < 0) {
+
+1191 
+	`PyEº_WrôeUƒaißbÀ
+((
+PyObje˘
+*)
+£lf
+);
+
+1198 i‡(
+	`Py_REFCNT
+(
+£lf
+Ë=1 && 
+	`PyGªíÀt_ACTIVE
+(self)) {
+
+1201 
+PyObje˘
+* 
+f
+ = 
+	`PySys_GëObje˘
+("stderr");
+
+1202 
+	`Py_INCREF
+(
+£lf
+);
+
+1203 i‡(
+f
+ !
+NULL
+) {
+
+1204 
+	`PyFûe_WrôeSåög
+("GªíÀtExô didÇŸ kû»", 
+f
+);
+
+1205 
+	`PyFûe_WrôeObje˘
+((
+PyObje˘
+*)
+£lf
+, 
+f
+, 0);
+
+1206 
+	`PyFûe_WrôeSåög
+("\n", 
+f
+);
+
+1210 
+	`PyEº_Re°‹e
+(
+îr‹_ty≥
+, 
+îr‹_vÆue
+, 
+îr‹_åa˚back
+);
+
+1214 
+	`as£π
+(
+	`Py_REFCNT
+(
+£lf
+) > 0);
+
+1216 
+ªf˙t
+ = 
+	`Py_REFCNT
+(
+£lf
+) - 1;
+
+1217 
+	`Py_SET_REFCNT
+(
+£lf
+, 
+ªf˙t
+);
+
+1218 i‡(
+ªf˙t
+ != 0) {
+
+1220 
+	`_Py_NewRe„ªn˚
+((
+PyObje˘
+*)
+£lf
+);
+
+1221 
+	`Py_SET_REFCNT
+(
+£lf
+, 
+ªf˙t
+);
+
+1233 i‡(
+	`PyTy≥_HasFótuª
+(
+	`Py_TYPE
+(
+£lf
+), 
+Py_TPFLAGS_HEAPTYPE
+)) {
+
+1234 
+	`Py_INCREF
+(
+	`Py_TYPE
+(
+£lf
+));
+
+1237 
+	`PyObje˘_GC_Tøck
+((
+PyObje˘
+*)
+£lf
+);
+
+1239 
+_Py_DEC_REFTOTAL
+;
+
+1240 #ifde‡
+COUNT_ALLOCS
+
+
+1241 --
+	`Py_TYPE
+(
+£lf
+)->
+ç_‰ìs
+;
+
+1242 --
+	`Py_TYPE
+(
+£lf
+)->
+ç_Ælocs
+;
+
+1247 i‡(
+£lf
+->
+wókªÊi°
+ !
+NULL
+) {
+
+1248 
+	`PyObje˘_CÀ¨WókRefs
+((
+PyObje˘
+*)
+£lf
+);
+
+1250 
+	`Py_CLEAR
+(
+£lf
+->
+∑ª¡
+);
+
+1251 
+	`Py_CLEAR
+(
+£lf
+->
+run_öfo
+);
+
+1252 #i‡
+GREENLET_PY37
+
+
+1253 
+	`Py_CLEAR
+(
+£lf
+->
+c⁄ãxt
+);
+
+1255 #i‡
+GREENLET_PY37
+
+
+1256 
+	`Py_CLEAR
+(
+£lf
+->
+exc_°©e
+.
+exc_ty≥
+);
+
+1257 
+	`Py_CLEAR
+(
+£lf
+->
+exc_°©e
+.
+exc_vÆue
+);
+
+1258 
+	`Py_CLEAR
+(
+£lf
+->
+exc_°©e
+.
+exc_åa˚back
+);
+
+1260 
+	`Py_CLEAR
+(
+£lf
+->
+exc_ty≥
+);
+
+1261 
+	`Py_CLEAR
+(
+£lf
+->
+exc_vÆue
+);
+
+1262 
+	`Py_CLEAR
+(
+£lf
+->
+exc_åa˚back
+);
+
+1264 
+	`Py_CLEAR
+(
+£lf
+->
+di˘
+);
+
+1265 
+	`Py_TYPE
+(
+£lf
+)->
+	`ç_‰ì
+((
+PyObje˘
+*)self);
+
+1266 
+	}
+}
+
+1268 
+PyObje˘
+*
+
+1269 
+	$sögÀ_ªsu…
+(
+PyObje˘
+* 
+ªsu…s
+)
+
+1271 i‡(
+ªsu…s
+ !
+NULL
+ && 
+	`PyTu∂e_Check
+(results) &&
+
+1272 
+	`PyTu∂e_GET_SIZE
+(
+ªsu…s
+) == 1) {
+
+1273 
+PyObje˘
+* 
+ªsu…
+ = 
+	`PyTu∂e_GET_ITEM
+(
+ªsu…s
+, 0);
+
+1274 
+	`Py_INCREF
+(
+ªsu…
+);
+
+1275 
+	`Py_DECREF
+(
+ªsu…s
+);
+
+1276  
+ªsu…
+;
+
+1279  
+ªsu…s
+;
+
+1281 
+	}
+}
+
+1283 
+PyObje˘
+*
+
+1284 
+	$throw_gªíÀt
+(
+PyGªíÀt
+* 
+£lf
+, 
+PyObje˘
+* 
+typ
+, PyObje˘* 
+vÆ
+, PyObje˘* 
+tb
+)
+
+1287 
+PyObje˘
+* 
+ªsu…
+ = 
+NULL
+;
+
+1288 
+	`PyEº_Re°‹e
+(
+typ
+, 
+vÆ
+, 
+tb
+);
+
+1289 i‡(
+	`PyGªíÀt_STARTED
+(
+£lf
+Ë&& !
+	`PyGªíÀt_ACTIVE
+(self)) {
+
+1291 
+ªsu…
+ = 
+	`g_h™dÀ_exô
+(result);
+
+1293  
+	`sögÀ_ªsu…
+(
+	`g_swôch
+(
+£lf
+, 
+ªsu…
+, 
+NULL
+));
+
+1294 
+	}
+}
+
+1296 
+PyDoc_STRVAR
+(
+
+1297 
+gªí_swôch_doc
+,
+
+1316 
+PyObje˘
+*
+
+1317 
+	$gªí_swôch
+(
+PyGªíÀt
+* 
+£lf
+, 
+PyObje˘
+* 
+¨gs
+, PyObje˘* 
+kw¨gs
+)
+
+1319 
+	`Py_INCREF
+(
+¨gs
+);
+
+1320 
+	`Py_XINCREF
+(
+kw¨gs
+);
+
+1321  
+	`sögÀ_ªsu…
+(
+	`g_swôch
+(
+£lf
+, 
+¨gs
+, 
+kw¨gs
+));
+
+1322 
+	}
+}
+
+1324 
+PyDoc_STRVAR
+(
+
+1325 
+gªí_throw_doc
+,
+
+1343 
+PyObje˘
+*
+
+1344 
+	$gªí_throw
+(
+PyGªíÀt
+* 
+£lf
+, 
+PyObje˘
+* 
+¨gs
+)
+
+1346 
+PyObje˘
+* 
+typ
+ = 
+PyExc_GªíÀtExô
+;
+
+1347 
+PyObje˘
+* 
+vÆ
+ = 
+NULL
+;
+
+1348 
+PyObje˘
+* 
+tb
+ = 
+NULL
+;
+
+1350 i‡(!
+	`PyArg_P¨£Tu∂e
+(
+¨gs
+, "|OOO:throw", &
+typ
+, &
+vÆ
+, &
+tb
+)) {
+
+1351  
+NULL
+;
+
+1355 i‡(
+tb
+ =
+Py_N⁄e
+) {
+
+1356 
+tb
+ = 
+NULL
+;
+
+1358 i‡(
+tb
+ !
+NULL
+ && !
+	`PyTø˚Back_Check
+(tb)) {
+
+1359 
+	`PyEº_SëSåög
+(
+PyExc_Ty≥Eº‹
+,
+
+1361  
+NULL
+;
+
+1364 
+	`Py_INCREF
+(
+typ
+);
+
+1365 
+	`Py_XINCREF
+(
+vÆ
+);
+
+1366 
+	`Py_XINCREF
+(
+tb
+);
+
+1368 i‡(
+	`PyEx˚±i⁄Cœss_Check
+(
+typ
+)) {
+
+1369 
+	`PyEº_N‹mÆizeEx˚±i⁄
+(&
+typ
+, &
+vÆ
+, &
+tb
+);
+
+1371 i‡(
+	`PyEx˚±i⁄In°™˚_Check
+(
+typ
+)) {
+
+1373 i‡(
+vÆ
+ && vÆ !
+Py_N⁄e
+) {
+
+1374 
+	`PyEº_SëSåög
+(
+
+1375 
+PyExc_Ty≥Eº‹
+,
+
+1377 
+Áûed_throw
+;
+
+1381 
+	`Py_XDECREF
+(
+vÆ
+);
+
+1382 
+vÆ
+ = 
+typ
+;
+
+1383 
+typ
+ = 
+	`PyEx˚±i⁄In°™˚_Cœss
+(typ);
+
+1384 
+	`Py_INCREF
+(
+typ
+);
+
+1389 
+	`PyEº_F‹m©
+(
+PyExc_Ty≥Eº‹
+,
+
+1391 
+	`Py_TYPE
+(
+typ
+)->
+ç_«me
+);
+
+1392 
+Áûed_throw
+;
+
+1395  
+	`throw_gªíÀt
+(
+£lf
+, 
+typ
+, 
+vÆ
+, 
+tb
+);
+
+1397 
+Áûed_throw
+:
+
+1399 
+	`Py_DECREF
+(
+typ
+);
+
+1400 
+	`Py_XDECREF
+(
+vÆ
+);
+
+1401 
+	`Py_XDECREF
+(
+tb
+);
+
+1402  
+NULL
+;
+
+1403 
+	}
+}
+
+1406 
+	$gªí_boﬁ
+(
+PyGªíÀt
+* 
+£lf
+)
+
+1408  
+	`PyGªíÀt_ACTIVE
+(
+£lf
+);
+
+1409 
+	}
+}
+
+1411 
+PyObje˘
+*
+
+1412 
+	$gªí_gëdi˘
+(
+PyGªíÀt
+* 
+£lf
+, * 
+c
+)
+
+1414 i‡(
+£lf
+->
+di˘
+ =
+NULL
+) {
+
+1415 
+£lf
+->
+di˘
+ = 
+	`PyDi˘_New
+();
+
+1416 i‡(
+£lf
+->
+di˘
+ =
+NULL
+) {
+
+1417  
+NULL
+;
+
+1420 
+	`Py_INCREF
+(
+£lf
+->
+di˘
+);
+
+1421  
+£lf
+->
+di˘
+;
+
+1422 
+	}
+}
+
+1425 
+	$gªí_£tdi˘
+(
+PyGªíÀt
+* 
+£lf
+, 
+PyObje˘
+* 
+vÆ
+, * 
+c
+)
+
+1427 
+PyObje˘
+* 
+tmp
+;
+
+1429 i‡(
+vÆ
+ =
+NULL
+) {
+
+1430 
+	`PyEº_SëSåög
+(
+PyExc_Ty≥Eº‹
+, "__dict__ mayÇot be deleted");
+
+1433 i‡(!
+	`PyDi˘_Check
+(
+vÆ
+)) {
+
+1434 
+	`PyEº_SëSåög
+(
+PyExc_Ty≥Eº‹
+, "__dict__ must beá dictionary");
+
+1437 
+tmp
+ = 
+£lf
+->
+di˘
+;
+
+1438 
+	`Py_INCREF
+(
+vÆ
+);
+
+1439 
+£lf
+->
+di˘
+ = 
+vÆ
+;
+
+1440 
+	`Py_XDECREF
+(
+tmp
+);
+
+1442 
+	}
+}
+
+1445 
+	$_gªí_nŸ_dód
+(
+PyGªíÀt
+* 
+£lf
+)
+
+1447  
+	`PyGªíÀt_ACTIVE
+(
+£lf
+Ë|| !
+	`PyGªíÀt_STARTED
+(self);
+
+1448 
+	}
+}
+
+1451 
+PyObje˘
+*
+
+1452 
+	$gªí_gëdód
+(
+PyGªíÀt
+* 
+£lf
+, * 
+c
+)
+
+1454 i‡(
+	`_gªí_nŸ_dód
+(
+£lf
+)) {
+
+1455 
+Py_RETURN_FALSE
+;
+
+1458 
+Py_RETURN_TRUE
+;
+
+1460 
+	}
+}
+
+1462 
+PyObje˘
+*
+
+1463 
+	$gªí_gë_°ack_ßved
+(
+PyGªíÀt
+* 
+£lf
+, * 
+c
+)
+
+1465  
+	`PyL⁄g_FromSsize_t
+(
+£lf
+->
+°ack_ßved
+);
+
+1466 
+	}
+}
+
+1468 
+PyObje˘
+*
+
+1469 
+	$gªí_gërun
+(
+PyGªíÀt
+* 
+£lf
+, * 
+c
+)
+
+1471 i‡(
+	`PyGªíÀt_STARTED
+(
+£lf
+Ë|| sñf->
+run_öfo
+ =
+NULL
+) {
+
+1472 
+	`PyEº_SëSåög
+(
+PyExc_AâribuãEº‹
+, "run");
+
+1473  
+NULL
+;
+
+1475 
+	`Py_INCREF
+(
+£lf
+->
+run_öfo
+);
+
+1476  
+£lf
+->
+run_öfo
+;
+
+1477 
+	}
+}
+
+1480 
+	$gªí_£åun
+(
+PyGªíÀt
+* 
+£lf
+, 
+PyObje˘
+* 
+ƒun
+, * 
+c
+)
+
+1482 
+PyObje˘
+* 
+o
+;
+
+1483 i‡(
+	`PyGªíÀt_STARTED
+(
+£lf
+)) {
+
+1484 
+	`PyEº_SëSåög
+(
+PyExc_AâribuãEº‹
+,
+
+1489 
+o
+ = 
+£lf
+->
+run_öfo
+;
+
+1490 
+£lf
+->
+run_öfo
+ = 
+ƒun
+;
+
+1491 
+	`Py_XINCREF
+(
+ƒun
+);
+
+1492 
+	`Py_XDECREF
+(
+o
+);
+
+1494 
+	}
+}
+
+1496 
+PyObje˘
+*
+
+1497 
+	$gªí_gë∑ª¡
+(
+PyGªíÀt
+* 
+£lf
+, * 
+c
+)
+
+1499 
+PyObje˘
+* 
+ªsu…
+ = 
+£lf
+->
+∑ª¡
+ ? (PyObje˘*)£lf->∑ª¡ : 
+Py_N⁄e
+;
+
+1500 
+	`Py_INCREF
+(
+ªsu…
+);
+
+1501  
+ªsu…
+;
+
+1502 
+	}
+}
+
+1505 
+	$gªí_£ç¨ít
+(
+PyGªíÀt
+* 
+£lf
+, 
+PyObje˘
+* 
+≈¨ít
+, * 
+c
+)
+
+1507 
+PyGªíÀt
+* 
+p
+;
+
+1508 
+PyObje˘
+* 
+run_öfo
+ = 
+NULL
+;
+
+1509 i‡(
+≈¨ít
+ =
+NULL
+) {
+
+1510 
+	`PyEº_SëSåög
+(
+PyExc_AâribuãEº‹
+, "can't deleteáttribute");
+
+1513 i‡(!
+	`PyGªíÀt_Check
+(
+≈¨ít
+)) {
+
+1514 
+	`PyEº_SëSåög
+(
+PyExc_Ty≥Eº‹
+, "parent must beá greenlet");
+
+1517 
+p
+ = (
+PyGªíÀt
+*)
+≈¨ít
+;Ö;Ö =Ö->
+∑ª¡
+) {
+
+1518 i‡(
+p
+ =
+£lf
+) {
+
+1519 
+	`PyEº_SëSåög
+(
+PyExc_VÆueEº‹
+, "cyclicÖarent chain");
+
+1522 
+run_öfo
+ = 
+	`PyGªíÀt_ACTIVE
+(
+p
+Ë?Ö->run_öfÿ: 
+NULL
+;
+
+1524 i‡(
+run_öfo
+ =
+NULL
+) {
+
+1525 
+	`PyEº_SëSåög
+(
+PyExc_VÆueEº‹
+,
+
+1529 i‡(
+	`PyGªíÀt_STARTED
+(
+£lf
+Ë&& sñf->
+run_öfo
+ !=Ñun_info) {
+
+1530 
+	`PyEº_SëSåög
+(
+PyExc_VÆueEº‹
+,
+
+1534 
+p
+ = 
+£lf
+->
+∑ª¡
+;
+
+1535 
+£lf
+->
+∑ª¡
+ = (
+PyGªíÀt
+*)
+≈¨ít
+;
+
+1536 
+	`Py_INCREF
+(
+≈¨ít
+);
+
+1537 
+	`Py_XDECREF
+(
+p
+);
+
+1539 
+	}
+}
+
+1541 #ifde‡
+Py_CONTEXT_H
+
+
+1542 
+	#GREENLET_NO_CONTEXTVARS_REASON
+ "Thi†buûd o‡gªíÀt"
+
+	)
+
+1544 
+	#GREENLET_NO_CONTEXTVARS_REASON
+ "Thi†Pyth⁄ i¡î¥ëî"
+
+	)
+
+1547 
+PyObje˘
+*
+
+1548 
+	$gªí_gëc⁄ãxt
+(
+PyGªíÀt
+* 
+£lf
+, * 
+c
+)
+
+1550 #i‡
+GREENLET_PY37
+
+
+1551 
+PyThªadSèã
+* 
+t°©e
+ = 
+	`PyThªadSèã_GET
+();
+
+1552 
+PyObje˘
+* 
+ªsu…
+;
+
+1554 i‡(!
+STATE_OK
+) {
+
+1555  
+NULL
+;
+
+1557 i‡(
+	`PyGªíÀt_ACTIVE
+(
+£lf
+Ë&& sñf->
+t›_‰ame
+ =
+NULL
+) {
+
+1560 i‡(
+£lf
+ =
+ts_cuºít
+) {
+
+1561 
+ªsu…
+ = 
+t°©e
+->
+c⁄ãxt
+;
+
+1564 
+	`PyEº_SëSåög
+(
+PyExc_VÆueEº‹
+,
+
+1567  
+NULL
+;
+
+1572 
+ªsu…
+ = 
+£lf
+->
+c⁄ãxt
+;
+
+1574 i‡(
+ªsu…
+ =
+NULL
+) {
+
+1575 
+ªsu…
+ = 
+Py_N⁄e
+;
+
+1577 
+	`Py_INCREF
+(
+ªsu…
+);
+
+1578  
+ªsu…
+;
+
+1580 
+	`PyEº_SëSåög
+(
+PyExc_AâribuãEº‹
+,
+
+1581 
+GREENLET_NO_CONTEXTVARS_REASON
+
+
+1583  
+NULL
+;
+
+1585 
+	}
+}
+
+1588 
+	$gªí_£tc⁄ãxt
+(
+PyGªíÀt
+* 
+£lf
+, 
+PyObje˘
+* 
+n˘x
+, * 
+c
+)
+
+1590 #i‡
+GREENLET_PY37
+
+
+1591 
+PyThªadSèã
+* 
+t°©e
+;
+
+1592 
+PyObje˘
+* 
+o˘x
+ = 
+NULL
+;
+
+1593 i‡(!
+STATE_OK
+) {
+
+1596 i‡(
+n˘x
+ =
+NULL
+) {
+
+1597 
+	`PyEº_SëSåög
+(
+PyExc_AâribuãEº‹
+, "can't deleteáttribute");
+
+1600 i‡(
+n˘x
+ =
+Py_N⁄e
+) {
+
+1602 
+n˘x
+ = 
+NULL
+;
+
+1604 i‡(!
+	`PyC⁄ãxt_CheckExa˘
+(
+n˘x
+)) {
+
+1605 
+	`PyEº_SëSåög
+(
+PyExc_Ty≥Eº‹
+,
+
+1610 
+t°©e
+ = 
+	`PyThªadSèã_GET
+();
+
+1611 i‡(
+	`PyGªíÀt_ACTIVE
+(
+£lf
+Ë&& sñf->
+t›_‰ame
+ =
+NULL
+) {
+
+1614 i‡(
+£lf
+ =
+ts_cuºít
+) {
+
+1615 
+o˘x
+ = 
+t°©e
+->
+c⁄ãxt
+;
+
+1616 
+t°©e
+->
+c⁄ãxt
+ = 
+n˘x
+;
+
+1617 
+t°©e
+->
+c⁄ãxt_vî
+++;
+
+1618 
+	`Py_XINCREF
+(
+n˘x
+);
+
+1621 
+	`PyEº_SëSåög
+(
+PyExc_VÆueEº‹
+,
+
+1629 
+o˘x
+ = 
+£lf
+->
+c⁄ãxt
+;
+
+1630 
+£lf
+->
+c⁄ãxt
+ = 
+n˘x
+;
+
+1631 
+	`Py_XINCREF
+(
+n˘x
+);
+
+1633 
+	`Py_XDECREF
+(
+o˘x
+);
+
+1636 
+	`PyEº_SëSåög
+(
+PyExc_AâribuãEº‹
+,
+
+1637 
+GREENLET_NO_CONTEXTVARS_REASON
+
+
+1641 
+	}
+}
+
+1643 #unde‡
+GREENLET_NO_CONTEXTVARS_REASON
+
+
+1645 
+PyObje˘
+*
+
+1646 
+	$gªí_gë‰ame
+(
+PyGªíÀt
+* 
+£lf
+, * 
+c
+)
+
+1648 
+PyObje˘
+* 
+ªsu…
+ = 
+£lf
+->
+t›_‰ame
+ ? (PyObje˘*)£lf->t›_‰amê: 
+Py_N⁄e
+;
+
+1649 
+	`Py_INCREF
+(
+ªsu…
+);
+
+1650  
+ªsu…
+;
+
+1651 
+	}
+}
+
+1653 
+PyObje˘
+*
+
+1654 
+	$gªí_gë°©e
+(
+PyGªíÀt
+* 
+£lf
+)
+
+1656 
+	`PyEº_F‹m©
+(
+PyExc_Ty≥Eº‹
+,
+
+1658 
+	`Py_TYPE
+(
+£lf
+)->
+ç_«me
+);
+
+1659  
+NULL
+;
+
+1660 
+	}
+}
+
+1662 
+PyObje˘
+*
+
+1663 
+	$gªí_ª¥
+(
+PyGªíÀt
+* 
+£lf
+)
+
+1673 
+PyObje˘
+* 
+ªsu…
+;
+
+1674 
+√vî_°¨ãd
+ = !
+	`PyGªíÀt_STARTED
+(
+£lf
+Ë&& !
+	`PyGªíÀt_ACTIVE
+(self);
+
+1676 i‡(!
+STATE_OK
+) {
+
+1677  
+NULL
+;
+
+1680 #i‡
+PY_MAJOR_VERSION
+ >= 3
+
+1681 
+	#GN©ive_FromF‹m©
+ 
+PyUnicode_FromF‹m©
+
+
+	)
+
+1683 
+	#GN©ive_FromF‹m©
+ 
+PySåög_FromF‹m©
+
+
+	)
+
+1686 i‡(
+	`_gªí_nŸ_dód
+(
+£lf
+)) {
+
+1694 
+ªsu…
+ = 
+	`GN©ive_FromF‹m©
+(
+
+1696 
+	`Py_TYPE
+(
+£lf
+)->
+ç_«me
+,
+
+1697 
+£lf
+,
+
+1698 
+£lf
+->
+run_öfo
+,
+
+1699 
+ts_cuºít
+ =
+£lf
+
+
+1701 : (
+	`PyGªíÀt_STARTED
+(
+£lf
+) ? " suspended" : ""),
+
+1702 
+	`PyGªíÀt_ACTIVE
+(
+£lf
+) ? "áctive" : "",
+
+1703 
+√vî_°¨ãd
+ ? "Öending" : " started",
+
+1704 
+	`PyGªíÀt_MAIN
+(
+£lf
+) ? " main" : ""
+
+1709 
+ªsu…
+ = 
+	`GN©ive_FromF‹m©
+(
+
+1711 
+	`Py_TYPE
+(
+£lf
+)->
+ç_«me
+,
+
+1712 
+£lf
+,
+
+1713 
+£lf
+->
+run_öfo
+
+
+1716 #unde‡
+GN©ive_FromF‹m©
+
+
+1718  
+ªsu…
+;
+
+1719 
+	}
+}
+
+1727 
+PyGªíÀt
+*
+
+1728 
+	$PyGªíÀt_GëCuºít
+()
+
+1730 i‡(!
+STATE_OK
+) {
+
+1731  
+NULL
+;
+
+1733 
+	`Py_INCREF
+(
+ts_cuºít
+);
+
+1734  
+ts_cuºít
+;
+
+1735 
+	}
+}
+
+1738 
+	$PyGªíÀt_SëP¨ít
+(
+PyGªíÀt
+* 
+g
+, PyGªíÀt* 
+≈¨ít
+)
+
+1740 i‡(!
+	`PyGªíÀt_Check
+(
+g
+)) {
+
+1741 
+	`PyEº_SëSåög
+(
+PyExc_Ty≥Eº‹
+, "parent must beá greenlet");
+
+1745  
+	`gªí_£ç¨ít
+((
+PyGªíÀt
+*)
+g
+, (
+PyObje˘
+*)
+≈¨ít
+, 
+NULL
+);
+
+1746 
+	}
+}
+
+1748 
+PyGªíÀt
+*
+
+1749 
+	$PyGªíÀt_New
+(
+PyObje˘
+* 
+run
+, 
+PyGªíÀt
+* 
+∑ª¡
+)
+
+1753 
+PyGªíÀt
+* 
+g
+ = 
+NULL
+;
+
+1754 
+g
+ = (
+PyGªíÀt
+*)
+	`PyTy≥_GíîicAŒoc
+(&
+PyGªíÀt_Ty≥
+, 0);
+
+1755 i‡(
+g
+ =
+NULL
+) {
+
+1756  
+NULL
+;
+
+1759 i‡(
+run
+ !
+NULL
+) {
+
+1760 
+	`Py_INCREF
+(
+run
+);
+
+1761 
+g
+->
+run_öfo
+ = 
+run
+;
+
+1764 i‡(
+∑ª¡
+ !
+NULL
+) {
+
+1765 i‡(
+	`PyGªíÀt_SëP¨ít
+(
+g
+, 
+∑ª¡
+)) {
+
+1766 
+	`Py_DECREF
+(
+g
+);
+
+1767  
+NULL
+;
+
+1771 i‡((
+g
+->
+∑ª¡
+ = 
+	`PyGªíÀt_GëCuºít
+()Ë=
+NULL
+) {
+
+1772 
+	`Py_DECREF
+(
+g
+);
+
+1773  
+NULL
+;
+
+1776 #i‡
+GREENLET_USE_CFRAME
+
+
+1777 
+g
+->
+c‰ame
+ = &
+	`PyThªadSèã_GET
+()->
+roŸ_c‰ame
+;
+
+1779  
+g
+;
+
+1780 
+	}
+}
+
+1782 
+PyObje˘
+*
+
+1783 
+	$PyGªíÀt_Swôch
+(
+PyGªíÀt
+* 
+g
+, 
+PyObje˘
+* 
+¨gs
+, PyObje˘* 
+kw¨gs
+)
+
+1785 
+PyGªíÀt
+* 
+£lf
+ = (PyGªíÀt*)
+g
+;
+
+1787 i‡(!
+	`PyGªíÀt_Check
+(
+£lf
+)) {
+
+1788 
+	`PyEº_BadArgumít
+();
+
+1789  
+NULL
+;
+
+1792 i‡(
+¨gs
+ =
+NULL
+) {
+
+1793 
+¨gs
+ = 
+	`Py_BuûdVÆue
+("()");
+
+1796 
+	`Py_INCREF
+(
+¨gs
+);
+
+1799 i‡(
+kw¨gs
+ !
+NULL
+ && 
+	`PyDi˘_Check
+(kwargs)) {
+
+1800 
+	`Py_INCREF
+(
+kw¨gs
+);
+
+1803 
+kw¨gs
+ = 
+NULL
+;
+
+1806  
+	`sögÀ_ªsu…
+(
+	`g_swôch
+(
+£lf
+, 
+¨gs
+, 
+kw¨gs
+));
+
+1807 
+	}
+}
+
+1809 
+PyObje˘
+*
+
+1810 
+	$PyGªíÀt_Throw
+(
+PyGªíÀt
+* 
+£lf
+, 
+PyObje˘
+* 
+typ
+, PyObje˘* 
+vÆ
+, PyObje˘* 
+tb
+)
+
+1812 i‡(!
+	`PyGªíÀt_Check
+(
+£lf
+)) {
+
+1813 
+	`PyEº_BadArgumít
+();
+
+1814  
+NULL
+;
+
+1816 
+	`Py_INCREF
+(
+typ
+);
+
+1817 
+	`Py_XINCREF
+(
+vÆ
+);
+
+1818 
+	`Py_XINCREF
+(
+tb
+);
+
+1819  
+	`throw_gªíÀt
+(
+£lf
+, 
+typ
+, 
+vÆ
+, 
+tb
+);
+
+1820 
+	}
+}
+
+1824 
+PyMëhodDef
+ 
+	ggªí_mëhods
+[] = {
+
+1826 (
+PyCFun˘i⁄
+)
+gªí_swôch
+,
+
+1827 
+METH_VARARGS
+ | 
+METH_KEYWORDS
+,
+
+1828 
+gªí_swôch_doc
+},
+
+1829 {"throw", (
+PyCFun˘i⁄
+)
+gªí_throw
+, 
+METH_VARARGS
+, 
+gªí_throw_doc
+},
+
+1830 {"__gë°©e__", (
+PyCFun˘i⁄
+)
+gªí_gë°©e
+, 
+METH_NOARGS
+, 
+NULL
+},
+
+1831 {
+NULL
+, NULL}
+
+1834 
+PyGëSëDef
+ 
+	ggªí_gë£ts
+[] = {
+
+1835 {"__di˘__", (
+gëãr
+)
+gªí_gëdi˘
+, (
+£âî
+)
+gªí_£tdi˘
+, 
+NULL
+},
+
+1836 {"run", (
+gëãr
+)
+gªí_gërun
+, (
+£âî
+)
+gªí_£åun
+, 
+NULL
+},
+
+1837 {"∑ª¡", (
+gëãr
+)
+gªí_gë∑ª¡
+, (
+£âî
+)
+gªí_£ç¨ít
+, 
+NULL
+},
+
+1838 {"gr_‰ame", (
+gëãr
+)
+gªí_gë‰ame
+, 
+NULL
+, NULL},
+
+1840 (
+gëãr
+)
+gªí_gëc⁄ãxt
+,
+
+1841 (
+£âî
+)
+gªí_£tc⁄ãxt
+,
+
+1842  
+NULL
+},
+
+1843 {"dód", (
+gëãr
+)
+gªí_gëdód
+, 
+NULL
+, NULL},
+
+1844 {"_°ack_ßved", (
+gëãr
+)
+gªí_gë_°ack_ßved
+, 
+NULL
+, NULL},
+
+1845 {
+NULL
+}};
+
+1847 
+PyNumbîMëhods
+ 
+	ggªí_as_numbî
+ = {
+
+1848 
+NULL
+,
+
+1849 
+NULL
+,
+
+1850 
+NULL
+,
+
+1851 #i‡
+PY_MAJOR_VERSION
+ < 3
+
+1852 
+NULL
+,
+
+1854 
+NULL
+,
+
+1855 
+NULL
+,
+
+1856 
+NULL
+,
+
+1857 
+NULL
+,
+
+1858 
+NULL
+,
+
+1859 
+NULL
+,
+
+1860 (
+öquúy
+)
+gªí_boﬁ
+,
+
+1863 
+PyTy≥Obje˘
+ 
+	gPyGªíÀt_Ty≥
+ = {
+
+1864 
+PyV¨Obje˘_HEAD_INIT
+(
+NULL
+, 0)
+
+1866 (
+PyGªíÀt
+),
+
+1869 (
+de°ru˘‹
+)
+gªí_dóŒoc
+,
+
+1874 (
+ª¥func
+)
+gªí_ª¥
+,
+
+1875 &
+gªí_as_numbî
+,
+
+1884 
+Py_TPFLAGS_DEFAULT
+ | 
+Py_TPFLAGS_BASETYPE
+ |
+
+1885 
+GREENLET_GC_FLAGS
+,
+
+1891 (
+åavî£¥oc
+)
+GREENLET_ç_åavî£
+,
+
+1892 (
+öquúy
+)
+GREENLET_ç_˛ór
+,
+
+1894 
+off£tof
+(
+PyGªíÀt
+, 
+wókªÊi°
+),
+
+1897 
+gªí_mëhods
+,
+
+1899 
+gªí_gë£ts
+,
+
+1904 
+off£tof
+(
+PyGªíÀt
+, 
+di˘
+),
+
+1905 (
+öô¥oc
+)
+gªí_öô
+,
+
+1906 
+GREENLET_ç_Æloc
+,
+
+1907 
+gªí_√w
+,
+
+1908 
+GREENLET_ç_‰ì
+,
+
+1909 (
+öquúy
+)
+GREENLET_ç_is_gc
+,
+
+1912 
+PyDoc_STRVAR
+(
+mod_gëcuºít_doc
+,
+
+1918 
+PyObje˘
+*
+
+1919 
+	$mod_gëcuºít
+(
+PyObje˘
+* 
+£lf
+)
+
+1921 i‡(!
+STATE_OK
+) {
+
+1922  
+NULL
+;
+
+1924 
+	`Py_INCREF
+(
+ts_cuºít
+);
+
+1925  (
+PyObje˘
+*)
+ts_cuºít
+;
+
+1926 
+	}
+}
+
+1928 
+PyDoc_STRVAR
+(
+mod_£âø˚_doc
+,
+
+1932 
+PyObje˘
+*
+
+1933 
+	$mod_£âø˚
+(
+PyObje˘
+* 
+£lf
+, PyObje˘* 
+¨gs
+)
+
+1935 
+îr
+;
+
+1936 
+PyObje˘
+* 
+¥evious
+;
+
+1937 
+PyObje˘
+* 
+åa˚func
+;
+
+1938 
+PyGªíÀt
+* 
+cuºít
+;
+
+1939 i‡(!
+	`PyArg_P¨£Tu∂e
+(
+¨gs
+, "O", &
+åa˚func
+)) {
+
+1940  
+NULL
+;
+
+1942 i‡(!
+STATE_OK
+) {
+
+1943  
+NULL
+;
+
+1945 
+cuºít
+ = 
+ts_cuºít
+;
+
+1946 
+¥evious
+ = 
+	`PyDi˘_GëIãm
+(
+cuºít
+->
+run_öfo
+, 
+ts_åa˚key
+);
+
+1947 i‡(
+¥evious
+ =
+NULL
+) {
+
+1948 
+¥evious
+ = 
+Py_N⁄e
+;
+
+1950 
+	`Py_INCREF
+(
+¥evious
+);
+
+1951 i‡(
+åa˚func
+ =
+Py_N⁄e
+) {
+
+1952 
+îr
+ = 
+¥evious
+ !
+Py_N⁄e
+ ?
+
+1953 
+	`PyDi˘_DñIãm
+(
+cuºít
+->
+run_öfo
+, 
+ts_åa˚key
+) :
+
+1957 
+îr
+ = 
+	`PyDi˘_SëIãm
+(
+cuºít
+->
+run_öfo
+, 
+ts_åa˚key
+, 
+åa˚func
+);
+
+1959 i‡(
+îr
+ < 0) {
+
+1960 
+	`Py_CLEAR
+(
+¥evious
+);
+
+1962  
+¥evious
+;
+
+1963 
+	}
+}
+
+1965 
+PyDoc_STRVAR
+(
+mod_gëåa˚_doc
+,
+
+1970 
+PyObje˘
+*
+
+1971 
+	$mod_gëåa˚
+(
+PyObje˘
+* 
+£lf
+)
+
+1973 
+PyObje˘
+* 
+åa˚func
+;
+
+1974 i‡(!
+STATE_OK
+) {
+
+1975  
+NULL
+;
+
+1977 
+åa˚func
+ = 
+	`PyDi˘_GëIãm
+(
+ts_cuºít
+->
+run_öfo
+, 
+ts_åa˚key
+);
+
+1978 i‡(
+åa˚func
+ =
+NULL
+) {
+
+1979 
+åa˚func
+ = 
+Py_N⁄e
+;
+
+1981 
+	`Py_INCREF
+(
+åa˚func
+);
+
+1982  
+åa˚func
+;
+
+1983 
+	}
+}
+
+1985 
+PyMëhodDef
+ 
+	gGªíMëhods
+[] = {
+
+1987 (
+PyCFun˘i⁄
+)
+mod_gëcuºít
+,
+
+1988 
+METH_NOARGS
+,
+
+1989 
+mod_gëcuºít_doc
+},
+
+1990 {"£âø˚", (
+PyCFun˘i⁄
+)
+mod_£âø˚
+, 
+METH_VARARGS
+, 
+mod_£âø˚_doc
+},
+
+1991 {"gëåa˚", (
+PyCFun˘i⁄
+)
+mod_gëåa˚
+, 
+METH_NOARGS
+, 
+mod_gëåa˚_doc
+},
+
+1992 {
+NULL
+, NULL}
+
+1995 * 
+	gc›y_⁄_gªíty≥
+[] = {
+
+1996 "gëcuºít", "îr‹", "GªíÀtExô", "£âø˚", "gëåa˚", 
+NULL
+};
+
+1998 #i‡
+PY_MAJOR_VERSION
+ >= 3
+
+1999 
+	#INITERROR
+  
+NULL
+
+
+	)
+
+2001 
+PyModuÀDef
+ 
+	ggªíÀt_moduÀ_def
+ = {
+
+2002 
+PyModuÀDef_HEAD_INIT
+,
+
+2004 
+NULL
+,
+
+2006 
+GªíMëhods
+,
+
+2009 
+PyMODINIT_FUNC
+
+
+2010 
+	$PyInô__gªíÀt
+()
+
+2012 
+	#INITERROR
+ 
+
+	)
+
+2014 
+PyMODINIT_FUNC
+
+
+2015 
+	$öô_gªíÀt
+()
+
+2018 
+PyObje˘
+* 
+m
+ = 
+NULL
+;
+
+2019 ** 
+p
+ = 
+NULL
+;
+
+2020 
+PyObje˘
+* 
+c_≠i_obje˘
+;
+
+2021 * 
+_PyGªíÀt_API
+[
+PyGªíÀt_API_poöãrs
+];
+
+2023 
+	`GREENLET_NOINLINE_INIT
+();
+
+2025 #i‡
+PY_MAJOR_VERSION
+ >= 3
+
+2026 
+m
+ = 
+	`PyModuÀ_Cª©e
+(&
+gªíÀt_moduÀ_def
+);
+
+2028 
+m
+ = 
+	`Py_InôModuÀ
+("gªíÀt._gªíÀt", 
+GªíMëhods
+);
+
+2030 i‡(
+m
+ =
+NULL
+) {
+
+2031 
+INITERROR
+;
+
+2034 #i‡
+PY_MAJOR_VERSION
+ >= 3
+
+2035 
+	#GªíÀt_I¡în
+ 
+PyUnicode_I¡înFromSåög
+
+
+	)
+
+2037 
+	#GªíÀt_I¡în
+ 
+PySåög_I¡înFromSåög
+
+
+	)
+
+2039 
+ts_curkey
+ = 
+	`GªíÀt_I¡în
+("__greenlet_ts_curkey");
+
+2040 
+ts_dñkey
+ = 
+	`GªíÀt_I¡în
+("__greenlet_ts_delkey");
+
+2041 
+ts_åa˚key
+ = 
+	`GªíÀt_I¡în
+("__greenlet_ts_tracekey");
+
+2042 
+ts_evít_swôch
+ = 
+	`GªíÀt_I¡în
+("switch");
+
+2043 
+ts_evít_throw
+ = 
+	`GªíÀt_I¡în
+("throw");
+
+2044 #unde‡
+GªíÀt_I¡în
+
+
+2046 i‡(
+ts_curkey
+ =
+NULL
+ || 
+ts_dñkey
+ == NULL) {
+
+2047 
+INITERROR
+;
+
+2049 i‡(
+	`PyTy≥_Ródy
+(&
+PyGªíÀt_Ty≥
+) < 0) {
+
+2050 
+INITERROR
+;
+
+2052 
+PyExc_GªíÀtEº‹
+ = 
+	`PyEº_NewEx˚±i⁄
+("gªíÀt.îr‹", 
+NULL
+, NULL);
+
+2053 i‡(
+PyExc_GªíÀtEº‹
+ =
+NULL
+) {
+
+2054 
+INITERROR
+;
+
+2056 
+PyExc_GªíÀtExô
+ =
+
+2057 
+	`PyEº_NewEx˚±i⁄
+("gªíÀt.GªíÀtExô", 
+PyExc_Ba£Ex˚±i⁄
+, 
+NULL
+);
+
+2058 i‡(
+PyExc_GªíÀtExô
+ =
+NULL
+) {
+
+2059 
+INITERROR
+;
+
+2062 
+ts_em±y_tu∂e
+ = 
+	`PyTu∂e_New
+(0);
+
+2063 i‡(
+ts_em±y_tu∂e
+ =
+NULL
+) {
+
+2064 
+INITERROR
+;
+
+2067 
+ts_em±y_di˘
+ = 
+	`PyDi˘_New
+();
+
+2068 i‡(
+ts_em±y_di˘
+ =
+NULL
+) {
+
+2069 
+INITERROR
+;
+
+2072 
+ts_cuºít
+ = 
+	`gªí_¸óã_maö
+();
+
+2073 i‡(
+ts_cuºít
+ =
+NULL
+) {
+
+2074 
+INITERROR
+;
+
+2077 
+	`Py_INCREF
+(&
+PyGªíÀt_Ty≥
+);
+
+2078 
+	`PyModuÀ_AddObje˘
+(
+m
+, "gªíÀt", (
+PyObje˘
+*)&
+PyGªíÀt_Ty≥
+);
+
+2079 
+	`Py_INCREF
+(
+PyExc_GªíÀtEº‹
+);
+
+2080 
+	`PyModuÀ_AddObje˘
+(
+m
+, "îr‹", 
+PyExc_GªíÀtEº‹
+);
+
+2081 
+	`Py_INCREF
+(
+PyExc_GªíÀtExô
+);
+
+2082 
+	`PyModuÀ_AddObje˘
+(
+m
+, "GªíÀtExô", 
+PyExc_GªíÀtExô
+);
+
+2084 
+	`PyModuÀ_AddObje˘
+(
+m
+, "GREENLET_USE_GC", 
+	`PyBoﬁ_FromL⁄g
+(1));
+
+2085 
+	`PyModuÀ_AddObje˘
+(
+m
+, "GREENLET_USE_TRACING", 
+	`PyBoﬁ_FromL⁄g
+(1));
+
+2086 
+	`PyModuÀ_AddObje˘
+(
+
+2087 
+m
+, "GREENLET_USE_CONTEXT_VARS", 
+	`PyBoﬁ_FromL⁄g
+(
+GREENLET_PY37
+));
+
+2091 
+p
+ = 
+c›y_⁄_gªíty≥
+; *p;Ö++) {
+
+2092 
+PyObje˘
+* 
+o
+ = 
+	`PyObje˘_GëAârSåög
+(
+m
+, *
+p
+);
+
+2093 i‡(!
+o
+) {
+
+2096 
+	`PyDi˘_SëIãmSåög
+(
+PyGªíÀt_Ty≥
+.
+ç_di˘
+, *
+p
+, 
+o
+);
+
+2097 
+	`Py_DECREF
+(
+o
+);
+
+2105 
+_PyGªíÀt_API
+[
+PyGªíÀt_Ty≥_NUM
+] = (*)&
+PyGªíÀt_Ty≥
+;
+
+2108 
+_PyGªíÀt_API
+[
+PyExc_GªíÀtEº‹_NUM
+] = (*)
+PyExc_GªíÀtEº‹
+;
+
+2109 
+_PyGªíÀt_API
+[
+PyExc_GªíÀtExô_NUM
+] = (*)
+PyExc_GªíÀtExô
+;
+
+2112 
+_PyGªíÀt_API
+[
+PyGªíÀt_New_NUM
+] = (*)
+PyGªíÀt_New
+;
+
+2113 
+_PyGªíÀt_API
+[
+PyGªíÀt_GëCuºít_NUM
+] = (*)
+PyGªíÀt_GëCuºít
+;
+
+2114 
+_PyGªíÀt_API
+[
+PyGªíÀt_Throw_NUM
+] = (*)
+PyGªíÀt_Throw
+;
+
+2115 
+_PyGªíÀt_API
+[
+PyGªíÀt_Swôch_NUM
+] = (*)
+PyGªíÀt_Swôch
+;
+
+2116 
+_PyGªíÀt_API
+[
+PyGªíÀt_SëP¨ít_NUM
+] = (*)
+PyGªíÀt_SëP¨ít
+;
+
+2122 
+c_≠i_obje˘
+ =
+
+2123 
+	`PyC≠suÀ_New
+((*)
+_PyGªíÀt_API
+, "gªíÀt._C_API", 
+NULL
+);
+
+2124 i‡(
+c_≠i_obje˘
+ !
+NULL
+) {
+
+2125 
+	`PyModuÀ_AddObje˘
+(
+m
+, "_C_API", 
+c_≠i_obje˘
+);
+
+2128 #i‡
+PY_MAJOR_VERSION
+ >= 3
+
+2129  
+m
+;
+
+2131 
+	}
+}
+
+2133 #ifde‡
+__˛™g__
+
+
+2134 #¥agm®
+˛™g
+ 
+dügno°ic
+ 
+p›
+
+
+	@.venv/lib/python3.10/site-packages/greenlet/greenlet.h
+
+5 #i‚de‡
+Py_GREENLETOBJECT_H
+
+
+6 
+	#Py_GREENLETOBJECT_H
+
+
+	)
+
+8 
+	~<Pyth⁄.h
+>
+
+10 #ifde‡
+__˝lu•lus
+
+
+15 
+	#GREENLET_VERSION
+ "1.0.0"
+
+	)
+
+17 
+	s_gªíÀt
+ {
+
+18 
+PyObje˘_HEAD
+
+
+19 * 
+°ack_°¨t
+;
+
+20 * 
+°ack_°›
+;
+
+21 * 
+°ack_c›y
+;
+
+22 
+öçå_t
+ 
+°ack_ßved
+;
+
+23 
+_gªíÀt
+* 
+°ack_¥ev
+;
+
+24 
+_gªíÀt
+* 
+∑ª¡
+;
+
+25 
+PyObje˘
+* 
+run_öfo
+;
+
+26 
+_‰ame
+* 
+t›_‰ame
+;
+
+27 
+ªcursi⁄_dïth
+;
+
+28 
+PyObje˘
+* 
+wókªÊi°
+;
+
+29 #i‡
+PY_VERSION_HEX
+ >= 0x030700A3
+
+30 
+_PyEº_SèckIãm
+* 
+exc_öfo
+;
+
+31 
+_PyEº_SèckIãm
+ 
+exc_°©e
+;
+
+33 
+PyObje˘
+* 
+exc_ty≥
+;
+
+34 
+PyObje˘
+* 
+exc_vÆue
+;
+
+35 
+PyObje˘
+* 
+exc_åa˚back
+;
+
+37 
+PyObje˘
+* 
+di˘
+;
+
+38 #i‡
+PY_VERSION_HEX
+ >= 0x030700A3
+
+39 
+PyObje˘
+* 
+c⁄ãxt
+;
+
+41 #i‡
+PY_VERSION_HEX
+ >= 0x30A00B1
+
+42 
+CFøme
+* 
+c‰ame
+;
+
+44 } 
+	tPyGªíÀt
+;
+
+46 
+	#PyGªíÀt_Check
+(
+›
+Ë
+	`PyObje˘_Ty≥Check
+(›, &
+PyGªíÀt_Ty≥
+)
+
+	)
+
+47 
+	#PyGªíÀt_MAIN
+(
+›
+Ë(((
+PyGªíÀt
+*)(›))->
+°ack_°›
+ =(*)-1)
+
+	)
+
+48 
+	#PyGªíÀt_STARTED
+(
+›
+Ë(((
+PyGªíÀt
+*)(›))->
+°ack_°›
+ !
+NULL
+)
+
+	)
+
+49 
+	#PyGªíÀt_ACTIVE
+(
+›
+Ë(((
+PyGªíÀt
+*)(›))->
+°ack_°¨t
+ !
+NULL
+)
+
+	)
+
+50 
+	#PyGªíÀt_GET_PARENT
+(
+›
+Ë(((
+PyGªíÀt
+*)(›))->
+∑ª¡
+)
+
+	)
+
+55 
+	#PyGªíÀt_API_poöãrs
+ 8
+
+	)
+
+57 
+	#PyGªíÀt_Ty≥_NUM
+ 0
+
+	)
+
+58 
+	#PyExc_GªíÀtEº‹_NUM
+ 1
+
+	)
+
+59 
+	#PyExc_GªíÀtExô_NUM
+ 2
+
+	)
+
+61 
+	#PyGªíÀt_New_NUM
+ 3
+
+	)
+
+62 
+	#PyGªíÀt_GëCuºít_NUM
+ 4
+
+	)
+
+63 
+	#PyGªíÀt_Throw_NUM
+ 5
+
+	)
+
+64 
+	#PyGªíÀt_Swôch_NUM
+ 6
+
+	)
+
+65 
+	#PyGªíÀt_SëP¨ít_NUM
+ 7
+
+	)
+
+67 #i‚de‡
+GREENLET_MODULE
+
+
+69 ** 
+_PyGªíÀt_API
+ = 
+NULL
+;
+
+71 
+	#PyGªíÀt_Ty≥
+ \
+
+72 (*(
+PyTy≥Obje˘
+*)
+_PyGªíÀt_API
+[
+PyGªíÀt_Ty≥_NUM
+])
+
+	)
+
+74 
+	#PyExc_GªíÀtEº‹
+ \
+
+75 ((
+PyObje˘
+*)
+_PyGªíÀt_API
+[
+PyExc_GªíÀtEº‹_NUM
+])
+
+	)
+
+77 
+	#PyExc_GªíÀtExô
+ \
+
+78 ((
+PyObje˘
+*)
+_PyGªíÀt_API
+[
+PyExc_GªíÀtExô_NUM
+])
+
+	)
+
+85 
+	#PyGªíÀt_New
+ \
+
+86 (*(
+PyGªíÀt
+ * (*)(
+PyObje˘
+ * 
+run
+, PyGªíÀà* 
+∑ª¡
+)) \
+
+87 
+_PyGªíÀt_API
+[
+PyGªíÀt_New_NUM
+])
+
+	)
+
+94 
+	#PyGªíÀt_GëCuºít
+ \
+
+95 (*(
+PyGªíÀt
+ * (*)()Ë
+_PyGªíÀt_API
+[
+PyGªíÀt_GëCuºít_NUM
+])
+
+	)
+
+106 
+	#PyGªíÀt_Throw
+ \
+
+107 (*(
+PyObje˘
+ * (*)(
+PyGªíÀt
+ * 
+£lf
+, \
+
+108 
+PyObje˘
+ * 
+typ
+, \
+
+109 
+PyObje˘
+ * 
+vÆ
+, \
+
+110 
+PyObje˘
+ * 
+tb
+)) \
+
+111 
+_PyGªíÀt_API
+[
+PyGªíÀt_Throw_NUM
+])
+
+	)
+
+118 
+	#PyGªíÀt_Swôch
+ \
+
+119 (*(
+PyObje˘
+ * \
+
+120 (*)(
+PyGªíÀt
+ * 
+gªíÀt
+, 
+PyObje˘
+ * 
+¨gs
+, PyObje˘ * 
+kw¨gs
+)) \
+
+121 
+_PyGªíÀt_API
+[
+PyGªíÀt_Swôch_NUM
+])
+
+	)
+
+128 
+	#PyGªíÀt_SëP¨ít
+ \
+
+129 (*((*)(
+PyGªíÀt
+ * 
+gªíÀt
+, PyGªíÀà* 
+≈¨ít
+)) \
+
+130 
+_PyGªíÀt_API
+[
+PyGªíÀt_SëP¨ít_NUM
+])
+
+	)
+
+136 
+	#PyGªíÀt_Imp‹t
+() \
+
+138 
+_PyGªíÀt_API
+ = (**)
+	`PyC≠suÀ_Imp‹t
+("greenlet._C_API", 0); \
+
+139 }
+
+	)
+
+143 #ifde‡
+__˝lu•lus
+
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_aarch64_gcc.h
+
+15 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+17 #ifde‡
+SLP_EVAL
+
+
+18 
+	#STACK_MAGIC
+ 0
+
+	)
+
+19 
+	#REGS_TO_SAVE
+ "x19", "x20", "x21", "x22", "x23", "x24", "x25", "x26", \
+
+22 "v12", "v13", "v14", "v15"
+
+	)
+
+25 
+	$¶p_swôch
+()
+
+27 
+îr
+;
+
+28 *
+Â
+;
+
+29 *
+°ackªf
+, 
+°sizediff
+;
+
+30 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+31 
+__asm__
+ vﬁ©ûê("°∏x29, %0" : "=m"(
+Â
+) : : );
+
+32 
+	`__asm__
+ ("mov %0, sp" : "Ù" (
+°ackªf
+));
+
+34 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+35 
+__asm__
+ volatile (
+
+39 : "r" (
+°sizediff
+)
+
+41 
+	`SLP_RESTORE_STATE
+();
+
+62 
+__asm__
+ vﬁ©ûê("mov %0, #0" : "Ù" (
+îr
+));
+
+64 
+__asm__
+ vﬁ©ûê("ld∏x29, %0" : : "m" (
+Â
+) :);
+
+65 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+66  
+îr
+;
+
+67 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_alpha_unix.h
+
+1 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+3 #ifde‡
+SLP_EVAL
+
+
+4 
+	#STACK_MAGIC
+ 0
+
+	)
+
+6 
+	#REGS_TO_SAVE
+ "$9", "$10", "$11", "$12", "$13", "$14", "$15", \
+
+7 "$f2", "$f3", "$f4", "$f5", "$f6", "$f7", "$f8", "$f9"
+
+	)
+
+10 
+	$¶p_swôch
+()
+
+12 
+ªt
+;
+
+13 *
+°ackªf
+, 
+°sizediff
+;
+
+14 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+15 
+__asm__
+ vﬁ©ûê("mov $30, %0" : "Ù" (
+°ackªf
+) : );
+
+17 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+18 
+__asm__
+ volatile (
+
+21 : "r" (
+°sizediff
+)
+
+23 
+	`SLP_RESTORE_STATE
+();
+
+25 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+26 
+__asm__
+ vﬁ©ûê("mov $31, %0" : "Ù" (
+ªt
+) : );
+
+27  
+ªt
+;
+
+28 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_amd64_unix.h
+
+29 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+31 #ifde‡
+SLP_EVAL
+
+
+35 
+	#STACK_MAGIC
+ 0
+
+	)
+
+37 
+	#REGS_TO_SAVE
+ "r12", "r13", "r14", "r15"
+
+	)
+
+40 
+	$¶p_swôch
+()
+
+42 
+îr
+;
+
+43 * 
+rbp
+;
+
+44 * 
+rbx
+;
+
+45 
+c§
+;
+
+46 
+cw
+;
+
+47 *
+°ackªf
+, 
+°sizediff
+;
+
+48 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+49 
+__asm__
+ vﬁ©ûê("f°cw %0" : "=m" (
+cw
+));
+
+50 
+__asm__
+ vﬁ©ûê("°mxc§ %0" : "=m" (
+c§
+));
+
+51 
+__asm__
+ vﬁ©ûê("movq %%rbp, %0" : "=m" (
+rbp
+));
+
+52 
+__asm__
+ vﬁ©ûê("movq %%rbx, %0" : "=m" (
+rbx
+));
+
+53 
+	`__asm__
+ ("movq %%r•, %0" : "=g" (
+°ackªf
+));
+
+55 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+56 
+__asm__
+ volatile (
+
+60 : "r" (
+°sizediff
+)
+
+62 
+	`SLP_RESTORE_STATE
+();
+
+63 
+__asm__
+ vﬁ©ûê("x‹q %%øx, %%øx" : "˜" (
+îr
+));
+
+65 
+__asm__
+ vﬁ©ûê("movq %0, %%rbx" : : "m" (
+rbx
+));
+
+66 
+__asm__
+ vﬁ©ûê("movq %0, %%rbp" : : "m" (
+rbp
+));
+
+67 
+__asm__
+ vﬁ©ûê("ldmxc§ %0" : : "m" (
+c§
+));
+
+68 
+__asm__
+ vﬁ©ûê("Êdcw %0" : : "m" (
+cw
+));
+
+69 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+70  
+îr
+;
+
+71 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_arm32_gcc.h
+
+24 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+26 #ifde‡
+SLP_EVAL
+
+
+27 
+	#STACK_MAGIC
+ 0
+
+	)
+
+28 
+	#REG_SP
+ "•"
+
+	)
+
+29 
+	#REG_SPSP
+ "•,•"
+
+	)
+
+30 #ifde‡
+__thumb__
+
+
+31 
+	#REG_FP
+ "r7"
+
+	)
+
+32 
+	#REG_FPFP
+ "r7,r7"
+
+	)
+
+33 
+	#REGS_TO_SAVE_GENERAL
+ "r4", "r5", "r6", "r8", "r9", "r10", "r11", "Ã"
+
+	)
+
+35 
+	#REG_FP
+ "Â"
+
+	)
+
+36 
+	#REG_FPFP
+ "Â,Â"
+
+	)
+
+37 
+	#REGS_TO_SAVE_GENERAL
+ "r4", "r5", "r6", "r7", "r8", "r9", "r10", "Ã"
+
+	)
+
+39 #i‡
+deföed
+(
+__SOFTFP__
+)
+
+40 
+	#REGS_TO_SAVE
+ 
+REGS_TO_SAVE_GENERAL
+
+
+	)
+
+41 #ñi‡
+deföed
+(
+__VFP_FP__
+)
+
+42 
+	#REGS_TO_SAVE
+ 
+REGS_TO_SAVE_GENERAL
+, "d8", "d9", "d10", "d11", \
+
+43 "d12", "d13", "d14", "d15"
+
+	)
+
+44 #ñi‡
+deföed
+(
+__MAVERICK__
+)
+
+45 
+	#REGS_TO_SAVE
+ 
+REGS_TO_SAVE_GENERAL
+, "mvf4", "mvf5", "mvf6", "mvf7", \
+
+47 "mvf12", "mvf13", "mvf14", "mvf15"
+
+	)
+
+49 
+	#REGS_TO_SAVE
+ 
+REGS_TO_SAVE_GENERAL
+, "f4", "f5", "f6", "f7"
+
+	)
+
+53 #ifde‡
+__GNUC__
+
+
+54 
+__©åibuã__
+((
+›timize
+("no-omit-frame-pointer")))
+
+56 
+	$¶p_swôch
+()
+
+58 *
+Â
+;
+
+59 *
+°ackªf
+, 
+°sizediff
+;
+
+60 
+ªsu…
+;
+
+61 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+62 
+__asm__
+ vﬁ©ûê("movÑ0," 
+REG_FP
+ "\n\t°∏r0,%0" : "=m" (
+Â
+) : : "r0");
+
+63 
+	`__asm__
+ ("mov %0," 
+REG_SP
+ : "Ù" (
+°ackªf
+));
+
+65 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+66 
+__asm__
+ volatile (
+
+67 "add " 
+REG_SPSP
+ ",%0\n"
+
+68 "add " 
+REG_FPFP
+ ",%0\n"
+
+70 : "r" (
+°sizediff
+)
+
+72 
+	`SLP_RESTORE_STATE
+();
+
+74 
+__asm__
+ vﬁ©ûê("ld∏r0,%1\n\tmov " 
+REG_FP
+ ",r0\n\tmov %0, #0" : "Ù" (
+ªsu…
+Ë: "m" (
+Â
+) : "r0");
+
+75 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+76  
+ªsu…
+;
+
+77 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_arm32_ios.h
+
+21 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+23 #ifde‡
+SLP_EVAL
+
+
+25 
+	#STACK_MAGIC
+ 0
+
+	)
+
+26 
+	#REG_SP
+ "•"
+
+	)
+
+27 
+	#REG_SPSP
+ "•,•"
+
+	)
+
+28 
+	#REG_FP
+ "r7"
+
+	)
+
+29 
+	#REG_FPFP
+ "r7,r7"
+
+	)
+
+30 
+	#REGS_TO_SAVE_GENERAL
+ "r4", "r5", "r6", "r8", "r10", "r11", "Ã"
+
+	)
+
+31 
+	#REGS_TO_SAVE
+ 
+REGS_TO_SAVE_GENERAL
+, "d8", "d9", "d10", "d11", \
+
+32 "d12", "d13", "d14", "d15"
+
+	)
+
+35 #ifde‡
+__GNUC__
+
+
+36 
+__©åibuã__
+((
+›timize
+("no-omit-frame-pointer")))
+
+38 
+	$¶p_swôch
+()
+
+40 *
+Â
+;
+
+41 *
+°ackªf
+, 
+°sizediff
+, 
+ªsu…
+;
+
+42 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+43 
+__asm__
+ vﬁ©ûê("°∏" 
+REG_FP
+ ",%0" : "=m" (
+Â
+));
+
+44 
+	`__asm__
+ ("mov %0," 
+REG_SP
+ : "Ù" (
+°ackªf
+));
+
+46 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+47 
+__asm__
+ volatile (
+
+48 "add " 
+REG_SPSP
+ ",%0\n"
+
+49 "add " 
+REG_FPFP
+ ",%0\n"
+
+51 : "r" (
+°sizediff
+)
+
+52 : 
+REGS_TO_SAVE
+
+
+55 
+	`SLP_RESTORE_STATE
+();
+
+57 
+__asm__
+ volatile (
+
+58 "ld∏" 
+REG_FP
+ ", %1\n\t"
+
+60 : "Ù" (
+ªsu…
+)
+
+61 : "m" (
+Â
+)
+
+62 : 
+REGS_TO_SAVE
+
+
+64  
+ªsu…
+;
+
+65 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_csky_gcc.h
+
+1 #ifde‡
+SLP_EVAL
+
+
+2 
+	#STACK_MAGIC
+ 0
+
+	)
+
+3 
+	#REG_FP
+ "r8"
+
+	)
+
+4 #ifde‡
+__CSKYABIV2__
+
+
+5 
+	#REGS_TO_SAVE_GENERAL
+ "r4", "r5", "r6", "r7", "r9", "r10", "r11", "r15",\
+
+7 "r23", "r24", "r25"
+
+	)
+
+9 #i‡
+deföed
+ (
+__CSKY_HARD_FLOAT__
+Ë|| (
+__CSKY_VDSP__
+)
+
+10 
+	#REGS_TO_SAVE
+ 
+REGS_TO_SAVE_GENERAL
+, "vr8", "vr9", "vr10", "vr11", "vr12",\
+
+11 "vr13", "vr14", "vr15"
+
+	)
+
+13 
+	#REGS_TO_SAVE
+ 
+REGS_TO_SAVE_GENERAL
+
+
+	)
+
+16 
+	#REGS_TO_SAVE
+ "r9", "r10", "r11", "r12", "r13", "r15"
+
+	)
+
+21 #ifde‡
+__GNUC__
+
+
+22 
+__©åibuã__
+((
+›timize
+("no-omit-frame-pointer")))
+
+24 
+	$¶p_swôch
+()
+
+26 *
+°ackªf
+, 
+°sizediff
+;
+
+27 
+ªsu…
+;
+
+29 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+30 
+	`__asm__
+ ("mov %0, sp" : "Ù" (
+°ackªf
+));
+
+32 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+33 
+__asm__
+ volatile (
+
+35 "addu "
+REG_FP
+",%0\n"
+
+37 : "r" (
+°sizediff
+)
+
+40 
+	`SLP_RESTORE_STATE
+();
+
+42 
+__asm__
+ vﬁ©ûê("movò%0, 0" : "Ù" (
+ªsu…
+));
+
+43 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+45  
+ªsu…
+;
+
+46 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_m68k_gcc.h
+
+9 #ifde‡
+SLP_EVAL
+
+
+11 
+	#STACK_MAGIC
+ 0
+
+	)
+
+13 
+	#REGS_TO_SAVE
+ "%d2", "%d3", "%d4", "%d5", "%d6", "%d7", \
+
+14 "%a2", "%a3", "%a4"
+
+	)
+
+17 
+	$¶p_swôch
+()
+
+19 
+îr
+;
+
+20 *
+°ackªf
+, 
+°sizediff
+;
+
+21 *
+Â
+, *
+a5
+;
+
+22 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+23 
+__asm__
+ vﬁ©ûê("move.»%%Â, %0" : "=m"(
+Â
+));
+
+24 
+__asm__
+ vﬁ©ûê("move.»%%a5, %0" : "=m"(
+a5
+));
+
+25 
+	`__asm__
+ ("move.»%%•, %0" : "Ù"(
+°ackªf
+));
+
+27 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+28 
+__asm__
+ vﬁ©ûê("add.»%0, %%•;ádd.»%0, %%Â" : : "r"(
+°sizediff
+));
+
+29 
+	`SLP_RESTORE_STATE
+();
+
+30 
+__asm__
+ vﬁ©ûê("˛r.»%0" : "=g" (
+îr
+));
+
+32 
+__asm__
+ vﬁ©ûê("move.»%0, %%a5" : : "m"(
+a5
+));
+
+33 
+__asm__
+ vﬁ©ûê("move.»%0, %%Â" : : "m"(
+Â
+));
+
+34 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+35  
+îr
+;
+
+36 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_mips_unix.h
+
+11 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+13 #ifde‡
+SLP_EVAL
+
+
+15 
+	#STACK_MAGIC
+ 0
+
+	)
+
+17 
+	#REGS_TO_SAVE
+ "$16", "$17", "$18", "$19", "$20", "$21", "$22", \
+
+18 "$23", "$30"
+
+	)
+
+20 
+	$¶p_swôch
+()
+
+22 
+îr
+;
+
+23 *
+°ackªf
+, 
+°sizediff
+;
+
+24 #ifde‡
+__mùs64
+
+
+25 
+uöt64_t
+ 
+gpßve
+;
+
+27 
+__asm__
+ 
+	`__vﬁ©ûe__
+ ("" : : : 
+REGS_TO_SAVE
+);
+
+28 #ifde‡
+__mùs64
+
+
+29 
+__asm__
+ 
+	`__vﬁ©ûe__
+ ("sd $28,%0" : "=m" (
+gpßve
+) : : );
+
+31 
+	`__asm__
+ ("movê%0, $29" : "Ù" (
+°ackªf
+) : );
+
+33 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+34 
+__asm__
+ 
+	`__vﬁ©ûe__
+ (
+
+35 #ifde‡
+__mùs64
+
+
+41 : "r" (
+°sizediff
+)
+
+43 
+	`SLP_RESTORE_STATE
+();
+
+45 #ifde‡
+__mùs64
+
+
+46 
+__asm__
+ 
+	`__vﬁ©ûe__
+ ("ld $28,%0" : : "m" (
+gpßve
+) : );
+
+48 
+__asm__
+ 
+	`__vﬁ©ûe__
+ ("" : : : 
+REGS_TO_SAVE
+);
+
+49 
+__asm__
+ 
+	`__vﬁ©ûe__
+ ("movê%0, $0" : "Ù" (
+îr
+));
+
+50  
+îr
+;
+
+51 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_ppc64_aix.h
+
+51 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+53 #ifde‡
+SLP_EVAL
+
+
+55 
+	#STACK_MAGIC
+ 6
+
+	)
+
+57 #i‡
+deföed
+(
+__ALTIVEC__
+)
+
+58 
+	#ALTIVEC_REGS
+ \
+
+60 "v28", "v29", "v30", "v31",
+
+	)
+
+62 
+	#ALTIVEC_REGS
+
+
+	)
+
+65 
+	#REGS_TO_SAVE
+ "r14", "r15", "r16", "r17", "r18", "r19", "r20", \
+
+71 
+ALTIVEC_REGS
+ \
+
+72 "¸2", "¸3", "¸4"
+
+	)
+
+75 
+	$¶p_swôch
+()
+
+77 
+îr
+;
+
+78 *
+°ackªf
+, 
+°sizediff
+;
+
+79 * 
+toc
+;
+
+80 * 
+r30
+;
+
+81 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+82 
+__asm__
+ vﬁ©ûê("°d 2, %0" : "=m" (
+toc
+));
+
+83 
+__asm__
+ vﬁ©ûê("°d 30, %0" : "=m" (
+r30
+));
+
+84 
+	`__asm__
+ ("m∏%0, 1" : "Ù" (
+°ackªf
+) : );
+
+86 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+87 
+__asm__
+ volatile (
+
+91 : "r" (
+°sizediff
+)
+
+94 
+	`SLP_RESTORE_STATE
+();
+
+96 
+__asm__
+ vﬁ©ûê("ld 30, %0" : : "m" (
+r30
+));
+
+97 
+__asm__
+ vﬁ©ûê("ld 2, %0" : : "m" (
+toc
+));
+
+98 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+99 
+__asm__
+ vﬁ©ûê("lò%0, 0" : "Ù" (
+îr
+));
+
+100  
+îr
+;
+
+101 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_ppc64_linux.h
+
+49 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+51 #ifde‡
+SLP_EVAL
+
+
+53 #i‡
+_CALL_ELF
+ == 2
+
+54 
+	#STACK_MAGIC
+ 4
+
+	)
+
+56 
+	#STACK_MAGIC
+ 6
+
+	)
+
+59 #i‡
+deföed
+(
+__ALTIVEC__
+)
+
+60 
+	#ALTIVEC_REGS
+ \
+
+62 "v28", "v29", "v30", "v31",
+
+	)
+
+64 
+	#ALTIVEC_REGS
+
+
+	)
+
+67 
+	#REGS_TO_SAVE
+ "r14", "r15", "r16", "r17", "r18", "r19", "r20", \
+
+73 
+ALTIVEC_REGS
+ \
+
+74 "¸2", "¸3", "¸4"
+
+	)
+
+77 
+	$¶p_swôch
+()
+
+79 
+îr
+;
+
+80 *
+°ackªf
+, 
+°sizediff
+;
+
+81 * 
+toc
+;
+
+82 * 
+r30
+;
+
+83 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+84 
+__asm__
+ vﬁ©ûê("°d 2, %0" : "=m" (
+toc
+));
+
+85 
+__asm__
+ vﬁ©ûê("°d 30, %0" : "=m" (
+r30
+));
+
+86 
+	`__asm__
+ ("m∏%0, 1" : "Ù" (
+°ackªf
+) : );
+
+88 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+89 
+__asm__
+ volatile (
+
+93 : "r" (
+°sizediff
+)
+
+96 
+	`SLP_RESTORE_STATE
+();
+
+98 
+__asm__
+ vﬁ©ûê("ld 30, %0" : : "m" (
+r30
+));
+
+99 
+__asm__
+ vﬁ©ûê("ld 2, %0" : : "m" (
+toc
+));
+
+100 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+101 
+__asm__
+ vﬁ©ûê("lò%0, 0" : "Ù" (
+îr
+));
+
+102  
+îr
+;
+
+103 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_ppc_aix.h
+
+41 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+43 #ifde‡
+SLP_EVAL
+
+
+45 
+	#STACK_MAGIC
+ 3
+
+	)
+
+50 
+	#REGS_TO_SAVE
+ "r13", "r14", "r15", "r16", "r17", "r18", "r19", "r20", \
+
+52 "¸2", "¸3", "¸4"
+
+	)
+
+54 
+	$¶p_swôch
+()
+
+56 
+îr
+;
+
+57 *
+°ackªf
+, 
+°sizediff
+;
+
+58 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+59 
+	`__asm__
+ ("m∏%0, 1" : "Ù" (
+°ackªf
+) : );
+
+61 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+62 
+__asm__
+ volatile (
+
+66 : "r" (
+°sizediff
+)
+
+69 
+	`SLP_RESTORE_STATE
+();
+
+71 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+72 
+__asm__
+ vﬁ©ûê("lò%0, 0" : "Ù" (
+îr
+));
+
+73  
+îr
+;
+
+74 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_ppc_linux.h
+
+37 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+39 #ifde‡
+SLP_EVAL
+
+
+41 
+	#STACK_MAGIC
+ 3
+
+	)
+
+46 
+	#REGS_TO_SAVE
+ "r13", "r14", "r15", "r16", "r17", "r18", "r19", "r20", \
+
+48 "¸2", "¸3", "¸4"
+
+	)
+
+50 
+	$¶p_swôch
+()
+
+52 
+îr
+;
+
+53 *
+°ackªf
+, 
+°sizediff
+;
+
+54 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+55 
+	`__asm__
+ ("m∏%0, 1" : "Ù" (
+°ackªf
+) : );
+
+57 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+58 
+__asm__
+ volatile (
+
+63 : "r" (
+°sizediff
+)
+
+66 
+	`SLP_RESTORE_STATE
+();
+
+68 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+69 
+__asm__
+ vﬁ©ûê("lò%0, 0" : "Ù" (
+îr
+));
+
+70  
+îr
+;
+
+71 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_ppc_macosx.h
+
+33 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+35 #ifde‡
+SLP_EVAL
+
+
+37 
+	#STACK_MAGIC
+ 3
+
+	)
+
+42 
+	#REGS_TO_SAVE
+ "r13", "r14", "r15", "r16", "r17", "r18", "r19", "r20", \
+
+44 "¸2", "¸3", "¸4"
+
+	)
+
+47 
+	$¶p_swôch
+()
+
+49 
+îr
+;
+
+50 *
+°ackªf
+, 
+°sizediff
+;
+
+51 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+52 
+	`__asm__
+ (";ásm block 2\n\tm∏%0,Ñ1" : "=g" (
+°ackªf
+) : );
+
+54 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+55 
+__asm__
+ volatile (
+
+61 : "g" (
+°sizediff
+)
+
+64 
+	`SLP_RESTORE_STATE
+();
+
+66 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+67 
+__asm__
+ vﬁ©ûê("lò%0, 0" : "Ù" (
+îr
+));
+
+68  
+îr
+;
+
+69 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_ppc_unix.h
+
+35 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+37 #ifde‡
+SLP_EVAL
+
+
+39 
+	#STACK_MAGIC
+ 3
+
+	)
+
+44 
+	#REGS_TO_SAVE
+ "r13", "r14", "r15", "r16", "r17", "r18", "r19", "r20", \
+
+46 "¸2", "¸3", "¸4"
+
+	)
+
+48 
+	$¶p_swôch
+()
+
+50 
+îr
+;
+
+51 *
+°ackªf
+, 
+°sizediff
+;
+
+52 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+53 
+	`__asm__
+ ("m∏%0, 1" : "=g" (
+°ackªf
+) : );
+
+55 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+56 
+__asm__
+ volatile (
+
+61 : "g" (
+°sizediff
+)
+
+64 
+	`SLP_RESTORE_STATE
+();
+
+66 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+67 
+__asm__
+ vﬁ©ûê("lò%0, 0" : "Ù" (
+îr
+));
+
+68  
+îr
+;
+
+69 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_riscv_unix.h
+
+1 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+3 #ifde‡
+SLP_EVAL
+
+
+4 
+	#STACK_MAGIC
+ 0
+
+	)
+
+6 
+	#REGS_TO_SAVE
+ "s0", "s1", "s2", "s3", "s4", "s5", \
+
+9 "fs10", "fs11"
+
+	)
+
+12 
+	$¶p_swôch
+()
+
+14 
+ªt
+;
+
+15 *
+°ackªf
+, 
+°sizediff
+;
+
+16 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+17 
+__asm__
+ vﬁ©ûê("mv %0, sp" : "Ù" (
+°ackªf
+) : );
+
+19 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+20 
+__asm__
+ volatile (
+
+23 : "r" (
+°sizediff
+)
+
+25 
+	`SLP_RESTORE_STATE
+();
+
+27 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+28 
+__asm__
+ vﬁ©ûê("mv %0, zîo" : "Ù" (
+ªt
+) : );
+
+29  
+ªt
+;
+
+30 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_s390_unix.h
+
+19 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+21 #ifde‡
+SLP_EVAL
+
+
+23 #ifde‡
+__s390x__
+
+
+24 
+	#STACK_MAGIC
+ 20
+
+	)
+
+26 
+	#STACK_MAGIC
+ 24
+
+	)
+
+32 
+	#REGS_TO_SAVE
+ "r6", "r7", "r8", "r9", "r10", "r14", \
+
+34 "f8", "f9", "f10", "f11", "f12", "f13", "f14", "f15"
+
+	)
+
+37 
+	$¶p_swôch
+()
+
+39 
+ªt
+;
+
+40 *
+°ackªf
+, 
+°sizediff
+;
+
+41 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+42 #ifde‡
+__s390x__
+
+
+43 
+__asm__
+ vﬁ©ûê("lg∏%0, 15" : "Ù" (
+°ackªf
+) : );
+
+45 
+__asm__
+ vﬁ©ûê("Ã %0, 15" : "Ù" (
+°ackªf
+) : );
+
+48 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+58 
+__asm__
+ volatile (
+
+59 #ifde‡
+__s390x__
+
+
+67 : "r" (
+°sizediff
+)
+
+69 
+	`SLP_RESTORE_STATE
+();
+
+71 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+72 
+__asm__
+ vﬁ©ûê("lhò%0, 0" : "Ù" (
+ªt
+) : );
+
+73  
+ªt
+;
+
+74 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_sparc_sun_gcc.h
+
+32 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+34 #ifde‡
+SLP_EVAL
+
+
+37 
+	#STACK_MAGIC
+ 0
+
+	)
+
+40 #i‡
+deföed
+(
+__•¨cv9
+)
+
+41 
+	#SLP_FLUSHW
+ 
+__asm__
+ vﬁ©ûê("Êushw")
+
+	)
+
+43 
+	#SLP_FLUSHW
+ 
+__asm__
+ vﬁ©ûê("è 3"Ë
+
+	)
+
+47 
+	#SLP_BEFORE_SAVE_STATE
+(Ë
+SLP_FLUSHW
+
+
+	)
+
+48 
+	#SLP_BEFORE_RESTORE_STATE
+(Ë
+SLP_FLUSHW
+
+
+	)
+
+52 
+	$¶p_swôch
+()
+
+54 
+îr
+;
+
+55 *
+°ackªf
+, 
+°sizediff
+;
+
+60 
+__asm__
+ vﬁ©ûê("mov %%•, %0" : "Ù" (
+°ackªf
+));
+
+65 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+68 
+__asm__
+ volatile (
+
+71 : : "r" (
+°sizediff
+));
+
+74 
+	`SLP_RESTORE_STATE
+();
+
+76 
+__asm__
+ vﬁ©ûê("mov %1, %0" : "Ù" (
+îr
+) : "i" (0));
+
+77  
+îr
+;
+
+79 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_x32_unix.h
+
+9 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+11 #ifde‡
+SLP_EVAL
+
+
+13 
+	#STACK_MAGIC
+ 0
+
+	)
+
+15 
+	#REGS_TO_SAVE
+ "r12", "r13", "r14", "r15"
+
+	)
+
+19 
+	$¶p_swôch
+()
+
+21 * 
+ebp
+;
+
+22 * 
+ebx
+;
+
+23 
+c§
+;
+
+24 
+cw
+;
+
+25 
+îr
+;
+
+26 *
+°ackªf
+, 
+°sizediff
+;
+
+27 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+28 
+__asm__
+ vﬁ©ûê("f°cw %0" : "=m" (
+cw
+));
+
+29 
+__asm__
+ vﬁ©ûê("°mxc§ %0" : "=m" (
+c§
+));
+
+30 
+__asm__
+ vﬁ©ûê("mov»%%ebp, %0" : "=m" (
+ebp
+));
+
+31 
+__asm__
+ vﬁ©ûê("mov»%%ebx, %0" : "=m" (
+ebx
+));
+
+32 
+	`__asm__
+ ("mov»%%e•, %0" : "=g" (
+°ackªf
+));
+
+34 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+35 
+__asm__
+ volatile (
+
+39 : "r" (
+°sizediff
+)
+
+41 
+	`SLP_RESTORE_STATE
+();
+
+43 
+__asm__
+ vﬁ©ûê("mov»%0, %%ebx" : : "m" (
+ebx
+));
+
+44 
+__asm__
+ vﬁ©ûê("mov»%0, %%ebp" : : "m" (
+ebp
+));
+
+45 
+__asm__
+ vﬁ©ûê("ldmxc§ %0" : : "m" (
+c§
+));
+
+46 
+__asm__
+ vﬁ©ûê("Êdcw %0" : : "m" (
+cw
+));
+
+47 
+__asm__
+ vﬁ©ûê("" : : : 
+REGS_TO_SAVE
+);
+
+48 
+__asm__
+ vﬁ©ûê("x‹»%%óx, %%óx" : "˜" (
+îr
+));
+
+49  
+îr
+;
+
+50 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_x64_msvc.h
+
+26 #i‚de‡
+Æloˇ
+
+
+27 
+	#Æloˇ
+ 
+_Æloˇ
+
+
+	)
+
+30 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+31 
+	#STACK_MAGIC
+ 0
+
+	)
+
+34 
+	#EXTERNAL_ASM
+
+
+	)
+
+36 #ifde‡
+SLP_EVAL
+
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_x86_msvc.h
+
+25 
+	#Æloˇ
+ 
+_Æloˇ
+
+
+	)
+
+27 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+29 #ifde‡
+SLP_EVAL
+
+
+31 
+	#STACK_MAGIC
+ 0
+
+	)
+
+36 #¥agm®
+›timize
+("g", 
+off
+)
+
+37 #¥agm®
+w¨nög
+(
+dißbÀ
+:4731)
+
+40 
+	$¶p_swôch
+()
+
+42 * 
+£h
+;
+
+43 *
+°ackªf
+, 
+°sizediff
+;
+
+44 
+__asm
+ 
+mov
+ 
+óx
+, 
+fs
+:[0]
+
+45 
+__asm
+ 
+mov
+ [
+£h
+], 
+óx
+
+
+46 
+__asm
+ 
+mov
+ 
+°ackªf
+, 
+e•
+;
+
+48 
+__asm
+ 
+mov
+ 
+ebx
+,Ébx;
+
+49 
+__asm
+ 
+xchg
+ 
+esi
+, 
+edi
+;
+
+51 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+52 
+__asm
+ {
+
+53 
+mov
+ 
+óx
+, 
+°sizediff
+
+
+54 
+add
+ 
+e•
+, 
+óx
+
+
+55 
+add
+ 
+ebp
+, 
+óx
+
+
+57 
+	`SLP_RESTORE_STATE
+();
+
+59 
+__asm
+ 
+mov
+ 
+óx
+, [
+£h
+]
+
+60 
+__asm
+ 
+mov
+ 
+fs
+:[0], 
+óx
+
+
+62 
+	}
+}
+
+65 #¥agm®
+›timize
+("g", 
+⁄
+)
+
+66 #¥agm®
+w¨nög
+(:4731)
+
+75 
+	#STACKLESS_SPY
+
+
+	)
+
+77 #ifde‡
+IMPLEMENT_STACKLESSMODULE
+
+
+78 
+	~"Wödows.h
+"
+
+79 
+	#CANNOT_READ_MEM
+(
+p
+, 
+byãs
+Ë
+	`IsBadRódPå
+’, byãs)
+
+	)
+
+81 
+	$IS_ON_STACK
+(*
+p
+)
+
+83 
+°ackªf
+;
+
+84 
+°ackba£
+ = (()&
+°ackªf
+) & 0xfffff000;
+
+85  ()
+p
+ >
+°ackba£
+ && ()p < stackbase + 0x00100000;
+
+86 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/platform/switch_x86_unix.h
+
+31 
+	#STACK_REFPLUS
+ 1
+
+	)
+
+33 #ifde‡
+SLP_EVAL
+
+
+37 
+	#STACK_MAGIC
+ 0
+
+	)
+
+39 #i‡
+__GNUC__
+ > 4 || (__GNUC__ =4 && 
+__GNUC_MINOR__
+ >= 5)
+
+40 
+	#ATTR_NOCLONE
+ 
+	`__©åibuã__
+((
+no˛⁄e
+))
+
+	)
+
+42 
+	#ATTR_NOCLONE
+
+
+	)
+
+46 
+	$¶p_swôch
+()
+
+48 
+îr
+;
+
+49 #ifde‡
+_WIN32
+
+
+50 *
+£h
+;
+
+52 *
+ebp
+, *
+ebx
+;
+
+53 
+cw
+;
+
+54 *
+°ackªf
+, 
+°sizediff
+;
+
+55 
+__asm__
+ volatile ("" : : : "esi", "edi");
+
+56 
+__asm__
+ vﬁ©ûê("f°cw %0" : "=m" (
+cw
+));
+
+57 
+__asm__
+ vﬁ©ûê("mov»%%ebp, %0" : "=m" (
+ebp
+));
+
+58 
+__asm__
+ vﬁ©ûê("mov»%%ebx, %0" : "=m" (
+ebx
+));
+
+59 #ifde‡
+_WIN32
+
+
+60 
+__asm__
+ volatile (
+
+63 : "=m" (
+£h
+)
+
+67 
+	`__asm__
+ ("mov»%%e•, %0" : "=g" (
+°ackªf
+));
+
+69 
+	`SLP_SAVE_STATE
+(
+°ackªf
+, 
+°sizediff
+);
+
+70 
+__asm__
+ volatile (
+
+74 : "r" (
+°sizediff
+)
+
+76 
+	`SLP_RESTORE_STATE
+();
+
+77 
+__asm__
+ vﬁ©ûê("x‹»%%óx, %%óx" : "˜" (
+îr
+));
+
+79 #ifde‡
+_WIN32
+
+
+80 
+__asm__
+ volatile (
+
+84 : "m" (
+£h
+)
+
+87 
+__asm__
+ vﬁ©ûê("mov»%0, %%ebx" : : "m" (
+ebx
+));
+
+88 
+__asm__
+ vﬁ©ûê("mov»%0, %%ebp" : : "m" (
+ebp
+));
+
+89 
+__asm__
+ vﬁ©ûê("Êdcw %0" : : "m" (
+cw
+));
+
+90 
+__asm__
+ volatile ("" : : : "esi", "edi");
+
+91  
+îr
+;
+
+92 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/slp_platformselect.h
+
+5 #i‡ 
+deföed
+(
+MS_WIN32
+Ë&& !deföed(
+MS_WIN64
+Ë&& deföed(
+_M_IX86
+Ë&& deföed(
+_MSC_VER
+)
+
+6 
+	~"∂©f‹m/swôch_x86_msvc.h
+"
+
+7 #ñi‡
+deföed
+(
+MS_WIN64
+Ë&& deföed(
+_M_X64
+Ë&& deföed(
+_MSC_VER
+Ë|| deföed(
+__MINGW64__
+)
+
+8 
+	~"∂©f‹m/swôch_x64_msvc.h
+"
+
+9 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__amd64__
+Ë&& deföed(
+__ILP32__
+)
+
+10 
+	~"∂©f‹m/swôch_x32_unix.h
+"
+
+11 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__amd64__
+)
+
+12 
+	~"∂©f‹m/swôch_amd64_unix.h
+"
+
+13 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__i386__
+)
+
+14 
+	~"∂©f‹m/swôch_x86_unix.h
+"
+
+15 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__powîpc64__
+Ë&& (deföed(
+__löux__
+Ë|| deföed(
+__FªeBSD__
+))
+
+16 
+	~"∂©f‹m/swôch_µc64_löux.h
+"
+
+17 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__PPC__
+Ë&& (deföed(
+__löux__
+Ë|| deföed(
+__FªeBSD__
+))
+
+18 
+	~"∂©f‹m/swôch_µc_löux.h
+"
+
+19 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__µc__
+Ë&& deföed(
+__APPLE__
+)
+
+20 
+	~"∂©f‹m/swôch_µc_macosx.h
+"
+
+21 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__powîpc64__
+Ë&& deföed(
+_AIX
+)
+
+22 
+	~"∂©f‹m/swôch_µc64_aix.h
+"
+
+23 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+_ARCH_PPC
+Ë&& deföed(
+_AIX
+)
+
+24 
+	~"∂©f‹m/swôch_µc_aix.h
+"
+
+25 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+•¨c
+)
+
+26 
+	~"∂©f‹m/swôch_•¨c_sun_gcc.h
+"
+
+27 #ñi‡
+deföed
+(
+__SUNPRO_C
+Ë&& deföed(
+•¨c
+Ë&& deföed(
+sun
+)
+
+28 
+	~"∂©f‹m/swôch_•¨c_sun_gcc.h
+"
+
+29 #ñi‡
+deföed
+(
+__SUNPRO_C
+Ë&& deföed(
+__amd64__
+Ë&& deföed(
+sun
+)
+
+30 
+	~"∂©f‹m/swôch_amd64_unix.h
+"
+
+31 #ñi‡
+deföed
+(
+__SUNPRO_C
+Ë&& deföed(
+__i386__
+Ë&& deföed(
+sun
+)
+
+32 
+	~"∂©f‹m/swôch_x86_unix.h
+"
+
+33 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__s390__
+Ë&& deföed(
+__löux__
+)
+
+34 
+	~"∂©f‹m/swôch_s390_unix.h
+"
+
+35 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__s390x__
+Ë&& deföed(
+__löux__
+)
+
+36 
+	~"∂©f‹m/swôch_s390_unix.h
+"
+
+37 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__¨m__
+)
+
+38 #ifde‡
+__APPLE__
+
+
+39 
+	~<T¨gëC⁄dôi⁄Æs.h
+>
+
+41 #i‡
+TARGET_OS_IPHONE
+
+
+42 
+	~"∂©f‹m/swôch_¨m32_ios.h
+"
+
+44 
+	~"∂©f‹m/swôch_¨m32_gcc.h
+"
+
+46 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__mùs__
+Ë&& deföed(
+__löux__
+)
+
+47 
+	~"∂©f‹m/swôch_mùs_unix.h
+"
+
+48 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__Ørch64__
+)
+
+49 
+	~"∂©f‹m/swôch_Ørch64_gcc.h
+"
+
+50 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__mc68000__
+)
+
+51 
+	~"∂©f‹m/swôch_m68k_gcc.h
+"
+
+52 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__csky__
+)
+
+53 
+	~"∂©f‹m/swôch_csky_gcc.h
+"
+
+54 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__riscv
+)
+
+55 
+	~"∂©f‹m/swôch_riscv_unix.h
+"
+
+56 #ñi‡
+deföed
+(
+__GNUC__
+Ë&& deföed(
+__Æpha__
+)
+
+57 
+	~"∂©f‹m/swôch_Æpha_unix.h
+"
+
+	@.venv/lib/python3.10/site-packages/greenlet/tests/_test_extension.c
+
+5 
+	~"../gªíÀt.h
+"
+
+7 #i‚de‡
+Py_RETURN_NONE
+
+
+8 
+	#Py_RETURN_NONE
+  
+	`Py_INCREF
+(
+Py_N⁄e
+), 
+	)
+Py_None
+
+11 
+	#TEST_MODULE_NAME
+ "_ã°_exãnsi⁄"
+
+	)
+
+13 
+PyObje˘
+*
+
+14 
+	$ã°_swôch
+(
+PyObje˘
+* 
+£lf
+, PyObje˘* 
+gªíÀt
+)
+
+16 
+PyObje˘
+* 
+ªsu…
+ = 
+NULL
+;
+
+18 i‡(
+gªíÀt
+ =
+NULL
+ || !
+	`PyGªíÀt_Check
+(greenlet)) {
+
+19 
+	`PyEº_BadArgumít
+();
+
+20  
+NULL
+;
+
+23 
+ªsu…
+ = 
+	`PyGªíÀt_Swôch
+((
+PyGªíÀt
+*)
+gªíÀt
+, 
+NULL
+, NULL);
+
+24 i‡(
+ªsu…
+ =
+NULL
+) {
+
+25 i‡(!
+	`PyEº_Occuºed
+()) {
+
+26 
+	`PyEº_SëSåög
+(
+PyExc_As£πi⁄Eº‹
+,
+
+29  
+NULL
+;
+
+31 
+	`Py_INCREF
+(
+ªsu…
+);
+
+32  
+ªsu…
+;
+
+33 
+	}
+}
+
+35 
+PyObje˘
+*
+
+36 
+	$ã°_swôch_kw¨gs
+(
+PyObje˘
+* 
+£lf
+, PyObje˘* 
+¨gs
+, PyObje˘* 
+kw¨gs
+)
+
+38 
+PyGªíÀt
+* 
+g
+ = 
+NULL
+;
+
+39 
+PyObje˘
+* 
+ªsu…
+ = 
+NULL
+;
+
+41 
+	`PyArg_P¨£Tu∂e
+(
+¨gs
+, "O!", &
+PyGªíÀt_Ty≥
+, &
+g
+);
+
+43 i‡(
+g
+ =
+NULL
+ || !
+	`PyGªíÀt_Check
+(g)) {
+
+44 
+	`PyEº_BadArgumít
+();
+
+45  
+NULL
+;
+
+48 
+ªsu…
+ = 
+	`PyGªíÀt_Swôch
+(
+g
+, 
+NULL
+, 
+kw¨gs
+);
+
+49 i‡(
+ªsu…
+ =
+NULL
+) {
+
+50 i‡(!
+	`PyEº_Occuºed
+()) {
+
+51 
+	`PyEº_SëSåög
+(
+PyExc_As£πi⁄Eº‹
+,
+
+54  
+NULL
+;
+
+56 
+	`Py_XINCREF
+(
+ªsu…
+);
+
+57  
+ªsu…
+;
+
+58 
+	}
+}
+
+60 
+PyObje˘
+*
+
+61 
+	$ã°_gëcuºít
+(
+PyObje˘
+* 
+£lf
+)
+
+63 
+PyGªíÀt
+* 
+g
+ = 
+	`PyGªíÀt_GëCuºít
+();
+
+64 i‡(
+g
+ =
+NULL
+ || !
+	`PyGªíÀt_Check
+(gË|| !
+	`PyGªíÀt_ACTIVE
+(g)) {
+
+65 
+	`PyEº_SëSåög
+(
+PyExc_As£πi⁄Eº‹
+,
+
+67 
+	`Py_XDECREF
+(
+g
+);
+
+68  
+NULL
+;
+
+70 
+	`Py_DECREF
+(
+g
+);
+
+71 
+Py_RETURN_NONE
+;
+
+72 
+	}
+}
+
+74 
+PyObje˘
+*
+
+75 
+	$ã°_£ç¨ít
+(
+PyObje˘
+* 
+£lf
+, PyObje˘* 
+¨g
+)
+
+77 
+PyGªíÀt
+* 
+cuºít
+;
+
+78 
+PyGªíÀt
+* 
+gªíÀt
+ = 
+NULL
+;
+
+80 i‡(
+¨g
+ =
+NULL
+ || !
+	`PyGªíÀt_Check
+(arg)) {
+
+81 
+	`PyEº_BadArgumít
+();
+
+82  
+NULL
+;
+
+84 i‡((
+cuºít
+ = 
+	`PyGªíÀt_GëCuºít
+()Ë=
+NULL
+) {
+
+85  
+NULL
+;
+
+87 
+gªíÀt
+ = (
+PyGªíÀt
+*)
+¨g
+;
+
+88 i‡(
+	`PyGªíÀt_SëP¨ít
+(
+gªíÀt
+, 
+cuºít
+)) {
+
+89 
+	`Py_DECREF
+(
+cuºít
+);
+
+90  
+NULL
+;
+
+92 
+	`Py_DECREF
+(
+cuºít
+);
+
+93 i‡(
+	`PyGªíÀt_Swôch
+(
+gªíÀt
+, 
+NULL
+, NULL) == NULL) {
+
+94  
+NULL
+;
+
+96 
+Py_RETURN_NONE
+;
+
+97 
+	}
+}
+
+99 
+PyObje˘
+*
+
+100 
+	$ã°_√w_gªíÀt
+(
+PyObje˘
+* 
+£lf
+, PyObje˘* 
+ˇŒabÀ
+)
+
+102 
+PyObje˘
+* 
+ªsu…
+ = 
+NULL
+;
+
+103 
+PyGªíÀt
+* 
+gªíÀt
+ = 
+	`PyGªíÀt_New
+(
+ˇŒabÀ
+, 
+NULL
+);
+
+105 i‡(!
+gªíÀt
+) {
+
+106  
+NULL
+;
+
+109 
+ªsu…
+ = 
+	`PyGªíÀt_Swôch
+(
+gªíÀt
+, 
+NULL
+, NULL);
+
+110 i‡(
+ªsu…
+ =
+NULL
+) {
+
+111  
+NULL
+;
+
+114 
+	`Py_INCREF
+(
+ªsu…
+);
+
+115  
+ªsu…
+;
+
+116 
+	}
+}
+
+118 
+PyObje˘
+*
+
+119 
+	$ã°_øi£_dód_gªíÀt
+(
+PyObje˘
+* 
+£lf
+)
+
+121 
+	`PyEº_SëSåög
+(
+PyExc_GªíÀtExô
+, "test GreenletExitÉxception.");
+
+122  
+NULL
+;
+
+123 
+	}
+}
+
+125 
+PyObje˘
+*
+
+126 
+	$ã°_øi£_gªíÀt_îr‹
+(
+PyObje˘
+* 
+£lf
+)
+
+128 
+	`PyEº_SëSåög
+(
+PyExc_GªíÀtEº‹
+, "test greenlet.errorÉxception");
+
+129  
+NULL
+;
+
+130 
+	}
+}
+
+132 
+PyObje˘
+*
+
+133 
+	$ã°_throw
+(
+PyObje˘
+* 
+£lf
+, 
+PyGªíÀt
+* 
+g
+)
+
+135 c⁄° 
+msg
+[] = "takeÅhat sucka!";
+
+136 
+PyObje˘
+* 
+msg_obj
+ = 
+	`Py_BuûdVÆue
+("s", 
+msg
+);
+
+137 
+	`PyGªíÀt_Throw
+(
+g
+, 
+PyExc_VÆueEº‹
+, 
+msg_obj
+, 
+NULL
+);
+
+138 
+	`Py_DECREF
+(
+msg_obj
+);
+
+139 
+Py_RETURN_NONE
+;
+
+140 
+	}
+}
+
+142 
+PyMëhodDef
+ 
+	gã°_mëhods
+[] = {
+
+144 (
+PyCFun˘i⁄
+)
+ã°_swôch
+,
+
+145 
+METH_O
+,
+
+149 (
+PyCFun˘i⁄
+)
+ã°_swôch_kw¨gs
+,
+
+150 
+METH_VARARGS
+ | 
+METH_KEYWORDS
+,
+
+153 (
+PyCFun˘i⁄
+)
+ã°_gëcuºít
+,
+
+154 
+METH_NOARGS
+,
+
+157 (
+PyCFun˘i⁄
+)
+ã°_£ç¨ít
+,
+
+158 
+METH_O
+,
+
+161 (
+PyCFun˘i⁄
+)
+ã°_√w_gªíÀt
+,
+
+162 
+METH_O
+,
+
+165 (
+PyCFun˘i⁄
+)
+ã°_øi£_dód_gªíÀt
+,
+
+166 
+METH_NOARGS
+,
+
+169 (
+PyCFun˘i⁄
+)
+ã°_øi£_gªíÀt_îr‹
+,
+
+170 
+METH_NOARGS
+,
+
+173 (
+PyCFun˘i⁄
+)
+ã°_throw
+,
+
+174 
+METH_O
+,
+
+176 {
+NULL
+, NULL, 0, NULL}};
+
+178 #i‡
+PY_MAJOR_VERSION
+ >= 3
+
+179 
+	#INITERROR
+  
+NULL
+
+
+	)
+
+181 
+PyModuÀDef
+ 
+	gmoduÀdef
+ = {
+PyModuÀDef_HEAD_INIT
+,
+
+182 
+TEST_MODULE_NAME
+,
+
+183 
+NULL
+,
+
+185 
+ã°_mëhods
+,
+
+186 
+NULL
+,
+
+187 
+NULL
+,
+
+188 
+NULL
+,
+
+189 
+NULL
+};
+
+191 
+PyMODINIT_FUNC
+
+
+192 
+	$PyInô__ã°_exãnsi⁄
+()
+
+194 
+	#INITERROR
+ 
+
+	)
+
+195 
+PyMODINIT_FUNC
+
+
+196 
+	$öô_ã°_exãnsi⁄
+()
+
+199 
+PyObje˘
+* 
+moduÀ
+ = 
+NULL
+;
+
+201 #i‡
+PY_MAJOR_VERSION
+ >= 3
+
+202 
+moduÀ
+ = 
+	`PyModuÀ_Cª©e
+(&
+moduÀdef
+);
+
+204 
+moduÀ
+ = 
+	`Py_InôModuÀ
+(
+TEST_MODULE_NAME
+, 
+ã°_mëhods
+);
+
+207 i‡(
+moduÀ
+ =
+NULL
+) {
+
+208 
+INITERROR
+;
+
+211 
+	`PyGªíÀt_Imp‹t
+();
+
+213 #i‡
+PY_MAJOR_VERSION
+ >= 3
+
+214  
+moduÀ
+;
+
+216 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/greenlet/tests/_test_extension_cpp.cpp
+
+5 
+	~"../gªíÀt.h
+"
+
+7 
+	sex˚±i⁄_t
+ {
+
+8 
+	mdïth
+;
+
+9 
+ex˚±i⁄_t
+(
+dïth
+) : depth(depth) {}
+
+13 (*
+p_ã°_ex˚±i⁄_throw
+)(
+dïth
+);
+
+14 
+PyObje˘
+* (*
+p_ã°_ex˚±i⁄_swôch_ªcur£
+)(
+dïth
+, 
+À·
+);
+
+17 
+	$ã°_ex˚±i⁄_throw
+(
+dïth
+)
+
+19 
+throw
+ 
+	`ex˚±i⁄_t
+(
+dïth
+);
+
+20 
+	}
+}
+
+22 
+PyObje˘
+*
+
+23 
+	$ã°_ex˚±i⁄_swôch_ªcur£
+(
+dïth
+, 
+À·
+)
+
+25 i‡(
+À·
+ > 0) {
+
+26  
+	`p_ã°_ex˚±i⁄_swôch_ªcur£
+(
+dïth
+, 
+À·
+ - 1);
+
+29 
+PyObje˘
+* 
+ªsu…
+ = 
+NULL
+;
+
+30 
+PyGªíÀt
+* 
+£lf
+ = 
+	`PyGªíÀt_GëCuºít
+();
+
+31 i‡(
+£lf
+ =
+NULL
+)
+
+32  
+NULL
+;
+
+34 
+åy
+ {
+
+35 
+	`PyGªíÀt_Swôch
+(
+£lf
+->
+∑ª¡
+, 
+NULL
+, NULL);
+
+36 
+	`p_ã°_ex˚±i⁄_throw
+(
+dïth
+);
+
+37 
+	`PyEº_SëSåög
+(
+PyExc_Ru¡imeEº‹
+,
+
+40 
+	`ˇtch
+ (
+ex˚±i⁄_t
+& 
+e
+) {
+
+41 i‡(
+e
+.
+dïth
+ != depth)
+
+42 
+	`PyEº_SëSåög
+(
+PyExc_As£πi⁄Eº‹
+, "depth mismatch");
+
+44 
+ªsu…
+ = 
+	`PyL⁄g_FromL⁄g
+(
+dïth
+);
+
+46 
+	`ˇtch
+ (...) {
+
+47 
+	`PyEº_SëSåög
+(
+PyExc_Ru¡imeEº‹
+, "unexpected C++Éxception");
+
+50 
+	`Py_DECREF
+(
+£lf
+);
+
+51  
+ªsu…
+;
+
+52 
+	}
+}
+
+60 
+PyObje˘
+*
+
+61 
+	$ã°_ex˚±i⁄_swôch
+(
+PyObje˘
+* 
+£lf
+, PyObje˘* 
+¨gs
+)
+
+63 
+dïth
+;
+
+64 i‡(!
+	`PyArg_P¨£Tu∂e
+(
+¨gs
+, "i", &
+dïth
+))
+
+65  
+NULL
+;
+
+66  
+	`p_ã°_ex˚±i⁄_swôch_ªcur£
+(
+dïth
+, depth);
+
+67 
+	}
+}
+
+69 
+PyMëhodDef
+ 
+	gã°_mëhods
+[] = {
+
+71 (
+PyCFun˘i⁄
+)&
+ã°_ex˚±i⁄_swôch
+,
+
+72 
+METH_VARARGS
+,
+
+75 {
+NULL
+, NULL, 0, NULL}};
+
+77 #i‡
+PY_MAJOR_VERSION
+ >= 3
+
+78 
+	#INITERROR
+  
+NULL
+
+
+	)
+
+80 
+PyModuÀDef
+ 
+	gmoduÀdef
+ = {
+PyModuÀDef_HEAD_INIT
+,
+
+82 
+NULL
+,
+
+84 
+ã°_mëhods
+,
+
+85 
+NULL
+,
+
+86 
+NULL
+,
+
+87 
+NULL
+,
+
+88 
+NULL
+};
+
+90 
+PyMODINIT_FUNC
+
+
+91 
+	$PyInô__ã°_exãnsi⁄_˝p
+()
+
+93 
+	#INITERROR
+ 
+
+	)
+
+94 
+PyMODINIT_FUNC
+
+
+95 
+	$öô_ã°_exãnsi⁄_˝p
+()
+
+98 
+PyObje˘
+* 
+moduÀ
+ = 
+NULL
+;
+
+100 #i‡
+PY_MAJOR_VERSION
+ >= 3
+
+101 
+moduÀ
+ = 
+	`PyModuÀ_Cª©e
+(&
+moduÀdef
+);
+
+103 
+moduÀ
+ = 
+	`Py_InôModuÀ
+("gªíÀt.ã°s._ã°_exãnsi⁄_˝p", 
+ã°_mëhods
+);
+
+106 i‡(
+moduÀ
+ =
+NULL
+) {
+
+107 
+INITERROR
+;
+
+110 
+	`PyGªíÀt_Imp‹t
+();
+
+111 i‡(
+_PyGªíÀt_API
+ =
+NULL
+) {
+
+112 
+INITERROR
+;
+
+115 
+p_ã°_ex˚±i⁄_throw
+ = 
+ã°_ex˚±i⁄_throw
+;
+
+116 
+p_ã°_ex˚±i⁄_swôch_ªcur£
+ = 
+ã°_ex˚±i⁄_swôch_ªcur£
+;
+
+118 #i‡
+PY_MAJOR_VERSION
+ >= 3
+
+119  
+moduÀ
+;
+
+121 
+	}
+}
+
+	@.venv/lib/python3.10/site-packages/markupsafe/_speedups.c
+
+1 
+	~<Pyth⁄.h
+>
+
+3 
+PyObje˘
+* 
+	gm¨kup
+;
+
+6 
+	$öô_c⁄°™ts
+()
+
+8 
+PyObje˘
+ *
+moduÀ
+;
+
+11 
+moduÀ
+ = 
+	`PyImp‹t_Imp‹tModuÀ
+("markupsafe");
+
+12 i‡(!
+moduÀ
+)
+
+14 
+m¨kup
+ = 
+	`PyObje˘_GëAârSåög
+(
+moduÀ
+, "Markup");
+
+15 
+	`Py_DECREF
+(
+moduÀ
+);
+
+18 
+	}
+}
+
+20 
+	#GET_DELTA
+(
+öp
+, 
+öp_íd
+, 
+dñè
+) \
+
+21 
+öp
+ < 
+öp_íd
+) { \
+
+22 *
+öp
+++) { \
+
+26 
+dñè
+ += 4; \
+
+30 
+dñè
+ += 3; \
+
+33 }
+
+	)
+
+35 
+	#DO_ESCAPE
+(
+öp
+, 
+öp_íd
+, 
+ouç
+) \
+
+37 
+Py_ssize_t
+ 
+nc›y
+ = 0; \
+
+38 
+öp
+ < 
+öp_íd
+) { \
+
+39 *
+öp
+) { \
+
+41 
+	`mem˝y
+(
+ouç
+, 
+öp
+-
+nc›y
+, (*outp)*ncopy); \
+
+42 
+ouç
+ +
+nc›y
+;Çcopy = 0; \
+
+43 *
+ouç
+++ = '&'; \
+
+44 *
+ouç
+++ = '#'; \
+
+45 *
+ouç
+++ = '3'; \
+
+46 *
+ouç
+++ = '4'; \
+
+47 *
+ouç
+++ = ';'; \
+
+50 
+	`mem˝y
+(
+ouç
+, 
+öp
+-
+nc›y
+, (*outp)*ncopy); \
+
+51 
+ouç
+ +
+nc›y
+;Çcopy = 0; \
+
+52 *
+ouç
+++ = '&'; \
+
+53 *
+ouç
+++ = '#'; \
+
+54 *
+ouç
+++ = '3'; \
+
+55 *
+ouç
+++ = '9'; \
+
+56 *
+ouç
+++ = ';'; \
+
+59 
+	`mem˝y
+(
+ouç
+, 
+öp
+-
+nc›y
+, (*outp)*ncopy); \
+
+60 
+ouç
+ +
+nc›y
+;Çcopy = 0; \
+
+61 *
+ouç
+++ = '&'; \
+
+62 *
+ouç
+++ = 'a'; \
+
+63 *
+ouç
+++ = 'm'; \
+
+64 *
+ouç
+++ = 'p'; \
+
+65 *
+ouç
+++ = ';'; \
+
+68 
+	`mem˝y
+(
+ouç
+, 
+öp
+-
+nc›y
+, (*outp)*ncopy); \
+
+69 
+ouç
+ +
+nc›y
+;Çcopy = 0; \
+
+70 *
+ouç
+++ = '&'; \
+
+71 *
+ouç
+++ = 'l'; \
+
+72 *
+ouç
+++ = 't'; \
+
+73 *
+ouç
+++ = ';'; \
+
+76 
+	`mem˝y
+(
+ouç
+, 
+öp
+-
+nc›y
+, (*outp)*ncopy); \
+
+77 
+ouç
+ +
+nc›y
+;Çcopy = 0; \
+
+78 *
+ouç
+++ = '&'; \
+
+79 *
+ouç
+++ = 'g'; \
+
+80 *
+ouç
+++ = 't'; \
+
+81 *
+ouç
+++ = ';'; \
+
+84 
+nc›y
+++; \
+
+86 
+öp
+++; \
+
+88 
+	`mem˝y
+(
+ouç
+, 
+öp
+-
+nc›y
+, (*outp)*ncopy); \
+
+89 }
+
+	)
+
+91 
+PyObje˘
+*
+
+92 
+	$esˇ≥_unicode_köd1
+(
+PyUnicodeObje˘
+ *
+ö
+)
+
+94 
+Py_UCS1
+ *
+öp
+ = 
+	`PyUnicode_1BYTE_DATA
+(
+ö
+);
+
+95 
+Py_UCS1
+ *
+öp_íd
+ = 
+öp
+ + 
+	`PyUnicode_GET_LENGTH
+(
+ö
+);
+
+96 
+Py_UCS1
+ *
+ouç
+;
+
+97 
+PyObje˘
+ *
+out
+;
+
+98 
+Py_ssize_t
+ 
+dñè
+ = 0;
+
+100 
+	`GET_DELTA
+(
+öp
+, 
+öp_íd
+, 
+dñè
+);
+
+101 i‡(!
+dñè
+) {
+
+102 
+	`Py_INCREF
+(
+ö
+);
+
+103  (
+PyObje˘
+*)
+ö
+;
+
+106 
+out
+ = 
+	`PyUnicode_New
+(
+	`PyUnicode_GET_LENGTH
+(
+ö
+Ë+ 
+dñè
+,
+
+107 
+	`PyUnicode_IS_ASCII
+(
+ö
+) ? 127 : 255);
+
+108 i‡(!
+out
+)
+
+109  
+NULL
+;
+
+111 
+öp
+ = 
+	`PyUnicode_1BYTE_DATA
+(
+ö
+);
+
+112 
+ouç
+ = 
+	`PyUnicode_1BYTE_DATA
+(
+out
+);
+
+113 
+	`DO_ESCAPE
+(
+öp
+, 
+öp_íd
+, 
+ouç
+);
+
+114  
+out
+;
+
+115 
+	}
+}
+
+117 
+PyObje˘
+*
+
+118 
+	$esˇ≥_unicode_köd2
+(
+PyUnicodeObje˘
+ *
+ö
+)
+
+120 
+Py_UCS2
+ *
+öp
+ = 
+	`PyUnicode_2BYTE_DATA
+(
+ö
+);
+
+121 
+Py_UCS2
+ *
+öp_íd
+ = 
+öp
+ + 
+	`PyUnicode_GET_LENGTH
+(
+ö
+);
+
+122 
+Py_UCS2
+ *
+ouç
+;
+
+123 
+PyObje˘
+ *
+out
+;
+
+124 
+Py_ssize_t
+ 
+dñè
+ = 0;
+
+126 
+	`GET_DELTA
+(
+öp
+, 
+öp_íd
+, 
+dñè
+);
+
+127 i‡(!
+dñè
+) {
+
+128 
+	`Py_INCREF
+(
+ö
+);
+
+129  (
+PyObje˘
+*)
+ö
+;
+
+132 
+out
+ = 
+	`PyUnicode_New
+(
+	`PyUnicode_GET_LENGTH
+(
+ö
+Ë+ 
+dñè
+, 65535);
+
+133 i‡(!
+out
+)
+
+134  
+NULL
+;
+
+136 
+öp
+ = 
+	`PyUnicode_2BYTE_DATA
+(
+ö
+);
+
+137 
+ouç
+ = 
+	`PyUnicode_2BYTE_DATA
+(
+out
+);
+
+138 
+	`DO_ESCAPE
+(
+öp
+, 
+öp_íd
+, 
+ouç
+);
+
+139  
+out
+;
+
+140 
+	}
+}
+
+143 
+PyObje˘
+*
+
+144 
+	$esˇ≥_unicode_köd4
+(
+PyUnicodeObje˘
+ *
+ö
+)
+
+146 
+Py_UCS4
+ *
+öp
+ = 
+	`PyUnicode_4BYTE_DATA
+(
+ö
+);
+
+147 
+Py_UCS4
+ *
+öp_íd
+ = 
+öp
+ + 
+	`PyUnicode_GET_LENGTH
+(
+ö
+);
+
+148 
+Py_UCS4
+ *
+ouç
+;
+
+149 
+PyObje˘
+ *
+out
+;
+
+150 
+Py_ssize_t
+ 
+dñè
+ = 0;
+
+152 
+	`GET_DELTA
+(
+öp
+, 
+öp_íd
+, 
+dñè
+);
+
+153 i‡(!
+dñè
+) {
+
+154 
+	`Py_INCREF
+(
+ö
+);
+
+155  (
+PyObje˘
+*)
+ö
+;
+
+158 
+out
+ = 
+	`PyUnicode_New
+(
+	`PyUnicode_GET_LENGTH
+(
+ö
+Ë+ 
+dñè
+, 1114111);
+
+159 i‡(!
+out
+)
+
+160  
+NULL
+;
+
+162 
+öp
+ = 
+	`PyUnicode_4BYTE_DATA
+(
+ö
+);
+
+163 
+ouç
+ = 
+	`PyUnicode_4BYTE_DATA
+(
+out
+);
+
+164 
+	`DO_ESCAPE
+(
+öp
+, 
+öp_íd
+, 
+ouç
+);
+
+165  
+out
+;
+
+166 
+	}
+}
+
+168 
+PyObje˘
+*
+
+169 
+	$esˇ≥_unicode
+(
+PyUnicodeObje˘
+ *
+ö
+)
+
+171 i‡(
+	`PyUnicode_READY
+(
+ö
+))
+
+172  
+NULL
+;
+
+174 
+	`PyUnicode_KIND
+(
+ö
+)) {
+
+175 
+PyUnicode_1BYTE_KIND
+:
+
+176  
+	`esˇ≥_unicode_köd1
+(
+ö
+);
+
+177 
+PyUnicode_2BYTE_KIND
+:
+
+178  
+	`esˇ≥_unicode_köd2
+(
+ö
+);
+
+179 
+PyUnicode_4BYTE_KIND
+:
+
+180  
+	`esˇ≥_unicode_köd4
+(
+ö
+);
+
+182 
+	`as£π
+(0);
+
+183  
+NULL
+;
+
+184 
+	}
+}
+
+186 
+PyObje˘
+*
+
+187 
+	$esˇ≥
+(
+PyObje˘
+ *
+£lf
+, PyObje˘ *
+ãxt
+)
+
+189 
+PyObje˘
+ *
+id_html
+;
+
+190 
+PyObje˘
+ *
+s
+ = 
+NULL
+, *
+rv
+ = NULL, *
+html
+;
+
+192 i‡(
+id_html
+ =
+NULL
+) {
+
+193 
+id_html
+ = 
+	`PyUnicode_I¡înFromSåög
+("__html__");
+
+194 i‡(
+id_html
+ =
+NULL
+) {
+
+195  
+NULL
+;
+
+200 i‡(
+	`PyL⁄g_CheckExa˘
+(
+ãxt
+) ||
+
+201 
+	`PyFlﬂt_CheckExa˘
+(
+ãxt
+Ë|| 
+	`PyBoﬁ_Check
+(text) ||
+
+202 
+ãxt
+ =
+Py_N⁄e
+)
+
+203  
+	`PyObje˘_CÆlFun˘i⁄ObjArgs
+(
+m¨kup
+, 
+ãxt
+, 
+NULL
+);
+
+206 
+html
+ = 
+	`PyObje˘_GëAâr
+(
+ãxt
+ ,
+id_html
+);
+
+207 i‡(
+html
+) {
+
+208 
+s
+ = 
+	`PyObje˘_CÆlObje˘
+(
+html
+, 
+NULL
+);
+
+209 
+	`Py_DECREF
+(
+html
+);
+
+210 i‡(
+s
+ =
+NULL
+) {
+
+211  
+NULL
+;
+
+214 
+rv
+ = 
+	`PyObje˘_CÆlFun˘i⁄ObjArgs
+(
+m¨kup
+, (
+PyObje˘
+*)
+s
+, 
+NULL
+);
+
+215 
+	`Py_DECREF
+(
+s
+);
+
+216  
+rv
+;
+
+220 
+	`PyEº_CÀ¨
+();
+
+221 i‡(!
+	`PyUnicode_Check
+(
+ãxt
+)) {
+
+222 
+PyObje˘
+ *
+unicode
+ = 
+	`PyObje˘_Så
+(
+ãxt
+);
+
+223 i‡(!
+unicode
+)
+
+224  
+NULL
+;
+
+225 
+s
+ = 
+	`esˇ≥_unicode
+((
+PyUnicodeObje˘
+*)
+unicode
+);
+
+226 
+	`Py_DECREF
+(
+unicode
+);
+
+229 
+s
+ = 
+	`esˇ≥_unicode
+((
+PyUnicodeObje˘
+*)
+ãxt
+);
+
+232 
+rv
+ = 
+	`PyObje˘_CÆlFun˘i⁄ObjArgs
+(
+m¨kup
+, (
+PyObje˘
+*)
+s
+, 
+NULL
+);
+
+233 
+	`Py_DECREF
+(
+s
+);
+
+234  
+rv
+;
+
+235 
+	}
+}
+
+238 
+PyObje˘
+*
+
+239 
+	$esˇ≥_sûít
+(
+PyObje˘
+ *
+£lf
+, PyObje˘ *
+ãxt
+)
+
+241 i‡(
+ãxt
+ !
+Py_N⁄e
+)
+
+242  
+	`esˇ≥
+(
+£lf
+, 
+ãxt
+);
+
+243  
+	`PyObje˘_CÆlFun˘i⁄ObjArgs
+(
+m¨kup
+, 
+NULL
+);
+
+244 
+	}
+}
+
+247 
+PyObje˘
+*
+
+248 
+	$so·_°r
+(
+PyObje˘
+ *
+£lf
+, PyObje˘ *
+s
+)
+
+250 i‡(!
+	`PyUnicode_Check
+(
+s
+))
+
+251  
+	`PyObje˘_Så
+(
+s
+);
+
+252 
+	`Py_INCREF
+(
+s
+);
+
+253  
+s
+;
+
+254 
+	}
+}
+
+257 
+PyMëhodDef
+ 
+	gmoduÀ_mëhods
+[] = {
+
+260 (
+PyCFun˘i⁄
+)
+esˇ≥
+,
+
+261 
+METH_O
+,
+
+272 (
+PyCFun˘i⁄
+)
+esˇ≥_sûít
+,
+
+273 
+METH_O
+,
+
+284 (
+PyCFun˘i⁄
+)
+so·_°r
+,
+
+285 
+METH_O
+,
+
+298 {
+NULL
+, NULL, 0, NULL}
+
+301 
+PyModuÀDef
+ 
+	gmoduÀ_deföôi⁄
+ = {
+
+302 
+PyModuÀDef_HEAD_INIT
+,
+
+304 
+NULL
+,
+
+306 
+moduÀ_mëhods
+,
+
+307 
+NULL
+,
+
+308 
+NULL
+,
+
+309 
+NULL
+,
+
+310 
+NULL
+
+
+313 
+PyMODINIT_FUNC
+
+
+314 
+	$PyInô__•ìdups
+()
+
+316 i‡(!
+	`öô_c⁄°™ts
+())
+
+317  
+NULL
+;
+
+319  
+	`PyModuÀ_Cª©e
+(&
+moduÀ_deföôi⁄
+);
+
+320 
+	}
+}
+
+	@
+2
+.
+.
+1
+/usr/include
+28
+1940
+.venv/include/site/python3.10/greenlet/greenlet.h
+.venv/lib/python3.10/site-packages/greenlet/greenlet.c
+.venv/lib/python3.10/site-packages/greenlet/greenlet.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_aarch64_gcc.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_alpha_unix.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_amd64_unix.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_arm32_gcc.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_arm32_ios.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_csky_gcc.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_m68k_gcc.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_mips_unix.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_ppc64_aix.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_ppc64_linux.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_ppc_aix.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_ppc_linux.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_ppc_macosx.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_ppc_unix.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_riscv_unix.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_s390_unix.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_sparc_sun_gcc.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_x32_unix.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_x64_msvc.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_x86_msvc.h
+.venv/lib/python3.10/site-packages/greenlet/platform/switch_x86_unix.h
+.venv/lib/python3.10/site-packages/greenlet/slp_platformselect.h
+.venv/lib/python3.10/site-packages/greenlet/tests/_test_extension.c
+.venv/lib/python3.10/site-packages/greenlet/tests/_test_extension_cpp.cpp
+.venv/lib/python3.10/site-packages/markupsafe/_speedups.c

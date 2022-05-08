@@ -19,7 +19,7 @@ def post_incidencias():
         estacion = request.json["estacion"]
         direccion = request.json["direccion"]
         fecha_averia = request.json["fecha_averia"]
-        fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%d/%m/%Y'))
+        fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%Y-%m-%d'))
         descripcion = request.json["descripcion"]
         id = control.post_incidencia(estacion, direccion, fecha_averia, descripcion)
 
@@ -55,7 +55,7 @@ def modify_incidencia(id):
     if "fecha_averia" in request.json:
         try:
             fecha_averia = request.json["fecha_averia"]
-            fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%d/%m/%Y'))
+            fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%Y-%m-%d'))
         except ValueError:
             return jsonify({"error": "Malformed request syntax."}), 400
 
