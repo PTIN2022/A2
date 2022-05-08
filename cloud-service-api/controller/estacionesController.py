@@ -9,7 +9,7 @@ def get_all_estaciones():
 
 
 def get_estacion_by_id(id):
-    i = Estacion.query.filter(Estacion.id == id).one_or_none()
+    i = Estacion.query.filter(Estacion.id_estacion == id).one_or_none()
     if i:
         estacion_dict = EstacionSchema().dump(i)
 
