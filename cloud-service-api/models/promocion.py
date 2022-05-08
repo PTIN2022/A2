@@ -1,9 +1,8 @@
 from utils.db import db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-   
+
 
 class Promocion(db.Model):
-
     id_promo = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     descuento = db.Column(db.Integer, nullable=False)
     cantidad_cupones = db.Column(db.Integer, nullable=False)

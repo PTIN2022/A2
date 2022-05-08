@@ -1,8 +1,8 @@
 from utils.db import db
-from models.usuari_t import Usuari_t
+from models.usuari_t import Usuari_t  # noqa: F401
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-import models.aviso
-import models.reserva
+import models.aviso  # noqa: F401
+import models.reserva  # noqa: F401
 
 
 class Cliente(db.Model):

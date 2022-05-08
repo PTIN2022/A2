@@ -35,6 +35,7 @@ app.config['MQTT_TLS_ENABLED'] = False  # set TLS to disabled for testing purpos
 mqtt = Mqtt(app)
 mqtt.subscribe('estacion/#')
 
+
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
     print("aseasdfgs")
@@ -45,7 +46,7 @@ def handle_connect(client, userdata, flags, rc):
 def handle_mqtt_message(client, userdata, message):
     data = dict(
         topic=message.topic,
-        payload=message.payload.decode() 
+        payload=message.payload.decode()
     )
     print(data)
     print(data["payload"])
@@ -57,9 +58,12 @@ def handle_mqtt_message(client, userdata, message):
         r = Reserva(ini, fin, data["id_cargador"], data["id_vehiculo"], data["id_cliente"])
         db.session.add(r)
         db.session.commit()
-    
-    #TODO: pasarlo a otro fichero
 
+    # TODO: pasarlo a otro fichero
+
+
+if os.path.exists("./test.db"):
+    os.remove("./test.db")
 
 init_db()
 with app.app_context():
@@ -77,23 +81,6 @@ with app.app_context():
 app.register_blueprint(incidencias, url_prefix='/api')
 app.register_blueprint(estaciones, url_prefix='/api')
 app.register_blueprint(trabajador, url_prefix='/api')
-
-if app.config["TESTING"] is False:
-    if os.path.exists("./test.db"):
-        os.remove("./test.db")
-
-    init_db()
-    with app.app_context():
-        e = Estacion("VG3", "mi casa", 720, 85, 23, 20, 130, "Alfredo_Manresa", 1300, 2000, "url")
-        db.session.add(e)
-        db.session.commit()
-
-        print(e)
-        p1 = Plaza(23, 23, 23, "mario", e.id)
-        p2 = Plaza(30, 23, 40, "mario", e.id)
-        db.session.add(p1)
-        db.session.add(p2)
-        db.session.commit()
 
 if __name__ == "__main__":  # pragma: no cover
     print("=========================================")

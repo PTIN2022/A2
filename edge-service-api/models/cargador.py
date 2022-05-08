@@ -1,7 +1,7 @@
 from utils.db import db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-import models.reserva
-import models.horas
+import models.reserva  # noqa: F401
+import models.horas  # noqa: F401
 
 
 class Cargador(db.Model):
