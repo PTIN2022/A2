@@ -1,7 +1,5 @@
 from utils.db import db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from sqlalchemy.dialects.mysql import FLOAT
-import models.aviso
 
 
 class Usuari_t(db.Model):

@@ -54,6 +54,8 @@ in_data7 = {
   "id_vehiculo": "LKE2378",
   "id_cliente": "1238712N"
 }
+
+
 def test_post_incidencia(client):
 
     # Reserva normal mismo dia

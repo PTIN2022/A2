@@ -17,14 +17,14 @@ def post_reservas():
     try:
         print(request.json)
         estacion = int(request.json["id_estacion"])
-        fecha_inicio = request.json["fecha_inicio"] # Dia y hora
+        fecha_inicio = request.json["fecha_inicio"]  # Dia y hora
         fecha_final = request.json["fecha_final"]
         fecha_final_str = datetime.strptime(fecha_final, '%d-%m-%Y %H:%M')
         fecha_inicio_str = datetime.strptime(fecha_inicio, '%d-%m-%Y %H:%M')
         matricula = request.json["id_vehiculo"]
         DNI = request.json["id_cliente"]
-    
-        #TODO: comprobar fecha final es mayor fecha inicial
+
+        # TODO: comprobar fecha final es mayor fecha inicial
         id = control.post_reserva(estacion, matricula, fecha_inicio_str, fecha_final_str, DNI)
         respuesta = control.get_reservas_id(id)
         return jsonify(respuesta)

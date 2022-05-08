@@ -1,6 +1,6 @@
 from utils.db import db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-   
+
 
 class Promocion(db.Model):
 

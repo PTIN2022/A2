@@ -1,6 +1,6 @@
 from utils.db import db
-from models.vehiculo import Vehiculo
-from models.cliente import Cliente
+from models.vehiculo import Vehiculo  # noqa: F401
+from models.cliente import Cliente  # noqa: F401
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 

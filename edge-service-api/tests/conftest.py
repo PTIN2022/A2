@@ -1,9 +1,9 @@
 import os
 import pytest
-from routes.reservas import reservas
-from routes.estaciones import estaciones
-from models.cargador import Cargador
-from models.estacion import Estacion
+from routes.reservas import reservas  # noqa: F401
+from routes.estaciones import estaciones  # noqa: F401
+from models.cargador import Cargador  # noqa: F401
+from models.estacion import Estacion  # noqa: F401
 
 from utils.db import db
 from app import app, init_db
