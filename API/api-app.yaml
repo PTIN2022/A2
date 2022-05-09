@@ -331,5 +331,78 @@ paths:
 
 #########################################################################################
 
+  /login:
+    post:
+      summary: Login 
+      tags: 
+      - Autenticación
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+
+              example:
+                username: denisenavarro
+                password: "123456"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Success Login: 
+                  value: >-
+                    {
+                      "token": "tokencito.jwt"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: {'error' : 'Invalid credentials'}
+  /logout:
+    get:
+      summary: "Log Out"
+      tags:
+      - Autenticación
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Success Login: 
+                  value: >-
+                    {
+                      "msg": "Success logout"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: {"error": "Something went wrong."}
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+      
+security:
+  - ApiKeyAuth: []
 
 
