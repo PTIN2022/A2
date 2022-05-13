@@ -474,14 +474,6 @@ paths:
                   error:
                     value: >-
                       {"error": "Incidencia not found."}
-<<<<<<< HEAD
-
-=======
-#########################################################################################
-
-
-#######################################################################################################
->>>>>>> main
 #########################################################################################
   /trabajador:
       # pedimos una lista de trabajadores
@@ -768,10 +760,7 @@ paths:
                       value: >-
                         {"error": "Trabajador not found."}
 #########################################################################################
-<<<<<<< HEAD
   
-=======
->>>>>>> main
   /soporte:
     get:
         summary: Obtiene una lista de peticiones que se han hecho al servicio técnico
@@ -823,14 +812,19 @@ paths:
               required:
                 - descripcion
                 - fecha
+                - estado
               properties:
-                descripcion:
-                  type: string
                 fecha:
                   type: string
+                descripcion:
+                  type: string
+                estado:
+                  type: boolean
             example:
-              fecha: 20-04-2022
-              descripcion: Problema con la aplicación movil
+              fecha: "2022-04-22"
+              descripcion: "Problema con la aplicación movil"
+              estado: False
+              
       responses:
         '200':
           description: Peticion correcta
@@ -843,6 +837,7 @@ paths:
                       
                       "fecha": "20-04-2022",
                       "descripcion": "Problema con la aplicación móvil"
+                      "estado": false
                     }
         '400':
           description: Peticion incorrecta
@@ -1401,7 +1396,3 @@ paths:
                       {"error": "Reserva not found."}
 
 #######################################################################################################
-<<<<<<< HEAD
-
-=======
->>>>>>> main

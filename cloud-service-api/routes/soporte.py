@@ -1,5 +1,7 @@
 import controller.soporteController as control
 from flask import Blueprint, jsonify, request
+from datetime import datetime
+from utils import errors
 
 soporte = Blueprint('soporte', __name__)
 
@@ -34,7 +36,6 @@ def post_soporte_user_id():
         print(request.json)
         mensaje = request.json["mensaje"]
         fecha = request.json["fecha"]
-
         user_id = control.post_soporte_user_id(mensaje, fecha)
         respuesta = control.get_soporte_user_id(user_id)
         return jsonify(respuesta)
@@ -53,14 +54,16 @@ def post_soporte():
         fecha = request.json["fecha"]
         fecha = datetime.date(datetime.strptime(fecha, '%Y-%m-%d'))
         descripcion = request.json["descripcion"]
-        ticket_id = control.post_soporte(fecha, descripcion)
+        estado = request.json["estado"]
+        ticket_id = control.post_soporte(descripcion, fecha, estado)
+        ticket = control.get_soporte_ticket_id(ticket_id)
+        return jsonify(ticket)
 
-        respuesta = control.get_soporte_ticket_id(ticket_id)
-        return jsonify(respuesta)
-
-    except ValueError:
+    except ValueError as e:
+        print(e)
         return jsonify(errors.malformed_error()), 400
-    except KeyError:
+    except KeyError as e:
+        print(e)
         return jsonify(errors.malformed_error()), 400
 
 
