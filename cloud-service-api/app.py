@@ -10,7 +10,6 @@ from models.estacion import Estacion
 from models.cargador import Cargador
 from routes.trabajador import trabajador
 from routes.soporte import soporte
-from models.chat import Chat
 from routes.estaciones import estaciones
 from routes.incidencias import incidencias
 from routes.reservas import reservas
@@ -88,7 +87,7 @@ app.register_blueprint(incidencias, url_prefix='/api')
 app.register_blueprint(estaciones, url_prefix='/api')
 app.register_blueprint(trabajador, url_prefix='/api')
 app.register_blueprint(reservas, url_prefix='/api')
-app.register_blueprint(soporte,url_prefix='/api')
+app.register_blueprint(soporte, url_prefix='/api')
 
 
 if __name__ == "__main__":  # pragma: no cover

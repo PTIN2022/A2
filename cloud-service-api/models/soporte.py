@@ -4,8 +4,8 @@ from models.chat import Chat  # noqa: F401
 
 
 class Soporte(db.Model):
-    ticket_id = db.Column(db.Integer, nullable=False, primary_key=True) 
-    # user_id = db.Column(db.Integer, nullable=False) 
+    ticket_id = db.Column(db.Integer, nullable=False, primary_key=True)
+    # user_id = db.Column(db.Integer, nullable=False)
     descripcion = db.Column(db.String(200), nullable=False)
     fecha = db.Column(db.String(15), nullable=False)
     estado = db.Column(db.Boolean, nullable=False)
