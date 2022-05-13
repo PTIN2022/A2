@@ -1,0 +1,335 @@
+openapi: 3.0.0
+info:
+  title: API portal de gestion
+  version: '1.0'
+servers:
+  - url: http://127.0.0.1:8080/
+    description: Developments
+  - url: http://craaxkvm.epsevg.upc.es:23701/
+    description: Server
+paths:
+  # reservas
+  /reservas:
+    get:
+      summary: Obtiene todas las reservas de todos los clientes (no me uses)
+      tags:
+        - Reservas
+      responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Meter reserva:
+                    value:  >-
+                        [
+                          {
+                            "fecha_entrada": "2022-04-18T11:00:00",
+                            "fecha_salida": "2022-04-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
+                          }
+                        ]
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter reserva:
+                    value: >-
+                      {"error": "Malformed request syntax."}
+                      
+    # mandamos/resolvemos 1 reserva]
+    post:
+      summary: Inserta una nueva reserva
+      tags:
+      - Reservas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                  - id_estacion
+                  - fecha_inicio
+                  - fecha_final
+                  - id_vehiculo
+                  - id_cliente
+              properties:
+                id_estacion:
+                  type: integer
+                fecha_inicio:
+                  type: string
+                fecha_final:
+                  type: string
+                id_vehiculo:
+                  type: string
+                id_cliente:
+                  type: string
+              example:
+                id_estacion: 1
+                fecha_inicio: "18-04-2022 11:00"
+                fecha_final: "18-04-2022 18:00"
+                id_vehiculo: "LKE2378"
+                id_cliente: "1238712N"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Meter reserva:
+                  value:  >-
+                      {
+                        "id_cliente": "1238712N",
+                        "fecha_entrada": "2022-04-18T18:00:00",
+                        "fecha_salida": "2022-04-18T11:00:00",
+                        "id_reserva": 1,
+                        "id_estacion": 1,
+                        "id_vehiculo": "LKE2378",
+                        "id_cargador": 2
+                      }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter reserva:
+                  value: >-
+                    {"error": "Malformed request syntax."}
+
+  /reservas/estacion/{id_estacion}:
+    # pedimos una lista de reservas por una estacion dada
+    get:
+      summary: Obtiene una lista de reservas para una estacion dada obtiene solo las reservas desde ahora al futuro
+      tags:
+      - Reservas
+      parameters:
+        - in: path
+          name: id_estacion
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Obtiene un lista de reservas por estacion desde la fecha actual al futuro
+          content:
+            application/json:
+              examples:
+                Con reservas:
+                  value: >-
+                        [
+                          {
+                            "fecha_entrada": "2022-07-18T11:00:00",
+                            "fecha_salida": "2022-07-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
+                          },
+                          {
+                            "fecha_entrada": "2022-07-18T12:00:00",
+                            "fecha_salida": "2022-07-18T115:00:00",
+                            "id_cargador": 2,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 2,
+                            "id_vehiculo": "LKE2378"
+                          }
+                        ]
+                Sin reservas:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+  /reservas/bydni/{dni}:
+    # pedimos una lista de reservas por un dni dado
+    get:
+      summary: Obtiene una lista de reservas para un dni dado
+      tags:
+      - Reservas
+      parameters:
+        - in: path
+          name: dni
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Obtiene un lista de reservas
+          content:
+            application/json:
+              examples:
+                Con reservas:
+                  value: >-
+                        [
+                          {
+                            "fecha_entrada": "2022-07-18T11:00:00",
+                            "fecha_salida": "2022-07-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
+                          },
+                          {
+                            "fecha_entrada": "2022-07-18T12:00:00",
+                            "fecha_salida": "2022-07-18T115:00:00",
+                            "id_cargador": 2,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 2,
+                            "id_vehiculo": "LKE2378"
+                          }
+                        ]
+                Sin reservas:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+  /reservas/bymatricula/{matricula}:
+    # pedimos una lista de reservas por una matriculña dada
+    get:
+      summary: Obtiene una lista de reservas para una matricula dada
+      tags:
+      - Reservas
+      parameters:
+        - in: path
+          name: matricula
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Obtiene un lista de reservas
+          content:
+            application/json:
+              examples:
+                Con reservas:
+                  value: >-
+                        [
+                          {
+                            "fecha_entrada": "2022-07-18T11:00:00",
+                            "fecha_salida": "2022-07-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
+                          },
+                          {
+                            "fecha_entrada": "2022-07-18T12:00:00",
+                            "fecha_salida": "2022-07-18T115:00:00",
+                            "id_cargador": 2,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 2,
+                            "id_vehiculo": "LKE2378"
+                          }
+                        ]
+                Sin reservas:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+  /reservas/{id}:
+      # pedimos una reserva, dado su id
+      get:
+        summary: Obtiene una reserva por un id dado
+        tags:
+          - Reservas
+        parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Default error sample response
+            content:
+              application/json:
+                examples:
+                  Reservas:
+                    value:  >-
+                        {
+                          "fecha_entrada": "2022-04-18T11:00:00",
+                          "fecha_salida": "2022-04-18T18:00:00",
+                          "id_cargador": 1,
+                          "id_cliente": "1238712N",
+                          "id_reserva": 1,
+                          "id_vehiculo": "LKE2378"
+                        }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+
+          '404':
+            description: Not found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "Reserva not found."}
+
+      #borrar reserva
+      delete:
+        summary: Elimina reserva por ID
+        tags:
+          - Reservas
+        parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Eliminado delete
+            content:
+              application/json:
+                examples:
+                  Reservas:
+                    value: {"msg": "Data deleted correctly."}
+                  Reserva no encontrada:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Reserva not found."}
+
+#########################################################################################
+
+
+

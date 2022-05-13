@@ -3,3 +3,5 @@
 tags
 __pycache__
 .coverage
+test.db
+./cloud-service-api/test.db

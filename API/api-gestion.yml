@@ -3,15 +3,17 @@ info:
   title: API portal de gestion
   version: '1.0'
 servers:
-  - url: http://127.0.0.1:5000/
-    description: Developments
+  - url: http://127.0.0.1:5000/api
+    description: Development
+  - url: http://craaxkvm.epsevg.upc.es:23601/api
+    description: Production
 paths:
   # incidencias
   /incidencias:
     # pedimos una lista de las incidencias
     get:
       summary: Obtiene una lista de incidencias
-      tags: 
+      tags:
       - Incidencias
       responses:
         '200':
@@ -38,7 +40,7 @@ paths:
                             "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
                           }
                         ]
-                  
+
                 Sin incidencias:
                   value: '[]'
         '401':
@@ -100,14 +102,14 @@ paths:
               application/json:
                 examples:
                   Error al meter incidencia:
-                    value: >- 
+                    value: >-
                       {"error": "Malformed request syntax."}
-                  
+
   /incidencias/byname/{estacion}:
     # pedimos una lista de incidencias por una estacion dada
     get:
       summary: Obtiene una lista de incidencias para una estacion dada
-      tags: 
+      tags:
       - Incidencias
       parameters:
         - in: path
@@ -149,13 +151,13 @@ paths:
             application/json:
               examples:
                 error:
-                  value: >- 
+                  value: >-
                     {"error": "User not authenticated."}
   /incidencias/{id}:
       # pedimos una incidencia, dado su id
       get:
         summary: Obtiene una incidencia por un id dado
-        tags: 
+        tags:
           - Incidencias
         parameters:
           - in: path
@@ -170,7 +172,7 @@ paths:
               application/json:
                 examples:
                   Incidencias:
-                    value: >- 
+                    value: >-
                           {
                             "incidencia_id": 1,
                             "estacion": "VG1",
@@ -197,7 +199,7 @@ paths:
                   error:
                     value: >-
                         {"error": "Incidencia not found."}
-                        
+
       # editar incidencia
       put:
           summary: Modificar incidencia
@@ -257,7 +259,7 @@ paths:
                 application/json:
                   examples:
                     Error al meter incidencia:
-                      value: >- 
+                      value: >-
                         {"error": "Malformed request syntax."}
             '404':
               description: Not Found
@@ -269,7 +271,7 @@ paths:
                         {"error": "incidencia not found."}
       #borrar incidencia
       delete:
-        summary: Elimina incidencia por ID 
+        summary: Elimina incidencia por ID
         tags:
           - Incidencias
         parameters:
@@ -310,7 +312,7 @@ paths:
       # pedimos una lista de las estaciones
       get:
         summary: Obtiene una lista de estaciones
-        tags: 
+        tags:
         - Estaciones
         responses:
           '200':
@@ -319,7 +321,7 @@ paths:
               application/json:
                 examples:
                   Con estaciones:
-                    value: >- 
+                    value: >-
                       [
                         {
                           "estacion": "VG1",
@@ -354,8 +356,8 @@ paths:
                       {"error": "User not authenticated."}
   /estaciones/{id}:
       get:
-        summary: Obtiene informacion de una estacion y sus surtidores 
-        tags: 
+        summary: Obtiene informacion de una estacion y sus surtidores
+        tags:
         - Estaciones
         parameters:
         - in: path
@@ -370,7 +372,7 @@ paths:
               application/json:
                 examples:
                   estacion:
-                    value: >- 
+                    value: >-
                           {
                             "estacion": "VG3",
                             "cordenadas": {
@@ -425,13 +427,13 @@ paths:
             content:
               application/json:
                 examples:
-                  error: 
+                  error:
                     value: >-
                       {"error": "Station not found."}
 #borrar incidencia
   /estaciones/{id}/{id_plaza}:
       delete:
-        summary: Liberas la plaza ocupada 
+        summary: Liberas la plaza ocupada
         tags:
           - Estaciones
         parameters:
@@ -462,7 +464,7 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: >- 
+                    value: >-
                       {"error": "User not authenticated."}
           '404':
             description: Not Found
@@ -470,15 +472,22 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: >- 
+                    value: >-
                       {"error": "Incidencia not found."}
+<<<<<<< HEAD
 
+=======
+#########################################################################################
+
+
+#######################################################################################################
+>>>>>>> main
 #########################################################################################
   /trabajador:
       # pedimos una lista de trabajadores
       get:
         summary: Obtiene una lista de trabajadores
-        tags: 
+        tags:
         - Trabajadores
         responses:
           '200':
@@ -487,7 +496,7 @@ paths:
               application/json:
                 examples:
                   Trabajadores:
-                    value: >- 
+                    value: >-
                       [
                         {
                             "name": "Pere Roca",
@@ -518,9 +527,9 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: >- 
+                    value: >-
                       {"error": "Trabajador not authorized."}
-      
+
       post:
         summary: Inserta un nuevo trabajador
         tags:
@@ -553,11 +562,11 @@ paths:
                     rol:
                       type: string
                     password:
-                      type: string                    
+                      type: string
                     profileImage:
-                      type: string 
+                      type: string
                       format: binary
-  
+
                   example:
                     name: "Pere"
                     lastname: "Roca"
@@ -590,20 +599,20 @@ paths:
                   examples:
                     Error al meter incidencia:
                       value: {"error": "Malformed request syntax."}
-  
+
           '401':
               description: Not login
               content:
                 application/json:
                   examples:
                     error:
-                      value: >- 
-                        {"error": "Trabajador not authorized."}    
+                      value: >-
+                        {"error": "Trabajador not authorized."}
   /trabajador/{dni}:
       # pedimos un trabajador, dado su id.
       get:
         summary: Obtiene información de un trabajador por su ID
-        tags: 
+        tags:
         - Trabajadores
         parameters:
         - in: path
@@ -618,7 +627,7 @@ paths:
               application/json:
                 examples:
                   Trabajador:
-                    value: >- 
+                    value: >-
                       {
                         "dni": "60748880S",
                         "name": "Pere",
@@ -635,7 +644,7 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: >- 
+                    value: >-
                       {"error": "Trabajdor not authorized."}
           '404':
             description: Not Found
@@ -643,7 +652,7 @@ paths:
               application/json:
                 examples:
                   error:
-                    value: >- 
+                    value: >-
                       {"error": "Trabajador not found."}
       # modificar trabajador de la lista de trabajadores
       put:
@@ -678,9 +687,9 @@ paths:
                   password:
                     type: string
                   profileImage:
-                    type: string 
+                    type: string
                     format: binary
-                    
+
                 example:
                   name: "Pere"
                   lastname: "Roca"
@@ -694,7 +703,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Trabajador actualizado: 
+                  Trabajador actualizado:
                     value: >-
                       {
                         "dni": "60748880S",
@@ -720,11 +729,11 @@ paths:
                 examples:
                   error:
                     value: {"error": "Trabajador not found."}
-      
-      
+
+
       delete:
         summary: Eliminar un trabajador por su ID
-        tags: 
+        tags:
           - Trabajadores
         parameters:
           - in: path
@@ -739,16 +748,16 @@ paths:
                 application/json:
                   examples:
                     Trabajador:
-                      value: >- 
+                      value: >-
                         {"msg": "Trabajdor deleted succesfully"}
-                        
+
             '401':
               description: Not login
               content:
                 application/json:
                   examples:
                     error:
-                      value: >- 
+                      value: >-
                         {"error": "Trabajador not authorized."}
             '404':
               description: Not Found
@@ -756,10 +765,13 @@ paths:
                 application/json:
                   examples:
                     error:
-                      value: >- 
+                      value: >-
                         {"error": "Trabajador not found."}
 #########################################################################################
+<<<<<<< HEAD
   
+=======
+>>>>>>> main
   /soporte:
     get:
         summary: Obtiene una lista de peticiones que se han hecho al servicio técnico
@@ -839,6 +851,7 @@ paths:
               examples:
                 Error al meter incidencia:
                   value: '{"error" :"Malformed request syntax."}'
+
 
   /soporte/ticket_id/{user_id}:
     get:
@@ -1022,6 +1035,7 @@ paths:
               examples:
                 Error al meter incidencia:
                   value: '{"error": "ID ususario no encontrado."}'
+
   # Eliminacion del ticket o peticion al soporte tecnico
     delete:
       summary: Eliminar un ticket/una peticion del soporte del usuario
@@ -1065,5 +1079,329 @@ paths:
               examples:
                 Error al meter incidencia:
                   value: '{"error": "ID ususario eliminado."}'
-#######################################################################################################
+  # reservas
+  /reservas:
+    get:
+      summary: Obtiene todas las reservas de todos los clientes (no me uses)
+      tags:
+        - Reservas
+      responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Meter reserva:
+                    value:  >-
+                        [
+                          {
+                            "fecha_entrada": "2022-04-18T11:00:00",
+                            "fecha_salida": "2022-04-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
+                          }
+                        ]
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter reserva:
+                    value: >-
+                      {"error": "Malformed request syntax."}
+                      
+    # mandamos/resolvemos 1 reserva]
+    post:
+      summary: Inserta una nueva reserva
+      tags:
+      - Reservas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                  - id_estacion
+                  - fecha_inicio
+                  - fecha_final
+                  - id_vehiculo
+                  - id_cliente
+              properties:
+                id_estacion:
+                  type: integer
+                fecha_inicio:
+                  type: string
+                fecha_final:
+                  type: string
+                id_vehiculo:
+                  type: string
+                id_cliente:
+                  type: string
+              example:
+                id_estacion: 1
+                fecha_inicio: "18-04-2022 11:00"
+                fecha_final: "18-04-2022 18:00"
+                id_vehiculo: "LKE2378"
+                id_cliente: "1238712N"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Meter reserva:
+                  value:  >-
+                      {
+                        "id_cliente": "1238712N",
+                        "fecha_entrada": "2022-04-18T18:00:00",
+                        "fecha_salida": "2022-04-18T11:00:00",
+                        "id_reserva": 1,
+                        "id_estacion": 1,
+                        "id_vehiculo": "LKE2378",
+                        "id_cargador": 2
+                      }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter reserva:
+                  value: >-
+                    {"error": "Malformed request syntax."}
 
+  /reservas/estacion/{id_estacion}:
+    # pedimos una lista de reservas por una estacion dada
+    get:
+      summary: Obtiene una lista de reservas para una estacion dada obtiene solo las reservas desde ahora al futuro
+      tags:
+      - Reservas
+      parameters:
+        - in: path
+          name: id_estacion
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Obtiene un lista de reservas por estacion desde la fecha actual al futuro
+          content:
+            application/json:
+              examples:
+                Con reservas:
+                  value: >-
+                        [
+                          {
+                            "fecha_entrada": "2022-07-18T11:00:00",
+                            "fecha_salida": "2022-07-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
+                          },
+                          {
+                            "fecha_entrada": "2022-07-18T12:00:00",
+                            "fecha_salida": "2022-07-18T115:00:00",
+                            "id_cargador": 2,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 2,
+                            "id_vehiculo": "LKE2378"
+                          }
+                        ]
+                Sin reservas:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+  /reservas/bydni/{dni}:
+    # pedimos una lista de reservas por un dni dado
+    get:
+      summary: Obtiene una lista de reservas para un dni dado
+      tags:
+      - Reservas
+      parameters:
+        - in: path
+          name: dni
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Obtiene un lista de reservas
+          content:
+            application/json:
+              examples:
+                Con reservas:
+                  value: >-
+                        [
+                          {
+                            "fecha_entrada": "2022-07-18T11:00:00",
+                            "fecha_salida": "2022-07-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
+                          },
+                          {
+                            "fecha_entrada": "2022-07-18T12:00:00",
+                            "fecha_salida": "2022-07-18T115:00:00",
+                            "id_cargador": 2,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 2,
+                            "id_vehiculo": "LKE2378"
+                          }
+                        ]
+                Sin reservas:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+  /reservas/bymatricula/{matricula}:
+    # pedimos una lista de reservas por una matriculña dada
+    get:
+      summary: Obtiene una lista de reservas para una matricula dada
+      tags:
+      - Reservas
+      parameters:
+        - in: path
+          name: matricula
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Obtiene un lista de reservas
+          content:
+            application/json:
+              examples:
+                Con reservas:
+                  value: >-
+                        [
+                          {
+                            "fecha_entrada": "2022-07-18T11:00:00",
+                            "fecha_salida": "2022-07-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
+                          },
+                          {
+                            "fecha_entrada": "2022-07-18T12:00:00",
+                            "fecha_salida": "2022-07-18T115:00:00",
+                            "id_cargador": 2,
+                            "id_cliente": "1238712N",
+                            "id_reserva": 2,
+                            "id_vehiculo": "LKE2378"
+                          }
+                        ]
+                Sin reservas:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+  /reservas/{id}:
+      # pedimos una reserva, dado su id
+      get:
+        summary: Obtiene una reserva por un id dado
+        tags:
+          - Reservas
+        parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Default error sample response
+            content:
+              application/json:
+                examples:
+                  Reservas:
+                    value:  >-
+                        {
+                          "fecha_entrada": "2022-04-18T11:00:00",
+                          "fecha_salida": "2022-04-18T18:00:00",
+                          "id_cargador": 1,
+                          "id_cliente": "1238712N",
+                          "id_reserva": 1,
+                          "id_vehiculo": "LKE2378"
+                        }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+
+          '404':
+            description: Not found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "Reserva not found."}
+
+      #borrar reserva
+      delete:
+        summary: Elimina reserva por ID
+        tags:
+          - Reservas
+        parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Eliminado delete
+            content:
+              application/json:
+                examples:
+                  Reservas:
+                    value: {"msg": "Data deleted correctly."}
+                  Reserva no encontrada:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Reserva not found."}
+
+#######################################################################################################
+<<<<<<< HEAD
+
+=======
+>>>>>>> main

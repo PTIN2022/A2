@@ -1,0 +1,23 @@
+name: OpenAPI TEST
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test_swagger_editor_validator_remote:
+    runs-on: ubuntu-latest
+    name: Swagger Editor Validator Remote
+    steps:
+      - uses: actions/checkout@v2
+      - name: Validate API WEB
+        uses: char0n/swagger-editor-validate@v1
+        with:
+          definition-file: API/api-gestion.yml
+
+      - uses: actions/checkout@v2
+      - name: Validate API APP
+        uses: char0n/swagger-editor-validate@v1
+        with:
+          definition-file: API/api-app.yml
