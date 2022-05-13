@@ -23,17 +23,15 @@ def post_reservas():
         fecha_inicio_str = datetime.strptime(fecha_inicio, '%d-%m-%Y %H:%M')
         matricula = request.json["id_vehiculo"]
         DNI = request.json["id_cliente"]
-
+        
         # TODO: comprobar fecha final es mayor fecha inicial
         id = control.post_reserva(estacion, matricula, fecha_inicio_str, fecha_final_str, DNI)
         respuesta = control.get_reservas_id(id)
         return jsonify(respuesta)
 
-    except ValueError as e:
-        print(e)
+    except ValueError:
         return jsonify(errors.malformed_error()), 400
-    except KeyError as e:
-        print(e)
+    except KeyError:
         return jsonify(errors.malformed_error()), 400
 
 

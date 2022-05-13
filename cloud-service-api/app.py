@@ -77,6 +77,8 @@ with app.app_context():
     p2 = Cargador("cargando", "cordenada", e.id_estacion)
     db.session.add(p1)
     db.session.add(p2)
+    r1 = Reserva(datetime.strptime("2022-04-18T11:00:00", '%Y-%m-%dT%H:%M:%S') , datetime.strptime("2022-04-18T18:00:00", '%Y-%m-%dT%H:%M:%S'), 1, "LKE2378", "1238712N", 55.0, datetime.strptime("2022-04-18T01:00:00", '%Y-%m-%dT%H:%M:%S'))
+    db.session.add(r1)
     db.session.commit()
 
 app.register_blueprint(incidencias, url_prefix='/api')

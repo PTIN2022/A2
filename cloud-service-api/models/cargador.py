@@ -22,4 +22,5 @@ class Cargador(db.Model):
 class CargadorSchema(SQLAlchemyAutoSchema):
     # estacion= fields.Nested(EstacionSchema)
     class Meta:
+        include_fk = True
         model = Cargador

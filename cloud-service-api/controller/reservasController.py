@@ -1,6 +1,7 @@
 from utils.db import db
 from models.reserva import Reserva, ReservaSchema
-from models.estacion import Estacion
+from models.estacion import Estacion, EstacionSchema
+from models.cargador import Cargador, CargadorSchema
 from datetime import datetime
 import random
 
@@ -12,7 +13,18 @@ def get_all_reservas():
 
 def get_reservas_id(id):
     i = Reserva.query.filter(Reserva.id_reserva == id).one_or_none()
-    return ReservaSchema().dump(i)
+    reserva = ReservaSchema().dump(i)
+    i = Cargador.query.filter(Cargador.id_cargador == int(reserva["id_cargador"])).one_or_none()
+    cargador = CargadorSchema().dump(i)
+    print(cargador)
+    i = Estacion.query.filter(Estacion.id_estacion == int(cargador["estacion_id"])).one_or_none()
+    estacion = EstacionSchema().dump(i)
+    print(estacion)
+    reserva["estacion"]=estacion["nombre_est"] 
+    reserva["direccion"]=estacion["direccion"]
+    print(reserva)
+    # print(estacion)
+    return {}
 
 
 def get_reservas_estacion(id_estacion):
