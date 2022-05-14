@@ -17,4 +17,5 @@ class Chat(db.Model):
 
 class ChatSchema(SQLAlchemyAutoSchema):
     class Meta:
+        include_fk = True
         model = Chat
