@@ -823,7 +823,7 @@ paths:
                 estado:
                   type: boolean
             example:
-              fecha: "2022-04-22"
+              fecha: "2022-04-22 18:00"
               descripcion: "Problema con la aplicación movil"
               estado: False
               
