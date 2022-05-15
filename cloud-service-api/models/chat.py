@@ -7,7 +7,7 @@ class Chat(db.Model):
     # user_id = db.Column(db.Integer, db.ForeignKey("Cliente.id_cliente"), nullable=False)
     mensaje = db.Column(db.Integer, nullable=False)
     ticket_id = db.Column(db.Integer, db.ForeignKey("soporte.ticket_id"), nullable=False)
-    fecha = db.Column(db.String(15), nullable=False)
+    fecha = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, ticket_id, mensaje, fecha):
         self.ticket_id = ticket_id

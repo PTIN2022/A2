@@ -778,14 +778,14 @@ paths:
                         {
                           "user_id": 1,
                           "ticket_id": 2,
-                          "fecha": "20-04-2022",
+                          "fecha": "2022-04-21T13:00:00",
                           "descripcion": "Problema con la aplicación móvil",
                           "estado": false
                         },
                         {
                           "user_id": 2,
                           "ticket_id": 3,
-                          "fecha": "25-05-2022",
+                          "fecha": "2022-04-22T13:00:00",
                           "descripcion": "Problema con las reservas",
                           "estado": false
                         }
@@ -837,7 +837,7 @@ paths:
                   value: >-
                     [
                       {
-                        "fecha": "20-04-2022",
+                        "fecha": "2022-04-01T13:00:00",
                         "descripcion": "Problema con la aplicación móvil",
                         "estado": false
                       }
@@ -873,25 +873,25 @@ paths:
                       "ticket_id": 0123456789,
                       "user_id": 0123456789,
                       "descripcion": "No se porque no carga mi coche",
-                      "fecha": "01/02/20222",
+                      "fecha": "2022-04-01T13:00:00",
                       "estado": false,
                       "chat": [ {
                           "msg_id": 1,
                           "user_id": 123456789,
                           "mensaje": "No se porque no carga mi coche",
-                          "fecha" : "01-02-2022"
+                          "fecha" : "2022-04-01T14:00:00"
                         },
                         {
                           "msg_id": 2,
                           "user_id": 111,
                           "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
-                          "fecha" : "01-02-2022"
+                          "fecha" : "2022-04-01T14:30:00"
                         },
                         {
                           "msg_id": 3,
                           "user_id": 123456789,
                           "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
-                          "fecha" : "01-02-2022"
+                          "fecha" : "2022-04-01T14:43:00"
                         }
                       ]
                     }
@@ -947,25 +947,25 @@ paths:
                         "ticket_id": 0123456789,
                         "user_id":  0123456789,
                         "descripcion": "No se porque no carga mi coche",
-                        "fecha": "2022-02-01",
+                        "fecha": "2022-04-01T13:00:00",
                         "estado": false,
                         "chat": [ {
                           "msg_id": 1,
                             "user_id": 0123456789,
                             "mensaje": "No se porque no carga mi coche",
-                            "fecha" : "2022-02-01"
+                            "fecha" : "2022-04-01T14:00:00"
                           },
                           {
                             "msg_id": 2,
                             "user_id": 111,
                             "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
-                            "fecha" : "2022-02-01"
+                            "fecha" : "2022-04-01T14:30:00"
                           },
                           {
                             "msg_id": 3,
                             "user_id": 123456789,
                             "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
-                            "fecha" : "2022-02-01"
+                            "fecha" : "2022-04-01T14:43:00"
                           }
                         ]
                       }
@@ -1052,13 +1052,13 @@ paths:
                           "ticket_id": 0123456789,
                           "user_id":  0123456789,
                           "descripcion": "No se porque no carga mi coche",
-                          "fecha": "01-02-2022",
+                          "fecha": "2022-04-22T18:00:00",
                           "estado": false,
                           "chat": [ {
                             "msg_id": 1,
                               "user_id": 0123456789,
                               "mensaje": "No se porque no carga mi coche",
-                              "fecha" : "01-02-2022"
+                              "fecha" : "2022-04-22T19:00:00"
                           }
                           ]
                       },
@@ -1066,13 +1066,13 @@ paths:
                           "ticket_id": 01231236789,
                           "user_id":  0123456789,
                           "descripcion": "Estoy atrapado",
-                          "fecha": "01-02-2022",
+                          "fecha": "2022-04-01T13:00:00",
                           "estado": false,
                           "chat": [ {
                             "msg_id": 1,
                               "user_id": 0123456789,
                               "mensaje": "Estoy atrapado",
-                              "fecha" : "01-02-2022"
+                              "fecha" : "2022-04-01T14:00:00"
                           }
                           ]
                       }

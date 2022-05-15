@@ -7,7 +7,7 @@ class Soporte(db.Model):
     ticket_id = db.Column(db.Integer, nullable=False, primary_key=True)
     # user_id = db.Column(db.Integer, nullable=False)
     descripcion = db.Column(db.String(200), nullable=False)
-    fecha = db.Column(db.String(15), nullable=False)
+    fecha = db.Column(db.DateTime, nullable=False)
     estado = db.Column(db.Boolean, nullable=False)
     chat = db.relationship("Chat", backref="soporte")
 
