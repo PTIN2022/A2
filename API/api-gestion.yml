@@ -1315,6 +1315,7 @@ paths:
                       [
                         {
                           "id_promo": "1234",
+                          "estacion": 1,
                           "descuento": 20,
                           "cantidad_usados": "10",
                           "fecha_inicio": "12-10-2022",
@@ -1324,6 +1325,7 @@ paths:
                         },
                         {
                           "id_promo": "1235",
+                          "estacion": 2,
                           "descuento": 20,
                           "cantidad_usados": "8",
                           "fecha_inicio": "2-10-2022",
@@ -1333,6 +1335,7 @@ paths:
                         },
                         {
                           "id_promo": "1236",
+                          "estacion": 3,
                           "descuento": 10,
                           "cantidad_usados": "20",
                           "fecha_inicio": "12-1-2022",
@@ -1362,7 +1365,6 @@ paths:
                 schema:
                   type: object
                   required:
-                    # nose si usar el nombre de la estacion o su id
                     - id_estacion
                     - descuento
                     - fecha_inicio
@@ -1381,7 +1383,7 @@ paths:
                       type: string
 
                   example:
-                    estacion: "VG1"
+                    estacion: 1
                     descuento: 20
                     fecha_inicio: "12-1-2022"
                     fecha_fin: "22-1-2022"
@@ -1396,6 +1398,7 @@ paths:
                     value: >-
                       {
                         "id_promo": "1236",
+                        "estacion": 3,
                         "descuento": 10,
                         "cantidad_usados": "20",
                         "fecha_inicio": "12-1-2022",
@@ -1434,6 +1437,7 @@ paths:
                     [
                       {
                         "id_promo": "1234",
+                        "estacion": 1,
                         "descuento": 20,
                         "cantidad_usados": "10",
                         "fecha_inicio": "12-10-2022",
@@ -1443,6 +1447,7 @@ paths:
                       },
                       {
                         "id_promo": "1235",
+                        "estacion": 2,
                         "descuento": 20,
                         "cantidad_usados": "8",
                         "fecha_inicio": "2-10-2022",
@@ -1452,6 +1457,7 @@ paths:
                       },
                       {
                         "id_promo": "1236",
+                        "estacion": 3,
                         "descuento": 10,
                         "cantidad_usados": "20",
                         "fecha_inicio": "12-1-2022",
@@ -1470,6 +1476,196 @@ paths:
                 error:
                   value: >-
                     {"error": "You don’t have permission to access."}
+
+  /promociones/estacion/{id_estacion}/{estado}:
+  # pedimos lista de promociones dado un estado y una estacion.
+    get:
+      summary: Obtiene una lista de promociones dado un estado y una estacion.
+      tags:
+      - Promociones
+      parameters:
+        - in: path
+          name: id_estacion
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: estado
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con promociones activas para estacion:
+                  value: >-
+                    [
+                      {
+                        "id_promo": "1234",
+                        "estacion": 1,
+                        "descuento": 20,
+                        "cantidad_usados": "10",
+                        "fecha_inicio": "12-10-2022",
+                        "fecha_fin": "22-10-2022",
+                        "estado": true,
+                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
+                      },
+                      {
+                        "id_promo": "1236",
+                        "estacion": 3,
+                        "descuento": 10,
+                        "cantidad_usados": "20",
+                        "fecha_inicio": "12-1-2022",
+                        "fecha_fin": "22-1-2022",
+                        "estado": true,
+                        "descripcion": "10% de descuento en la electrolinera de Vilanova!"
+                      }
+                    ]
+                Sin_promociones_activas_estacion:
+                  value: >-
+                    [
+                      {
+                        "id_promo": "1234",
+                        "estacion": 1,
+                        "descuento": 20,
+                        "cantidad_usados": "10",
+                        "fecha_inicio": "12-10-2022",
+                        "fecha_fin": "22-10-2022",
+                        "estado": false,
+                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
+                      },
+                      {
+                        "id_promo": "1236",
+                        "estacion": 3,
+                        "descuento": 10,
+                        "cantidad_usados": "20",
+                        "fecha_inicio": "12-1-2022",
+                        "fecha_fin": "22-1-2022",
+                        "estado": false,
+                        "descripcion": "10% de descuento en la electrolinera de Vilanova!"
+                      }
+                    ]
+                Sin_promociones:
+                  value: '[]'
+        '403':
+          description: Denied access
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "You don’t have permission to access."}
+  
+  /promociones/estacion/{id_estacion}/{fecha_inicio}/{fecha_fin}:
+  # pedimos lista de promociones dado una estacion y su fecha de inicio y final.
+    get:
+      summary: Obtiene una lista de promociones dado un estado y una estacion.
+      tags:
+      - Promociones
+      parameters:
+        - in: path
+          name: id_estacion
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: fecha_inicio
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: fecha_fin
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con promociones para las fechas:
+                  value: >-
+                    [
+                      {
+                        "id_promo": "1234",
+                        "estacion": 1,
+                        "descuento": 20,
+                        "cantidad_usados": "10",
+                        "fecha_inicio": "12-10-2022",
+                        "fecha_fin": "22-10-2022",
+                        "estado": true,
+                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
+                      },
+                      {
+                        "id_promo": "1235",
+                        "estacion": 2,
+                        "descuento": 20,
+                        "cantidad_usados": "8",
+                        "fecha_inicio": "13-10-2022",
+                        "fecha_fin": "25-10-2022",
+                        "estado": true,
+                        "descripcion": "20% de descuento en la electrolinera de Sitges!"
+                      },
+                      {
+                        "id_promo": "1236",
+                        "estacion": 3,
+                        "descuento": 10,
+                        "cantidad_usados": "20",
+                        "fecha_inicio": "10-10-2022",
+                        "fecha_fin": "22-10-2022",
+                        "estado": true,
+                        "descripcion": "10% de descuento en la electrolinera de Barcelona!"
+                      }
+                    ]
+                Sin_promociones_para_esas_fechas:
+                  value: >-
+                    [
+                      {
+                        "id_promo": "1234",
+                        "estacion": 1,
+                        "descuento": 20,
+                        "cantidad_usados": "10",
+                        "fecha_inicio": "12-10-2022",
+                        "fecha_fin": "22-10-2022",
+                        "estado": false,
+                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
+                      },
+                      {
+                        "id_promo": "1235",
+                        "estacion": 2,
+                        "descuento": 20,
+                        "cantidad_usados": "8",
+                        "fecha_inicio": "13-10-2022",
+                        "fecha_fin": "25-10-2022",
+                        "estado": false,
+                        "descripcion": "20% de descuento en la electrolinera de Sitges!"
+                      },
+                      {
+                        "id_promo": "1236",
+                        "estacion": 3,
+                        "descuento": 10,
+                        "cantidad_usados": "20",
+                        "fecha_inicio": "10-10-2022",
+                        "fecha_fin": "22-10-2022",
+                        "estado": false,
+                        "descripcion": "10% de descuento en la electrolinera de Barcelona!"
+                      }
+                    ]
+                Sin_promociones:
+                  value: '[]'
+        '403':
+          description: Denied access
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "You don’t have permission to access."}
+                    
   /promociones/{estado}:
   # pedimos una lista de promociones dado su estado (activo/inactivo)
     get:
@@ -1488,11 +1684,12 @@ paths:
           content:
             application/json:
               examples:
-                Con promociones:
+                Con promociones activas:
                   value: >-
                     [
                       {
                         "id_promo": "1234",
+                        "estacion": 1,
                         "descuento": 20,
                         "cantidad_usados": "10",
                         "fecha_inicio": "12-10-2022",
@@ -1502,6 +1699,7 @@ paths:
                       },
                       {
                         "id_promo": "1235",
+                        "estacion": 2,
                         "descuento": 20,
                         "cantidad_usados": "8",
                         "fecha_inicio": "2-10-2022",
@@ -1511,11 +1709,36 @@ paths:
                       },
                       {
                         "id_promo": "1236",
+                        "estacion": 3,
                         "descuento": 10,
                         "cantidad_usados": "20",
                         "fecha_inicio": "12-1-2022",
                         "fecha_fin": "22-1-2022",
                         "estado": true,
+                        "descripcion": "10% de descuento en la electrolinera de Barcelona!"
+                      }
+                    ]
+                Sin_promociones_activas:
+                  value: >-
+                    [
+                      {
+                        "id_promo": "1234",
+                        "estacion": 1,
+                        "descuento": 20,
+                        "cantidad_usados": "10",
+                        "fecha_inicio": "12-10-2022",
+                        "fecha_fin": "22-10-2022",
+                        "estado": false,
+                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
+                      },
+                      {
+                        "id_promo": "1236",
+                        "estacion": 3,
+                        "descuento": 10,
+                        "cantidad_usados": "20",
+                        "fecha_inicio": "12-1-2022",
+                        "fecha_fin": "22-1-2022",
+                        "estado": false,
                         "descripcion": "10% de descuento en la electrolinera de Barcelona!"
                       }
                     ]
@@ -1551,6 +1774,7 @@ paths:
                   value: >-
                     {
                       "id_promo": "1236",
+                      "estacion": 3,
                       "descuento": 10,
                       "cantidad_usados": "20",
                       "fecha_inicio": "12-1-2022",
@@ -1605,7 +1829,7 @@ paths:
                   type: string
 
               example:
-                estacion: "VG1"
+                estacion: 1
                 descuento: 20
                 fecha_inicio: "12-1-2022"
                 fecha_fin: "22-1-2022"
@@ -1620,6 +1844,7 @@ paths:
                   value: >-
                     {
                       "id_promo": "1236",
+                      "estacion": 3,
                       "descuento": 10,
                       "cantidad_usados": "20",
                       "fecha_inicio": "12-1-2022",
