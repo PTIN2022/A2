@@ -27,7 +27,7 @@ def get_soporte_user_id(user_id):
 
 
 def post_soporte_by_ticket(ticket_id, mensaje, fecha):
-    soporte=Soporte.query.filter(Soporte.ticket_id == ticket_id).one_or_none()
+    soporte = Soporte.query.filter(Soporte.ticket_id == ticket_id).one_or_none()
     if soporte:
         s = Chat(ticket_id, mensaje, fecha)
         db.session.add(s)
