@@ -15,13 +15,12 @@ def get_soporte():
 @soporte.route('/soporte', methods=['POST'])
 def post_soporte():
     try:
-        fecha = request.json["fecha"]
-        fecha = datetime.strptime(fecha, '%Y-%m-%d %H:%M')
+        fecha = datetime.now()
         descripcion = request.json["descripcion"]
         estado = request.json["estado"]
         ticket_id = control.post_soporte(descripcion, fecha, estado)
         ticket = control.get_soporte_ticket_id(ticket_id)
-        return jsonify(ticket)
+        return jsonify(ticket), 200
 
     except ValueError as e:
         print(e)
@@ -44,7 +43,7 @@ def get_soporte_ticket_id(ticket_id):
 def delete_soporte_ticket_id(ticket_id):
     deleted = control.delete_soporte_ticket_id(ticket_id)
     if deleted:
-        return jsonify({"msg": "Ticket deleted succesfully"}), 200
+        return jsonify({"msg": "Ticket deleted succesfully."}), 200
     else:
         return jsonify({"error": "Ticket not found."}), 404
 
@@ -53,11 +52,13 @@ def delete_soporte_ticket_id(ticket_id):
 def post_soporte_by_ticket(ticket_id):
     try:
         mensaje = request.form.to_dict()["mensaje"]
-        fecha = request.form.to_dict()["fecha"]
-        fecha = datetime.strptime(fecha, '%Y-%m-%d %H:%M')
-        control.post_soporte_by_ticket(ticket_id, mensaje, fecha)
-        respuesta = control.get_soporte_ticket_id(ticket_id)
-        return jsonify(respuesta)
+        fecha = datetime.now()
+        resultado = control.post_soporte_by_ticket(ticket_id, mensaje, fecha)
+        if resultado:
+            respuesta = control.get_soporte_ticket_id(ticket_id)
+            return jsonify(respuesta), 200
+        else:
+            return jsonify({"error": "Ticket not found."}), 400
     except ValueError as e:
         print(e)
         return jsonify(errors.malformed_error()), 400
@@ -79,6 +80,6 @@ def get_soporte_user_id(user_id):
 def delete_message_by_user(ticket_id, msg_id):
     respuesta = control.delete_message_by_user(ticket_id, msg_id)
     if respuesta:
-        return jsonify({"msg": "Message deleted succesfully"}), 200
+        return jsonify({"msg": "Message deleted succesfully."}), 200
     else:
         return jsonify({"error": "Message not found."}), 404

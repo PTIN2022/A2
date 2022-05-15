@@ -27,10 +27,14 @@ def get_soporte_user_id(user_id):
 
 
 def post_soporte_by_ticket(ticket_id, mensaje, fecha):
-    s = Chat(ticket_id, mensaje, fecha)
-    db.session.add(s)
-    db.session.commit()
-    return ChatSchema().dump(s)
+    soporte=Soporte.query.filter(Soporte.ticket_id == ticket_id).one_or_none()
+    if soporte:
+        s = Chat(ticket_id, mensaje, fecha)
+        db.session.add(s)
+        db.session.commit()
+        return ChatSchema().dump(s)
+    else:
+        return None
 
 
 def get_soporte_ticket_id(ticket_id):
@@ -44,6 +48,7 @@ def get_soporte_ticket_id(ticket_id):
             soporte_dict["Mensajes"].append(ChatSchema().dump(mensaje))
 
         return soporte_dict
+    return None
     # if s:
     #     soporte_dict = SoporteSchema().dump(s)
 
