@@ -1317,9 +1317,8 @@ paths:
                           "id_promo": "1234",
                           "estacion": 1,
                           "descuento": 20,
-                          "cantidad_usados": "10",
-                          "fecha_inicio": "12-10-2022",
-                          "fecha_fin": "22-10-2022",
+                          "fecha_inicio": "12-10-2022-12:00PM",
+                          "fecha_fin": "22-10-2022-5:00AM",
                           "estado": true,
                           "descripcion": "20% de descuento en la electrolinera de Vilanova!"
                         },
@@ -1327,9 +1326,8 @@ paths:
                           "id_promo": "1235",
                           "estacion": 2,
                           "descuento": 20,
-                          "cantidad_usados": "8",
-                          "fecha_inicio": "2-10-2022",
-                          "fecha_fin": "12-10-2022",
+                          "fecha_inicio": "2-10-2022-12:00PM",
+                          "fecha_fin": "12-10-2022-5:00AM",
                           "estado": true,
                           "descripcion": "20% de descuento en la electrolinera de Sitges!"
                         },
@@ -1337,9 +1335,8 @@ paths:
                           "id_promo": "1236",
                           "estacion": 3,
                           "descuento": 10,
-                          "cantidad_usados": "20",
-                          "fecha_inicio": "12-1-2022",
-                          "fecha_fin": "22-1-2022",
+                          "fecha_inicio": "12-1-2022-12:00PM",
+                          "fecha_fin": "22-1-2022-5:00AM",
                           "estado": false,
                           "descripcion": "10% de descuento en la electrolinera de Barcelona!"
                         }
@@ -1385,8 +1382,8 @@ paths:
                   example:
                     estacion: 1
                     descuento: 20
-                    fecha_inicio: "12-1-2022"
-                    fecha_fin: "22-1-2022"
+                    fecha_inicio: "12-1-2022-12:00PM"
+                    fecha_fin: "22-1-2022-5:00AM"
                     descripcion: "20% de descuento en la electrolinera VG1 de Vilanova!"
         responses:
           '200':
@@ -1398,13 +1395,13 @@ paths:
                     value: >-
                       {
                         "id_promo": "1236",
-                        "estacion": 3,
-                        "descuento": 10,
+                        "estacion": 1,
+                        "descuento": 20,
                         "cantidad_usados": "20",
-                        "fecha_inicio": "12-1-2022",
-                        "fecha_fin": "22-1-2022",
+                        "fecha_inicio": "12-1-2022-12:00PM",
+                        "fecha_fin": "22-1-2022-5:00AM",
                         "estado": true,
-                        "descripcion": "10% de descuento en la electrolinera de Barcelona!"
+                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
                       }
           '400':
               description: Peticion incorrecta
@@ -1439,29 +1436,26 @@ paths:
                         "id_promo": "1234",
                         "estacion": 1,
                         "descuento": 20,
-                        "cantidad_usados": "10",
-                        "fecha_inicio": "12-10-2022",
-                        "fecha_fin": "22-10-2022",
+                        "fecha_inicio": "12-10-2022-12:00PM",
+                        "fecha_fin": "22-1-2022-5:00AM",
                         "estado": true,
                         "descripcion": "20% de descuento en la electrolinera de Vilanova!"
                       },
                       {
                         "id_promo": "1235",
-                        "estacion": 2,
+                        "estacion": 1,
                         "descuento": 20,
-                        "cantidad_usados": "8",
-                        "fecha_inicio": "2-10-2022",
-                        "fecha_fin": "12-10-2022",
+                        "fecha_inicio": "2-10-2022-12:00PM",
+                        "fecha_fin": "12-10-2022-5:00AM",
                         "estado": true,
                         "descripcion": "20% de descuento en la electrolinera de Sitges!"
                       },
                       {
                         "id_promo": "1236",
-                        "estacion": 3,
+                        "estacion": 1,
                         "descuento": 10,
-                        "cantidad_usados": "20",
-                        "fecha_inicio": "12-1-2022",
-                        "fecha_fin": "22-1-2022",
+                        "fecha_inicio": "12-1-2022-12:00PM",
+                        "fecha_fin": "22-1-2022-5:00AM",
                         "estado": true,
                         "descripcion": "10% de descuento en la electrolinera de Barcelona!"
                       }
@@ -1507,19 +1501,17 @@ paths:
                         "id_promo": "1234",
                         "estacion": 1,
                         "descuento": 20,
-                        "cantidad_usados": "10",
-                        "fecha_inicio": "12-10-2022",
-                        "fecha_fin": "22-10-2022",
+                        "fecha_inicio": "12-10-2022-12:00PM",
+                        "fecha_fin": "22-10-2022-5:00AM",
                         "estado": true,
                         "descripcion": "20% de descuento en la electrolinera de Vilanova!"
                       },
                       {
                         "id_promo": "1236",
-                        "estacion": 3,
+                        "estacion": 1,
                         "descuento": 10,
-                        "cantidad_usados": "20",
-                        "fecha_inicio": "12-1-2022",
-                        "fecha_fin": "22-1-2022",
+                        "fecha_inicio": "12-1-2022-12:00PM",
+                        "fecha_fin": "22-1-2022-5:00AM",
                         "estado": true,
                         "descripcion": "10% de descuento en la electrolinera de Vilanova!"
                       }
@@ -1531,19 +1523,18 @@ paths:
                         "id_promo": "1234",
                         "estacion": 1,
                         "descuento": 20,
-                        "cantidad_usados": "10",
-                        "fecha_inicio": "12-10-2022",
-                        "fecha_fin": "22-10-2022",
+                        "fecha_inicio": "12-10-2022-12:00PM",
+                        "fecha_fin": "22-10-2022-5:00AM",
                         "estado": false,
                         "descripcion": "20% de descuento en la electrolinera de Vilanova!"
                       },
                       {
                         "id_promo": "1236",
-                        "estacion": 3,
+                        "estacion": 1,
                         "descuento": 10,
                         "cantidad_usados": "20",
-                        "fecha_inicio": "12-1-2022",
-                        "fecha_fin": "22-1-2022",
+                        "fecha_inicio": "12-1-2022-12:00PM",
+                        "fecha_fin": "22-1-2022-5:00AM",
                         "estado": false,
                         "descripcion": "10% de descuento en la electrolinera de Vilanova!"
                       }
@@ -1594,31 +1585,28 @@ paths:
                         "id_promo": "1234",
                         "estacion": 1,
                         "descuento": 20,
-                        "cantidad_usados": "10",
-                        "fecha_inicio": "12-10-2022",
-                        "fecha_fin": "22-10-2022",
+                        "fecha_inicio": "12-10-2022-12:00PM",
+                        "fecha_fin": "22-10-2022-5:00AM",
                         "estado": true,
                         "descripcion": "20% de descuento en la electrolinera de Vilanova!"
                       },
                       {
                         "id_promo": "1235",
-                        "estacion": 2,
+                        "estacion": 1,
                         "descuento": 20,
-                        "cantidad_usados": "8",
-                        "fecha_inicio": "13-10-2022",
-                        "fecha_fin": "25-10-2022",
+                        "fecha_inicio": "13-10-2022-12:00PM",
+                        "fecha_fin": "25-10-2022-5:00AM",
                         "estado": true,
-                        "descripcion": "20% de descuento en la electrolinera de Sitges!"
+                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
                       },
                       {
                         "id_promo": "1236",
-                        "estacion": 3,
+                        "estacion": 1,
                         "descuento": 10,
-                        "cantidad_usados": "20",
-                        "fecha_inicio": "10-10-2022",
-                        "fecha_fin": "22-10-2022",
+                        "fecha_inicio": "10-10-2022-12:00PM",
+                        "fecha_fin": "22-10-2022-5:00AM",
                         "estado": true,
-                        "descripcion": "10% de descuento en la electrolinera de Barcelona!"
+                        "descripcion": "10% de descuento en la electrolinera de Vilanova!"
                       }
                     ]
                 Sin_promociones_para_esas_fechas:
@@ -1628,31 +1616,28 @@ paths:
                         "id_promo": "1234",
                         "estacion": 1,
                         "descuento": 20,
-                        "cantidad_usados": "10",
-                        "fecha_inicio": "12-10-2022",
-                        "fecha_fin": "22-10-2022",
+                        "fecha_inicio": "12-10-2022-12:00PM",
+                        "fecha_fin": "22-10-2022-5:00AM",
                         "estado": false,
                         "descripcion": "20% de descuento en la electrolinera de Vilanova!"
                       },
                       {
                         "id_promo": "1235",
-                        "estacion": 2,
+                        "estacion": 1,
                         "descuento": 20,
-                        "cantidad_usados": "8",
-                        "fecha_inicio": "13-10-2022",
-                        "fecha_fin": "25-10-2022",
+                        "fecha_inicio": "13-10-2022-12:00PM",
+                        "fecha_fin": "25-10-2022-5:00AM",
                         "estado": false,
-                        "descripcion": "20% de descuento en la electrolinera de Sitges!"
+                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
                       },
                       {
                         "id_promo": "1236",
-                        "estacion": 3,
+                        "estacion": 1,
                         "descuento": 10,
-                        "cantidad_usados": "20",
-                        "fecha_inicio": "10-10-2022",
-                        "fecha_fin": "22-10-2022",
+                        "fecha_inicio": "10-10-2022-12:00PM",
+                        "fecha_fin": "22-10-2022-5:00AM",
                         "estado": false,
-                        "descripcion": "10% de descuento en la electrolinera de Barcelona!"
+                        "descripcion": "10% de descuento en la electrolinera de Vilanova!"
                       }
                     ]
                 Sin_promociones:
@@ -1691,9 +1676,8 @@ paths:
                         "id_promo": "1234",
                         "estacion": 1,
                         "descuento": 20,
-                        "cantidad_usados": "10",
-                        "fecha_inicio": "12-10-2022",
-                        "fecha_fin": "22-10-2022",
+                        "fecha_inicio": "12-10-2022-12:00PM",
+                        "fecha_fin": "22-10-2022-5:00AM",
                         "estado": true,
                         "descripcion": "20% de descuento en la electrolinera de Vilanova!"
                       },
@@ -1701,9 +1685,8 @@ paths:
                         "id_promo": "1235",
                         "estacion": 2,
                         "descuento": 20,
-                        "cantidad_usados": "8",
-                        "fecha_inicio": "2-10-2022",
-                        "fecha_fin": "12-10-2022",
+                        "fecha_inicio": "2-10-2022-12:00PM",
+                        "fecha_fin": "12-10-2022-5:00AM",
                         "estado": true,
                         "descripcion": "20% de descuento en la electrolinera de Sitges!"
                       },
@@ -1711,9 +1694,8 @@ paths:
                         "id_promo": "1236",
                         "estacion": 3,
                         "descuento": 10,
-                        "cantidad_usados": "20",
-                        "fecha_inicio": "12-1-2022",
-                        "fecha_fin": "22-1-2022",
+                        "fecha_inicio": "12-1-2022-12:00PM",
+                        "fecha_fin": "22-1-2022-5:00AM",
                         "estado": true,
                         "descripcion": "10% de descuento en la electrolinera de Barcelona!"
                       }
@@ -1725,9 +1707,8 @@ paths:
                         "id_promo": "1234",
                         "estacion": 1,
                         "descuento": 20,
-                        "cantidad_usados": "10",
-                        "fecha_inicio": "12-10-2022",
-                        "fecha_fin": "22-10-2022",
+                        "fecha_inicio": "12-10-2022-12:00PM",
+                        "fecha_fin": "22-10-2022-5:00AM",
                         "estado": false,
                         "descripcion": "20% de descuento en la electrolinera de Vilanova!"
                       },
@@ -1735,9 +1716,8 @@ paths:
                         "id_promo": "1236",
                         "estacion": 3,
                         "descuento": 10,
-                        "cantidad_usados": "20",
-                        "fecha_inicio": "12-1-2022",
-                        "fecha_fin": "22-1-2022",
+                        "fecha_inicio": "12-1-2022-12:00PM",
+                        "fecha_fin": "22-1-2022-5:00AM",
                         "estado": false,
                         "descripcion": "10% de descuento en la electrolinera de Barcelona!"
                       }
@@ -1776,9 +1756,8 @@ paths:
                       "id_promo": "1236",
                       "estacion": 3,
                       "descuento": 10,
-                      "cantidad_usados": "20",
-                      "fecha_inicio": "12-1-2022",
-                      "fecha_fin": "22-1-2022",
+                      "fecha_inicio": "12-1-2022-12:00PM",
+                      "fecha_fin": "22-1-2022-5:00AM",
                       "estado": true,
                       "descripcion": "10% de descuento en la electrolinera de Barcelona!"
                     }
@@ -1831,8 +1810,8 @@ paths:
               example:
                 estacion: 1
                 descuento: 20
-                fecha_inicio: "12-1-2022"
-                fecha_fin: "22-1-2022"
+                fecha_inicio: "12-1-2022-12:00PM"
+                fecha_fin: "22-1-2022-5:00AM"
                 descripcion: "20% de descuento en la electrolinera VG1 de Vilanova!"
       responses:
         '200':
@@ -1846,9 +1825,8 @@ paths:
                       "id_promo": "1236",
                       "estacion": 3,
                       "descuento": 10,
-                      "cantidad_usados": "20",
-                      "fecha_inicio": "12-1-2022",
-                      "fecha_fin": "22-1-2022",
+                      "fecha_inicio": "12-1-2022-12:00PM",
+                      "fecha_fin": "22-1-2022-5:00AM",
                       "estado": true,
                       "descripcion": "10% de descuento en la electrolinera de Barcelona!"
                     }
