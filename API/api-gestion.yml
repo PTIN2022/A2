@@ -1453,7 +1453,14 @@ paths:
                         		]
                         	}
                         ]
-
+            '400':
+              description: Malformed
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "Bad request"}      
             '401':
               description: Not login
               content:
