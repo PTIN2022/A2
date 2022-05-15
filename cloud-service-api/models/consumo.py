@@ -1,6 +1,6 @@
 from utils.db import db
-from models.cargador import Cargador
-from models.horas import Horas
+from models.cargador import Cargador  # noqa: F401
+from models.horas import Horas  # noqa: F401
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 

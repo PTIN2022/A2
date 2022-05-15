@@ -1,9 +1,7 @@
-from models.cargador import CargadorSchema
 from models.consumo import Consumo, ConsumoSchema
 from models.estacion import Estacion, EstacionSchema
 from models.horas import Horas, HorasSchema
 from datetime import datetime
-from utils.db import db
 from dateutil.relativedelta import relativedelta
 import sqlalchemy
 
@@ -29,7 +27,7 @@ def get_all_estadisticas():
                 for cargador in i.cargadores:
                     for hora in cargador.horas:
                         if hora.dia == date_inicio_str:
-                            cons = Consumo.query.filter(Consumo.id_cargador==cargador.id_cargador, Consumo.id_horas==hora.id).one_or_none()
+                            cons = Consumo.query.filter(Consumo.id_cargador == cargador.id_cargador, Consumo.id_horas == hora.id).one_or_none()
                             if cons:
                                 cons_obj = ConsumoSchema().dump(cons)
                                 potencia_ej = int(cons_obj["potencia_consumida"])
@@ -37,7 +35,7 @@ def get_all_estadisticas():
                                     potencia_max_cons = potencia_ej
                 date_inicio_str = date_inicio_str + relativedelta(days=1)
                 data_inicio = str(date_inicio_str)
-                new_estacion_json["dias"].append({ 'dia': data_inicio, 'potencia_max_cons': potencia_max_cons })
+                new_estacion_json["dias"].append({'dia': data_inicio, 'potencia_max_cons': potencia_max_cons})
             new_estacion_json["estacion"] = estacion_dict["nombre_est"]
             new_estacion_json["direccion"] = estacion_dict["direccion"]
             new_estacion_json["kwh_max"] = estacion_dict["kwh_max"]
@@ -59,14 +57,14 @@ def get_estadisticas_by_estacion(id, data_inicio, data_final):
             for cargador in i.cargadores:
                 for hora in cargador.horas:
                     if hora.dia == data_inicio:
-                        cons = Consumo.query.filter(Consumo.id_cargador==cargador.id_cargador, Consumo.id_horas==hora.id).one_or_none()
+                        cons = Consumo.query.filter(Consumo.id_cargador == cargador.id_cargador, Consumo.id_horas == hora.id).one_or_none()
                         if cons:
                             cons_obj = ConsumoSchema().dump(cons)
                             potencia_ej = int(cons_obj["potencia_consumida"])
                             if potencia_max_cons < potencia_ej:
                                 potencia_max_cons = potencia_ej
-            date_inicio_str=str(data_inicio)
-            new_estacion_json["dias"].append({ 'dia': date_inicio_str, 'potencia_max_cons': potencia_max_cons })
+            date_inicio_str = str(data_inicio)
+            new_estacion_json["dias"].append({'dia': date_inicio_str, 'potencia_max_cons': potencia_max_cons})
             data_inicio = data_inicio + relativedelta(days=1)
         new_estacion_json["estacion"] = estacion_dict["nombre_est"]
         new_estacion_json["direccion"] = estacion_dict["direccion"]

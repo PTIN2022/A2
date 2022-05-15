@@ -14,8 +14,8 @@ def get_all_estadisticas():
 
 @estadisticas.route('/estadisticas/<estacion>/<data_inicio>/<data_final>', methods=["GET"])
 def get_estadisticas_by_estacion(estacion, data_inicio, data_final):
-    data_inicio_d=datetime.strptime(data_inicio, '%Y-%m-%d').date()
-    data_final_d=datetime.strptime(data_final, '%Y-%m-%d').date()
+    data_inicio_d = datetime.strptime(data_inicio, '%Y-%m-%d').date()
+    data_final_d = datetime.strptime(data_final, '%Y-%m-%d').date()
     if data_inicio_d <= data_final_d:
         respuesta = control.get_estadisticas_by_estacion(estacion, data_inicio_d, data_final_d)
         if respuesta:
