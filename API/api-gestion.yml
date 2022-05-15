@@ -1301,3 +1301,173 @@ paths:
                       {"error": "Reserva not found."}
 
 #######################################################################################################
+  /estadisticas:
+    get:
+        summary: Obtiene estadisticas de todas las estaciones
+        tags:
+          - Estadisticas
+        responses:
+          '200':
+            description: Respuesta por defecto buena
+            content:
+              application/json:
+                examples:
+                  Reservas:
+                    value:  >-
+                        [
+                        	{
+                        		"estacion": "VG1",
+                        		"direccion": "Av.Victor Balaguer 2",
+                        		"kwh_max": 720,
+                        		"kwh_now": 75,
+                        		"dias": [
+                        			{
+                        				"dia": "2022-05-10",
+                        				"potencia_max_cons": 720
+                        			},
+                        			{
+                        				"dia": "2022-05-11",
+                        				"potencia_max_cons": 720
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 720
+                        			},
+                        			{
+                        				"dia": "2022-05-13",
+                        				"potencia_max_cons": 560
+                        			},
+                        			{
+                        				"dia": "2022-05-14",
+                        				"potencia_max_cons": 330
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 120
+                        			}
+                        		]
+                        	},
+                        	{
+                        		"estacion": "VG2",
+                        		"direccion": "Av. Alberto 2",
+                        		"kwh_max": 330,
+                        		"kwh_now": 75,
+                        		"dias": [
+                        			{
+                        				"dia": "2022-05-10",
+                        				"potencia_max_cons": 123
+                        			},
+                        			{
+                        				"dia": "2022-05-11",
+                        				"potencia_max_cons": 432
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 432
+                        			},
+                        			{
+                        				"dia": "2022-05-13",
+                        				"potencia_max_cons": 233
+                        			},
+                        			{
+                        				"dia": "2022-05-14",
+                        				"potencia_max_cons": 200
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 500
+                        			}
+                        		]
+                        	}
+                        ]
+                        
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+
+          '404':
+            description: Not found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "Estacion not found."}
+  /estadisticas/{estacion}/{data_inicio}/{data_final}:
+    get:
+          summary: Obtiene estadisticas para todos los cargadores de una estación entre una data inicio y una data final.
+          tags:
+            - Estadisticas
+          parameters:
+            - in: path
+              name: estacion
+              required: true
+              schema:
+                type: integer
+            - in: path
+              name: data_inicio
+              required: true
+              schema:
+                type: string
+            - in: path
+              name: data_final
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: Respuesta por defecto buena
+              content:
+                application/json:
+                  examples:
+                    Reservas:
+                      value:  >-
+                        [
+                        	{
+                        		"estacion": "VG1",
+                        		"direccion": "Av.Victor Balaguer 2",
+                        		"kwh_max": 720,
+                        		"kwh_now": 75,
+                        		"dias": [
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 720
+                        			},
+                        			{
+                        				"dia": "2022-05-13",
+                        				"potencia_max_cons": 560
+                        			},
+                        			{
+                        				"dia": "2022-05-14",
+                        				"potencia_max_cons": 330
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 120
+                        			}
+                        		]
+                        	}
+                        ]
+
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "User not authenticated."}
+  
+            '404':
+              description: Not found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "Estacion not found."}
