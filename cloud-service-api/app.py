@@ -9,7 +9,7 @@ from models.reserva import Reserva
 from models.estacion import Estacion
 from models.cargador import Cargador
 from models.horas import Horas
-from models.consumo import Consumo, ConsumoSchema
+from models.consumo import Consumo
 from routes.trabajador import trabajador
 from routes.estaciones import estaciones
 from routes.incidencias import incidencias
