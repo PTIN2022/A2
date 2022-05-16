@@ -4,8 +4,8 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 class Horas(db.Model):
     id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    dia = db.Column(db.DateTime, nullable=False)
-    hora = db.Column(db.DateTime, nullable=False)
+    dia = db.Column(db.Date, nullable=False)
+    hora = db.Column(db.Time, nullable=False)
     id_cargador = db.Column(db.Integer, db.ForeignKey("cargador.id_cargador"), nullable=False)
 
     def __init__(self, dia, hora, id_cargador):
