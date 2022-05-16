@@ -475,10 +475,6 @@ paths:
                     value: >-
                       {"error": "Incidencia not found."}
 #########################################################################################
-
-
-#######################################################################################################
-#########################################################################################
   /trabajador:
       # pedimos una lista de trabajadores
       get:
@@ -764,10 +760,49 @@ paths:
                       value: >-
                         {"error": "Trabajador not found."}
 #########################################################################################
+  
   /soporte:
+    get:
+        summary: Obtiene una lista de peticiones que se han hecho al servicio técnico
+        tags: 
+        - Soporte tecnico
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Peticion a soporte:
+                    value: >- 
+                      [
+                        {
+                          "user_id": 1,
+                          "ticket_id": 2,
+                          "fecha": "2022-04-21T13:00:00",
+                          "descripcion": "Problema con la aplicación móvil",
+                          "estado": false
+                        },
+                        {
+                          "user_id": 2,
+                          "ticket_id": 3,
+                          "fecha": "2022-04-22T13:00:00",
+                          "descripcion": "Problema con las reservas",
+                          "estado": false
+                        }
+                      ]
+                  Sin peticiones a soporte:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
   # Creacion de una ayuda o ticket al soporte tecnico
     post:
-      summary: Consulta una petición a soporte tecnico
+      summary: Publica una petición a soporte tecnico
       tags:
         - Soporte tecnico
       requestBody:
@@ -778,15 +813,16 @@ paths:
               type: object
               required:
                 - descripcion
-                - fecha
+                - estado
               properties:
                 descripcion:
                   type: string
-                fecha:
-                  type: string
+                estado:
+                  type: boolean
             example:
-              fecha: 20/04/2022
-              descripcion: Problema con la aplicación movil
+              descripcion: "Problema con la aplicación movil"
+              estado: False
+              
       responses:
         '200':
           description: Peticion correcta
@@ -794,91 +830,30 @@ paths:
             application/json:
               examples:
                 Insertar petición a soporte tecnico:
-                  value: |-
-                    {
-                      "user_id": 1,
-                      "ticket_id": 2,
-                      "fecha": "20/04/2022",
-                      "descripcion": "Problema con la aplicación móvil"
-                    }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error" :"Malformed request syntax."}'
-
-
-  /soporte/ticket_id/{user_id}:
-    post:
-      summary: Encontrar el ticket/la peticion de soporte del usuario
-      tags:
-        - Soporte tecnico
-      parameters:
-      - in: path
-        name: user_id
-        required: true
-        schema:
-          type: integer
-          required:
-            - ticket_id
-            - user_id
-            - mensaje
-            - fecha
-          properties:
-            ticket_id:
-              type: integer
-            user_id:
-              type: integer
-            mensaje:
-              type: string
-            fecha:
-              type: string
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Insertar petición a soporte tecnico:
-                  value: {
-                        "ticket_id": 0123456789,
-                        "user_id":  0123456789,
-                        "descripcion": "No se porque no carga mi coche",
-                        "fecha": "01/02/20222",
-                        "estado": false,
-                        "chat": [ {
-                            "user_id": 0123456789,
-                            "mensaje": "No se porque no carga mi coche",
-                            "fecha" : "01/02/20222"
-                          },
-                          {
-                            "user_id": 111,
-                            "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
-                            "fecha" : "01/02/20222"
-                          },
-                          {
-                            "user_id": 123456789,
-                            "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
-                            "fecha" : "01/02/20222"
-                          }
-                        ]
+                  value: >-
+                    [
+                      {
+                        "fecha": "2022-04-01T13:00:00",
+                        "descripcion": "Problema con la aplicación móvil",
+                        "estado": false
                       }
+                    ]
         '400':
           description: Peticion incorrecta
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error" :"ID ususario no valido."}'
-        '404':
-          description: Peticion no encontrado
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error" :"ID ususario no valido."}'
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+
 #Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
   /soporte/{ticket_id}:
     get:
@@ -897,44 +872,126 @@ paths:
           content:
             application/json:
               examples:
-                Insertar petición a soporte tecnico:
+               Consultando petición a soporte tecnico:
                   value: {
                       "ticket_id": 0123456789,
                       "user_id": 0123456789,
                       "descripcion": "No se porque no carga mi coche",
-                      "fecha": "01/02/20222",
+                      "fecha": "2022-04-01T13:00:00",
                       "estado": false,
-                      "chat": [ {
+                      "Mensajes": [ {
+                          "msg_id": 1,
                           "user_id": 123456789,
                           "mensaje": "No se porque no carga mi coche",
-                          "fecha" : "01/02/20222"
+                          "fecha" : "2022-04-01T14:00:00"
                         },
                         {
+                          "msg_id": 2,
                           "user_id": 111,
                           "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
-                          "fecha" : "01/02/20222"
+                          "fecha" : "2022-04-01T14:30:00"
                         },
                         {
+                          "msg_id": 3,
                           "user_id": 123456789,
                           "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
-                          "fecha" : "01/02/20222"
+                          "fecha" : "2022-04-01T14:43:00"
                         }
                       ]
                     }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error": "peticion mal formada."}'
         '404':
-          description: Peticion no encontrado
+          description: Ticket no encontrado
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error": "ID ususario no encontrado."}'
+                error:
+                  value: '{"error": "Ticket not found."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+    post:
+      summary: Dado un usuario en concreto pueda generar un mensaje para un ticket
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - mensaje
+              properties:
+                mensaje:
+                  type: string
+              example:
+                mensaje: "no se que me esta contando"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: {
+                        "ticket_id": 0123456789,
+                        "user_id":  0123456789,
+                        "descripcion": "No se porque no carga mi coche",
+                        "fecha": "2022-04-01T13:00:00",
+                        "estado": false,
+                        "Mensajes": [ {
+                          "msg_id": 1,
+                            "user_id": 0123456789,
+                            "mensaje": "No se porque no carga mi coche",
+                            "fecha" : "2022-04-01T14:00:00"
+                          },
+                          {
+                            "msg_id": 2,
+                            "user_id": 111,
+                            "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
+                            "fecha" : "2022-04-01T14:30:00"
+                          },
+                          {
+                            "msg_id": 3,
+                            "user_id": 123456789,
+                            "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
+                            "fecha" : "2022-04-01T14:43:00"
+                          }
+                        ]
+                      }
+        '400':
+          description: Ticket incorrecto
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Ticket not valid."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+        '404':
+          description: Ticket no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Ticket not found."}'
 
   # Eliminacion del ticket o peticion al soporte tecnico
     delete:
@@ -949,36 +1006,169 @@ paths:
           type: integer
       responses:
         '200':
+          description: Ticket correcto
+          content:
+            application/json:
+              examples:
+                Eliminando una petición a soporte tecnico:
+                  value: |-
+                    {
+                      "msg": "Ticket deleted succesfully."
+                    }
+        '400':
+          description: Ticket incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Ticket not valid."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+        '404':
+          description: Ticket no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" : "Ticket not found."}'
+        '410':
+          description: Ticket ya eliminado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Ticket have been deleted."}'
+                  
+  /soporte/byuser/{user_id}:
+    get:
+      summary: (NO ME USES) Obtiene los mensajes que ha generado un usuario en el soporte
+      tags: 
+      - Soporte tecnico
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema: 
+          type: string
+      responses:
+        '200':
           description: Peticion correcta
           content:
             application/json:
               examples:
-                Insertar petición a soporte tecnico:
+                Trabajador:
+                  value:  
+                    [
+                      {
+                          "ticket_id": 0123456789,
+                          "user_id":  0123456789,
+                          "descripcion": "No se porque no carga mi coche",
+                          "fecha": "2022-04-22T18:00:00",
+                          "estado": false,
+                          "Mensajes": [ {
+                            "msg_id": 1,
+                              "user_id": 0123456789,
+                              "mensaje": "No se porque no carga mi coche",
+                              "fecha" : "2022-04-22T19:00:00"
+                          }
+                          ]
+                      },
+                      {
+                          "ticket_id": 01231236789,
+                          "user_id":  0123456789,
+                          "descripcion": "Estoy atrapado",
+                          "fecha": "2022-04-01T13:00:00",
+                          "estado": false,
+                          "Mensajes": [ {
+                            "msg_id": 1,
+                              "user_id": 0123456789,
+                              "mensaje": "Estoy atrapado",
+                              "fecha" : "2022-04-01T14:00:00"
+                          }
+                          ]
+                      }
+                    ]
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not authorized."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not found."}
+                  
+    
+  /soporte/{ticket_id}/{msg_id}:
+    delete:
+      summary: Elimina un mensaje de una peticion
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      - in: path
+        name: msg_id
+        required: true
+        schema: 
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Eliminado mensaje:
                   value: |-
                     {
-                      "info": "Ticket ha sido eliminado"
+                      "msg": "Message deleted succesfully"
                     }
         '400':
           description: Peticion incorrecta
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error" :"ID ususario no valido."}'
+                error:
+                  value: '{"error" :"Message not valid"}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
         '404':
           description: Peticion no encontrado
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error" : "ID ususario no encontrado."}'
+                error:
+                  value: '{"error" : "Message not found."}'
         '410':
-          description: Peticion eliminada
+          description: Peticion ya eliminada
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error": "ID ususario eliminado."}'
+                error:
+                  value: '{"error": "Message have been deleted."}'
+
   # reservas
   /reservas:
     get:
@@ -1071,6 +1261,7 @@ paths:
                 Error al meter reserva:
                   value: >-
                     {"error": "Malformed request syntax."}
+
 
   /reservas/estacion/{id_estacion}:
     # pedimos una lista de reservas por una estacion dada
