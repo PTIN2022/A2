@@ -1447,7 +1447,8 @@ paths:
             application/json:
               examples:
                 Cliente encontrado:
-                  value: >-
+                  value:
+                      [
                         {
                           "id_cliente": 1,
                           # tipo ??????????
@@ -1459,6 +1460,7 @@ paths:
                           "telefono": "643876101",
                           "username": "xXpabloXx",
                         },
+                      ]
                 Cliente no encontrado:
                   value: '[]'
         '401':
@@ -1534,7 +1536,8 @@ paths:
             application/json:
               examples:
                 Cliente encontrado:
-                  value: >-
+                  value:
+                      [
                         {
                           "id_cliente": 1,
                           # tipo ??????????
@@ -1545,7 +1548,8 @@ paths:
                           "foto": "http://?????????/clientes/pablo.png",
                           "telefono": "643876101",
                           "username": "xXpabloXx",
-                        },
+                        }
+                      ]
                 Cliente no encontrado:
                   value: '[]'
         '401':
