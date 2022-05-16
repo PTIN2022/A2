@@ -1429,90 +1429,180 @@ paths:
                       value: >-
                         {"error": "Trabajador not authorized."}
   /clientes/{id}:
-      # pedimos un cliente dado su id
-      get:
-        summary: Obtiene un cliente por un id dado
-        tags:
-          - Clientes
-        parameters:
-          - in: path
-            name: id
-            required: true
-            schema:
-              type: integer
-        responses:
-          '200':
-            description: Default error sample response
-            content:
-              application/json:
-                examples:
-                  Cliente encontrado:
-                    value: >-
-                          {
-                            "id_cliente": 1,
-                            # tipo ??????????
-                            "nombre": "Pablo",
-                            "apellido": "Escobar",
-                            "email": "pablo@gmail.com",
-                            "DNI": "23769543B",
-                            "foto": "http://?????????/clientes/pablo.png",
-                            "telefono": "643876101",
-                            "username": "xXpabloXx",
-                          },
-                  Cliente no encontrado:
-                    value: '[]'
-          '401':
-            description: Not login
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >-
-                        {"error": "User not authenticated."}
-          '404':
-            description: Not found
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >-
-                        {"error": "Client not found."}
-      #borrar cliente
-      delete:
-        summary: Elimina cliente por DNI
-        tags:
-          - Clientes
-        parameters:
-          - in: path
-            name: DNI
-            required: true
-            schema:
-              type: string
-        responses:
-          '200':
-            description: Cliente eliminado delete
-            content:
-              application/json:
-                examples:
-                  Incidencias:
-                    value: "{\"msg\": \"Client deleted correctly.\"}"
-                  Incidencia no encontrada:
-                    value: '[]'
-          '401':
-            description: Not login
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >-
+    # pedimos un cliente dado su id
+    get:
+      summary: Obtiene un cliente por un id dado
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                Cliente encontrado:
+                  value: >-
+                        {
+                          "id_cliente": 1,
+                          # tipo ??????????
+                          "nombre": "Pablo",
+                          "apellido": "Escobar",
+                          "email": "pablo@gmail.com",
+                          "DNI": "23769543B",
+                          "foto": "http://?????????/clientes/pablo.png",
+                          "telefono": "643876101",
+                          "username": "xXpabloXx",
+                        },
+                Cliente no encontrado:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
                       {"error": "User not authenticated."}
-          '404':
-            description: Not Found
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >-
+        '404':
+          description: Not found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
                       {"error": "Client not found."}
+  #borrar cliente
+    delete:
+      summary: Elimina cliente por id
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Cliente eliminado delete
+          content:
+            application/json:
+              examples:
+                Incidencias:
+                  value: "{\"msg\": \"Client deleted correctly.\"}"
+                Incidencia no encontrada:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Client not found."}
+                    
+  /clientes/bydni/{DNI}:
+    # pedimos un cliente dado su id
+    get:
+      summary: Obtiene un cliente por un id dado
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: DNI
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                Cliente encontrado:
+                  value: >-
+                        {
+                          "id_cliente": 1,
+                          # tipo ??????????
+                          "nombre": "Pablo",
+                          "apellido": "Escobar",
+                          "email": "pablo@gmail.com",
+                          "DNI": "23769543B",
+                          "foto": "http://?????????/clientes/pablo.png",
+                          "telefono": "643876101",
+                          "username": "xXpabloXx",
+                        },
+                Cliente no encontrado:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "User not authenticated."}
+        '404':
+          description: Not found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "Client not found."}
+  #borrar cliente
+  
+    delete:
+      summary: Elimina cliente por id
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: DNI
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cliente eliminado delete
+          content:
+            application/json:
+              examples:
+                Incidencias:
+                  value: "{\"msg\": \"Client deleted correctly.\"}"
+                Incidencia no encontrada:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Client not found."}
+
+#######################################################################################################
 
 #######################################################################################################
