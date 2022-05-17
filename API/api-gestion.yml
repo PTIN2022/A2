@@ -1314,31 +1314,34 @@ paths:
                     value: >-
                       [
                         {
-                          "id_promo": "1234",
-                          "estacion": 1,
+                          "cantidad_cupones": 50,
+                          "cantidad_usados": 25,
+                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
                           "descuento": 20,
-                          "fecha_inicio": "12-10-2022-12:00PM",
-                          "fecha_fin": "22-10-2022-5:00AM",
-                          "estado": true,
-                          "descripcion": "20% de descuento en la electrolinera de Vilanova!"
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T11:00:00",
+                          "fecha_fin": "2022-04-18T21:00:00",
+                          "id_promo": 1
                         },
                         {
-                          "id_promo": "1235",
-                          "estacion": 2,
-                          "descuento": 20,
-                          "fecha_inicio": "2-10-2022-12:00PM",
-                          "fecha_fin": "12-10-2022-5:00AM",
-                          "estado": true,
-                          "descripcion": "20% de descuento en la electrolinera de Sitges!"
+                          "cantidad_cupones": 100,
+                          "cantidad_usados": 25,
+                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
+                          "descuento": 15,
+                          "estado": "inactiva",
+                          "fecha_inicio": "2022-04-18T17:00:00",
+                          "fecha_fin": "2022-04-18T22:00:00",
+                          "id_promo": 2
                         },
                         {
-                          "id_promo": "1236",
-                          "estacion": 3,
-                          "descuento": 10,
-                          "fecha_inicio": "12-1-2022-12:00PM",
-                          "fecha_fin": "22-1-2022-5:00AM",
-                          "estado": false,
-                          "descripcion": "10% de descuento en la electrolinera de Barcelona!"
+                          "cantidad_cupones": 50,
+                          "cantidad_usados": 10,
+                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                          "descuento": 25,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T10:00:00",
+                          "fecha_fin": "2022-04-18T19:00:00",
+                          "id_promo": 3
                         }
                       ]
                   No_promociones:
@@ -1349,7 +1352,15 @@ paths:
               application/json:
                 examples:
                   Error al meter incidencia:
-                    value: '{"error": "peticion mal formada."}'
+                    value: {"error": "Malformed request syntax."}
+          '403':
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
 
       post:
         summary: Inserta un nueva promocion
@@ -1363,12 +1374,19 @@ paths:
                   type: object
                   required:
                     - id_estacion
+                    - cantidad_cupones
+                    - cantidad_usados
+                    - descripcion
                     - descuento
+                    - estado
                     - fecha_inicio
                     - fecha_fin
-                    - descripcion
                   properties:
                     id_estacion:
+                      type: integer
+                    cantidad_cupones:
+                      type: integer
+                    cantidad_usados:
                       type: integer
                     descuento:
                       type: integer
@@ -1378,13 +1396,8 @@ paths:
                       type: string
                     descripcion:
                       type: string
-
-                  example:
-                    estacion: 1
-                    descuento: 20
-                    fecha_inicio: "12-1-2022-12:00PM"
-                    fecha_fin: "22-1-2022-5:00AM"
-                    descripcion: "20% de descuento en la electrolinera VG1 de Vilanova!"
+                    estado:
+                      type: string
         responses:
           '200':
             description: Peticion correcta
@@ -1394,22 +1407,30 @@ paths:
                   Meter trabajador:
                     value: >-
                       {
-                        "id_promo": "1236",
-                        "estacion": 1,
-                        "descuento": 20,
-                        "cantidad_usados": "20",
-                        "fecha_inicio": "12-1-2022-12:00PM",
-                        "fecha_fin": "22-1-2022-5:00AM",
-                        "estado": true,
-                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
+                        "cantidad_cupones": 50,
+                        "cantidad_usados": 10,
+                        "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                        "descuento": 25,
+                        "estado": "activa",
+                        "fecha_inicio": "2022-04-18T10:00:00",
+                        "fecha_fin": "2022-04-18T19:00:00",
+                        "id_promo": 3
                       }
           '400':
-              description: Peticion incorrecta
-              content:
-                application/json:
-                  examples:
-                    Error al meter incidencia:
-                      value: {"error": "Malformed request syntax."}
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
+          '403':
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
     
   /promociones/estacion/{id_estacion}:
   # pedimos una lista de promociones por una estacion dada
@@ -1431,45 +1452,55 @@ paths:
               examples:
                 Con promociones:
                   value: >-
-                    [
-                      {
-                        "id_promo": "1234",
-                        "estacion": 1,
-                        "descuento": 20,
-                        "fecha_inicio": "12-10-2022-12:00PM",
-                        "fecha_fin": "22-1-2022-5:00AM",
-                        "estado": true,
-                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
-                      },
-                      {
-                        "id_promo": "1235",
-                        "estacion": 1,
-                        "descuento": 20,
-                        "fecha_inicio": "2-10-2022-12:00PM",
-                        "fecha_fin": "12-10-2022-5:00AM",
-                        "estado": true,
-                        "descripcion": "20% de descuento en la electrolinera de Sitges!"
-                      },
-                      {
-                        "id_promo": "1236",
-                        "estacion": 1,
-                        "descuento": 10,
-                        "fecha_inicio": "12-1-2022-12:00PM",
-                        "fecha_fin": "22-1-2022-5:00AM",
-                        "estado": true,
-                        "descripcion": "10% de descuento en la electrolinera de Barcelona!"
-                      }
-                    ]
+                      [
+                        {
+                          "cantidad_cupones": 50,
+                          "cantidad_usados": 25,
+                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
+                          "descuento": 20,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T11:00:00",
+                          "fecha_fin": "2022-04-18T21:00:00",
+                          "id_promo": 1
+                        },
+                        {
+                          "cantidad_cupones": 100,
+                          "cantidad_usados": 25,
+                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
+                          "descuento": 15,
+                          "estado": "inactiva",
+                          "fecha_inicio": "2022-04-18T17:00:00",
+                          "fecha_fin": "2022-04-18T22:00:00",
+                          "id_promo": 2
+                        },
+                        {
+                          "cantidad_cupones": 50,
+                          "cantidad_usados": 10,
+                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                          "descuento": 25,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T10:00:00",
+                          "fecha_fin": "2022-04-18T19:00:00",
+                          "id_promo": 3
+                        }
+                      ]
                 Sin_promociones:
                   value: '[]'
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
         '403':
-          description: Denied access
-          content:
-            application/json:
-              examples:
-                error:
-                  value: >-
-                    {"error": "You don’t have permission to access."}
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
 
   /promociones/estacion/{id_estacion}/{estado}:
   # pedimos lista de promociones dado un estado y una estacion.
@@ -1487,7 +1518,7 @@ paths:
           name: estado
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: Peticion correcta
@@ -1496,59 +1527,59 @@ paths:
               examples:
                 Con promociones activas para estacion:
                   value: >-
-                    [
-                      {
-                        "id_promo": "1234",
-                        "estacion": 1,
-                        "descuento": 20,
-                        "fecha_inicio": "12-10-2022-12:00PM",
-                        "fecha_fin": "22-10-2022-5:00AM",
-                        "estado": true,
-                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
-                      },
-                      {
-                        "id_promo": "1236",
-                        "estacion": 1,
-                        "descuento": 10,
-                        "fecha_inicio": "12-1-2022-12:00PM",
-                        "fecha_fin": "22-1-2022-5:00AM",
-                        "estado": true,
-                        "descripcion": "10% de descuento en la electrolinera de Vilanova!"
-                      }
-                    ]
+                      [
+                        {
+                          "cantidad_cupones": 50,
+                          "cantidad_usados": 25,
+                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
+                          "descuento": 20,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T11:00:00",
+                          "fecha_fin": "2022-04-18T21:00:00",
+                          "id_promo": 1
+                        },
+                        {
+                          "cantidad_cupones": 50,
+                          "cantidad_usados": 10,
+                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                          "descuento": 25,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T10:00:00",
+                          "fecha_fin": "2022-04-18T19:00:00",
+                          "id_promo": 3
+                        }
+                      ]
                 Sin_promociones_activas_estacion:
                   value: >-
-                    [
-                      {
-                        "id_promo": "1234",
-                        "estacion": 1,
-                        "descuento": 20,
-                        "fecha_inicio": "12-10-2022-12:00PM",
-                        "fecha_fin": "22-10-2022-5:00AM",
-                        "estado": false,
-                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
-                      },
-                      {
-                        "id_promo": "1236",
-                        "estacion": 1,
-                        "descuento": 10,
-                        "cantidad_usados": "20",
-                        "fecha_inicio": "12-1-2022-12:00PM",
-                        "fecha_fin": "22-1-2022-5:00AM",
-                        "estado": false,
-                        "descripcion": "10% de descuento en la electrolinera de Vilanova!"
-                      }
-                    ]
+                      [
+                        {
+                          "cantidad_cupones": 100,
+                          "cantidad_usados": 25,
+                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
+                          "descuento": 15,
+                          "estado": "inactiva",
+                          "fecha_inicio": "2022-04-18T17:00:00",
+                          "fecha_fin": "2022-04-18T22:00:00",
+                          "id_promo": 2
+                        }
+                      ]
                 Sin_promociones:
                   value: '[]'
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
         '403':
-          description: Denied access
-          content:
-            application/json:
-              examples:
-                error:
-                  value: >-
-                    {"error": "You don’t have permission to access."}
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
   
   /promociones/estacion/{id_estacion}/{fecha_inicio}/{fecha_fin}:
   # pedimos lista de promociones dado una estacion y su fecha de inicio y final.
@@ -1580,79 +1611,92 @@ paths:
               examples:
                 Con promociones para las fechas:
                   value: >-
-                    [
-                      {
-                        "id_promo": "1234",
-                        "estacion": 1,
-                        "descuento": 20,
-                        "fecha_inicio": "12-10-2022-12:00PM",
-                        "fecha_fin": "22-10-2022-5:00AM",
-                        "estado": true,
-                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
-                      },
-                      {
-                        "id_promo": "1235",
-                        "estacion": 1,
-                        "descuento": 20,
-                        "fecha_inicio": "13-10-2022-12:00PM",
-                        "fecha_fin": "25-10-2022-5:00AM",
-                        "estado": true,
-                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
-                      },
-                      {
-                        "id_promo": "1236",
-                        "estacion": 1,
-                        "descuento": 10,
-                        "fecha_inicio": "10-10-2022-12:00PM",
-                        "fecha_fin": "22-10-2022-5:00AM",
-                        "estado": true,
-                        "descripcion": "10% de descuento en la electrolinera de Vilanova!"
-                      }
-                    ]
+                      [
+                        {
+                          "cantidad_cupones": 50,
+                          "cantidad_usados": 25,
+                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
+                          "descuento": 20,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T11:00:00",
+                          "fecha_fin": "2022-04-18T21:00:00",
+                          "id_promo": 1
+                        },
+                        {
+                          "cantidad_cupones": 100,
+                          "cantidad_usados": 25,
+                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
+                          "descuento": 15,
+                          "estado": "inactiva",
+                          "fecha_inicio": "2022-04-18T17:00:00",
+                          "fecha_fin": "2022-04-18T22:00:00",
+                          "id_promo": 2
+                        },
+                        {
+                          "cantidad_cupones": 50,
+                          "cantidad_usados": 10,
+                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                          "descuento": 25,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T10:00:00",
+                          "fecha_fin": "2022-04-18T19:00:00",
+                          "id_promo": 3
+                        }
+                      ]
                 Sin_promociones_para_esas_fechas:
                   value: >-
-                    [
-                      {
-                        "id_promo": "1234",
-                        "estacion": 1,
-                        "descuento": 20,
-                        "fecha_inicio": "12-10-2022-12:00PM",
-                        "fecha_fin": "22-10-2022-5:00AM",
-                        "estado": false,
-                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
-                      },
-                      {
-                        "id_promo": "1235",
-                        "estacion": 1,
-                        "descuento": 20,
-                        "fecha_inicio": "13-10-2022-12:00PM",
-                        "fecha_fin": "25-10-2022-5:00AM",
-                        "estado": false,
-                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
-                      },
-                      {
-                        "id_promo": "1236",
-                        "estacion": 1,
-                        "descuento": 10,
-                        "fecha_inicio": "10-10-2022-12:00PM",
-                        "fecha_fin": "22-10-2022-5:00AM",
-                        "estado": false,
-                        "descripcion": "10% de descuento en la electrolinera de Vilanova!"
-                      }
-                    ]
+                      [
+                        {
+                          "cantidad_cupones": 50,
+                          "cantidad_usados": 25,
+                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
+                          "descuento": 20,
+                          "estado": "activa",
+                          "fecha_inicio": "2021-04-18T11:00:00",
+                          "fecha_fin": "2021-04-18T21:00:00",
+                          "id_promo": 1
+                        },
+                        {
+                          "cantidad_cupones": 100,
+                          "cantidad_usados": 25,
+                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
+                          "descuento": 15,
+                          "estado": "inactiva",
+                          "fecha_inicio": "2021-04-18T17:00:00",
+                          "fecha_fin": "2021-04-18T22:00:00",
+                          "id_promo": 2
+                        },
+                        {
+                          "cantidad_cupones": 50,
+                          "cantidad_usados": 10,
+                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                          "descuento": 25,
+                          "estado": "activa",
+                          "fecha_inicio": "2021-04-18T10:00:00",
+                          "fecha_fin": "2021-04-18T19:00:00",
+                          "id_promo": 3
+                        }
+                      ]
                 Sin_promociones:
                   value: '[]'
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
         '403':
-          description: Denied access
-          content:
-            application/json:
-              examples:
-                error:
-                  value: >-
-                    {"error": "You don’t have permission to access."}
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
                     
-  /promociones/{estado}:
-  # pedimos una lista de promociones dado su estado (activo/inactivo)
+  /promociones/estado/{estado}:
+  # pedimos una lista de promociones dado su estado (activa/inactiva)
     get:
       summary: Obtiene información de una promocion en caso de que este activa
       tags:
@@ -1662,7 +1706,7 @@ paths:
         name: estado
         required: true
         schema:
-          type: boolean
+          type: string
       responses:
         '200':
           description: Peticion correcta
@@ -1671,67 +1715,59 @@ paths:
               examples:
                 Con promociones activas:
                   value: >-
-                    [
-                      {
-                        "id_promo": "1234",
-                        "estacion": 1,
-                        "descuento": 20,
-                        "fecha_inicio": "12-10-2022-12:00PM",
-                        "fecha_fin": "22-10-2022-5:00AM",
-                        "estado": true,
-                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
-                      },
-                      {
-                        "id_promo": "1235",
-                        "estacion": 2,
-                        "descuento": 20,
-                        "fecha_inicio": "2-10-2022-12:00PM",
-                        "fecha_fin": "12-10-2022-5:00AM",
-                        "estado": true,
-                        "descripcion": "20% de descuento en la electrolinera de Sitges!"
-                      },
-                      {
-                        "id_promo": "1236",
-                        "estacion": 3,
-                        "descuento": 10,
-                        "fecha_inicio": "12-1-2022-12:00PM",
-                        "fecha_fin": "22-1-2022-5:00AM",
-                        "estado": true,
-                        "descripcion": "10% de descuento en la electrolinera de Barcelona!"
-                      }
-                    ]
+                      [
+                        {
+                          "cantidad_cupones": 50,
+                          "cantidad_usados": 25,
+                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
+                          "descuento": 20,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T11:00:00",
+                          "fecha_fin": "2022-04-18T21:00:00",
+                          "id_promo": 1
+                        },
+                        {
+                          "cantidad_cupones": 50,
+                          "cantidad_usados": 10,
+                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                          "descuento": 25,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T10:00:00",
+                          "fecha_fin": "2022-04-18T19:00:00",
+                          "id_promo": 3
+                        }
+                      ]
                 Sin_promociones_activas:
                   value: >-
-                    [
-                      {
-                        "id_promo": "1234",
-                        "estacion": 1,
-                        "descuento": 20,
-                        "fecha_inicio": "12-10-2022-12:00PM",
-                        "fecha_fin": "22-10-2022-5:00AM",
-                        "estado": false,
-                        "descripcion": "20% de descuento en la electrolinera de Vilanova!"
-                      },
-                      {
-                        "id_promo": "1236",
-                        "estacion": 3,
-                        "descuento": 10,
-                        "fecha_inicio": "12-1-2022-12:00PM",
-                        "fecha_fin": "22-1-2022-5:00AM",
-                        "estado": false,
-                        "descripcion": "10% de descuento en la electrolinera de Barcelona!"
-                      }
-                    ]
+                      [
+                        {
+                          "cantidad_cupones": 100,
+                          "cantidad_usados": 25,
+                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
+                          "descuento": 15,
+                          "estado": "inactiva",
+                          "fecha_inicio": "2022-04-18T17:00:00",
+                          "fecha_fin": "2022-04-18T22:00:00",
+                          "id_promo": 2
+                        }
+                      ]
                 Sin_promociones:
                   value: '[]'
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
         '403':
-          description: Denied access
-          content:
-            application/json:
-              examples:
-                error:
-                  value: >-
-                    {"error": "You don’t have permission to access."}
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
   /promociones/{id}:
   # pedimos una promocion dado su id.
     get:
@@ -1752,23 +1788,31 @@ paths:
               examples:
                 Trabajador:
                   value: >-
-                    {
-                      "id_promo": "1236",
-                      "estacion": 3,
-                      "descuento": 10,
-                      "fecha_inicio": "12-1-2022-12:00PM",
-                      "fecha_fin": "22-1-2022-5:00AM",
-                      "estado": true,
-                      "descripcion": "10% de descuento en la electrolinera de Barcelona!"
-                    }
+                      {
+                        "cantidad_cupones": 50,
+                        "cantidad_usados": 10,
+                        "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                        "descuento": 25,
+                        "estado": "activa",
+                        "fecha_inicio": "2022-04-18T10:00:00",
+                        "fecha_fin": "2022-04-18T19:00:00",
+                        "id_promo": 3
+                      }
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
         '403':
-          description: Denied access
-          content:
-            application/json:
-              examples:
-                error:
-                  value: >-
-                    {"error": "You don’t have permission to access."}
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
         '404':
           description: Not Found
           content:
@@ -1788,7 +1832,7 @@ paths:
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         required: true
         content:
@@ -1807,12 +1851,6 @@ paths:
                 descripcion:
                   type: string
 
-              example:
-                estacion: 1
-                descuento: 20
-                fecha_inicio: "12-1-2022-12:00PM"
-                fecha_fin: "22-1-2022-5:00AM"
-                descripcion: "20% de descuento en la electrolinera VG1 de Vilanova!"
       responses:
         '200':
           description: Peticion correcta
@@ -1821,37 +1859,38 @@ paths:
               examples:
                 Trabajador actualizado:
                   value: >-
-                    {
-                      "id_promo": "1236",
-                      "estacion": 3,
-                      "descuento": 10,
-                      "fecha_inicio": "12-1-2022-12:00PM",
-                      "fecha_fin": "22-1-2022-5:00AM",
-                      "estado": true,
-                      "descripcion": "10% de descuento en la electrolinera de Barcelona!"
-                    }
+                      {
+                        "cantidad_cupones": 50,
+                        "cantidad_usados": 10,
+                        "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                        "descuento": 25,
+                        "estado": "activa",
+                        "fecha_inicio": "2022-04-18T10:00:00",
+                        "fecha_fin": "2022-04-18T19:00:00",
+                        "id_promo": 3
+                      }
         '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter trabajador:
-                  value: {"error": "Malformed request syntax."}
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
         '403':
-          description: Denied access
-          content:
-            application/json:
-              examples:
-                error:
-                  value: >-
-                    {"error": "You don’t have permission to modify."}
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
         '404':
-          description: Not Found
-          content:
-            application/json:
-              examples:
-                error:
-                  value: {"error": "Promocion not found."}
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: {"error": "Promocion not found."}
 
     delete:
       summary: Eliminar una promcion dado su id
@@ -1862,7 +1901,7 @@ paths:
           name: id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
           '200':
             description: Peticion correcta
@@ -1872,6 +1911,13 @@ paths:
                   Trabajador:
                     value: >-
                       {"msg": "Promocion deleted succesfully"}
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
           '403':
             description: Denied access
             content:
@@ -1879,7 +1925,7 @@ paths:
                 examples:
                   error:
                     value: >-
-                      {"error": "You don’t have permission to modify."}
+                      {"error": "User not authenticated."}
           '404':
             description: Not Found
             content:
