@@ -63,7 +63,8 @@ def post_reserva(id_estacion, matricula, fecha_inicio_str, fecha_final_str, DNI)
                     i = Reserva(fecha_inicio_str, fecha_final_str, cargador.id_cargador, matricula, DNI)
                     db.session.add(i)
                     db.session.commit()
-                    publish.single("estacion/"+str(id_estacion)+"/cargador/"+str(cargador.id_cargador)+"/reserva", json.dumps(ReservaSchema().dump(i)), hostname="craaxkvm.epsevg.upc.es", port=23602, qos=2)
+                    hostname = "craaxkvm.epsevg.upc.es"
+                    publish.single("estacion/"+str(id_estacion)+"/cargador/"+str(cargador.id_cargador)+"/reserva", json.dumps(ReservaSchema().dump(i)), hostname, port=23602, qos=2)
                     cargador_encontrado = True
                     return i.id_reserva
     if not cargador_encontrado:
