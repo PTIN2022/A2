@@ -12,6 +12,7 @@ from routes.trabajador import trabajador
 from routes.estaciones import estaciones
 from routes.incidencias import incidencias
 from routes.reservas import reservas
+from routes.promociones import promociones
 
 
 def init_db():
@@ -83,6 +84,7 @@ app.register_blueprint(incidencias, url_prefix='/api')
 app.register_blueprint(estaciones, url_prefix='/api')
 app.register_blueprint(trabajador, url_prefix='/api')
 app.register_blueprint(reservas, url_prefix='/api')
+app.register_blueprint(promociones, url_prefix='/api')
 
 if __name__ == "__main__":  # pragma: no cover
     print("=========================================")
