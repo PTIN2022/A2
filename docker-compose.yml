@@ -18,3 +18,10 @@ services:
       - api
       - front
 
+  brokercloud:
+    build: ./broker
+    ports:
+      - "42069:1883"
+    expose:
+      - 1883
+
