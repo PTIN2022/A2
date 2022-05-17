@@ -14,6 +14,7 @@ from routes.trabajador import trabajador
 from routes.soporte import soporte
 from routes.estaciones import estaciones
 from routes.incidencias import incidencias
+from routes.clientes import clientes
 from routes.reservas import reservas
 from routes.estadisticas import estadisticas
 
@@ -158,6 +159,7 @@ with app.app_context():
 app.register_blueprint(incidencias, url_prefix='/api')
 app.register_blueprint(estaciones, url_prefix='/api')
 app.register_blueprint(trabajador, url_prefix='/api')
+app.register_blueprint(clientes, url_prefix='/api')
 app.register_blueprint(reservas, url_prefix='/api')
 app.register_blueprint(soporte, url_prefix='/api')
 app.register_blueprint(estadisticas, url_prefix='/api')
