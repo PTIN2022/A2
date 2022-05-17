@@ -1326,7 +1326,7 @@ paths:
                             "username": "xXpabloXx",
                           },
                           {
-                            "id_cliente": 1,
+                            "id_cliente": 2,
                             # tipo ??????????
                             "nombre": "Javier",
                             "apellido": "Sanchez",
@@ -1427,7 +1427,7 @@ paths:
                   examples:
                     error:
                       value: >-
-                        {"error": "Trabajador not authorized."}
+                        {"error": "User not authorized."}
   /clientes/{id}:
     # pedimos un cliente dado su id
     get:
@@ -1520,7 +1520,7 @@ paths:
   /clientes/bydni/{DNI}:
     # pedimos un cliente dado su id
     get:
-      summary: Obtiene un cliente por un id dado
+      summary: Obtiene un cliente dado su DNI
       tags:
         - Clientes
       parameters:
