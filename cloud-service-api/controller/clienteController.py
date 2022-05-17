@@ -6,9 +6,11 @@ def get_all_clientes():
     c = Cliente.query.all()
     return ClienteSchema(many=True).dump(c)
 
+
 def get_cliente_id(id):
     c = Cliente.query.filter(Cliente.id_usuari == id).one_or_none()
     return ClienteSchema().dump(c)
+
 
 def get_cliente_dni(DNI):
     c = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
@@ -29,6 +31,7 @@ def delete_cliente_dni(DNI):
         db.session.commit()
         return True
     return False
+
 
 def delete_cliente_id(id):
     c = Cliente.query.filter(Cliente.id_usuari == id).one_or_none()

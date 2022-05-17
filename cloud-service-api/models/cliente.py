@@ -6,10 +6,10 @@ import models.reserva  # noqa: F401
 
 
 class Cliente(db.Model):
-    #avisos = db.relationship("Aviso",  backref="cliente")
+    # avisos = db.relationship("Aviso",  backref="cliente")
     # id_usuari = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_usuari = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    #tipo = db.Column(db.String(20), nullable=False)
+    # tipo = db.Column(db.String(20), nullable=False)
     nombre = db.Column(db.String(30), nullable=False)
     apellido = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(30), nullable=False)
@@ -21,7 +21,7 @@ class Cliente(db.Model):
     reservas = db.relationship("Reserva",  backref="cliente")
 
     def __init__(self, nombre, apellido, email, dni, foto, telefono, username, password):
-        #self.tipo = tipo
+        # self.tipo = tipo
         self.nombre = nombre
         self.apellido = apellido
         self.email = email

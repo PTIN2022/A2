@@ -20,6 +20,7 @@ def get_clientes_dni(DNI):
         return jsonify({"error": "cliente not found."}), 404
 # habra que meter el error 401
 
+
 @clientes.route('/clientes/<id>', methods=['GET'])
 def get_clientes_id(id):
     respuesta = control.get_cliente_id(id)
@@ -28,6 +29,7 @@ def get_clientes_id(id):
     else:
         return jsonify({"error": "cliente not found."}), 404
 # habra que meter el error 401
+
 
 @clientes.route('/clientes', methods=['POST'])
 def post_cliente():
@@ -51,6 +53,7 @@ def deleted_cliente_dni(DNI):
     else:
         return jsonify({"error": "cliente not found."}), 404
 # habra que hacer error 401
+
 
 @clientes.route('/clientes/<id>', methods=["DELETE"])
 def deleted_cliente_id(id):

@@ -14,6 +14,7 @@ from routes.incidencias import incidencias
 from routes.clientes import clientes
 from routes.reservas import reservas
 
+
 def init_db():
     db.init_app(app)
     with app.app_context():

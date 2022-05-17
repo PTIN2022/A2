@@ -1,5 +1,5 @@
 from utils.db import db
-#from models.cliente import Cliente  # noqa: F401
+# from models.cliente import Cliente  # noqa: F401
 from models.reserva import Reserva  # noqa: F401
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
