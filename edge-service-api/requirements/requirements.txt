@@ -9,3 +9,5 @@ marshmallow_sqlalchemy
 gunicorn
 paho-mqtt
 wheel
+Faker
+random2
