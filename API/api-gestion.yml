@@ -3,11 +3,1172 @@ info:
   title: API portal de gestion
   version: '1.0'
 servers:
-  - url: http://127.0.0.1:5000/
-    description: Developments
-  - url: http://craaxkvm.epsevg.upc.es:23701/
-    description: Server
+  - url: http://127.0.0.1:5000/api
+    description: Development
+  - url: http://craaxkvm.epsevg.upc.es:23601/api
+    description: Production
 paths:
+  # incidencias
+  /incidencias:
+    # pedimos una lista de las incidencias
+    get:
+      summary: Obtiene una lista de incidencias
+      tags:
+      - Incidencias
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con incidencias:
+                  value: [
+                          {
+                            "incidenciaId": 1,
+                            "estación": "VG1",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "fecha_averia": "2022-04-18",
+                            "estado": false,
+                            "descripción": "El cargador de la planta 2 m plaza 1 no funciona"
+                          },
+                          {
+                            "incidenciaId": 2,
+                            "estación": "VG2",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "fecha_averia": "2022-04-18 ",
+                            "estado": false,
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                          }
+                        ]
+
+                Sin incidencias:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+    # mandamos/resolvemos 1 incidencia]
+    post:
+        summary: Inserta una nueva incidencia
+        tags:
+        - Incidencias
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - estacion
+                  - direccion
+                  - fecha_averia
+                  - descripcion
+                properties:
+                  estacion:
+                    type: string
+                  direccion:
+                    type: string
+                  fecha_averia:
+                    type: string
+                  descripcion:
+                    type: string
+                example:
+                  estacion: VG1
+                  direccion: "Av.Victor Balaguer 2"
+                  fecha_averia: "2022-04-18"
+                  descripcion: "El cargador de la planta 2 m plaza 1 no funciona"
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Meter incidencia:
+                    value:  >-
+                        {
+                          "estacion": "VG1",
+                          "direccion": "Av.Victor Balaguer 2",
+                          "fecha_averia": "2022-04-18",
+                          "estado": "true",
+                          "descripcion": "El cargador de la planta 2 m plaza 1 funciona"
+                        }
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: >-
+                      {"error": "Malformed request syntax."}
+
+  /incidencias/byname/{estacion}:
+    # pedimos una lista de incidencias por una estacion dada
+    get:
+      summary: Obtiene una lista de incidencias para una estacion dada
+      tags:
+      - Incidencias
+      parameters:
+        - in: path
+          name: estacion
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Obtiene un lista de incidencias
+          content:
+            application/json:
+              examples:
+                Con incidencias:
+                  value: >-
+                        [
+                          {
+                            "incidenciaId": 1,
+                            "estación": "VG1",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "fecha_averia": "2022-04-18 ",
+                            "estado": false,
+                            "descripción": "El cargador de la planta 2 m plaza 1 no funciona"
+                          },
+                          {
+                            "incidenciaId": 2,
+                            "estacion": "VG2",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "fecha_averia": "2022-04-18 ",
+                            "estado": false,
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                          }
+                        ]
+                Sin incidencias:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+  /incidencias/{id}:
+      # pedimos una incidencia, dado su id
+      get:
+        summary: Obtiene una incidencia por un id dado
+        tags:
+          - Incidencias
+        parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Default error sample response
+            content:
+              application/json:
+                examples:
+                  Incidencias:
+                    value: >-
+                          {
+                            "incidencia_id": 1,
+                            "estacion": "VG1",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "fecha_averia": "2022-04-18",
+                            "estado": false,
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                          }
+                  Incidencia no encontrada:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+          '404':
+            description: Not found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "Incidencia not found."}
+
+      # editar incidencia
+      put:
+          summary: Modificar incidencia
+          tags:
+          - Incidencias
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required:
+                    - incidencia_id
+                  properties:
+                    estacion:
+                      type: string
+                    direccion:
+                      type: string
+                    fecha_averia:
+                      type: string
+                    descripcion:
+                      type: string
+                    estado:
+                      type: boolean
+                  example:
+                    estacion: VG1
+                    direccion: "Av.Victor Balaguer 2"
+                    fecha_averia: "18/04/022"
+                    descripcion: "El cargador de la planta 2 m plaza 1 no funciona"
+                    estado: false
+          parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+          responses:
+            #respuesta correcta
+            '200':
+              description: Incidencia actualizada
+              content:
+                application/json:
+                  examples:
+                    Incidencia actualizada:
+                      value: >-
+                          {
+                            "incidencia_id": 1,
+                            "estacion": "VG1",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "fecha_averia": "2022-04-18",
+                            "estado": false,
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                          }
+            '400':
+              description: Peticion incorrecta
+              content:
+                application/json:
+                  examples:
+                    Error al meter incidencia:
+                      value: >-
+                        {"error": "Malformed request syntax."}
+            '404':
+              description: Not Found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "incidencia not found."}
+      #borrar incidencia
+      delete:
+        summary: Elimina incidencia por ID
+        tags:
+          - Incidencias
+        parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Eliminado delete
+            content:
+              application/json:
+                examples:
+                  Incidencias:
+                    value: "{\"msg\": \"Data deleted correctly.\"}"
+                  Incidencia no encontrada:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Incidencia not found."}
+#########################################################################################
+
+  /estaciones:
+      # pedimos una lista de las estaciones
+      get:
+        summary: Obtiene una lista de estaciones
+        tags:
+        - Estaciones
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Con estaciones:
+                    value: >-
+                      [
+                        {
+                          "estacion": "VG1",
+                          "direccion": "Av.Victor Balaguer 2",
+                          "kwh_max": 720,
+                          "kwh_now": 75,
+                          "ocupation_max": 32,
+                          "ocupation_now": 20,
+                          "surface_in_meters": 130,
+                          "boss": "Alfredo Manresa"
+                        },
+                        {
+                          "estacion": "VG2",
+                          "direccion": "Calle de les Empúries 2",
+                          "kwh_max": 640,
+                          "kwh_now": 20,
+                          "ocupation_max": 32,
+                          "ocupation_now": 5,
+                          "surface_in_meters": 130,
+                          "boss": "Pere Roca"
+                        }
+                      ]
+                  Sin estaciones:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+  /estaciones/{id}:
+      get:
+        summary: Obtiene informacion de una estacion y sus surtidores
+        tags:
+        - Estaciones
+        parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  estacion:
+                    value: >-
+                          {
+                            "estacion": "VG3",
+                            "cordenadas": {
+                              "latitud": 41.224115,
+                              "longitud": 1.730610
+                            },
+                            "imagen": "http://?????????/estacion/VG3.png",
+                            "kwh_max": 20000,
+                            "ocupation_max": 8,
+                            "ocupation_now": 4,
+                            "plaza": [
+                              {
+                                "id": 1,
+                                "kwh_usage": 372,
+                                "battery_status": 372,
+                                "battery_max": 800,
+                                "cliente": "peroivi"
+                              },
+                              {
+                                "id": 7,
+                                "kwh_usage": 372,
+                                "battery_status": 372,
+                                "battery_max": 800,
+                                "cliente": "peroivi"
+                              },
+                              {
+                                "id": 3,
+                                "kwh_usage": 372,
+                                "battery_status": 372,
+                                "battery_max": 800,
+                                "cliente": "peroivi"
+                              },
+                              {
+                                "id": 6,
+                                "kwh_usage": 372,
+                                "battery_status": 372,
+                                "battery_max": 800,
+                                "cliente": "peroivi"
+                              }
+                            ]
+                          }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Station not found."}
+#borrar incidencia
+  /estaciones/{id}/{id_plaza}:
+      delete:
+        summary: Liberas la plaza ocupada
+        tags:
+          - Estaciones
+        parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+          - in: path
+            name: id_plaza
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Eliminado delete
+            content:
+              application/json:
+                examples:
+                  Estaciones:
+                    value: >-
+                      {"msg": "Data deleted correctly."}
+                  Estaciones no encontrada:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Incidencia not found."}
+#########################################################################################
+  /trabajador:
+      # pedimos una lista de trabajadores
+      get:
+        summary: Obtiene una lista de trabajadores
+        tags:
+        - Trabajadores
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Trabajadores:
+                    value: >-
+                      [
+                        {
+                            "name": "Pere Roca",
+                            "rol": "dueño",
+                            "last_access": -1
+                        },
+                        {
+                            "name": "Pere Alberto",
+                            "rol": "trabajador",
+                            "last_access": 0
+                        },
+                        {
+                            "name": "Pere Garcia",
+                            "rol": "Developer",
+                            "ultimo_acceso": 45
+                        },
+                        {
+                            "name": "Pere Juanjo",
+                            "rol": "esclavo",
+                            "last_access": 90
+                        }
+                      ]
+                  Sin trabajadores:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Trabajador not authorized."}
+
+      post:
+        summary: Inserta un nuevo trabajador
+        tags:
+        - Trabajadores
+        requestBody:
+            required: true
+            content:
+              multipart/form-data:
+                schema:
+                  type: object
+                  required:
+                    - name
+                    - lastname
+                    - telf
+                    - email
+                    - rol
+                    - dni
+                    - password
+                  properties:
+                    dni:
+                      type: string
+                    name:
+                      type: string
+                    lastname:
+                      type: string
+                    email:
+                      type: string
+                    telf:
+                      type: string
+                    rol:
+                      type: string
+                    password:
+                      type: string
+                    profileImage:
+                      type: string
+                      format: binary
+
+                  example:
+                    name: "Pere"
+                    lastname: "Roca"
+                    telf: "622554433"
+                    email: "pere.roca@boss.com"
+                    rol: "Dueño"
+                    password: "proca"
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Meter trabajador:
+                    value: >-
+                      {
+                        "dni": "60748880S",
+                        "name": "Pere",
+                        "lastname": "Roca",
+                        "telf": "622554433",
+                        "email": "pere.roca@boss.com",
+                        "rol": "dueño",
+                        "last_access": -1,
+                        "picture": "http://?????????/trabajadores/PereRoca.png"
+                      }
+          '400':
+              description: Peticion incorrecta
+              content:
+                application/json:
+                  examples:
+                    Error al meter incidencia:
+                      value: {"error": "Malformed request syntax."}
+
+          '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "Trabajador not authorized."}
+  /trabajador/{dni}:
+      # pedimos un trabajador, dado su id.
+      get:
+        summary: Obtiene información de un trabajador por su ID
+        tags:
+        - Trabajadores
+        parameters:
+        - in: path
+          name: dni
+          required: true
+          schema:
+            type: string
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Trabajador:
+                    value: >-
+                      {
+                        "dni": "60748880S",
+                        "name": "Pere",
+                        "lastname": "Roca",
+                        "telf": "622554433",
+                        "email": "pere.roca@boss.com",
+                        "rol": "dueño",
+                        "last_access": -1,
+                        "picture": "http://?????????/trabajadores/PereRoca.png"
+                      }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Trabajdor not authorized."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Trabajador not found."}
+      # modificar trabajador de la lista de trabajadores
+      put:
+        summary: Modifica un trabajador
+        tags:
+          - Trabajadores
+        parameters:
+        - in: path
+          name: dni
+          required: true
+          schema:
+            type: string
+        requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  dni:
+                    type: string
+                  name:
+                    type: string
+                  lastname:
+                    type: string
+                  email:
+                    type: string
+                  telf:
+                    type: string
+                  rol:
+                    type: string
+                  password:
+                    type: string
+                  profileImage:
+                    type: string
+                    format: binary
+
+                example:
+                  name: "Pere"
+                  lastname: "Roca"
+                  telf: "622554433"
+                  email: "pere.roca@boss.com"
+                  rol: "Dueño"
+                  password: "proca"
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Trabajador actualizado:
+                    value: >-
+                      {
+                        "dni": "60748880S",
+                        "name": "Pere",
+                        "lastname": "Roca",
+                        "telf": "622554433",
+                        "email": "pere.roca@boss.com",
+                        "rol": "dueño",
+                        "last_access": -1,
+                        "picture": "http://?????????/trabajadores/PereRoca.png"
+                      }
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter trabajador:
+                    value: {"error": "Malformed request syntax."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: {"error": "Trabajador not found."}
+
+
+      delete:
+        summary: Eliminar un trabajador por su ID
+        tags:
+          - Trabajadores
+        parameters:
+          - in: path
+            name: dni
+            required: true
+            schema:
+              type: string
+        responses:
+            '200':
+              description: Peticion correcta
+              content:
+                application/json:
+                  examples:
+                    Trabajador:
+                      value: >-
+                        {"msg": "Trabajdor deleted succesfully"}
+
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "Trabajador not authorized."}
+            '404':
+              description: Not Found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "Trabajador not found."}
+#########################################################################################
+  
+  /soporte:
+    get:
+        summary: Obtiene una lista de peticiones que se han hecho al servicio técnico
+        tags: 
+        - Soporte tecnico
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Peticion a soporte:
+                    value: >- 
+                      [
+                        {
+                          "user_id": 1,
+                          "ticket_id": 2,
+                          "fecha": "2022-04-21T13:00:00",
+                          "descripcion": "Problema con la aplicación móvil",
+                          "estado": false
+                        },
+                        {
+                          "user_id": 2,
+                          "ticket_id": 3,
+                          "fecha": "2022-04-22T13:00:00",
+                          "descripcion": "Problema con las reservas",
+                          "estado": false
+                        }
+                      ]
+                  Sin peticiones a soporte:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+  # Creacion de una ayuda o ticket al soporte tecnico
+    post:
+      summary: Publica una petición a soporte tecnico
+      tags:
+        - Soporte tecnico
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - descripcion
+                - estado
+              properties:
+                descripcion:
+                  type: string
+                estado:
+                  type: boolean
+            example:
+              descripcion: "Problema con la aplicación movil"
+              estado: False
+              
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: >-
+                    [
+                      {
+                        "fecha": "2022-04-01T13:00:00",
+                        "descripcion": "Problema con la aplicación móvil",
+                        "estado": false
+                      }
+                    ]
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+
+#Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
+  /soporte/{ticket_id}:
+    get:
+      summary: Encontrar el ticket/la peticion de soporte del usuario
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+               Consultando petición a soporte tecnico:
+                  value: {
+                      "ticket_id": 0123456789,
+                      "user_id": 0123456789,
+                      "descripcion": "No se porque no carga mi coche",
+                      "fecha": "2022-04-01T13:00:00",
+                      "estado": false,
+                      "Mensajes": [ {
+                          "msg_id": 1,
+                          "user_id": 123456789,
+                          "mensaje": "No se porque no carga mi coche",
+                          "fecha" : "2022-04-01T14:00:00"
+                        },
+                        {
+                          "msg_id": 2,
+                          "user_id": 111,
+                          "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
+                          "fecha" : "2022-04-01T14:30:00"
+                        },
+                        {
+                          "msg_id": 3,
+                          "user_id": 123456789,
+                          "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
+                          "fecha" : "2022-04-01T14:43:00"
+                        }
+                      ]
+                    }
+        '404':
+          description: Ticket no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Ticket not found."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+    post:
+      summary: Dado un usuario en concreto pueda generar un mensaje para un ticket
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - mensaje
+              properties:
+                mensaje:
+                  type: string
+              example:
+                mensaje: "no se que me esta contando"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: {
+                        "ticket_id": 0123456789,
+                        "user_id":  0123456789,
+                        "descripcion": "No se porque no carga mi coche",
+                        "fecha": "2022-04-01T13:00:00",
+                        "estado": false,
+                        "Mensajes": [ {
+                          "msg_id": 1,
+                            "user_id": 0123456789,
+                            "mensaje": "No se porque no carga mi coche",
+                            "fecha" : "2022-04-01T14:00:00"
+                          },
+                          {
+                            "msg_id": 2,
+                            "user_id": 111,
+                            "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
+                            "fecha" : "2022-04-01T14:30:00"
+                          },
+                          {
+                            "msg_id": 3,
+                            "user_id": 123456789,
+                            "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
+                            "fecha" : "2022-04-01T14:43:00"
+                          }
+                        ]
+                      }
+        '400':
+          description: Ticket incorrecto
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Ticket not valid."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+        '404':
+          description: Ticket no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Ticket not found."}'
+
+  # Eliminacion del ticket o peticion al soporte tecnico
+    delete:
+      summary: Eliminar un ticket/una peticion del soporte del usuario
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Ticket correcto
+          content:
+            application/json:
+              examples:
+                Eliminando una petición a soporte tecnico:
+                  value: |-
+                    {
+                      "msg": "Ticket deleted succesfully."
+                    }
+        '400':
+          description: Ticket incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Ticket not valid."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+        '404':
+          description: Ticket no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" : "Ticket not found."}'
+        '410':
+          description: Ticket ya eliminado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Ticket have been deleted."}'
+                  
+  /soporte/byuser/{user_id}:
+    get:
+      summary: (NO ME USES) Obtiene los mensajes que ha generado un usuario en el soporte
+      tags: 
+      - Soporte tecnico
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema: 
+          type: string
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Trabajador:
+                  value:  
+                    [
+                      {
+                          "ticket_id": 0123456789,
+                          "user_id":  0123456789,
+                          "descripcion": "No se porque no carga mi coche",
+                          "fecha": "2022-04-22T18:00:00",
+                          "estado": false,
+                          "Mensajes": [ {
+                            "msg_id": 1,
+                              "user_id": 0123456789,
+                              "mensaje": "No se porque no carga mi coche",
+                              "fecha" : "2022-04-22T19:00:00"
+                          }
+                          ]
+                      },
+                      {
+                          "ticket_id": 01231236789,
+                          "user_id":  0123456789,
+                          "descripcion": "Estoy atrapado",
+                          "fecha": "2022-04-01T13:00:00",
+                          "estado": false,
+                          "Mensajes": [ {
+                            "msg_id": 1,
+                              "user_id": 0123456789,
+                              "mensaje": "Estoy atrapado",
+                              "fecha" : "2022-04-01T14:00:00"
+                          }
+                          ]
+                      }
+                    ]
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not authorized."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not found."}
+                  
+    
+  /soporte/{ticket_id}/{msg_id}:
+    delete:
+      summary: Elimina un mensaje de una peticion
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      - in: path
+        name: msg_id
+        required: true
+        schema: 
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Eliminado mensaje:
+                  value: |-
+                    {
+                      "msg": "Message deleted succesfully"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Message not valid"}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+        '404':
+          description: Peticion no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" : "Message not found."}'
+        '410':
+          description: Peticion ya eliminada
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Message have been deleted."}'
+
   # reservas
   /reservas:
     get:
@@ -100,6 +1261,7 @@ paths:
                 Error al meter reserva:
                   value: >-
                     {"error": "Malformed request syntax."}
+
 
   /reservas/estacion/{id_estacion}:
     # pedimos una lista de reservas por una estacion dada
@@ -327,269 +1489,398 @@ paths:
                 examples:
                   error:
                     value: >-
-                      {"error": "Reserva not found."}
+                      {"error": "Reserva not found."
+# clientes
+  /clientes:
+    # pedimos una lista de las incidencias
+    get:
+      summary: Obtiene una lista de clientes
+      tags:
+      - Clientes
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con clientes:
+                  value: [
+                          {
+                            "id_cliente": 1,
+                            # tipo ??????????
+                            "nombre": "Pablo",
+                            "apellido": "Escobar",
+                            "email": "pablo@gmail.com",
+                            "DNI": "23769543B",
+                            "foto": "http://?????????/clientes/pablo.png",
+                            "telefono": "643876101",
+                            "username": "xXpabloXx",
+                          },
+                          {
+                            "id_cliente": 2,
+                            # tipo ??????????
+                            "nombre": "Javier",
+                            "apellido": "Sanchez",
+                            "email": "javi@gmail.com",
+                            "DNI": "23769612h",
+                            "foto": "http://?????????/clientes/javi.png",
+                            "telefono": "643876101",
+                            "username": "xXpabloXx",
+                          }
+                        ]
 
-#########################################################################################
-
-
-  /estaciones:
-      # pedimos una lista de las estaciones
-      get:
-        summary: Obtiene una lista de estaciones
+                Sin clientes:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+    post:
+        summary: Inserta un nuevo cliente
         tags:
-        - Estaciones
+        - Clientes
+        requestBody:
+            required: true
+            content:
+              multipart/form-data:
+                schema:
+                  type: object
+                  required:
+                    - nombre
+                    - apellido
+                    - email
+                    - DNI
+                    - foto
+                    - telefono
+                    - username
+                  properties:
+                    nombre:
+                      type: string
+                    apellido:
+                      type: string
+                    email:
+                      type: string
+                    DNI:
+                      type: string
+                    foto:
+                      type: string
+                    telefono:
+                      type: string
+                    username:
+                      type: string
+                    #profileImage:
+                    #  type: string
+                    #  format: binary
+
+                  example:
+                    name: "Pere"
+                    lastname: "Roca"
+                    telf: "622554433"
+                    email: "pere.roca@boss.com"
+                    rol: "Dueño"
+                    password: "proca"
         responses:
           '200':
             description: Peticion correcta
             content:
               application/json:
                 examples:
-                  Con estaciones:
-                    value: >-
-                      [
-                          {
-                            "capacidad": 32,
-                            "ciudad": "España",
-                            "direccion": "mi casa",
-                            "id_estacion": 1,
-                            "latitud": 59.26258315325391,
-                            "longitud": 82.104931574632,
-                            "nombre_est": "VG0",
-                            "ocupacion_actual": 9,
-                            "pais": "Vilanova",
-                            "potencia_contratada": 309,
-                            "potencia_usada": 226,
-                            "telefono": "690389157",
-                            "zona": 5
-                          },
-                          {
-                            "capacidad": 32,
-                            "ciudad": "España",
-                            "direccion": "mi casa",
-                            "id_estacion": 2,
-                            "latitud": 57.77617625032384,
-                            "longitud": 12.35933821353951,
-                            "nombre_est": "VG1",
-                            "ocupacion_actual": 6,
-                            "pais": "Vilanova",
-                            "potencia_contratada": 431,
-                            "potencia_usada": 95,
-                            "telefono": "690389157",
-                            "zona": 1
-                          }
+                  Meter cliente:
+                    value: [
+                      {
+                        "id_cliente": 1,
+                        # tipo ??????????
+                        "nombre": "Pablo",
+                        "apellido": "Escobar",
+                        "email": "pablo@gmail.com",
+                        "DNI": "23769543B",
+                        "foto": "http://?????????/clientes/pablo.png",
+                        "telefono": "643876101",
+                        "username": "xXpabloXx",
+                      },
                       ]
-                  Sin estaciones:
-                    value: '[]'
+          '400':
+              description: Peticion incorrecta
+              content:
+                application/json:
+                  examples:
+                    Error al meter incidencia:
+                      value: {"error": "Malformed request syntax."}
+
           '401':
-            description: Not login
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >-
-                      {"error": "User not authenticated."}
-  /estaciones/{id}:
-      get:
-        summary: Obtiene informacion de una estacion y sus surtidores
-        tags:
-        - Estaciones
-        parameters:
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "User not authorized."}
+  /clientes/{id}:
+    # pedimos un cliente dado su id
+    get:
+      summary: Obtiene un cliente por un id dado
+      tags:
+        - Clientes
+      parameters:
         - in: path
           name: id
           required: true
           schema:
             type: integer
-        responses:
-          '200':
-            description: Peticion correcta
-            content:
-              application/json:
-                examples:
-                  estacion:
-                    value: >-
-                          {
-                            "capacidad": 32,
-                            "cargadores": [
-                              {
-                                "estado": "True",
-                                "id_cargador": 1,
-                                "posicion": 32
-                              },
-                              {
-                                "estado": "False",
-                                "id_cargador": 2,
-                                "posicion": 31
-                              },
-                              {
-                                "estado": "False",
-                                "id_cargador": 3,
-                                "posicion": 12
-                              },
-                              {
-                                "estado": "False",
-                                "id_cargador": 4,
-                                "posicion": 13
-                              }
-                            ],
-                            "ciudad": "España",
-                            "direccion": "mi casa",
-                            "id_estacion": 1,
-                            "latitud": 12,
-                            "longitud": 13,
-                            "nombre_est": "VG30",
-                            "ocupacion_actual": 23,
-                            "pais": "Vilanova",
-                            "potencia_contratada": 720,
-                            "potencia_usada": 130,
-                            "telefono": "690389157",
-                            "zona": 3
-                          }
-          '401':
-            description: Not login
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >-
-                        {"error": "User not authenticated."}
-          '404':
-            description: Not Found
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >-
-                      {"error": "Station not found."}
-#borrar incidencia
-  /estaciones/coor/{lat}/{long}:
-      get:
-        summary: Obtiene las estaciones más cercanas por las coordenadas que se le pasen en la URI
-        tags:
-        - Estaciones
-        parameters:
-        - in: path
-          name: lat
-          required: true
-          schema:
-            type: number
-        - in: path
-          name: long
-          required: true
-          schema:
-            type: number
-        responses:
-          '200':
-            description: Peticion correcta
-            content:
-              application/json:
-                examples:
-                  estacion:
-                    value: >-
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                Cliente encontrado:
+                  value:
+                      [
                         {
-                          "Estaciones": [
-                            {
-                              "capacidad": 32,
-                                "cargadores": [
-                                  {
-                                    "estado": "True",
-                                    "id_cargador": 1,
-                                    "posicion": 32
-                                  },
-                                  {
-                                    "estado": "False",
-                                    "id_cargador": 2,
-                                    "posicion": 31
-                                  },
-                                  {
-                                    "estado": "False",
-                                    "id_cargador": 3,
-                                    "posicion": 12
-                                  },
-                                  {
-                                    "estado": "False",
-                                    "id_cargador": 4,
-                                    "posicion": 13
-                                  }
-                                ],
-                              "ciudad": "España",
-                              "direccion": "mi casa",
-                              "id_estacion": 1,
-                              "latitud": 12,
-                              "longitud": 13,
-                              "nombre_est": "VG30",
-                              "ocupacion_actual": 23,
-                              "pais": "Vilanova",
-                              "potencia_contratada": 720,
-                              "potencia_usada": 130,
-                              "telefono": "690389157",
-                              "zona": 3
-                            },
-                            {
-                              "capacidad": 32,
-                              "cargadores": [],
-                              "ciudad": "España",
-                              "direccion": "mi casa",
-                              "id_estacion": 30,
-                              "latitud": 15.333991225795597,
-                              "longitud": 20.112191933383876,
-                              "nombre_est": "VG28",
-                              "ocupacion_actual": 19,
-                              "pais": "Vilanova",
-                              "potencia_contratada": 496,
-                              "potencia_usada": 455,
-                              "telefono": "690389157",
-                              "zona": 2
-                            },
-                            {
-                              "capacidad": 32,
-                              "cargadores": [],
-                              "ciudad": "España",
-                              "direccion": "mi casa",
-                              "id_estacion": 8,
-                              "latitud": 10.310335286671437,
-                              "longitud": 23.36392378582253,
-                              "nombre_est": "VG6",
-                              "ocupacion_actual": 1,
-                              "pais": "Vilanova",
-                              "potencia_contratada": 643,
-                              "potencia_usada": 238,
-                              "telefono": "690389157",
-                              "zona": 4
-                            },
-                            {
-                              "capacidad": 32,
-                              "cargadores": [],
-                              "ciudad": "España",
-                              "direccion": "mi casa",
-                              "id_estacion": 12,
-                              "latitud": 15.622761909852207,
-                              "longitud": 27.34148410638893,
-                              "nombre_est": "VG10",
-                              "ocupacion_actual": 8,
-                              "pais": "Vilanova",
-                              "potencia_contratada": 821,
-                              "potencia_usada": 252,
-                              "telefono": "690389157",
-                              "zona": 4
-                            },
-                            {
-                              "capacidad": 32,
-                              "cargadores": [],
-                              "ciudad": "España",
-                              "direccion": "mi casa",
-                              "id_estacion": 23,
-                              "latitud": 3.6752802128221025,
-                              "longitud": 31.098887261123572,
-                              "nombre_est": "VG21",
-                              "ocupacion_actual": 15,
-                              "pais": "Vilanova",
-                              "potencia_contratada": 503,
-                              "potencia_usada": 204,
-                              "telefono": "690389157",
-                              "zona": 4
-                            }
-                          ]
+                          "id_cliente": 1,
+                          # tipo ??????????
+                          "nombre": "Pablo",
+                          "apellido": "Escobar",
+                          "email": "pablo@gmail.com",
+                          "DNI": "23769543B",
+                          "foto": "http://?????????/clientes/pablo.png",
+                          "telefono": "643876101",
+                          "username": "xXpabloXx",
+                        },
+                      ]
+                Cliente no encontrado:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "User not authenticated."}
+        '404':
+          description: Not found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "Client not found."}
+  #borrar cliente
+    delete:
+      summary: Elimina cliente por id
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Cliente eliminado delete
+          content:
+            application/json:
+              examples:
+                Incidencias:
+                  value: "{\"msg\": \"Client deleted correctly.\"}"
+                Incidencia no encontrada:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Client not found."}
+                    
+  /clientes/bydni/{DNI}:
+    # pedimos un cliente dado su id
+    get:
+      summary: Obtiene un cliente dado su DNI
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: DNI
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                Cliente encontrado:
+                  value:
+                      [
+                        {
+                          "id_cliente": 1,
+                          # tipo ??????????
+                          "nombre": "Pablo",
+                          "apellido": "Escobar",
+                          "email": "pablo@gmail.com",
+                          "DNI": "23769543B",
+                          "foto": "http://?????????/clientes/pablo.png",
+                          "telefono": "643876101",
+                          "username": "xXpabloXx",
                         }
+                      ]
+                Cliente no encontrado:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "User not authenticated."}
+        '404':
+          description: Not found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "Client not found."}
+  #borrar cliente
+  
+    delete:
+      summary: Elimina cliente por id
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: DNI
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cliente eliminado delete
+          content:
+            application/json:
+              examples:
+                Incidencias:
+                  value: "{\"msg\": \"Client deleted correctly.\"}"
+                Incidencia no encontrada:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Client not found."}
+
+#######################################################################################################
+
+#######################################################################################################
+  /estadisticas:
+    get:
+        summary: Obtiene estadisticas de todas las estaciones
+        tags:
+          - Estadisticas
+        responses:
+          '200':
+            description: Respuesta por defecto buena
+            content:
+              application/json:
+                examples:
+                  Reservas:
+                    value:  >-
+                        [
+                        	{
+                        		"estacion": "VG1",
+                        		"direccion": "Av.Victor Balaguer 2",
+                        		"kwh_max": 720,
+                        		"kwh_now": 75,
+                        		"dias": [
+                        			{
+                        				"dia": "2022-05-10",
+                        				"potencia_max_cons": 720
+                        			},
+                        			{
+                        				"dia": "2022-05-11",
+                        				"potencia_max_cons": 720
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 720
+                        			},
+                        			{
+                        				"dia": "2022-05-13",
+                        				"potencia_max_cons": 560
+                        			},
+                        			{
+                        				"dia": "2022-05-14",
+                        				"potencia_max_cons": 330
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 120
+                        			}
+                        		]
+                        	},
+                        	{
+                        		"estacion": "VG2",
+                        		"direccion": "Av. Alberto 2",
+                        		"kwh_max": 330,
+                        		"kwh_now": 75,
+                        		"dias": [
+                        			{
+                        				"dia": "2022-05-10",
+                        				"potencia_max_cons": 123
+                        			},
+                        			{
+                        				"dia": "2022-05-11",
+                        				"potencia_max_cons": 432
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 432
+                        			},
+                        			{
+                        				"dia": "2022-05-13",
+                        				"potencia_max_cons": 233
+                        			},
+                        			{
+                        				"dia": "2022-05-14",
+                        				"potencia_max_cons": 200
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 500
+                        			}
+                        		]
+                        	}
+                        ]
+                        
           '401':
             description: Not login
             content:
@@ -598,11 +1889,165 @@ paths:
                   error:
                     value: >-
                         {"error": "User not authenticated."}
+
           '404':
-            description: Not Found
+            description: Not found
             content:
               application/json:
                 examples:
                   error:
                     value: >-
-                      {"error": "Station not found."}
+                        {"error": "Estacion not found."}
+  /estadisticas/{estacion}/{data_inicio}/{data_final}:
+    get:
+          summary: Obtiene estadisticas para todos los cargadores de una estación entre una data inicio y una data final.
+          tags:
+            - Estadisticas
+          parameters:
+            - in: path
+              name: estacion
+              required: true
+              schema:
+                type: integer
+            - in: path
+              name: data_inicio
+              required: true
+              schema:
+                type: string
+            - in: path
+              name: data_final
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: Respuesta por defecto buena
+              content:
+                application/json:
+                  examples:
+                    Reservas:
+                      value:  >-
+                        [
+                        	{
+                        		"estacion": "VG1",
+                        		"direccion": "Av.Victor Balaguer 2",
+                        		"kwh_max": 720,
+                        		"kwh_now": 75,
+                        		"dias": [
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 720
+                        			},
+                        			{
+                        				"dia": "2022-05-13",
+                        				"potencia_max_cons": 560
+                        			},
+                        			{
+                        				"dia": "2022-05-14",
+                        				"potencia_max_cons": 330
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 120
+                        			}
+                        		]
+                        	}
+                        ]
+            '400':
+              description: Malformed
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "Bad request"}      
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "User not authenticated."}
+  
+            '404':
+              description: Not found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "Estacion not found."}
+#########################################################################################
+  /login:
+    post:
+      summary: Login en el sistema
+      tags: 
+      - Autenticacion
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+
+              example:
+                email: "meh@meh.com"
+                password: "supersegura"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Success Login: 
+                  value: >-
+                    {
+                      "token": "tokencito.jwt"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: {'error' : 'Invalid credendtials'}
+  /logout:
+    get:
+      summary: "Log Out"
+      tags:
+      - Autenticacion
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Success Login: 
+                  value: >-
+                    {
+                      "msg": "Success logout"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: {"error": "Something went wrong."}
+  
+components:
+  securitySchemes:
+    token:
+      type: apiKey
+      description: API key to authorize requests.
+      name: x-access-tokens
+      in: header
