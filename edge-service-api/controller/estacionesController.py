@@ -1,5 +1,5 @@
 from models.estacion import Estacion, EstacionSchema
-from models.cargador import Cargador, CargadorSchema
+from models.cargador import CargadorSchema
 from utils.db import db
 
 
@@ -23,18 +23,18 @@ def get_estacion_by_id(id):
 
 
 def get_estacion_by_coor(lat_str=0, long_str=0):
-    lat=float(lat_str)
-    long=float(long_str)
+    lat = float(lat_str)
+    long = float(long_str)
     lista_estaciones = {}
     coor = Estacion.query.with_entities(Estacion.latitud, Estacion.longitud).order_by(db.desc(Estacion.latitud)).all()
     if coor:
         points = []
-        lista_estaciones["Estaciones"]=[]
+        lista_estaciones["Estaciones"] = []
         for i in range(len(coor)):
             tupla = [coor[i][0], coor[i][1]]
             points.append(tupla)
-        lista_order = get_ordered_list(points,lat,long)
-        valor=5
+        lista_order = get_ordered_list(points, lat, long)
+        valor = 5
         if len(lista_order) < 5:
             valor = len(lista_order)
         for i in range(valor):
@@ -45,5 +45,5 @@ def get_estacion_by_coor(lat_str=0, long_str=0):
 
 
 def get_ordered_list(points, x, y):
-   points.sort(key = lambda p: (p[0] - x)**2 + (p[1] - y)**2)
-   return points
+    points.sort(key=lambda p: (p[0] - x)**2 + (p[1] - y)**2)
+    return points
