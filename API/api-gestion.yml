@@ -6,7 +6,7 @@ servers:
   - url: http://127.0.0.1:5000/api
     description: Development
   - url: http://craaxkvm.epsevg.upc.es:23600/api
-    description: Productio
+    description: Production
 paths:
   # incidencias
   /incidencias:
