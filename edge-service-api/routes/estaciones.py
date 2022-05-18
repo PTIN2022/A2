@@ -17,7 +17,7 @@ def get_estacion_by_id(id):
     if respuesta:
         return jsonify(respuesta), 200
     else:
-        return jsonify({"error": "Estacion not found"}), 404
+        return jsonify({"error": "Station not found"}), 404
 
 
 @estaciones.route('/estaciones/coor/<lat>/<long>', methods=["GET"])
@@ -26,4 +26,4 @@ def get_estacion_by_coor(lat, long):
     if respuesta:
         return jsonify(respuesta), 200
     else:
-        return jsonify({"error": "Estacion not found"}), 404
+        return jsonify({"error": "Station not found"}), 404
