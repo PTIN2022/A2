@@ -23,6 +23,7 @@ app.config["TESTING"] = False
 
 app.register_blueprint(reservas)
 app.register_blueprint(estaciones)
+app.register_blueprint(promociones)
 
 if os.path.exists("./test.db"):
     os.remove("./test.db")

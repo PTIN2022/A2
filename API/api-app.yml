@@ -348,7 +348,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Reservas:
+                  Promociones:
                     value:  >-
                       [{"id_promo":1,"descuento":10,"cantidad_cupones":100,"cantidad_usados":20,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"Por la ignauracion de la electrolinera"},{"id_promo":2,"descuento":11,"cantidad_cupones":75,"cantidad_usados":2,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"La promocion se consigue mediante por sorteo"}]
           '401':
@@ -385,7 +385,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Reservas:
+                  Promociones:
                     value:  >-
                       {"id_promo":1,"descuento":10,"cantidad_cupones":100,"cantidad_usados":20,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"Por la ignauracion de la electrolinera"}
           '401':
