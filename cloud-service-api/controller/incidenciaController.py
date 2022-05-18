@@ -1,5 +1,5 @@
 from utils.db import db
-from models.incidencia import Incidencia, IncidenciaSchema
+from models.model import *
 
 
 def get_all_incidencias():

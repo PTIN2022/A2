@@ -1,6 +1,5 @@
-from models.estacion import Estacion, EstacionSchema
-from models.cargador import Cargador, CargadorSchema
 from utils.db import db
+from models.model import *
 
 
 def get_all_estaciones():

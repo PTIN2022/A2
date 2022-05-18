@@ -1,9 +1,7 @@
-from models.consumo import Consumo, ConsumoSchema
-from models.estacion import Estacion, EstacionSchema
-from models.horas import Horas, HorasSchema
+import sqlalchemy
+from models.model import *
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-import sqlalchemy
 
 
 def get_all_estadisticas():

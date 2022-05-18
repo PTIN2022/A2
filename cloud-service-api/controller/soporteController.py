@@ -1,6 +1,5 @@
-from models.soporte import Soporte, SoporteSchema
-from models.chat import Chat, ChatSchema
 from utils.db import db
+from models.model import *
 
 
 def get_all_soporte():

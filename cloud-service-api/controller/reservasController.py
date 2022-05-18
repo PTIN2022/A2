@@ -1,8 +1,8 @@
-from utils.db import db
-from models.reserva import Reserva, ReservaSchema
-from models.estacion import Estacion
-from datetime import datetime
 import random
+
+from utils.db import db
+from models.model import *
+from datetime import datetime
 
 
 def get_all_reservas():

@@ -1,15 +1,14 @@
 import os
 import json
+import string
+import random
+
 from utils.db import db
 from flask import Flask
 from flask_mqtt import Mqtt
 from datetime import datetime
 
-from models.reserva import Reserva
-from models.estacion import Estacion
-from models.cargador import Cargador
-from models.horas import Horas
-from models.consumo import Consumo
+from models.model import *
 from routes.trabajador import trabajador
 from routes.soporte import soporte
 from routes.estaciones import estaciones
@@ -38,6 +37,13 @@ app.config['MQTT_PASSWORD'] = ''  # set the password here if the broker demands 
 app.config['MQTT_KEEPALIVE'] = 5  # set the time interval for sending a ping to the broker to 5 seconds
 app.config['MQTT_TLS_ENABLED'] = False  # set TLS to disabled for testing purposes
 
+app.register_blueprint(incidencias, url_prefix='/api')
+app.register_blueprint(estaciones, url_prefix='/api')
+app.register_blueprint(trabajador, url_prefix='/api')
+app.register_blueprint(clientes, url_prefix='/api')
+app.register_blueprint(reservas, url_prefix='/api')
+app.register_blueprint(soporte, url_prefix='/api')
+app.register_blueprint(estadisticas, url_prefix='/api')
 
 mqtt = Mqtt(app)
 mqtt.subscribe('estacion/#')
@@ -72,34 +78,26 @@ def handle_mqtt_message(client, userdata, message):
 if os.path.exists("./test.db"):
     os.remove("./test.db")
 
-
 init_db()
 with app.app_context():
-    e = Estacion("VG3", "mi casa", 720, 85, 23, 20, 130, "Alfredo_Manresa", 1300, 2000, "url")
+    e = Estacion("VG3", 720, 85, 32, "Rambla de L'exposicio",20,"Zona industrial", 12,130,
+                "+347624872487", "Vilanova i la geltru", "España")  # , t.id_trabajador
     db.session.add(e)
     db.session.commit()
-    p1 = Cargador("cargando", "coordenada", e.id_estacion)
-    p2 = Cargador("cargando", "cordenada", e.id_estacion)
+
+    p1 = Cargador("cargando", "coordenada", "fast" ,e.id_estacion)
+    p2 = Cargador("cargando", "cordenada", "meh" ,e.id_estacion)
     db.session.add(p1)
     db.session.add(p2)
     db.session.commit()
-    h1 = Horas(datetime.strptime('2022-04-20', '%Y-%m-%d').date(), datetime.strptime('18:00', '%H:%M').time(), 1)
-    h2 = Horas(datetime.strptime('2022-04-20', '%Y-%m-%d').date(), datetime.strptime('19:00', '%H:%M').time(), 1)
-    h3 = Horas(datetime.strptime('2022-04-20', '%Y-%m-%d').date(), datetime.strptime('20:00', '%H:%M').time(), 1)
-    h4 = Horas(datetime.strptime('2022-04-20', '%Y-%m-%d').date(), datetime.strptime('21:00', '%H:%M').time(), 1)
+    h1 = Horas(datetime.strptime('2022-04-20', '%Y-%m-%d').date(), datetime.strptime('18:00', '%H:%M').time())
+    h2 = Horas(datetime.strptime('2022-04-20', '%Y-%m-%d').date(), datetime.strptime('19:00', '%H:%M').time())
+    h3 = Horas(datetime.strptime('2022-04-20', '%Y-%m-%d').date(), datetime.strptime('20:00', '%H:%M').time())
+    h4 = Horas(datetime.strptime('2022-04-20', '%Y-%m-%d').date(), datetime.strptime('21:00', '%H:%M').time())
     db.session.add(h1)
     db.session.add(h2)
     db.session.add(h3)
     db.session.add(h4)
-    db.session.commit()
-    h5 = Horas(datetime.strptime('2022-04-20', '%Y-%m-%d').date(), datetime.strptime('18:00', '%H:%M').time(), 2)
-    h6 = Horas(datetime.strptime('2022-04-20', '%Y-%m-%d').date(), datetime.strptime('19:00', '%H:%M').time(), 2)
-    h7 = Horas(datetime.strptime('2022-04-20', '%Y-%m-%d').date(), datetime.strptime('20:00', '%H:%M').time(), 2)
-    h8 = Horas(datetime.strptime('2022-04-20', '%Y-%m-%d').date(), datetime.strptime('22:00', '%H:%M').time(), 2)
-    db.session.add(h5)
-    db.session.add(h6)
-    db.session.add(h7)
-    db.session.add(h8)
     db.session.commit()
     c1 = Consumo(p1.id_cargador, h1.id, 300,  400)
     c2 = Consumo(p1.id_cargador, h2.id, 220,  400)
@@ -110,59 +108,105 @@ with app.app_context():
     db.session.add(c3)
     db.session.add(c4)
     db.session.commit()
-    c5 = Consumo(p2.id_cargador, h5.id, 111,  500)
-    c6 = Consumo(p2.id_cargador, h6.id, 300,  500)
-    c7 = Consumo(p2.id_cargador, h7.id, 333,  500)
-    c8 = Consumo(p2.id_cargador, h8.id, 800,  500)
-    db.session.add(c5)
-    db.session.add(c6)
-    db.session.add(c7)
-    db.session.add(c8)
-    db.session.commit()
-    h1 = Horas(datetime.strptime('2022-04-21', '%Y-%m-%d').date(), datetime.strptime('18:00', '%H:%M').time(), 1)
-    h2 = Horas(datetime.strptime('2022-04-21', '%Y-%m-%d').date(), datetime.strptime('19:00', '%H:%M').time(), 1)
-    h3 = Horas(datetime.strptime('2022-04-21', '%Y-%m-%d').date(), datetime.strptime('20:00', '%H:%M').time(), 1)
-    h4 = Horas(datetime.strptime('2022-04-21', '%Y-%m-%d').date(), datetime.strptime('21:00', '%H:%M').time(), 1)
-    h5 = Horas(datetime.strptime('2022-04-21', '%Y-%m-%d').date(), datetime.strptime('18:00', '%H:%M').time(), 2)
-    h6 = Horas(datetime.strptime('2022-04-21', '%Y-%m-%d').date(), datetime.strptime('19:00', '%H:%M').time(), 2)
-    h7 = Horas(datetime.strptime('2022-04-21', '%Y-%m-%d').date(), datetime.strptime('20:00', '%H:%M').time(), 2)
-    h8 = Horas(datetime.strptime('2022-04-21', '%Y-%m-%d').date(), datetime.strptime('22:00', '%H:%M').time(), 2)
-    db.session.add(h1)
-    db.session.add(h2)
-    db.session.add(h3)
-    db.session.add(h4)
-    db.session.add(h5)
-    db.session.add(h6)
-    db.session.add(h7)
-    db.session.add(h8)
-    db.session.commit()
-    c1 = Consumo(p1.id_cargador, h1.id, 600,  700)
-    c2 = Consumo(p1.id_cargador, h2.id, 200,  700)
-    c3 = Consumo(p1.id_cargador, h3.id, 116,  700)
-    c4 = Consumo(p1.id_cargador, h4.id, 200,  700)
-    db.session.add(c1)
-    db.session.add(c2)
-    db.session.add(c3)
-    db.session.add(c4)
-    db.session.commit()
-    c5 = Consumo(p2.id_cargador, h5.id, 300,  500)
-    c6 = Consumo(p2.id_cargador, h6.id, 800,  500)
-    c7 = Consumo(p2.id_cargador, h7.id, 900,  500)
-    c8 = Consumo(p2.id_cargador, h8.id, 300,  500)
-    db.session.add(c5)
-    db.session.add(c6)
-    db.session.add(c7)
-    db.session.add(c8)
+    c5 = Consumo(p2.id_cargador, h1.id, 111,  500)
+    c6 = Consumo(p2.id_cargador, h2.id, 300,  500)
+    c7 = Consumo(p2.id_cargador, h3.id, 333,  500)
+    c8 = Consumo(p2.id_cargador, h4.id, 800,  500)
+
+    t = Trabajador("otrosergi", "garcia", "meh@gmail.com", "245363Y", "foto_chula", 4674387249, "sergi.ib", "mehmeh123", "jefe", "Activo", datetime.today(), "Amigo de la infancia?", e.id_estacion)
+    db.session.add(t)
     db.session.commit()
 
+    c = Cliente("clientesergi", "garcia", "meh@gmail.com", "245363Y", "foto_chula", 4674387249, "sergi.ib", "mehmeh123")
+    db.session.add(c)
+    db.session.commit()
+    #e.encargado = t.id_trabajador
+    #db.session.commit()
 
-app.register_blueprint(incidencias, url_prefix='/api')
-app.register_blueprint(estaciones, url_prefix='/api')
-app.register_blueprint(trabajador, url_prefix='/api')
-app.register_blueprint(clientes, url_prefix='/api')
-app.register_blueprint(reservas, url_prefix='/api')
-app.register_blueprint(soporte, url_prefix='/api')
-app.register_blueprint(estadisticas, url_prefix='/api')
+
+    p = Promociones(32, 2, datetime.today(), datetime.today(), "activa", "superdecuento")
+    db.session.add(p)
+    db.session.commit()
+
+    p.estaciones.append(e)
+    db.session.commit()
+    p1 = Cargador("ocupado", 2, "tipo C", e.id_estacion)
+    p2 = Cargador("libre", 5, "super fast", e.id_estacion)
+    db.session.add(p1)
+    db.session.add(p2)
+    db.session.commit()
+
+    model_list = ["500e Cabrio eléctrico", "Taycan eléctrico","e-tron GT eléctrico", "Leaf eléctrico", "Ioniq eléctrico", "i3 eléctrico", "ID.3 eléctrico", "2 eléctrico", "UX300e eléctrico", "EV6 eléctrico"]
+    
+    mod = Modelo(model_list[0], "Fiat", False, 42)
+    db.session.add(mod)
+    mod2 = Modelo(model_list[1], "Porsche", True, 93.4)
+    db.session.add(mod2)
+    mod3 = Modelo(model_list[2], "Audi", True, 93.4)
+    db.session.add(mod3)
+    mod4 = Modelo(model_list[3], "Nissan", False, 42.6)
+    db.session.add(mod4)
+    mod5 = Modelo(model_list[4], "Hyundai", False, 72.6)
+    db.session.add(mod5)
+    mod6 = Modelo(model_list[5], "BMW", False, 42.2)
+    db.session.add(mod6)
+    mod7 = Modelo(model_list[6], "Volkswagen", True, 77)
+    db.session.add(mod7)
+    mod8 = Modelo(model_list[7], "Polestar", False, 69)
+    db.session.add(mod8)
+    mod9 = Modelo(model_list[8], "Lexus", False, 54.3)
+    db.session.add(mod9)
+    mod10 = Modelo(model_list[9], "Kia", True, 77)
+    db.session.add(mod10)
+    db.session.commit()
+
+    for i in range(50):
+        letras = ''.join(random.choices(string.ascii_uppercase, k=3))
+        numeros = ''.join(random.choices(string.digits, k=4))
+        matricula = ''.join(random.choices(letras+numeros, k=7))
+        procentaje_bat = random.randint(0, 100)
+        modelo = random.choice(model_list)
+
+        v = Vehiculo(matricula, procentaje_bat, modelo)
+        db.session.add(v)
+
+    #v = Vehiculo("X96392WXES", 34, mod.modelo)
+    #db.session.add(v)
+    db.session.commit()
+#####
+    c.vehiculos.append(v)
+    db.session.commit()
+
+    r1 = Reserva(datetime.today(), datetime.today(), 50, 25.2,10.1, True, 90.99, True,True,p1.id_cargador, v.matricula, c.id_cliente)
+    r2 = Reserva(datetime.today(), datetime.today(), 33, 50, 60,
+                 False, 44.44, True,True,p2.id_cargador, v.matricula, c.id_cliente)
+    db.session.add(r1)
+    db.session.add(r2)
+    db.session.commit()
+
+    a = Aviso("Cancelación","motomamiiiiii",datetime.today(), r1.id_reserva, c.id_cliente)#c.id_cliente
+    db.session.add(a)
+    db.session.commit()
+
+    ticket = Ticket(datetime.today(), "Error App",
+                    "No me deja reservar en la estacion de Rambla Exposicio, no se que le pasa", "Pendiente", c.id_cliente)
+    db.session.add(ticket)
+    db.session.commit()
+
+    m = Mensaje("Me parece que lo haceis todo mal, salu2",datetime.today(),
+                c.id_usuari, ticket.id_ticket)
+    db.session.add(m)
+    db.session.commit()
+
+    av = Averia(datetime.today(), "Pendiente",
+                    "No funciona la estación por mantenimiento", t.id_trabajador, e.id_estacion)
+    db.session.add(av)
+    db.session.commit()
+
+    s = Sesiones(datetime.today(), datetime.today(), t.id_trabajador)
+    db.session.add(s)
+    db.session.commit()
+
 
 if __name__ == "__main__":  # pragma: no cover
     print("=========================================")

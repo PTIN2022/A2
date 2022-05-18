@@ -1,5 +1,5 @@
-from models.trabajador import Trabajador, TrabajadorSchema
 from utils.db import db
+from models.model import *
 
 
 def get_all_trabajadores():
