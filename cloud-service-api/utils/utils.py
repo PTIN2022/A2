@@ -21,6 +21,7 @@ def strtobool(val):
     else:
         raise ValueError("invalid truth value %r" % (val,))
 
+
 # https://www.bacancytechnology.com/blog/flask-jwt-authentication
 def token_required(f):
     @wraps(f)

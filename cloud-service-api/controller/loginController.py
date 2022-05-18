@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from utils.utils import encrypt_password
 from models.trabajador import Trabajador
 
+
 def expire_date(minutes):
     now = datetime.utcnow()
     new_date = now + timedelta(minutes=minutes)
