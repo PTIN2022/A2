@@ -18,3 +18,8 @@ services:
     depends_on:
       - api
       - front
+    volumes:
+      - nginxcerts:/etc/ssl/certs
+
+volumes:
+    nginxcerts:
