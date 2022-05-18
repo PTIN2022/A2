@@ -3,9 +3,11 @@ from utils.db import db
 from flask import Flask
 from routes.reservas import reservas
 from routes.estaciones import estaciones
+from routes.promociones import promociones
 from models.cargador import Cargador
 from models.estacion import Estacion
-
+from models.promocion import Promocion
+from models.promocionEstacion import PromocionEstacion
 
 def init_db():
     db.init_app(app)

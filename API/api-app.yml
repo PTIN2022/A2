@@ -330,6 +330,77 @@ paths:
                       {"error": "Reserva not found."}
 
 #########################################################################################
-
-
-
+  /promociones/estaciones/{id_electrolinera}:
+    # pedimos una reserva, dado su id
+      get:
+        summary: Obtiene una lista de promociones en funcion de su id estaciones
+        tags:
+          - Promociones
+        parameters:
+          - in: path
+            name: id_electrolinera
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Por defecto sacamos una lista de promociones
+            content:
+              application/json:
+                examples:
+                  Reservas:
+                    value:  >-
+                      [{"id_promo":1,"descuento":10,"cantidad_cupones":100,"cantidad_usados":20,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"Por la ignauracion de la electrolinera"},{"id_promo":2,"descuento":11,"cantidad_cupones":75,"cantidad_usados":2,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"La promocion se consigue mediante por sorteo"}]
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+          '404':
+            description: Not found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "Promociones not found."}
+  /promociones/{id_promocion}:
+    # pedimos una reserva, dado su id
+      get:
+        summary: Obtiene una promocion concreta en funcion de su id estaciones
+        tags:
+          - Promociones
+        parameters:
+          - in: path
+            name: id_promocion
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Por defecto sacamos una lista de promociones
+            content:
+              application/json:
+                examples:
+                  Reservas:
+                    value:  >-
+                      {"id_promo":1,"descuento":10,"cantidad_cupones":100,"cantidad_usados":20,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"Por la ignauracion de la electrolinera"}
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+          '404':
+            description: Not found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "Promociones not found."}
