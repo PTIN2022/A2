@@ -29,4 +29,3 @@ class TrabajadorSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Trabajador
         exclude = ('password',)
-

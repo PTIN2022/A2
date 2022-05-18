@@ -1,9 +1,6 @@
-import os
 import hashlib
 import jwt
-
 from functools import wraps
-from datetime import datetime
 from flask import jsonify, request
 from flask import current_app as app
 from models.trabajador import Trabajador
@@ -24,7 +21,6 @@ def strtobool(val):
     else:
         raise ValueError("invalid truth value %r" % (val,))
 
-
 # https://www.bacancytechnology.com/blog/flask-jwt-authentication
 def token_required(f):
     @wraps(f)
@@ -34,8 +30,6 @@ def token_required(f):
             token = request.headers['x-access-tokens']
             print(token)
             print(request.headers)
-
-
         if not token:
             return jsonify({'message': 'a valid token is missing'})
         try:
@@ -43,7 +37,8 @@ def token_required(f):
             current_trabajador = Trabajador.query.filter(Trabajador.email == data['email']).one_or_none()
         except jwt.exceptions.ExpiredSignatureError:
             return jsonify({'message': 'token is expired'})
-        except:  # TODO: cuidado aqui va cualquier excepcion
+        except:  # noqa: E722
+            # TODO: cuidado aqui va cualquier excepcion
             return jsonify({'message': 'token is invalid'})
 
         return f(current_trabajador, *args, **kwargs)
@@ -51,14 +46,10 @@ def token_required(f):
 
 
 def encrypt_password(password):
-    
     key = hashlib.pbkdf2_hmac(
-        'sha256', # The hash digest algorithm for HMAC
-        password.encode('utf-8'), # Convert the password to bytes
-        app.config['SALT'], # Provide the salt
-        100000 # It is recommended to use at least 100,000 iterations of SHA-256 
+        'sha256',  # The hash digest algorithm for HMAC
+        password.encode('utf-8'),  # Convert the password to bytes
+        app.config['SALT'],  # Provide the salt
+        100000  # It is recommended to use at least 100,000 iterations of SHA-256
     )
-
     return key
-
-

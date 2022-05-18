@@ -70,7 +70,7 @@ def modify_trabajador(dni):
     if "password" in request.form.to_dict():
         password = request.form.to_dict()["password"]
 
-    respuesta = control.modify_trabajador(dni, dni_change, name, lastname, telf, email, rol, picture, password)
+    respuesta = control.modify_trabajador(dni, dni_change, name, lastname, telf, email, rol, last_access, picture, password)
 
     if respuesta:
         return jsonify(respuesta), 200

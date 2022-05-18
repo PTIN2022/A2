@@ -18,9 +18,6 @@ from routes.clientes import clientes
 from routes.reservas import reservas
 from routes.estadisticas import estadisticas
 from routes.login import login, logout
-import jwt
-
-
 
 
 def init_db():
@@ -44,10 +41,10 @@ app.config['MQTT_TLS_ENABLED'] = False  # set TLS to disabled for testing purpos
 
 
 # secrets.token_hex(32) TODO: regenerate with a real secret on the server
-app.config['SECRET_KEY']='bf9d91da2b703c30e770279ee82b17692def66a956b25b7c2d92f4088dfea293'
+app.config['SECRET_KEY'] = 'bf9d91da2b703c30e770279ee82b17692def66a956b25b7c2d92f4088dfea293'
 
 # salt = os.urandom(32) TODO: regenerate with a real secret on the servers
-app.config['SALT']='\xd2\x1f\xca\x0c\xc5\xe6:)\xa9\xeb<\x07j\r\xb6\xef\xda$\xb8\xc5XJak\xab\x9d\x0e\x99\xaf\xc7\x94\xba'.encode("utf-8")
+app.config['SALT'] = '\xd2\x1f\xca\x0c\xc5\xe6:)\xa9\xeb<\x07j\r\xb6\xef\xda$\xb8\xc5XJak\xab\x9d\x0e\x99\xaf\xc7\x94\xba'.encode("utf-8")
 app.config["EXPIRE_TOKEN_TIME"] = 2*60  # mins
 
 

@@ -16,7 +16,7 @@ def get_trabajador_dni(dni):
 def post_trabajador(DNI, name, lastname, telf, email, rol, password, last_access, picture):
     password = encrypt_password(password)
     t = Trabajador.query.filter(Trabajador.dni == DNI).one_or_none()
-    if  t:
+    if t:
         return None
 
     t = Trabajador(DNI, name, lastname, telf, email, rol, password, int(last_access), picture)
@@ -26,7 +26,7 @@ def post_trabajador(DNI, name, lastname, telf, email, rol, password, last_access
 
 
 # habra que mojararlo (last_access, picture...)
-def modify_trabajador(DNI, dni_change=None, name=None, lastname=None, telf=None, email=None, rol=None, picture=None, password=None):
+def modify_trabajador(DNI, dni_change=None, name=None, lastname=None, telf=None, email=None, rol=None, picture=None, last_acces=None, password=None):
     t = Trabajador.query.filter(Trabajador.dni == DNI).one_or_none()
     if t:
         if name:
@@ -43,6 +43,8 @@ def modify_trabajador(DNI, dni_change=None, name=None, lastname=None, telf=None,
             t.picture = picture
         if dni_change:
             t.dni = dni_change
+        if last_acces:
+            t.last_acces = last_acces
         if password:
             password = encrypt_password(password)
             t.password = password
