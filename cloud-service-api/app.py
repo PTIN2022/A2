@@ -1,6 +1,5 @@
 import os
 import json
-import os
 from utils.db import db
 from flask import Flask
 from flask_mqtt import Mqtt
@@ -39,9 +38,8 @@ app.config['MQTT_KEEPALIVE'] = int(os.getenv('MQTT_KEEPALIVE', "5"))  # set the 
 app.config['MQTT_TLS_ENABLED'] = os.getenv('MQTT_TLS_ENABLED', False)  # set TLS to disabled for testing purposes
 
 
-if app.config["TESTING"] == False:
-    mqtt = Mqtt(app)
-    mqtt.subscribe('estacion/#')
+mqtt = Mqtt(app)
+mqtt.subscribe('estacion/#')
 
 
 @mqtt.on_connect()
