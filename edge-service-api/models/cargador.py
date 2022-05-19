@@ -7,8 +7,8 @@ import models.horas  # noqa: F401
 class Cargador(db.Model):
 
     id_cargador = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    estado = db.Column(db.String(30), nullable=False)
-    posicion = db.Column(db.String(80), nullable=False)
+    estado = db.Column(db.Boolean, nullable=False)
+    posicion = db.Column(db.Integer, nullable=False)
     estacion_id = db.Column(db.Integer, db.ForeignKey("estacion.id_estacion"), nullable=False)
     reservas = db.relationship("Reserva",  backref="cargador")
     horas = db.relationship("Horas",  backref="cargador")
