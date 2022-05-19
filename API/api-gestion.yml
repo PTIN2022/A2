@@ -5,7 +5,7 @@ info:
 servers:
   - url: http://127.0.0.1:5000/api
     description: Development
-  - url: http://craaxkvm.epsevg.upc.es:23601/api
+  - url: http://craaxkvm.epsevg.upc.es:23600/api
     description: Production
 paths:
   # incidencias
@@ -104,7 +104,6 @@ paths:
                   Error al meter incidencia:
                     value: >-
                       {"error": "Malformed request syntax."}
-
   /incidencias/byname/{estacion}:
     # pedimos una lista de incidencias por una estacion dada
     get:
@@ -199,7 +198,6 @@ paths:
                   error:
                     value: >-
                         {"error": "Incidencia not found."}
-
       # editar incidencia
       put:
           summary: Modificar incidencia
@@ -521,7 +519,6 @@ paths:
                   error:
                     value: >-
                       {"error": "Trabajador not authorized."}
-
       post:
         summary: Inserta un nuevo trabajador
         tags:
@@ -742,7 +739,6 @@ paths:
                     Trabajador:
                       value: >-
                         {"msg": "Trabajdor deleted succesfully"}
-
             '401':
               description: Not login
               content:
@@ -760,10 +756,49 @@ paths:
                       value: >-
                         {"error": "Trabajador not found."}
 #########################################################################################
+  
   /soporte:
+    get:
+        summary: Obtiene una lista de peticiones que se han hecho al servicio técnico
+        tags: 
+        - Soporte tecnico
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Peticion a soporte:
+                    value: >- 
+                      [
+                        {
+                          "user_id": 1,
+                          "ticket_id": 2,
+                          "fecha": "2022-04-21T13:00:00",
+                          "descripcion": "Problema con la aplicación móvil",
+                          "estado": false
+                        },
+                        {
+                          "user_id": 2,
+                          "ticket_id": 3,
+                          "fecha": "2022-04-22T13:00:00",
+                          "descripcion": "Problema con las reservas",
+                          "estado": false
+                        }
+                      ]
+                  Sin peticiones a soporte:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
   # Creacion de una ayuda o ticket al soporte tecnico
     post:
-      summary: Consulta una petición a soporte tecnico
+      summary: Publica una petición a soporte tecnico
       tags:
         - Soporte tecnico
       requestBody:
@@ -774,15 +809,16 @@ paths:
               type: object
               required:
                 - descripcion
-                - fecha
+                - estado
               properties:
                 descripcion:
                   type: string
-                fecha:
-                  type: string
+                estado:
+                  type: boolean
             example:
-              fecha: 20/04/2022
-              descripcion: Problema con la aplicación movil
+              descripcion: "Problema con la aplicación movil"
+              estado: False
+              
       responses:
         '200':
           description: Peticion correcta
@@ -790,91 +826,29 @@ paths:
             application/json:
               examples:
                 Insertar petición a soporte tecnico:
-                  value: |-
-                    {
-                      "user_id": 1,
-                      "ticket_id": 2,
-                      "fecha": "20/04/2022",
-                      "descripcion": "Problema con la aplicación móvil"
-                    }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error" :"Malformed request syntax."}'
-
-
-  /soporte/ticket_id/{user_id}:
-    post:
-      summary: Encontrar el ticket/la peticion de soporte del usuario
-      tags:
-        - Soporte tecnico
-      parameters:
-      - in: path
-        name: user_id
-        required: true
-        schema:
-          type: integer
-          required:
-            - ticket_id
-            - user_id
-            - mensaje
-            - fecha
-          properties:
-            ticket_id:
-              type: integer
-            user_id:
-              type: integer
-            mensaje:
-              type: string
-            fecha:
-              type: string
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Insertar petición a soporte tecnico:
-                  value: {
-                        "ticket_id": 0123456789,
-                        "user_id":  0123456789,
-                        "descripcion": "No se porque no carga mi coche",
-                        "fecha": "01/02/20222",
-                        "estado": false,
-                        "chat": [ {
-                            "user_id": 0123456789,
-                            "mensaje": "No se porque no carga mi coche",
-                            "fecha" : "01/02/20222"
-                          },
-                          {
-                            "user_id": 111,
-                            "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
-                            "fecha" : "01/02/20222"
-                          },
-                          {
-                            "user_id": 123456789,
-                            "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
-                            "fecha" : "01/02/20222"
-                          }
-                        ]
+                  value: >-
+                    [
+                      {
+                        "fecha": "2022-04-01T13:00:00",
+                        "descripcion": "Problema con la aplicación móvil",
+                        "estado": false
                       }
+                    ]
         '400':
           description: Peticion incorrecta
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error" :"ID ususario no valido."}'
-        '404':
-          description: Peticion no encontrado
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error" :"ID ususario no valido."}'
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
 #Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
   /soporte/{ticket_id}:
     get:
@@ -893,44 +867,126 @@ paths:
           content:
             application/json:
               examples:
-                Insertar petición a soporte tecnico:
+               Consultando petición a soporte tecnico:
                   value: {
                       "ticket_id": 0123456789,
                       "user_id": 0123456789,
                       "descripcion": "No se porque no carga mi coche",
-                      "fecha": "01/02/20222",
+                      "fecha": "2022-04-01T13:00:00",
                       "estado": false,
-                      "chat": [ {
+                      "Mensajes": [ {
+                          "msg_id": 1,
                           "user_id": 123456789,
                           "mensaje": "No se porque no carga mi coche",
-                          "fecha" : "01/02/20222"
+                          "fecha" : "2022-04-01T14:00:00"
                         },
                         {
+                          "msg_id": 2,
                           "user_id": 111,
                           "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
-                          "fecha" : "01/02/20222"
+                          "fecha" : "2022-04-01T14:30:00"
                         },
                         {
+                          "msg_id": 3,
                           "user_id": 123456789,
                           "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
-                          "fecha" : "01/02/20222"
+                          "fecha" : "2022-04-01T14:43:00"
                         }
                       ]
                     }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                Error al meter incidencia:
-                  value: '{"error": "peticion mal formada."}'
         '404':
-          description: Peticion no encontrado
+          description: Ticket no encontrado
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error": "ID ususario no encontrado."}'
+                error:
+                  value: '{"error": "Ticket not found."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+    post:
+      summary: Dado un usuario en concreto pueda generar un mensaje para un ticket
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - mensaje
+              properties:
+                mensaje:
+                  type: string
+              example:
+                mensaje: "no se que me esta contando"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: {
+                        "ticket_id": 0123456789,
+                        "user_id":  0123456789,
+                        "descripcion": "No se porque no carga mi coche",
+                        "fecha": "2022-04-01T13:00:00",
+                        "estado": false,
+                        "Mensajes": [ {
+                          "msg_id": 1,
+                            "user_id": 0123456789,
+                            "mensaje": "No se porque no carga mi coche",
+                            "fecha" : "2022-04-01T14:00:00"
+                          },
+                          {
+                            "msg_id": 2,
+                            "user_id": 111,
+                            "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
+                            "fecha" : "2022-04-01T14:30:00"
+                          },
+                          {
+                            "msg_id": 3,
+                            "user_id": 123456789,
+                            "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
+                            "fecha" : "2022-04-01T14:43:00"
+                          }
+                        ]
+                      }
+        '400':
+          description: Ticket incorrecto
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Ticket not valid."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+        '404':
+          description: Ticket no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Ticket not found."}'
 
   # Eliminacion del ticket o peticion al soporte tecnico
     delete:
@@ -945,37 +1001,169 @@ paths:
           type: integer
       responses:
         '200':
+          description: Ticket correcto
+          content:
+            application/json:
+              examples:
+                Eliminando una petición a soporte tecnico:
+                  value: |-
+                    {
+                      "msg": "Ticket deleted succesfully."
+                    }
+        '400':
+          description: Ticket incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Ticket not valid."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+        '404':
+          description: Ticket no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" : "Ticket not found."}'
+        '410':
+          description: Ticket ya eliminado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Ticket have been deleted."}'
+                  
+  /soporte/byuser/{user_id}:
+    get:
+      summary: (NO ME USES) Obtiene los mensajes que ha generado un usuario en el soporte
+      tags: 
+      - Soporte tecnico
+      parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema: 
+          type: string
+      responses:
+        '200':
           description: Peticion correcta
           content:
             application/json:
               examples:
-                Insertar petición a soporte tecnico:
+                Trabajador:
+                  value:  
+                    [
+                      {
+                          "ticket_id": 0123456789,
+                          "user_id":  0123456789,
+                          "descripcion": "No se porque no carga mi coche",
+                          "fecha": "2022-04-22T18:00:00",
+                          "estado": false,
+                          "Mensajes": [ {
+                            "msg_id": 1,
+                              "user_id": 0123456789,
+                              "mensaje": "No se porque no carga mi coche",
+                              "fecha" : "2022-04-22T19:00:00"
+                          }
+                          ]
+                      },
+                      {
+                          "ticket_id": 01231236789,
+                          "user_id":  0123456789,
+                          "descripcion": "Estoy atrapado",
+                          "fecha": "2022-04-01T13:00:00",
+                          "estado": false,
+                          "Mensajes": [ {
+                            "msg_id": 1,
+                              "user_id": 0123456789,
+                              "mensaje": "Estoy atrapado",
+                              "fecha" : "2022-04-01T14:00:00"
+                          }
+                          ]
+                      }
+                    ]
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not authorized."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not found."}
+                  
+    
+  /soporte/{ticket_id}/{msg_id}:
+    delete:
+      summary: Elimina un mensaje de una peticion
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      - in: path
+        name: msg_id
+        required: true
+        schema: 
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Eliminado mensaje:
                   value: |-
                     {
-                      "info": "Ticket ha sido eliminado"
+                      "msg": "Message deleted succesfully"
                     }
         '400':
           description: Peticion incorrecta
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error" :"ID ususario no valido."}'
+                error:
+                  value: '{"error" :"Message not valid"}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
         '404':
           description: Peticion no encontrado
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error" : "ID ususario no encontrado."}'
+                error:
+                  value: '{"error" : "Message not found."}'
         '410':
-          description: Peticion eliminada
+          description: Peticion ya eliminada
           content:
             application/json:
               examples:
-                Error al meter incidencia:
-                  value: '{"error": "ID ususario eliminado."}'
-#########################################################################################
+                error:
+                  value: '{"error": "Message have been deleted."}'
+
   # reservas
   /reservas:
     get:
@@ -1068,7 +1256,6 @@ paths:
                 Error al meter reserva:
                   value: >-
                     {"error": "Malformed request syntax."}
-
   /reservas/estacion/{id_estacion}:
     # pedimos una lista de reservas por una estacion dada
     get:
@@ -1249,7 +1436,6 @@ paths:
                   error:
                     value: >-
                         {"error": "User not authenticated."}
-
           '404':
             description: Not found
             content:
@@ -1258,7 +1444,6 @@ paths:
                   error:
                     value: >-
                         {"error": "Reserva not found."}
-
       #borrar reserva
       delete:
         summary: Elimina reserva por ID
@@ -1295,8 +1480,494 @@ paths:
                 examples:
                   error:
                     value: >-
-                      {"error": "Reserva not found."}
+                      {"error": "Reserva not found."
+# clientes
+  /clientes:
+    # pedimos una lista de las incidencias
+    get:
+      summary: Obtiene una lista de clientes
+      tags:
+      - Clientes
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con clientes:
+                  value: [
+                          {
+                            "id_cliente": 1,
+                            # tipo ??????????
+                            "nombre": "Pablo",
+                            "apellido": "Escobar",
+                            "email": "pablo@gmail.com",
+                            "DNI": "23769543B",
+                            "foto": "http://?????????/clientes/pablo.png",
+                            "telefono": "643876101",
+                            "username": "xXpabloXx",
+                          },
+                          {
+                            "id_cliente": 2,
+                            # tipo ??????????
+                            "nombre": "Javier",
+                            "apellido": "Sanchez",
+                            "email": "javi@gmail.com",
+                            "DNI": "23769612h",
+                            "foto": "http://?????????/clientes/javi.png",
+                            "telefono": "643876101",
+                            "username": "xXpabloXx",
+                          }
+                        ]
 
+                Sin clientes:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+    post:
+        summary: Inserta un nuevo cliente
+        tags:
+        - Clientes
+        requestBody:
+            required: true
+            content:
+              multipart/form-data:
+                schema:
+                  type: object
+                  required:
+                    - nombre
+                    - apellido
+                    - email
+                    - DNI
+                    - foto
+                    - telefono
+                    - username
+                  properties:
+                    nombre:
+                      type: string
+                    apellido:
+                      type: string
+                    email:
+                      type: string
+                    DNI:
+                      type: string
+                    foto:
+                      type: string
+                    telefono:
+                      type: string
+                    username:
+                      type: string
+                    #profileImage:
+                    #  type: string
+                    #  format: binary
+
+                  example:
+                    name: "Pere"
+                    lastname: "Roca"
+                    telf: "622554433"
+                    email: "pere.roca@boss.com"
+                    rol: "Dueño"
+                    password: "proca"
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Meter cliente:
+                    value: [
+                      {
+                        "id_cliente": 1,
+                        # tipo ??????????
+                        "nombre": "Pablo",
+                        "apellido": "Escobar",
+                        "email": "pablo@gmail.com",
+                        "DNI": "23769543B",
+                        "foto": "http://?????????/clientes/pablo.png",
+                        "telefono": "643876101",
+                        "username": "xXpabloXx",
+                      },
+                      ]
+          '400':
+              description: Peticion incorrecta
+              content:
+                application/json:
+                  examples:
+                    Error al meter incidencia:
+                      value: {"error": "Malformed request syntax."}
+
+          '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "User not authorized."}
+  /clientes/{id}:
+    # pedimos un cliente dado su id
+    get:
+      summary: Obtiene un cliente por un id dado
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                Cliente encontrado:
+                  value:
+                      [
+                        {
+                          "id_cliente": 1,
+                          # tipo ??????????
+                          "nombre": "Pablo",
+                          "apellido": "Escobar",
+                          "email": "pablo@gmail.com",
+                          "DNI": "23769543B",
+                          "foto": "http://?????????/clientes/pablo.png",
+                          "telefono": "643876101",
+                          "username": "xXpabloXx",
+                        },
+                      ]
+                Cliente no encontrado:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "User not authenticated."}
+        '404':
+          description: Not found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "Client not found."}
+  #borrar cliente
+    delete:
+      summary: Elimina cliente por id
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Cliente eliminado delete
+          content:
+            application/json:
+              examples:
+                Incidencias:
+                  value: "{\"msg\": \"Client deleted correctly.\"}"
+                Incidencia no encontrada:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Client not found."}
+                    
+  /clientes/bydni/{DNI}:
+    # pedimos un cliente dado su id
+    get:
+      summary: Obtiene un cliente dado su DNI
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: DNI
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                Cliente encontrado:
+                  value:
+                      [
+                        {
+                          "id_cliente": 1,
+                          # tipo ??????????
+                          "nombre": "Pablo",
+                          "apellido": "Escobar",
+                          "email": "pablo@gmail.com",
+                          "DNI": "23769543B",
+                          "foto": "http://?????????/clientes/pablo.png",
+                          "telefono": "643876101",
+                          "username": "xXpabloXx",
+                        }
+                      ]
+                Cliente no encontrado:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "User not authenticated."}
+        '404':
+          description: Not found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "Client not found."}
+  #borrar cliente
+  
+    delete:
+      summary: Elimina cliente por id
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: DNI
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cliente eliminado delete
+          content:
+            application/json:
+              examples:
+                Incidencias:
+                  value: "{\"msg\": \"Client deleted correctly.\"}"
+                Incidencia no encontrada:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Client not found."}
+#######################################################################################################
+
+#######################################################################################################
+  /estadisticas:
+    get:
+        summary: Obtiene estadisticas de todas las estaciones
+        tags:
+          - Estadisticas
+        responses:
+          '200':
+            description: Respuesta por defecto buena
+            content:
+              application/json:
+                examples:
+                  Reservas:
+                    value:  >-
+                        [
+                        	{
+                        		"estacion": "VG1",
+                        		"direccion": "Av.Victor Balaguer 2",
+                        		"kwh_max": 720,
+                        		"kwh_now": 75,
+                        		"dias": [
+                        			{
+                        				"dia": "2022-05-10",
+                        				"potencia_max_cons": 720
+                        			},
+                        			{
+                        				"dia": "2022-05-11",
+                        				"potencia_max_cons": 720
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 720
+                        			},
+                        			{
+                        				"dia": "2022-05-13",
+                        				"potencia_max_cons": 560
+                        			},
+                        			{
+                        				"dia": "2022-05-14",
+                        				"potencia_max_cons": 330
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 120
+                        			}
+                        		]
+                        	},
+                        	{
+                        		"estacion": "VG2",
+                        		"direccion": "Av. Alberto 2",
+                        		"kwh_max": 330,
+                        		"kwh_now": 75,
+                        		"dias": [
+                        			{
+                        				"dia": "2022-05-10",
+                        				"potencia_max_cons": 123
+                        			},
+                        			{
+                        				"dia": "2022-05-11",
+                        				"potencia_max_cons": 432
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 432
+                        			},
+                        			{
+                        				"dia": "2022-05-13",
+                        				"potencia_max_cons": 233
+                        			},
+                        			{
+                        				"dia": "2022-05-14",
+                        				"potencia_max_cons": 200
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 500
+                        			}
+                        		]
+                        	}
+                        ]
+                        
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+          '404':
+            description: Not found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "Estacion not found."}
+  /estadisticas/{estacion}/{data_inicio}/{data_final}:
+    get:
+          summary: Obtiene estadisticas para todos los cargadores de una estación entre una data inicio y una data final.
+          tags:
+            - Estadisticas
+          parameters:
+            - in: path
+              name: estacion
+              required: true
+              schema:
+                type: integer
+            - in: path
+              name: data_inicio
+              required: true
+              schema:
+                type: string
+            - in: path
+              name: data_final
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: Respuesta por defecto buena
+              content:
+                application/json:
+                  examples:
+                    Reservas:
+                      value:  >-
+                        [
+                        	{
+                        		"estacion": "VG1",
+                        		"direccion": "Av.Victor Balaguer 2",
+                        		"kwh_max": 720,
+                        		"kwh_now": 75,
+                        		"dias": [
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 720
+                        			},
+                        			{
+                        				"dia": "2022-05-13",
+                        				"potencia_max_cons": 560
+                        			},
+                        			{
+                        				"dia": "2022-05-14",
+                        				"potencia_max_cons": 330
+                        			},
+                        			{
+                        				"dia": "2022-05-12",
+                        				"potencia_max_cons": 120
+                        			}
+                        		]
+                        	}
+                        ]
+            '400':
+              description: Malformed
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "Bad request"}      
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "User not authenticated."}
+  
+            '404':
+              description: Not found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "Estacion not found."}
+                          
 #######################################################################################################
   /promociones:
       # pedimos una lista de promociones
@@ -1314,8 +1985,6 @@ paths:
                     value: >-
                       [
                         {
-                          "cantidad_cupones": 50,
-                          "cantidad_usados": 25,
                           "descripcion": "20% de descuento en la electrolinera de Vilanova!",
                           "descuento": 20,
                           "estado": "activa",
@@ -1324,8 +1993,6 @@ paths:
                           "id_promo": 1
                         },
                         {
-                          "cantidad_cupones": 100,
-                          "cantidad_usados": 25,
                           "descripcion": "20% de descuento en la electrolinera de Barcelona!",
                           "descuento": 15,
                           "estado": "inactiva",
@@ -1334,8 +2001,6 @@ paths:
                           "id_promo": 2
                         },
                         {
-                          "cantidad_cupones": 50,
-                          "cantidad_usados": 10,
                           "descripcion": "20% de descuento en la electrolinera de Sitges!",
                           "descuento": 25,
                           "estado": "activa",
@@ -1373,21 +2038,12 @@ paths:
                 schema:
                   type: object
                   required:
-                    - id_estacion
-                    - cantidad_cupones
-                    - cantidad_usados
                     - descripcion
                     - descuento
                     - estado
                     - fecha_inicio
                     - fecha_fin
                   properties:
-                    id_estacion:
-                      type: integer
-                    cantidad_cupones:
-                      type: integer
-                    cantidad_usados:
-                      type: integer
                     descuento:
                       type: integer
                     fecha_inicio:
@@ -1397,7 +2053,7 @@ paths:
                     descripcion:
                       type: string
                     estado:
-                      type: string
+                      type: boolean
         responses:
           '200':
             description: Peticion correcta
@@ -1407,11 +2063,9 @@ paths:
                   Meter trabajador:
                     value: >-
                       {
-                        "cantidad_cupones": 50,
-                        "cantidad_usados": 10,
                         "descripcion": "20% de descuento en la electrolinera de Sitges!",
                         "descuento": 25,
-                        "estado": "activa",
+                        "estado": true,
                         "fecha_inicio": "2022-04-18T10:00:00",
                         "fecha_fin": "2022-04-18T19:00:00",
                         "id_promo": 3
@@ -1431,269 +2085,6 @@ paths:
                   error:
                     value: >-
                       {"error": "User not authenticated."}
-    
-  /promociones/estacion/{id_estacion}:
-  # pedimos una lista de promociones por una estacion dada
-    get:
-      summary: Obtiene una lista de promociones para una estacion dada
-      tags:
-      - Promociones
-      parameters:
-        - in: path
-          name: id_estacion
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Con promociones:
-                  value: >-
-                      [
-                        {
-                          "cantidad_cupones": 50,
-                          "cantidad_usados": 25,
-                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
-                          "descuento": 20,
-                          "estado": "activa",
-                          "fecha_inicio": "2022-04-18T11:00:00",
-                          "fecha_fin": "2022-04-18T21:00:00",
-                          "id_promo": 1
-                        },
-                        {
-                          "cantidad_cupones": 100,
-                          "cantidad_usados": 25,
-                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
-                          "descuento": 15,
-                          "estado": "inactiva",
-                          "fecha_inicio": "2022-04-18T17:00:00",
-                          "fecha_fin": "2022-04-18T22:00:00",
-                          "id_promo": 2
-                        },
-                        {
-                          "cantidad_cupones": 50,
-                          "cantidad_usados": 10,
-                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
-                          "descuento": 25,
-                          "estado": "activa",
-                          "fecha_inicio": "2022-04-18T10:00:00",
-                          "fecha_fin": "2022-04-18T19:00:00",
-                          "id_promo": 3
-                        }
-                      ]
-                Sin_promociones:
-                  value: '[]'
-        '400':
-            description: Peticion incorrecta
-            content:
-              application/json:
-                examples:
-                  Error al meter incidencia:
-                    value: {"error": "Malformed request syntax."}
-        '403':
-            description: Denied access
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >-
-                      {"error": "User not authenticated."}
-
-  /promociones/estacion/{id_estacion}/{estado}:
-  # pedimos lista de promociones dado un estado y una estacion.
-    get:
-      summary: Obtiene una lista de promociones dado un estado y una estacion.
-      tags:
-      - Promociones
-      parameters:
-        - in: path
-          name: id_estacion
-          required: true
-          schema:
-            type: integer
-        - in: path
-          name: estado
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Con promociones activas para estacion:
-                  value: >-
-                      [
-                        {
-                          "cantidad_cupones": 50,
-                          "cantidad_usados": 25,
-                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
-                          "descuento": 20,
-                          "estado": "activa",
-                          "fecha_inicio": "2022-04-18T11:00:00",
-                          "fecha_fin": "2022-04-18T21:00:00",
-                          "id_promo": 1
-                        },
-                        {
-                          "cantidad_cupones": 50,
-                          "cantidad_usados": 10,
-                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
-                          "descuento": 25,
-                          "estado": "activa",
-                          "fecha_inicio": "2022-04-18T10:00:00",
-                          "fecha_fin": "2022-04-18T19:00:00",
-                          "id_promo": 3
-                        }
-                      ]
-                Sin_promociones_activas_estacion:
-                  value: >-
-                      [
-                        {
-                          "cantidad_cupones": 100,
-                          "cantidad_usados": 25,
-                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
-                          "descuento": 15,
-                          "estado": "inactiva",
-                          "fecha_inicio": "2022-04-18T17:00:00",
-                          "fecha_fin": "2022-04-18T22:00:00",
-                          "id_promo": 2
-                        }
-                      ]
-                Sin_promociones:
-                  value: '[]'
-        '400':
-            description: Peticion incorrecta
-            content:
-              application/json:
-                examples:
-                  Error al meter incidencia:
-                    value: {"error": "Malformed request syntax."}
-        '403':
-            description: Denied access
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >-
-                      {"error": "User not authenticated."}
-  
-  /promociones/estacion/{id_estacion}/{fecha_inicio}/{fecha_fin}:
-  # pedimos lista de promociones dado una estacion y su fecha de inicio y final.
-    get:
-      summary: Obtiene una lista de promociones dado un estado y una estacion.
-      tags:
-      - Promociones
-      parameters:
-        - in: path
-          name: id_estacion
-          required: true
-          schema:
-            type: integer
-        - in: path
-          name: fecha_inicio
-          required: true
-          schema:
-            type: string
-        - in: path
-          name: fecha_fin
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Con promociones para las fechas:
-                  value: >-
-                      [
-                        {
-                          "cantidad_cupones": 50,
-                          "cantidad_usados": 25,
-                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
-                          "descuento": 20,
-                          "estado": "activa",
-                          "fecha_inicio": "2022-04-18T11:00:00",
-                          "fecha_fin": "2022-04-18T21:00:00",
-                          "id_promo": 1
-                        },
-                        {
-                          "cantidad_cupones": 100,
-                          "cantidad_usados": 25,
-                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
-                          "descuento": 15,
-                          "estado": "inactiva",
-                          "fecha_inicio": "2022-04-18T17:00:00",
-                          "fecha_fin": "2022-04-18T22:00:00",
-                          "id_promo": 2
-                        },
-                        {
-                          "cantidad_cupones": 50,
-                          "cantidad_usados": 10,
-                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
-                          "descuento": 25,
-                          "estado": "activa",
-                          "fecha_inicio": "2022-04-18T10:00:00",
-                          "fecha_fin": "2022-04-18T19:00:00",
-                          "id_promo": 3
-                        }
-                      ]
-                Sin_promociones_para_esas_fechas:
-                  value: >-
-                      [
-                        {
-                          "cantidad_cupones": 50,
-                          "cantidad_usados": 25,
-                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
-                          "descuento": 20,
-                          "estado": "activa",
-                          "fecha_inicio": "2021-04-18T11:00:00",
-                          "fecha_fin": "2021-04-18T21:00:00",
-                          "id_promo": 1
-                        },
-                        {
-                          "cantidad_cupones": 100,
-                          "cantidad_usados": 25,
-                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
-                          "descuento": 15,
-                          "estado": "inactiva",
-                          "fecha_inicio": "2021-04-18T17:00:00",
-                          "fecha_fin": "2021-04-18T22:00:00",
-                          "id_promo": 2
-                        },
-                        {
-                          "cantidad_cupones": 50,
-                          "cantidad_usados": 10,
-                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
-                          "descuento": 25,
-                          "estado": "activa",
-                          "fecha_inicio": "2021-04-18T10:00:00",
-                          "fecha_fin": "2021-04-18T19:00:00",
-                          "id_promo": 3
-                        }
-                      ]
-                Sin_promociones:
-                  value: '[]'
-        '400':
-            description: Peticion incorrecta
-            content:
-              application/json:
-                examples:
-                  Error al meter incidencia:
-                    value: {"error": "Malformed request syntax."}
-        '403':
-            description: Denied access
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >-
-                      {"error": "User not authenticated."}
                     
   /promociones/estado/{estado}:
   # pedimos una lista de promociones dado su estado (activa/inactiva)
@@ -1706,7 +2097,7 @@ paths:
         name: estado
         required: true
         schema:
-          type: string
+          type: boolean
       responses:
         '200':
           description: Peticion correcta
@@ -1717,21 +2108,17 @@ paths:
                   value: >-
                       [
                         {
-                          "cantidad_cupones": 50,
-                          "cantidad_usados": 25,
                           "descripcion": "20% de descuento en la electrolinera de Vilanova!",
                           "descuento": 20,
-                          "estado": "activa",
+                          "estado": true,
                           "fecha_inicio": "2022-04-18T11:00:00",
                           "fecha_fin": "2022-04-18T21:00:00",
                           "id_promo": 1
                         },
                         {
-                          "cantidad_cupones": 50,
-                          "cantidad_usados": 10,
                           "descripcion": "20% de descuento en la electrolinera de Sitges!",
                           "descuento": 25,
-                          "estado": "activa",
+                          "estado": true,
                           "fecha_inicio": "2022-04-18T10:00:00",
                           "fecha_fin": "2022-04-18T19:00:00",
                           "id_promo": 3
@@ -1741,11 +2128,9 @@ paths:
                   value: >-
                       [
                         {
-                          "cantidad_cupones": 100,
-                          "cantidad_usados": 25,
                           "descripcion": "20% de descuento en la electrolinera de Barcelona!",
                           "descuento": 15,
-                          "estado": "inactiva",
+                          "estado": false,
                           "fecha_inicio": "2022-04-18T17:00:00",
                           "fecha_fin": "2022-04-18T22:00:00",
                           "id_promo": 2
@@ -1789,11 +2174,9 @@ paths:
                 Trabajador:
                   value: >-
                       {
-                        "cantidad_cupones": 50,
-                        "cantidad_usados": 10,
                         "descripcion": "20% de descuento en la electrolinera de Sitges!",
                         "descuento": 25,
-                        "estado": "activa",
+                        "estado": true,
                         "fecha_inicio": "2022-04-18T10:00:00",
                         "fecha_fin": "2022-04-18T19:00:00",
                         "id_promo": 3
@@ -1840,8 +2223,8 @@ paths:
             schema:
               type: object
               properties:
-                estacion:
-                  type: string
+                estado:
+                  type: boolean
                 descuento:
                   type: integer
                 fecha_inicio:
@@ -1860,11 +2243,9 @@ paths:
                 Trabajador actualizado:
                   value: >-
                       {
-                        "cantidad_cupones": 50,
-                        "cantidad_usados": 10,
                         "descripcion": "20% de descuento en la electrolinera de Sitges!",
                         "descuento": 25,
-                        "estado": "activa",
+                        "estado": true,
                         "fecha_inicio": "2022-04-18T10:00:00",
                         "fecha_fin": "2022-04-18T19:00:00",
                         "id_promo": 3
@@ -1933,21 +2314,3 @@ paths:
                 examples:
                   error:
                     value: {"error": "Promocion not found."}
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
