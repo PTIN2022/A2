@@ -14,14 +14,20 @@ services:
     build: ./nginx
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - api
       - front
+    volumes:
+      - nginxcerts:/etc/ssl/certs
 
+
+volumes:
+    nginxcerts:
+    
   brokercloud:
     build: ./broker
     ports:
       - "42069:1883"
     expose:
       - 1883
-
