@@ -4,17 +4,17 @@ from utils.db import db
 
 
 def get_all_promociones(id_estacion):
-    i = PromocionEstacion.query.filter(PromocionEstacion.id_estacion == id).one_or_none()
+    i = Promocion.query.filter(Promocion.id_promo == PromocionEstacion.id_promo).filter(PromocionEstacion.id_estacion == id_estacion).all()
     if i:
         promociones_dict = PromocionSchema().dump(i)
 
-#        promociones_dict["id_estacion"] = []
-#        for cargador in i.Cargadors:
-#            estacion_dict["id_estacion"].append(CargadorSchema().dump(cargador))
+        promociones_dict["id_promo"] = []
+        for cargador in i.id_promo:
+            estacion_dict["id_promo"].append(PromocionSchema().dump(cargador))
 
         return promociones_dict
 
-    return []
+    return None
 
 
 def get_promocion_by_id(id):
