@@ -1,17 +1,12 @@
 version: "3.9"
 services:
   api:
-    build: ./cloud-service-api
+    build: ./edge-service-api
     expose:
       - 5000
 
-  front:
-    build: ../GeSyS-Front
-    expose:
-      - 3000
-
   nginx:
-    build: ./nginx
+    build: ./edge-nginx
     ports:
       - "80:80"
       - "443:443"
@@ -21,7 +16,7 @@ services:
     volumes:
       - nginxcerts:/etc/ssl/certs
 
-  brokercloud:
+  brokeredge:
     build: ./broker
     ports:
       - "42069:1883"
