@@ -5,8 +5,10 @@ info:
 servers:
   - url: http://127.0.0.1:5000/api
     description: Development
-  - url: http://craaxkvm.epsevg.upc.es:23600/api
-    description: Production
+  - url: http://craaxkvm.epsevg.upc.es:23601/api
+    description: Production HTTP
+  - url: https://craaxkvm.epsevg.upc.es:23600/api
+    description: Production HTTPS
 paths:
   # incidencias
   /incidencias:
@@ -104,6 +106,7 @@ paths:
                   Error al meter incidencia:
                     value: >-
                       {"error": "Malformed request syntax."}
+
   /incidencias/byname/{estacion}:
     # pedimos una lista de incidencias por una estacion dada
     get:
@@ -198,6 +201,7 @@ paths:
                   error:
                     value: >-
                         {"error": "Incidencia not found."}
+
       # editar incidencia
       put:
           summary: Modificar incidencia
@@ -519,6 +523,7 @@ paths:
                   error:
                     value: >-
                       {"error": "Trabajador not authorized."}
+
       post:
         summary: Inserta un nuevo trabajador
         tags:
@@ -739,6 +744,7 @@ paths:
                     Trabajador:
                       value: >-
                         {"msg": "Trabajdor deleted succesfully"}
+
             '401':
               description: Not login
               content:
@@ -849,6 +855,7 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+
 #Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
   /soporte/{ticket_id}:
     get:
@@ -1256,6 +1263,8 @@ paths:
                 Error al meter reserva:
                   value: >-
                     {"error": "Malformed request syntax."}
+
+
   /reservas/estacion/{id_estacion}:
     # pedimos una lista de reservas por una estacion dada
     get:
@@ -1436,6 +1445,7 @@ paths:
                   error:
                     value: >-
                         {"error": "User not authenticated."}
+
           '404':
             description: Not found
             content:
@@ -1444,6 +1454,7 @@ paths:
                   error:
                     value: >-
                         {"error": "Reserva not found."}
+
       #borrar reserva
       delete:
         summary: Elimina reserva por ID
@@ -1788,6 +1799,7 @@ paths:
                 error:
                   value: >-
                     {"error": "Client not found."}
+
 #######################################################################################################
 
 #######################################################################################################
@@ -1879,6 +1891,7 @@ paths:
                   error:
                     value: >-
                         {"error": "User not authenticated."}
+
           '404':
             description: Not found
             content:
@@ -1967,8 +1980,7 @@ paths:
                     error:
                       value: >-
                           {"error": "Estacion not found."}
-                          
-#######################################################################################################
+#############################################################################
   /promociones:
       # pedimos una lista de promociones
       get:
