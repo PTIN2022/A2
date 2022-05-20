@@ -6,7 +6,9 @@ servers:
   - url: http://127.0.0.1:5000/
     description: Developments
   - url: http://craaxkvm.epsevg.upc.es:23701/
-    description: Server
+    description: Production HTTP
+  - url: https://craaxkvm.epsevg.upc.es:23700/
+    description: Production HTTPS
 paths:
   # reservas
   /reservas:
