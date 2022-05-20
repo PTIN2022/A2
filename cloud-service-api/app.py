@@ -31,12 +31,12 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"  # TODO: Pass to mysql
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
-app.config['MQTT_BROKER_URL'] = os.getenv('MQTT_BROKER_URL', 'test.mosquitto.org')  # use the free broker from HIVEMQ
-app.config['MQTT_BROKER_PORT'] = int(os.getenv('MQTT_BROKER_PORT', "1883"))  # default port for non-tls connection
-app.config['MQTT_USERNAME'] = os.getenv('MQTT_USERNAME', '')  # set the username here if you need authentication for the broker
-app.config['MQTT_PASSWORD'] = os.getenv('MQTT_PASSWORD', '')  # set the password here if the broker demands authentication
-app.config['MQTT_KEEPALIVE'] = int(os.getenv('MQTT_KEEPALIVE', "5"))  # set the time interval for sending a ping to the broker to 5 seconds
-app.config['MQTT_TLS_ENABLED'] = os.getenv('MQTT_TLS_ENABLED', False)  # set TLS to disabled for testing purposes
+app.config['MQTT_BROKER_URL'] = 'test.mosquitto.org'  # use the free broker from HIVEMQ
+app.config['MQTT_BROKER_PORT'] = 1883  # default port for non-tls connection
+app.config['MQTT_USERNAME'] = ''  # set the username here if you need authentication for the broker
+app.config['MQTT_PASSWORD'] = ''  # set the password here if the broker demands authentication
+app.config['MQTT_KEEPALIVE'] = 5  # set the time interval for sending a ping to the broker to 5 seconds
+app.config['MQTT_TLS_ENABLED'] = False  # set TLS to disabled for testing purposes
 
 
 mqtt = Mqtt(app)
@@ -75,8 +75,10 @@ if os.path.exists("./test.db"):
 
 init_db()
 with app.app_context():
-    e = Estacion("VG3", "mi casa", 720, 85, 23, 20, 130, "Alfredo_Manresa", 1300, 2000, "url")
+    e = Estacion("VG1", 12.000, 13.0000, 32, "mi casa", 720, 3, 23, 130, 690389157, "España", "Vilanova")
+    e2 = Estacion("VG2", 11.000, 11.0000, 32, "mi cole", 720, 3, 30, 200, 690389158, "España", "Gava")
     db.session.add(e)
+    db.session.add(e2)
     db.session.commit()
     p1 = Cargador("cargando", "coordenada", e.id_estacion)
     p2 = Cargador("cargando", "cordenada", e.id_estacion)

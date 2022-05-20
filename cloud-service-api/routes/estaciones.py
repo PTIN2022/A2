@@ -20,10 +20,10 @@ def get_estacion_by_id(id):
         return jsonify({"error": "Estacion not found"}), 404
 
 
-@estaciones.route('/estaciones/<id>/<id_plaza>', methods=["DELETE"])
-def delete_plaza(id, id_plaza):
-    respuesta = control.delete_plaza(id, id_plaza)
+@estaciones.route('/estaciones/coor/<lat>/<long>', methods=["GET"])
+def get_estacion_by_coor(lat, long):
+    respuesta = control.get_estacion_by_coor(lat, long)
     if respuesta:
         return jsonify(respuesta), 200
     else:
-        return jsonify({"error": "Plaza or Estacion not found"}), 404
+        return jsonify({"error": "Station not found"}), 404

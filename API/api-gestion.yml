@@ -6,9 +6,7 @@ servers:
   - url: http://127.0.0.1:5000/api
     description: Development
   - url: http://craaxkvm.epsevg.upc.es:23601/api
-    description: Production HTTP
-  - url: https://craaxkvm.epsevg.upc.es:23600/api
-    description: Production HTTPS
+    description: Production
 paths:
   # incidencias
   /incidencias:
@@ -326,24 +324,34 @@ paths:
                     value: >-
                       [
                         {
-                          "estacion": "VG1",
-                          "direccion": "Av.Victor Balaguer 2",
-                          "kwh_max": 720,
-                          "kwh_now": 75,
-                          "ocupation_max": 32,
-                          "ocupation_now": 20,
-                          "surface_in_meters": 130,
-                          "boss": "Alfredo Manresa"
+                          "capacidad": 32,
+                          "ciudad": "España",
+                          "direccion": "mi casa",
+                          "id_estacion": 1,
+                          "latitud": 59.26258315325391,
+                          "longitud": 82.104931574632,
+                          "nombre_est": "VG0",
+                          "ocupacion_actual": 9,
+                          "pais": "Vilanova",
+                          "potencia_contratada": 309,
+                          "potencia_usada": 226,
+                          "telefono": "690389157",
+                          "zona": 5
                         },
                         {
-                          "estacion": "VG2",
-                          "direccion": "Calle de les Empúries 2",
-                          "kwh_max": 640,
-                          "kwh_now": 20,
-                          "ocupation_max": 32,
-                          "ocupation_now": 5,
-                          "surface_in_meters": 130,
-                          "boss": "Pere Roca"
+                          "capacidad": 32,
+                          "ciudad": "España",
+                          "direccion": "mi casa",
+                          "id_estacion": 2,
+                          "latitud": 57.77617625032384,
+                          "longitud": 12.35933821353951,
+                          "nombre_est": "VG1",
+                          "ocupacion_actual": 6,
+                          "pais": "Vilanova",
+                          "potencia_contratada": 431,
+                          "potencia_usada": 95,
+                          "telefono": "690389157",
+                          "zona": 1
                         }
                       ]
                   Sin estaciones:
@@ -376,45 +384,41 @@ paths:
                   estacion:
                     value: >-
                           {
-                            "estacion": "VG3",
-                            "cordenadas": {
-                              "latitud": 41.224115,
-                              "longitud": 1.730610
-                            },
-                            "imagen": "http://?????????/estacion/VG3.png",
-                            "kwh_max": 20000,
-                            "ocupation_max": 8,
-                            "ocupation_now": 4,
-                            "plaza": [
+                            "capacidad": 32,
+                            "cargadores": [
                               {
-                                "id": 1,
-                                "kwh_usage": 372,
-                                "battery_status": 372,
-                                "battery_max": 800,
-                                "cliente": "peroivi"
+                                "estado": "True",
+                                "id_cargador": 1,
+                                "posicion": 32
                               },
                               {
-                                "id": 7,
-                                "kwh_usage": 372,
-                                "battery_status": 372,
-                                "battery_max": 800,
-                                "cliente": "peroivi"
+                                "estado": "False",
+                                "id_cargador": 2,
+                                "posicion": 31
                               },
                               {
-                                "id": 3,
-                                "kwh_usage": 372,
-                                "battery_status": 372,
-                                "battery_max": 800,
-                                "cliente": "peroivi"
+                                "estado": "False",
+                                "id_cargador": 3,
+                                "posicion": 12
                               },
                               {
-                                "id": 6,
-                                "kwh_usage": 372,
-                                "battery_status": 372,
-                                "battery_max": 800,
-                                "cliente": "peroivi"
+                                "estado": "False",
+                                "id_cargador": 4,
+                                "posicion": 13
                               }
-                            ]
+                            ],
+                            "ciudad": "España",
+                            "direccion": "mi casa",
+                            "id_estacion": 1,
+                            "latitud": 12,
+                            "longitud": 13,
+                            "nombre_est": "VG30",
+                            "ocupacion_actual": 23,
+                            "pais": "Vilanova",
+                            "potencia_contratada": 720,
+                            "potencia_usada": 130,
+                            "telefono": "690389157",
+                            "zona": 3
                           }
           '401':
             description: Not login
@@ -432,51 +436,152 @@ paths:
                   error:
                     value: >-
                       {"error": "Station not found."}
-#borrar incidencia
-  /estaciones/{id}/{id_plaza}:
-      delete:
-        summary: Liberas la plaza ocupada
-        tags:
+# retorna lista con estaciones ordenadas por distancia
+  /estaciones/coor/{lat}/{long}:
+        get:
+          summary: Obtiene las estaciones más cercanas por las coordenadas que se le pasen en la URI
+          tags:
           - Estaciones
-        parameters:
+          parameters:
           - in: path
-            name: id
+            name: lat
             required: true
             schema:
-              type: integer
+              type: number
           - in: path
-            name: id_plaza
+            name: long
             required: true
             schema:
-              type: integer
-        responses:
-          '200':
-            description: Eliminado delete
-            content:
-              application/json:
-                examples:
-                  Estaciones:
-                    value: >-
-                      {"msg": "Data deleted correctly."}
-                  Estaciones no encontrada:
-                    value: '[]'
-          '401':
-            description: Not login
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >-
-                      {"error": "User not authenticated."}
-          '404':
-            description: Not Found
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >-
-                      {"error": "Incidencia not found."}
-#########################################################################################
+              type: number
+          responses:
+            '200':
+              description: Peticion correcta
+              content:
+                application/json:
+                  examples:
+                    estacion:
+                      value: >-
+                          {
+                            "Estaciones": [
+                              {
+                                "capacidad": 32,
+                                  "cargadores": [
+                                    {
+                                      "estado": "True",
+                                      "id_cargador": 1,
+                                      "posicion": 32
+                                    },
+                                    {
+                                      "estado": "False",
+                                      "id_cargador": 2,
+                                      "posicion": 31
+                                    },
+                                    {
+                                      "estado": "False",
+                                      "id_cargador": 3,
+                                      "posicion": 12
+                                    },
+                                    {
+                                      "estado": "False",
+                                      "id_cargador": 4,
+                                      "posicion": 13
+                                    }
+                                  ],
+                                "ciudad": "España",
+                                "direccion": "mi casa",
+                                "id_estacion": 1,
+                                "latitud": 12,
+                                "longitud": 13,
+                                "nombre_est": "VG30",
+                                "ocupacion_actual": 23,
+                                "pais": "Vilanova",
+                                "potencia_contratada": 720,
+                                "potencia_usada": 130,
+                                "telefono": "690389157",
+                                "zona": 3
+                              },
+                              {
+                                "capacidad": 32,
+                                "cargadores": [],
+                                "ciudad": "España",
+                                "direccion": "mi casa",
+                                "id_estacion": 30,
+                                "latitud": 15.333991225795597,
+                                "longitud": 20.112191933383876,
+                                "nombre_est": "VG28",
+                                "ocupacion_actual": 19,
+                                "pais": "Vilanova",
+                                "potencia_contratada": 496,
+                                "potencia_usada": 455,
+                                "telefono": "690389157",
+                                "zona": 2
+                              },
+                              {
+                                "capacidad": 32,
+                                "cargadores": [],
+                                "ciudad": "España",
+                                "direccion": "mi casa",
+                                "id_estacion": 8,
+                                "latitud": 10.310335286671437,
+                                "longitud": 23.36392378582253,
+                                "nombre_est": "VG6",
+                                "ocupacion_actual": 1,
+                                "pais": "Vilanova",
+                                "potencia_contratada": 643,
+                                "potencia_usada": 238,
+                                "telefono": "690389157",
+                                "zona": 4
+                              },
+                              {
+                                "capacidad": 32,
+                                "cargadores": [],
+                                "ciudad": "España",
+                                "direccion": "mi casa",
+                                "id_estacion": 12,
+                                "latitud": 15.622761909852207,
+                                "longitud": 27.34148410638893,
+                                "nombre_est": "VG10",
+                                "ocupacion_actual": 8,
+                                "pais": "Vilanova",
+                                "potencia_contratada": 821,
+                                "potencia_usada": 252,
+                                "telefono": "690389157",
+                                "zona": 4
+                              },
+                              {
+                                "capacidad": 32,
+                                "cargadores": [],
+                                "ciudad": "España",
+                                "direccion": "mi casa",
+                                "id_estacion": 23,
+                                "latitud": 3.6752802128221025,
+                                "longitud": 31.098887261123572,
+                                "nombre_est": "VG21",
+                                "ocupacion_actual": 15,
+                                "pais": "Vilanova",
+                                "potencia_contratada": 503,
+                                "potencia_usada": 204,
+                                "telefono": "690389157",
+                                "zona": 4
+                              }
+                            ]
+                          }
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "User not authenticated."}
+            '404':
+              description: Not Found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "Station not found."}
   /trabajador:
       # pedimos una lista de trabajadores
       get:
