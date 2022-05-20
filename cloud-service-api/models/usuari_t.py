@@ -1,11 +1,15 @@
 from utils.db import db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy.orm import with_polymorphic
+
+Base = declarative_base()
 
 
-class Usuari_t(db.Model):
-
+class Usuari_t(Base):
+    __tablename__ = 'Usuari_t'
     id_usuari = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    tipo = db.Column(db.String(20), nullable=False)
+    # tipo = db.Column(db.String(20), nullable=False)
     nombre = db.Column(db.String(30), nullable=False)
     apellido = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(30), nullable=False)
@@ -15,8 +19,8 @@ class Usuari_t(db.Model):
     username = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(30), nullable=False)
 
-    def __init__(self, tipo, nombre, apellido, email, dni, foto, telefono, username, password):
-        self.tipo = tipo
+    def __init__(self, nombre, apellido, email, dni, foto, telefono, username, password):
+        # self.tipo = tipo
         self.nombre = nombre
         self.apellido = apellido
         self.email = email
