@@ -2319,3 +2319,4 @@ paths:
                 examples:
                   error:
                     value: {"error": "Promocion not found."}
+
