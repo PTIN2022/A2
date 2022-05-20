@@ -12,12 +12,13 @@ import random
 def init_db():
     db.init_app(app)
     with app.app_context():
+        db.drop_all() #TODO: REMOVE AT THE END OF THE PROYECT
         db.create_all()
 
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"  # TODO: Pass to mysql
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///test.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
 

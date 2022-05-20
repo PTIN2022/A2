@@ -22,6 +22,7 @@ from routes.estadisticas import estadisticas
 def init_db():
     db.init_app(app)
     with app.app_context():
+        db.drop_all() #TODO: REMOVE AT THE END OF THE PROYECT
         db.create_all()
 
 
@@ -77,6 +78,9 @@ init_db()
 with app.app_context():
     e = Estacion("VG3", "mi casa", 720, 85, 23, 20, 130, "Alfredo_Manresa", 1300, 2000, "url")
     db.session.add(e)
+    db.session.commit()
+    e2 = Estacion("VG5", "mi casa", 720, 85, 23, 20, 130, "Alfredo_Manresa", 1300, 2000, "url")
+    db.session.add(e2)
     db.session.commit()
     p1 = Cargador("cargando", "coordenada", e.id_estacion)
     p2 = Cargador("cargando", "cordenada", e.id_estacion)
