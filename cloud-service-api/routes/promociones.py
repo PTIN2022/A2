@@ -25,7 +25,7 @@ def get_promo_by_estado(estado):
     if respuesta:
         return jsonify(respuesta), 200
     else:
-        return jsonify({"error": "Bad syntax."}), 404
+        return jsonify({"error": "Malformed request syntax."}), 400
 
 
 @promociones.route('/promociones', methods=['POST'])
@@ -40,7 +40,7 @@ def post_promocion():
     if p:
         return jsonify(p), 200
     else:
-        return jsonify({"error": "Bad syntax."}), 404
+        return jsonify({"error": "Malformed request syntax."}), 400
 
 
 @promociones.route('/promociones/<id_promo>', methods=["PUT"])

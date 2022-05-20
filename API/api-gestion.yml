@@ -2011,13 +2011,6 @@ paths:
                       ]
                   No_promociones:
                     value: '[]'
-          '400':
-            description: Peticion incorrecta
-            content:
-              application/json:
-                examples:
-                  Error al meter incidencia:
-                    value: {"error": "Malformed request syntax."}
           '403':
             description: Denied access
             content:
