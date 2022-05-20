@@ -5,9 +5,9 @@ info:
 servers:
   - url: http://127.0.0.1:5000/
     description: Developments
-  - url: http://127.0.0.1
+  - url: http://127.0.0.1/api
     description: Development HTTP docker-compose
-  - url: https://127.0.0.1
+  - url: https://127.0.0.1/api
     description: Development HTTPS docker-compose
   - url: http://craaxkvm.epsevg.upc.es:23701/
     description: Production HTTP
