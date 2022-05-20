@@ -51,7 +51,6 @@ def modify_promocion(id_promo):
     estado = None
     descripcion = None
 
-
     if "descuento" in request.form.to_dict():
         descuento = request.form.to_dict()["descuento"]
     if "fecha_inicio" in request.form.to_dict():

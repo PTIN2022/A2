@@ -35,7 +35,7 @@ def post_promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion):
         db.session.add(p)
         db.session.commit()
         return PromocionSchema().dump(p)
-    except:
+    except:  # noqa: E722
         return None
 
 
@@ -56,11 +56,8 @@ def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=No
             p.estado = estado
         if descripcion:
             p.descripcion = descripcion
-       
-
         db.session.commit()
         return PromocionSchema().dump(p)
-
     return None
 
 
