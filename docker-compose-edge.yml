@@ -4,6 +4,9 @@ services:
     build: ./edge-service-api
     expose:
       - 5000
+    depends_on:
+      - brokeredge
+      - mysql
 
   nginx:
     build: ./edge-nginx
@@ -22,6 +25,16 @@ services:
       - "42069:1883"
     expose:
       - 1883
+
+  mysql:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    volumes:
+      - ~/.gesys/cloud-mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: secret
+        MYSQL_DATABASE: data
 
 volumes:
     nginxcerts:

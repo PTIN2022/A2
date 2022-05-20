@@ -28,7 +28,7 @@ def init_db():
 app = Flask(__name__)
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"  # TODO: Pass to mysql
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///test.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
 app.config['MQTT_BROKER_URL'] = os.getenv('MQTT_BROKER_URL', 'test.mosquitto.org')  # use the free broker from HIVEMQ
