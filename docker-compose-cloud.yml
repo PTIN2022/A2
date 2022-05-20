@@ -7,6 +7,8 @@ services:
     depends_on:
       - brokercloud
       - mysql
+    environment:
+        SQLALCHEMY_DATABASE_URI: $SQLALCHEMY_DATABASE_URI
 
   front:
     build: ../GeSyS-Front

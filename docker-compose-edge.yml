@@ -7,6 +7,8 @@ services:
     depends_on:
       - brokeredge
       - mysql
+    environment:
+        SQLALCHEMY_DATABASE_URI: $SQLALCHEMY_DATABASE_URI
 
   nginx:
     build: ./edge-nginx
@@ -31,7 +33,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ~/.gesys/cloud-mysql:/var/lib/mysql
+      - ~/.gesys/edge-mysql:/var/lib/mysql
     environment:
         MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
         MYSQL_DATABASE: $MYSQL_DATABASE

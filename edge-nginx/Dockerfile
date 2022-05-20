@@ -5,9 +5,7 @@ RUN apk update \
 
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf /etc/nginx/conf.d
-COPY ./certs /etc/ssl/certs
 COPY ./snippets /etc/nginx/snippets
+COPY ./entrypoint.sh /
 
-WORKDIR /etc/ssl/certs
-CMD ./generate.sh
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/entrypoint.sh"]

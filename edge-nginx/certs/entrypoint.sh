@@ -9,3 +9,5 @@ if ! [ -f ./dhparam.pem ];
 then
     openssl dhparam -out ./dhparam.pem 2048
 fi
+
+nginx -g daemon off

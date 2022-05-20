@@ -3,8 +3,10 @@ linter:
 	@. .venv/bin/activate && pip install flake8 > /dev/null && flake8 --statistics
 
 cloud:
+	docker-compose -f ./docker-compose-cloud.yml down -v
 	docker-compose -f ./docker-compose-cloud.yml up --build
 
 edge:
+	docker-compose -f ./docker-compose-edge.yml down -v
 	docker-compose -f ./docker-compose-edge.yml up --build
 

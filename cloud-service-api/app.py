@@ -1,4 +1,5 @@
 import os
+import time
 import json
 from utils.db import db
 from flask import Flask
@@ -20,6 +21,7 @@ from routes.estadisticas import estadisticas
 
 
 def init_db():
+    time.sleep(5)
     db.init_app(app)
     with app.app_context():
         db.drop_all() #TODO: REMOVE AT THE END OF THE PROYECT
