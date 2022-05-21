@@ -6,8 +6,9 @@ from routes.estaciones import estaciones
 from routes.promociones import promociones
 from models.cargador import Cargador
 from models.estacion import Estacion
-from models.promocion import Promocion
+from models.promociones import Promocion
 from models.promocionEstacion import PromocionEstacion
+
 
 def init_db():
     db.init_app(app)
@@ -36,7 +37,7 @@ with app.app_context():
 
     print(e)
     p1 = Cargador("cargando", "coordenada", e.id_estacion)
-    p2 = Cargador("cargadon", "cordenada", e.id_estacion)
+    p2 = Cargador("cargando", "coordenada", e.id_estacion)
     db.session.add(p1)
     db.session.add(p2)
     db.session.commit()

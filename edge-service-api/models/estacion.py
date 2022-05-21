@@ -1,6 +1,6 @@
 from utils.db import db
 import models.cargador  # noqa: F401
-import models.promocion  # noqa: F401
+import models.promociones  # noqa: F401
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
