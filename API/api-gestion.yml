@@ -1223,7 +1223,7 @@ paths:
                   - id_cliente
               properties:
                 id_estacion:
-                  type: integer
+                  type: string
                 fecha_inicio:
                   type: string
                 fecha_final:
@@ -1233,7 +1233,7 @@ paths:
                 id_cliente:
                   type: string
               example:
-                id_estacion: 1
+                id_estacion: "VG1"
                 fecha_inicio: "18-04-2022 11:00"
                 fecha_final: "18-04-2022 18:00"
                 id_vehiculo: "LKE2378"
@@ -1276,7 +1276,7 @@ paths:
           name: id_estacion
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: Obtiene un lista de reservas por estacion desde la fecha actual al futuro
