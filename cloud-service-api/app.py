@@ -16,6 +16,7 @@ from routes.estaciones import estaciones
 from routes.incidencias import incidencias
 from routes.clientes import clientes
 from routes.reservas import reservas
+from routes.promociones import promociones
 from routes.estadisticas import estadisticas
 
 
@@ -161,6 +162,7 @@ app.register_blueprint(estaciones, url_prefix='/api')
 app.register_blueprint(trabajador, url_prefix='/api')
 app.register_blueprint(clientes, url_prefix='/api')
 app.register_blueprint(reservas, url_prefix='/api')
+app.register_blueprint(promociones, url_prefix='/api')
 app.register_blueprint(soporte, url_prefix='/api')
 app.register_blueprint(estadisticas, url_prefix='/api')
 

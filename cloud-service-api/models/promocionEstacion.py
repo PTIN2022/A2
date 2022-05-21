@@ -9,7 +9,6 @@ class PromocionEstacion(db.Model):
     id_promo = db.Column('id_promo', db.ForeignKey('promocion.id_promo'), nullable=False)
     __table_args__ = (
         db.PrimaryKeyConstraint(id_estacion, id_promo),
-        {},
     )
 
     def __init__(self, id_estacion, id_promo):
