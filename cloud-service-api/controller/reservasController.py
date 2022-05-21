@@ -16,7 +16,7 @@ def get_reservas_id(id):
 
 
 def get_reservas_estacion(id_estacion):
-    i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
+    i = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
     reservas_desde_ahora = []
     if i:
         ahora = datetime.today()
@@ -39,7 +39,7 @@ def get_reservas_dni(dni):
 
 
 def post_reserva(id_estacion, matricula, fecha_inicio_str, fecha_final_str, DNI):
-    i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
+    i = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
     cargador_encontrado = False
     if i:
         random.shuffle(i.cargadores)  # Se hace un shuffle para que no siempre se use el mismo cargador para evitar el desgaste del mismo

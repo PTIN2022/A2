@@ -13,7 +13,7 @@ class Cliente(db.Model):
     nombre = db.Column(db.String(30), nullable=False)
     apellido = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(30), nullable=False)
-    dni = db.Column(db.String(15), nullable=False)
+    dni = db.Column(db.String(15), nullable=False, unique=True)
     foto = db.Column(db.String(15), nullable=False)
     telefono = db.Column(db.Integer, nullable=False)
     username = db.Column(db.String(30), nullable=False)

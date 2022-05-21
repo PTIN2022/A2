@@ -16,7 +16,7 @@ class Reserva(db.Model):
     id_cargador = db.Column(db.Integer, db.ForeignKey("cargador.id_cargador"), nullable=False)
     # id_vehiculo = db.Column(db.String(7), db.ForeignKey("vehiculo.id_vehiculo"), nullable=False) TODO
     id_vehiculo = db.Column(db.String(20), nullable=False)
-    id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
+    id_cliente = db.Column(db.String(15), db.ForeignKey("cliente.dni"), nullable=False)
     # id_cliente = db.Column(db.String(20), nullable=False)  # TODO: foreingk key
     # avisos = db.relationship("Aviso",  backref="reserva")
 
