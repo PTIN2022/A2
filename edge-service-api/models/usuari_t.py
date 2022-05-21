@@ -6,7 +6,6 @@ import models.aviso  # noqa: F401
 class Usuari_t(db.Model):
 
     id_usuari = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    tipo = db.Column(db.String(20), nullable=False)
     nombre = db.Column(db.String(30), nullable=False)
     apellido = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(30), nullable=False)
@@ -16,8 +15,7 @@ class Usuari_t(db.Model):
     username = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(30), nullable=False)
 
-    def __init__(self, tipo, nombre, apellido, email, dni, foto, telefono, username, password):
-        self.tipo = tipo
+    def __init__(self, nombre, apellido, email, dni, foto, telefono, username, password):
         self.nombre = nombre
         self.apellido = apellido
         self.email = email
