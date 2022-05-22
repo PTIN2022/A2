@@ -1,4 +1,5 @@
 import os
+import time
 import json
 import string
 import random
@@ -21,15 +22,17 @@ from routes.estadisticas import estadisticas
 
 
 def init_db():
+    time.sleep(5)
     db.init_app(app)
     with app.app_context():
+        db.drop_all()  # TODO: REMOVE AT THE END OF THE PROYECT
         db.create_all()
 
 
 app = Flask(__name__)
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"  # TODO: Pass to mysql
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///test.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
 app.config['MQTT_BROKER_URL'] = os.getenv('MQTT_BROKER_URL', 'test.mosquitto.org')  # use the free broker from HIVEMQ
@@ -47,6 +50,7 @@ app.register_blueprint(reservas, url_prefix='/api')
 app.register_blueprint(promociones, url_prefix='/api')
 app.register_blueprint(soporte, url_prefix='/api')
 app.register_blueprint(estadisticas, url_prefix='/api')
+
 
 mqtt = Mqtt(app)
 mqtt.subscribe('estacion/#')

@@ -1,4 +1,5 @@
 import os
+import time
 from utils.db import db
 from flask import Flask
 from routes.reservas import reservas
@@ -10,19 +11,21 @@ import random
 
 
 def init_db():
+    time.sleep(5)
     db.init_app(app)
     with app.app_context():
+        db.drop_all()  # TODO: REMOVE AT THE END OF THE PROYECT
         db.create_all()
 
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"  # TODO: Pass to mysql
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///test.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
 
-app.register_blueprint(reservas)
-app.register_blueprint(estaciones)
+app.register_blueprint(reservas, url_prefix="/api")
+app.register_blueprint(estaciones, url_prefix="/api")
 
 if os.path.exists("./test.db"):
     os.remove("./test.db")

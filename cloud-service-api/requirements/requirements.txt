@@ -10,3 +10,4 @@ gunicorn
 flask_mqtt
 python-dateutil
 Faker
+mysqlclient
