@@ -9,9 +9,9 @@ servers:
     description: Development HTTP docker-compose
   - url: https://127.0.0.1/api
     description: Development HTTPS docker-compose
-  - url: http://craaxkvm.epsevg.upc.es:23701/
+  - url: http://craaxkvm.epsevg.upc.es:23701/api
     description: Production HTTP
-  - url: https://craaxkvm.epsevg.upc.es:23700/
+  - url: https://craaxkvm.epsevg.upc.es:23700/api
     description: Production HTTPS
 paths:
   # reservas
