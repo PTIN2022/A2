@@ -9,6 +9,7 @@ services:
       - mysql
     environment:
         SQLALCHEMY_DATABASE_URI: $SQLALCHEMY_DATABASE_URI
+        PYTHONUNBUFFERED: 1
     restart: unless-stopped
 
   front:

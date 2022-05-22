@@ -6,7 +6,12 @@ cloud:
 	docker-compose -f ./docker-compose-cloud.yml down -v
 	docker-compose -f ./docker-compose-cloud.yml up -d --build
 
+cloud-logs:
+	docker-compose -f ./docker-compose-cloud.yml logs -f
+
 edge:
 	docker-compose -f ./docker-compose-edge.yml down -v
-	docker-compose -f ./docker-compose-edge.yml up -d --build
+	docker-compose -f ./docker-compose-edge.yml up --build
 
+edge-logs:
+	docker-compose -f ./docker-compose-edge.yml logs -f
