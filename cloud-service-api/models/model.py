@@ -49,48 +49,6 @@ class AvisoSchema(SQLAlchemyAutoSchema):
         model = Aviso
 
 
-
-class Consumo(db.Model):
-    id_cargador = db.Column('id_cargador', db.ForeignKey('cargador.id_cargador'), nullable=False)
-    id_horas = db.Column('id_horas', db.ForeignKey('horas.id'), nullable=False)
-    __table_args__ = (
-        db.PrimaryKeyConstraint(id_cargador, id_horas),
-        {},
-    )
-    potencia_consumida = db.Column(db.Integer, nullable=False)
-    potencia_maxima = db.Column(db.Integer, nullable=False)
-
-    def __init__(self, id_cargador, id_horas, potencia_consumida, potencia_maxima):
-        self.id_cargador = id_cargador
-        self.id_horas = id_horas
-        self.potencia_consumida = potencia_consumida
-        self.potencia_maxima = potencia_maxima
-
-class ConsumoSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Consumo
-
-
-class Horas(db.Model):
-    id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    dia = db.Column(db.Date, nullable=False)
-    hora = db.Column(db.Time, nullable=False)
-
-    #id_cargador = db.Column(db.Integer, db.ForeignKey("cargador.id_cargador"), nullable=False)
-
-    def __init__(self, dia, hora):  #,id_cargador
-        self.dia = dia
-        self.hora = hora
-        #self.id_cargador = id_cargador
-
-
-
-class HorasSchema(SQLAlchemyAutoSchema):
-    # estacion= fields.Nested(EstacionSchema)
-    class Meta:
-        model = Horas
-
-
 class Incidencia(db.Model):
 
     id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
@@ -378,6 +336,19 @@ class ModeloSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Modelo
 
+
+
+
+class Horas(db.Model):
+    id = db.Column(db.DateTime, nullable=False, primary_key=True)
+
+    def __init__(self, date):  #,id_cargador
+        self.id = date
+
+class HorasSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Horas
+
 class Cargador(db.Model):
 
     id_cargador = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
@@ -387,7 +358,6 @@ class Cargador(db.Model):
 
     estacion_id = db.Column(db.Integer, db.ForeignKey("estacion.id_estacion"), nullable=False)
     reservas = db.relationship("Reserva",  backref="Cargador")
-    #horass = db.relationship("Horas",  backref="cargador")
 
     def __init__(self, estado, posicion, tipo, estacion_id):
         self.estado = estado
@@ -397,9 +367,25 @@ class Cargador(db.Model):
 
 
 class CargadorSchema(SQLAlchemyAutoSchema):
-    # estacion= fields.Nested(EstacionSchema)
     class Meta:
         model = Cargador
+
+class Consumo(db.Model):
+    id_cargador = db.Column(db.ForeignKey('cargador.id_cargador'), nullable=False, primary_key=True)
+    id_horas = db.Column(db.ForeignKey('horas.id'), nullable=False, primary_key=True)
+    potencia_consumida = db.Column(db.Integer, nullable=False)
+    potencia_maxima = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, id_cargador, id_horas, potencia_consumida, potencia_maxima):
+        self.id_cargador = id_cargador
+        self.id_horas = id_horas
+        self.potencia_consumida = potencia_consumida
+        self.potencia_maxima = potencia_maxima
+
+class ConsumoSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        include_fk = True
+        model = Consumo
 
 promocion_estacion = db.Table('promocion-stacion',
     db.Column('id_estacion', db.ForeignKey('estacion.id_estacion'), nullable=False),
@@ -443,6 +429,10 @@ class Estacion(db.Model):
         self.pais = pais
         #self.encargado = encargado
 
+class EstacionSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Estacion
+
 
 class Promociones(db.Model):
     id_promo = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
@@ -461,10 +451,6 @@ class Promociones(db.Model):
         self.fecha_fin = fecha_fin
         self.estado = estado
         self.descripcion = descripcion
-
-class EstacionSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Estacion
 
 class PromocionesSchema(SQLAlchemyAutoSchema):
     class Meta:

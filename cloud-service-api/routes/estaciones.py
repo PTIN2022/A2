@@ -13,7 +13,7 @@ def get_estaciones():
 
 @estaciones.route('/estaciones/<id>', methods=["GET"])
 def get_estacion_by_id(id):
-    respuesta = control.get_estacion_by_id(id)
+    respuesta = control.get_estacion_by_id(int(id))
     if respuesta:
         return jsonify(respuesta), 200
     else:

@@ -12,9 +12,9 @@ def get_estacion_by_id(id):
     if i:
         estacion_dict = EstacionSchema().dump(i)
 
-        estacion_dict["Cargadores"] = []
-        for cargador in i.cargadores:
-            estacion_dict["Cargadores"].append(CargadorSchema().dump(cargador))
+        estacion_dict["Cargadores"] = CargadorSchema(many=True).dump(i.cargadores)
+        #for cargador in i.cargadores:
+        #    estacion_dict["Cargadores"].append(CargadorSchema().dump(cargador))
 
         return estacion_dict
 
