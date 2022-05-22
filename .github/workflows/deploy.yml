@@ -18,10 +18,6 @@ jobs:
         port: ${{ secrets.PORT_CLOUD }}
         script: /home/user/deploy/cloud-back.sh
 
-  build:
-    name: Deploy edge
-    runs-on: ubuntu-latest
-    steps:
     - name: Deploying edge server
       uses: appleboy/ssh-action@master
       with:
