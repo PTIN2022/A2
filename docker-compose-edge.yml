@@ -9,6 +9,7 @@ services:
       - mysql
     environment:
         SQLALCHEMY_DATABASE_URI: $SQLALCHEMY_DATABASE_URI
+    restart: unless-stopped
 
   nginx:
     build: ./edge-nginx
@@ -17,9 +18,9 @@ services:
       - "443:443"
     depends_on:
       - api
-      - front
     volumes:
       - nginxcerts:/etc/ssl/certs
+    restart: unless-stopped
 
   brokeredge:
     build: ./broker
@@ -27,6 +28,7 @@ services:
       - "42069:1883"
     expose:
       - 1883
+    restart: unless-stopped
 
   mysql:
     image: mysql:8
@@ -37,6 +39,7 @@ services:
     environment:
         MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
         MYSQL_DATABASE: $MYSQL_DATABASE
+    restart: unless-stopped
 
 volumes:
     nginxcerts:
