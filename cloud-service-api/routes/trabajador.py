@@ -60,7 +60,6 @@ def modify_trabajador(dni):
         last_access = -1
     if "picture" in request.form.to_dict():
         picture = "https://editor.swagger.io/"
-        print("INNNNNNN")
     if "dni" in request.form.to_dict():
         dni_change = request.form.to_dict()["dni"]
 

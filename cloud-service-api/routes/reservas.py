@@ -16,7 +16,7 @@ def get_reservas():
 def post_reservas():
     try:
         print(request.json)
-        estacion = int(request.json["id_estacion"])
+        estacion = request.json["id_estacion"]
         fecha_inicio = request.json["fecha_inicio"]  # Dia y hora
         fecha_final = request.json["fecha_final"]
         fecha_final_str = datetime.strptime(fecha_final, '%d-%m-%Y %H:%M')

@@ -6,7 +6,9 @@ servers:
   - url: http://127.0.0.1:5000/api
     description: Development
   - url: http://craaxkvm.epsevg.upc.es:23601/api
-    description: Production
+    description: Production HTTP
+  - url: https://craaxkvm.epsevg.upc.es:23600/api
+    description: Production HTTPS
 paths:
   # incidencias
   /incidencias:
@@ -1221,7 +1223,7 @@ paths:
                   - id_cliente
               properties:
                 id_estacion:
-                  type: integer
+                  type: string
                 fecha_inicio:
                   type: string
                 fecha_final:
@@ -1231,7 +1233,7 @@ paths:
                 id_cliente:
                   type: string
               example:
-                id_estacion: 1
+                id_estacion: "VG1"
                 fecha_inicio: "18-04-2022 11:00"
                 fecha_final: "18-04-2022 18:00"
                 id_vehiculo: "LKE2378"
@@ -1274,7 +1276,7 @@ paths:
           name: id_estacion
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: Obtiene un lista de reservas por estacion desde la fecha actual al futuro
@@ -1978,3 +1980,343 @@ paths:
                     error:
                       value: >-
                           {"error": "Estacion not found."}
+#############################################################################
+  /promociones:
+      # pedimos una lista de promociones
+      get:
+        summary: Obtiene una lista de trabajadores
+        tags:
+        - Promociones
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Trabajadores:
+                    value: >-
+                      [
+                        {
+                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
+                          "descuento": 20,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T11:00:00",
+                          "fecha_fin": "2022-04-18T21:00:00",
+                          "id_promo": 1
+                        },
+                        {
+                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
+                          "descuento": 15,
+                          "estado": "inactiva",
+                          "fecha_inicio": "2022-04-18T17:00:00",
+                          "fecha_fin": "2022-04-18T22:00:00",
+                          "id_promo": 2
+                        },
+                        {
+                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                          "descuento": 25,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T10:00:00",
+                          "fecha_fin": "2022-04-18T19:00:00",
+                          "id_promo": 3
+                        }
+                      ]
+                  No_promociones:
+                    value: '[]'
+          '403':
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+
+      post:
+        summary: Inserta un nueva promocion
+        tags:
+        - Promociones
+        requestBody:
+            required: true
+            content:
+              multipart/form-data:
+                schema:
+                  type: object
+                  required:
+                    - descripcion
+                    - descuento
+                    - estado
+                    - fecha_inicio
+                    - fecha_fin
+                  properties:
+                    descuento:
+                      type: integer
+                    fecha_inicio:
+                      type: string
+                    fecha_fin:
+                      type: string
+                    descripcion:
+                      type: string
+                    estado:
+                      type: boolean
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Meter trabajador:
+                    value: >-
+                      {
+                        "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                        "descuento": 25,
+                        "estado": true,
+                        "fecha_inicio": "2022-04-18T10:00:00",
+                        "fecha_fin": "2022-04-18T19:00:00",
+                        "id_promo": 3
+                      }
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
+          '403':
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+                    
+  /promociones/estado/{estado}:
+  # pedimos una lista de promociones dado su estado (activa/inactiva)
+    get:
+      summary: Obtiene información de una promocion en caso de que este activa
+      tags:
+      - Promociones
+      parameters:
+      - in: path
+        name: estado
+        required: true
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con promociones activas:
+                  value: >-
+                      [
+                        {
+                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
+                          "descuento": 20,
+                          "estado": true,
+                          "fecha_inicio": "2022-04-18T11:00:00",
+                          "fecha_fin": "2022-04-18T21:00:00",
+                          "id_promo": 1
+                        },
+                        {
+                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                          "descuento": 25,
+                          "estado": true,
+                          "fecha_inicio": "2022-04-18T10:00:00",
+                          "fecha_fin": "2022-04-18T19:00:00",
+                          "id_promo": 3
+                        }
+                      ]
+                Sin_promociones_activas:
+                  value: >-
+                      [
+                        {
+                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
+                          "descuento": 15,
+                          "estado": false,
+                          "fecha_inicio": "2022-04-18T17:00:00",
+                          "fecha_fin": "2022-04-18T22:00:00",
+                          "id_promo": 2
+                        }
+                      ]
+                Sin_promociones:
+                  value: '[]'
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
+        '403':
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+  /promociones/{id}:
+  # pedimos una promocion dado su id.
+    get:
+      summary: Obtiene información de una promocion por su ID
+      tags:
+      - Promociones
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Trabajador:
+                  value: >-
+                      {
+                        "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                        "descuento": 25,
+                        "estado": true,
+                        "fecha_inicio": "2022-04-18T10:00:00",
+                        "fecha_fin": "2022-04-18T19:00:00",
+                        "id_promo": 3
+                      }
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
+        '403':
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Promocion not found."}
+      
+    # modificar una promocion dado su id
+    put:
+      summary: Modifica una promocion
+      tags:
+        - Promociones
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                estado:
+                  type: boolean
+                descuento:
+                  type: integer
+                fecha_inicio:
+                  type: string
+                fecha_fin:
+                  type: string
+                descripcion:
+                  type: string
+
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Trabajador actualizado:
+                  value: >-
+                      {
+                        "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                        "descuento": 25,
+                        "estado": true,
+                        "fecha_inicio": "2022-04-18T10:00:00",
+                        "fecha_fin": "2022-04-18T19:00:00",
+                        "id_promo": 3
+                      }
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
+        '403':
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+        '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: {"error": "Promocion not found."}
+
+    delete:
+      summary: Eliminar una promcion dado su id
+      tags:
+        - Promociones
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Trabajador:
+                    value: >-
+                      {"msg": "Promocion deleted succesfully"}
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
+          '403':
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: {"error": "Promocion not found."}
+

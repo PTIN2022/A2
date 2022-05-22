@@ -1,7 +1,10 @@
 import os
 import pytest
 
-from app import app, init_db
+os.environ["MQTT_BROKER_URL"] = "test.mosquitto.org"
+os.environ["MQTT_BROKER_PORT"] = "1883"
+
+from app import app, init_db  # noqa: E402
 
 
 @pytest.fixture(scope='module')
