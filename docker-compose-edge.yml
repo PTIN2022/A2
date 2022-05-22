@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  api:
+    build: ./edge-service-api
+    expose:
+      - 5000
+    depends_on:
+      - brokeredge
+      - mysql
+    environment:
+        SQLALCHEMY_DATABASE_URI: $SQLALCHEMY_DATABASE_URI
+
+  nginx:
+    build: ./edge-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+      - front
+    volumes:
+      - nginxcerts:/etc/ssl/certs
+
+  brokeredge:
+    build: ./broker
+    ports:
+      - "42069:1883"
+    expose:
+      - 1883
+
+  mysql:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    volumes:
+      - ~/.gesys/edge-mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+        MYSQL_DATABASE: $MYSQL_DATABASE
+
+volumes:
+    nginxcerts:
+    

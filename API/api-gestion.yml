@@ -3,8 +3,12 @@ info:
   title: API portal de gestion
   version: '1.0'
 servers:
-  - url: http://127.0.0.1:5000/api
+  - url: http://127.0.0.1:5000
     description: Development
+  - url: http://127.0.0.1/api
+    description: Development HTTP docker-compose
+  - url: https://127.0.0.1/api
+    description: Development HTTPS docker-compose
   - url: http://craaxkvm.epsevg.upc.es:23601/api
     description: Production HTTP
   - url: https://craaxkvm.epsevg.upc.es:23600/api

@@ -1,4 +1,5 @@
 import os
+import time
 import json
 from utils.db import db
 from flask import Flask
@@ -21,15 +22,17 @@ from routes.estadisticas import estadisticas
 
 
 def init_db():
+    time.sleep(5)
     db.init_app(app)
     with app.app_context():
+        db.drop_all()  # TODO: REMOVE AT THE END OF THE PROYECT
         db.create_all()
 
 
 app = Flask(__name__)
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"  # TODO: Pass to mysql
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///test.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
 app.config['MQTT_BROKER_URL'] = os.getenv('MQTT_BROKER_URL', 'test.mosquitto.org')  # use the free broker from HIVEMQ
@@ -78,6 +81,9 @@ init_db()
 with app.app_context():
     e = Estacion("VG3", "mi casa", 720, 85, 23, 20, 130, "Alfredo_Manresa", 1300, 2000, "url")
     db.session.add(e)
+    db.session.commit()
+    e2 = Estacion("VG5", "mi casa", 720, 85, 23, 20, 130, "Alfredo_Manresa", 1300, 2000, "url")
+    db.session.add(e2)
     db.session.commit()
     p1 = Cargador("cargando", "coordenada", e.id_estacion)
     p2 = Cargador("cargando", "cordenada", e.id_estacion)

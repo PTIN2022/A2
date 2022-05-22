@@ -4,6 +4,11 @@ services:
     build: ./cloud-service-api
     expose:
       - 5000
+    depends_on:
+      - brokercloud
+      - mysql
+    environment:
+        SQLALCHEMY_DATABASE_URI: $SQLALCHEMY_DATABASE_URI
 
   front:
     build: ../GeSyS-Front
@@ -11,7 +16,7 @@ services:
       - 3000
 
   nginx:
-    build: ./nginx
+    build: ./cloud-nginx
     ports:
       - "80:80"
       - "443:443"
@@ -27,6 +32,16 @@ services:
       - "42069:1883"
     expose:
       - 1883
+
+  mysql:
+    image: mysql:8
+    ports:
+      - 3306:3306
+    volumes:
+      - ~/.gesys/cloud-mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+        MYSQL_DATABASE: $MYSQL_DATABASE
 
 volumes:
     nginxcerts:

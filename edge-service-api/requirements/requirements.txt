@@ -11,3 +11,4 @@ paho-mqtt
 wheel
 Faker
 random2
+mysqlclient
