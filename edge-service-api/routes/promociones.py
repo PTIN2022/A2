@@ -26,8 +26,8 @@ def post_promocion():
 
 
 @promociones.route('/promociones/<id_promocion>', methods=['GET'])
-def get_promo_id(id_promo):
-    respuesta = control.get_promo_id(id_promo)
+def get_promo_id(id_promocion):
+    respuesta = control.get_promo_id(id_promocion)
     if respuesta:
         return jsonify(respuesta), 200
     else:
@@ -35,7 +35,7 @@ def get_promo_id(id_promo):
 
 
 @promociones.route('/promociones/<id_promocion>', methods=["PUT"])
-def modify_promocion(id_promo):
+def modify_promocion(id_promocion):
     descuento = None
     fecha_inicio = None
     fecha_fin = None
@@ -53,7 +53,7 @@ def modify_promocion(id_promo):
     if "descripcion" in request.form.to_dict():
         descripcion = request.form.to_dict()["descripcion"]
 
-    respuesta = control.modify_promociones(id_promo, descuento, fecha_inicio, fecha_fin, estado, descripcion)
+    respuesta = control.modify_promociones(id_promocion, descuento, fecha_inicio, fecha_fin, estado, descripcion)
 
     if respuesta:
         return jsonify(respuesta), 200
@@ -61,7 +61,7 @@ def modify_promocion(id_promo):
         return jsonify({"error": "Promocion not found."}), 404
 
 
-@promociones.route('/promociones/<id_promo>', methods=["DELETE"])
+@promociones.route('/promociones/<id_promocion>', methods=["DELETE"])
 def deleted_promocion(id_promo):
     deleted = control.delete_promocion(id_promo)
     if deleted:
