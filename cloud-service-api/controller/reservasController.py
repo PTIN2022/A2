@@ -1,6 +1,7 @@
 from utils.db import db
 from models.reserva import Reserva, ReservaSchema
 from models.estacion import Estacion
+from models.cliente import Cliente
 from datetime import datetime
 import random
 
@@ -39,6 +40,10 @@ def get_reservas_dni(dni):
 
 
 def post_reserva(id_estacion, matricula, fecha_inicio_str, fecha_final_str, DNI):
+    cliente = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
+    if not cliente:
+        return None
+
     i = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
     cargador_encontrado = False
     if i:
