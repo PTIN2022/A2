@@ -1,16 +1,16 @@
-from models.promocion import Promocion, PromocionSchema
+from models.model import Promociones, PromocionesSchema
 from utils.db import db
 from datetime import datetime
 
 
-def get_all_promociones():
-    p = Promocion.query.all()
-    return PromocionSchema(many=True).dump(p)
+def get_all_Promocioneses():
+    p = Promociones.query.all()
+    return PromocionesSchema(many=True).dump(p)
 
 
 def get_promo_id(id_promo):
-    p = Promocion.query.filter(Promocion.id_promo == id_promo).one_or_none()
-    return PromocionSchema().dump(p)
+    p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
+    return PromocionesSchema().dump(p)
 
 
 def get_promo_estado(estado):
@@ -18,11 +18,11 @@ def get_promo_estado(estado):
         estado = True
     else:
         estado = False
-    p = Promocion.query.filter(Promocion.estado == estado)
-    return PromocionSchema(many=True).dump(p)
+    p = Promociones.query.filter(Promociones.estado == estado)
+    return PromocionesSchema(many=True).dump(p)
 
 
-def post_promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion):
+def post_Promocioneses(descuento, fecha_inicio, fecha_fin, estado, descripcion):
     try:
         if estado == 'true':
             estado = True
@@ -31,16 +31,16 @@ def post_promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion):
         # Pasamos a datetime las fechas
         fecha_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%dT%H:%M:%S')
         fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%dT%H:%M:%S')
-        p = Promocion(descuento, fecha_inicio, fecha_fin, estado, descripcion)
+        p = Promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
         db.session.add(p)
         db.session.commit()
-        return PromocionSchema().dump(p)
+        return PromocionesSchema().dump(p)
     except:  # noqa: E722
         return None
 
 
-def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=None, estado=None, descripcion=None):
-    p = Promocion.query.filter(Promocion.id_promo == id_promo).one_or_none()
+def modify_Promocioneses(id_promo, descuento=None, fecha_inicio=None, fecha_fin=None, estado=None, descripcion=None):
+    p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
     if p:
         if descuento:
             p.descuento = descuento
@@ -57,12 +57,12 @@ def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=No
         if descripcion:
             p.descripcion = descripcion
         db.session.commit()
-        return PromocionSchema().dump(p)
+        return PromocionesSchema().dump(p)
     return None
 
 
-def delete_promocion(id_promo):
-    p = Promocion.query.filter(Promocion.id_promo == id_promo).one_or_none()
+def delete_Promociones(id_promo):
+    p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
     if p:
         db.session.delete(p)
         db.session.commit()
