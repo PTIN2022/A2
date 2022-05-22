@@ -3,6 +3,7 @@ from utils.db import db
 from flask import Flask
 from routes.reservas import reservas
 from routes.estaciones import estaciones
+from routes.cliente import clientes
 from models.cargador import Cargador
 from models.estacion import Estacion
 
@@ -21,6 +22,7 @@ app.config["TESTING"] = False
 
 app.register_blueprint(reservas)
 app.register_blueprint(estaciones)
+app.register_blueprint(clientes)
 
 if os.path.exists("./test.db"):
     os.remove("./test.db")
