@@ -40,7 +40,7 @@ def post_cliente():
     foto = request.form.to_dict()["foto"]
     telefono = request.form.to_dict()["telefono"]
     username = request.form.to_dict()["username"]
-    password = "123"
+    password = request.form.to_dict()["password"]
     c = control.post_cliente(nombre, apellido, email, DNI, foto, telefono, username, password)
     return jsonify(c)
 

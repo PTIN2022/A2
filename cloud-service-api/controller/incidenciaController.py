@@ -3,29 +3,29 @@ from models.model import *
 
 
 def get_all_incidencias():
-    i = Incidencia.query.all()
-    return IncidenciaSchema(many=True).dump(i)
+    i = Averia.query.all()
+    return AveriaSchema(many=True).dump(i)
 
 
 def get_incidencias_id(id):
-    i = Incidencia.query.filter(Incidencia.id == id).one_or_none()
-    return IncidenciaSchema().dump(i)
+    i = Averia.query.filter(Averia.id_averia == id).one_or_none()
+    return AveriaSchema().dump(i)
 
 
 def get_incidencias_estacion(estacion):
-    i = Incidencia.query.filter(Incidencia.id_estacion == estacion)
-    return IncidenciaSchema(many=True).dump(i)
+    i = Averia.query.filter(Averia.name_estacion == estacion)
+    return AveriaSchema(many=True).dump(i)
 
 
-def post_incidencia(estacion, direccion, fecha, descripcion, estado=False):
-    i = Incidencia(estacion, fecha, estado, descripcion)
+def post_incidencia(estacion, fecha, descripcion, estado=False):
+    i = Averia(fecha, estado, descripcion, estacion)
     db.session.add(i)
     db.session.commit()
-    return i.id
+    return i.id_averia
 
 
 def remove_incidencia(id):
-    i = Incidencia.query.filter(Incidencia.id == id).one_or_none()
+    i = Averia.query.filter(Averia.id_averia == id).one_or_none()
     if i:
         db.session.delete(i)
         db.session.commit()
@@ -33,19 +33,21 @@ def remove_incidencia(id):
     return False
 
 
-def modify_incidencia(id, estacion=None, direccion=None, fecha_averia=None, descripcion=None, estado=None):
-    i = Incidencia.query.filter(Incidencia.id == id).one_or_none()
+def modify_incidencia(id, estacion=None, fecha_averia=None, descripcion=None, estado=None, trabajador=None):
+    i = Averia.query.filter(Averia.id_averia == id).one_or_none()
     if i:
         if estacion:
-            i.estacion = estacion
+            i.name_estacion = estacion
         if fecha_averia:
-            i.fecha_averia = fecha_averia
+            i.fecha = fecha_averia
         if descripcion:
             i.descripcion = descripcion
         if estado is not None:
             i.estado = estado
+        if trabajador is not None:
+            i.id_trabajador = trabajador
 
         db.session.commit()
-        return IncidenciaSchema().dump(i)
+        return AveriaSchema().dump(i)
 
     return None

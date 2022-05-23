@@ -29,24 +29,31 @@ paths:
               examples:
                 Con incidencias:
                   value: [
-                          {
-                            "incidenciaId": 1,
-                            "estación": "VG1",
-                            "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "2022-04-18",
-                            "estado": false,
-                            "descripción": "El cargador de la planta 2 m plaza 1 no funciona"
-                          },
-                          {
-                            "incidenciaId": 2,
-                            "estación": "VG2",
-                            "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "2022-04-18 ",
-                            "estado": false,
-                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
-                          }
-                        ]
-
+                        {
+                          "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                          "estado": "Arreglando",
+                          "fecha": "2022-04-18T00:00:00",
+                          "id_averia": 1,
+                          "id_trabajador": 1,
+                          "name_estacion": "VG1"
+                        },
+                        {
+                          "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                          "estado": "Arreglando",
+                          "fecha": "2022-04-18T00:00:00",
+                          "id_averia": 3,
+                          "id_trabajador": null,
+                          "name_estacion": "VG1"
+                        },
+                        {
+                          "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                          "estado": "Arreglando",
+                          "fecha": "2022-04-18T00:00:00",
+                          "id_averia": 4,
+                          "id_trabajador": null,
+                          "name_estacion": "VG1"
+                        }
+                      ]
                 Sin incidencias:
                   value: '[]'
         '401':
@@ -70,13 +77,13 @@ paths:
                 type: object
                 required:
                   - estacion
-                  - direccion
+                  - estado
                   - fecha_averia
                   - descripcion
                 properties:
                   estacion:
                     type: string
-                  direccion:
+                  estado:
                     type: string
                   fecha_averia:
                     type: string
@@ -84,7 +91,7 @@ paths:
                     type: string
                 example:
                   estacion: VG1
-                  direccion: "Av.Victor Balaguer 2"
+                  estado: "Arreglando"
                   fecha_averia: "2022-04-18"
                   descripcion: "El cargador de la planta 2 m plaza 1 no funciona"
         responses:
@@ -96,11 +103,12 @@ paths:
                   Meter incidencia:
                     value:  >-
                         {
-                          "estacion": "VG1",
-                          "direccion": "Av.Victor Balaguer 2",
-                          "fecha_averia": "2022-04-18",
-                          "estado": "true",
-                          "descripcion": "El cargador de la planta 2 m plaza 1 funciona"
+                          "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                          "estado": "Arreglando",
+                          "fecha": "2022-04-18T00:00:00",
+                          "id_averia": 4,
+                          "id_trabajador": null,
+                          "name_estacion": "VG1"
                         }
           '400':
             description: Peticion incorrecta
@@ -133,20 +141,20 @@ paths:
                   value: >-
                         [
                           {
-                            "incidenciaId": 1,
-                            "estación": "VG1",
-                            "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "2022-04-18 ",
-                            "estado": false,
-                            "descripción": "El cargador de la planta 2 m plaza 1 no funciona"
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                            "estado": "Arreglando",
+                            "fecha": "2022-04-18T00:00:00",
+                            "id_averia": 3,
+                            "id_trabajador": null,
+                            "name_estacion": "VG1"
                           },
                           {
-                            "incidenciaId": 2,
-                            "estacion": "VG2",
-                            "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "2022-04-18 ",
-                            "estado": false,
-                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                            "estado": "Arreglando",
+                            "fecha": "2022-04-18T00:00:00",
+                            "id_averia": 4,
+                            "id_trabajador": null,
+                            "name_estacion": "VG1"
                           }
                         ]
                 Sin incidencias:
@@ -180,12 +188,12 @@ paths:
                   Incidencias:
                     value: >-
                           {
-                            "incidencia_id": 1,
-                            "estacion": "VG1",
-                            "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "2022-04-18",
-                            "estado": false,
-                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                            "estado": "Arreglando",
+                            "fecha": "2022-04-18T00:00:00",
+                            "id_averia": 4,
+                            "id_trabajador": null,
+                            "name_estacion": "VG1"
                           }
                   Incidencia no encontrada:
                     value: '[]'
@@ -230,9 +238,11 @@ paths:
                       type: string
                     estado:
                       type: boolean
+                    trabajador:
+                      type: integer
                   example:
                     estacion: VG1
-                    direccion: "Av.Victor Balaguer 2"
+                    trabajador: 1
                     fecha_averia: "18/04/022"
                     descripcion: "El cargador de la planta 2 m plaza 1 no funciona"
                     estado: false
@@ -252,12 +262,12 @@ paths:
                     Incidencia actualizada:
                       value: >-
                           {
-                            "incidencia_id": 1,
-                            "estacion": "VG1",
-                            "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "2022-04-18",
-                            "estado": false,
-                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                            "estado": "Arreglando",
+                            "fecha": "2022-04-18T00:00:00",
+                            "id_averia": 4,
+                            "id_trabajador": 1,
+                            "name_estacion": "VG1"
                           }
             '400':
               description: Peticion incorrecta
@@ -1563,6 +1573,7 @@ paths:
                     - foto
                     - telefono
                     - username
+                    - password
                   properties:
                     nombre:
                       type: string
@@ -1575,12 +1586,11 @@ paths:
                     foto:
                       type: string
                     telefono:
-                      type: string
+                      type: integer
                     username:
                       type: string
-                    #profileImage:
-                    #  type: string
-                    #  format: binary
+                    password:
+                      type: string
 
                   example:
                     name: "Pere"

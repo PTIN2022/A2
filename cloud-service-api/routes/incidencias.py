@@ -17,11 +17,11 @@ def get_incidencias():
 def post_incidencias():
     try:
         estacion = request.json["estacion"]
-        direccion = request.json["direccion"]
+        estado = request.json["estado"]
         fecha_averia = request.json["fecha_averia"]
         fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%Y-%m-%d'))
         descripcion = request.json["descripcion"]
-        id = control.post_incidencia(estacion, direccion, fecha_averia, descripcion)
+        id = control.post_incidencia(estacion, fecha_averia, descripcion, estado)
 
         respuesta = control.get_incidencias_id(id)
         return jsonify(respuesta)
@@ -59,13 +59,13 @@ def modify_incidencia(id):
         except ValueError:
             return jsonify({"error": "Malformed request syntax."}), 400
 
-    if "descripcion" in request.json:
-        descripcion = request.json["descripcion"]
+    if "trabajador" in request.json:
+        trabajador = request.json["trabajador"]
     if "estado" in request.json:
         print(request.json["estado"])
         estado = utils.strtobool(str(request.json["estado"]))
 
-    respuesta = control.modify_incidencia(id, estacion, direccion, fecha_averia, descripcion, estado)
+    respuesta = control.modify_incidencia(id, estacion, fecha_averia, descripcion, estado, trabajador)
     if respuesta:
         return jsonify(respuesta), 200
     else:

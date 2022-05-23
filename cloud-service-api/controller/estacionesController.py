@@ -20,7 +20,7 @@ def get_estacion_by_id(id):
 
     return None
 
-
+# Este no se yo si vale la pena mantenerlo
 def delete_plaza(id, id_plaza):
     i = Cargador.query.filter(Cargador.id == id_plaza).one_or_none()
     if i:

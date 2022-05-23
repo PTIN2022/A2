@@ -10,20 +10,21 @@ class Averia(db.Model):
     estado = db.Column(db.String(30), nullable=False)
     descripcion = db.Column(db.String(300))
 
-    id_trabajador = db.Column('id_trabajador', db.ForeignKey(
-        'trabajador.id_usuari'), nullable=False)
-    id_estacion = db.Column(db.Integer, db.ForeignKey(
-        'estacion.id_estacion'), nullable=False)
+    id_trabajador = db.Column(db.Integer, db.ForeignKey(
+        'trabajador.id_usuari'), nullable=True)
+    name_estacion = db.Column(db.String(20), db.ForeignKey(
+        'estacion.nombre_est'), nullable=False)
 
-    def __init__(self, fecha, estado, descripcion, id_trabajador, id_estacion):
+    def __init__(self, fecha, estado, descripcion, id_estacion, id_trabajador=None):
         self.fecha = fecha
         self.estado = estado
         self.descripcion = descripcion
         self.id_trabajador = id_trabajador
-        self.id_estacion = id_estacion
+        self.name_estacion = id_estacion
 
 class AveriaSchema(SQLAlchemyAutoSchema):
     class Meta:
+        include_fk = True
         model = Averia
 
 class Aviso(db.Model):
@@ -54,7 +55,7 @@ class Incidencia(db.Model):
     id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     id_estacion = db.Column(db.String(20), nullable=False)  # TODO: foreing key
     ###################################### CHANGE ME #############################################
-    #estacion_id = db.Column(db.Integer, db.ForeignKey("estacion.id_estacion"), nullable=False)
+    # estacion_id = db.Column(db.Integer, db.ForeignKey("estacion.id_estacion"), nullable=False)
     fecha_averia = db.Column(db.Date, nullable=False)
     estado = db.Column(db.Boolean, nullable=False)
     descripcion = db.Column(db.String(200))
@@ -199,7 +200,7 @@ class Usuari_t(db.Model):
     nombre = db.Column(db.String(30), nullable=False)
     apellido = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(30), nullable=False)
-    dni = db.Column(db.String(15), nullable=False)
+    dni = db.Column(db.String(15), nullable=False, unique=True)
     foto = db.Column(db.String(15), nullable=False)
     telefono = db.Column(db.Integer, nullable=False)
     username = db.Column(db.String(30), nullable=False)
