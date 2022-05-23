@@ -49,28 +49,6 @@ class AvisoSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Aviso
 
-
-class Incidencia(db.Model):
-
-    id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    id_estacion = db.Column(db.String(20), nullable=False)  # TODO: foreing key
-    ###################################### CHANGE ME #############################################
-    # estacion_id = db.Column(db.Integer, db.ForeignKey("estacion.id_estacion"), nullable=False)
-    fecha_averia = db.Column(db.Date, nullable=False)
-    estado = db.Column(db.Boolean, nullable=False)
-    descripcion = db.Column(db.String(200))
-
-    def __init__(self, id_estacion, fecha, estado, descripcion):
-        self.descripcion = descripcion
-        self.estado = estado
-        self.fecha_averia = fecha
-        self.id_estacion = id_estacion
-
-
-class IncidenciaSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Incidencia
-
 class Mensaje(db.Model):
 
 	id_mensaje = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
@@ -126,16 +104,16 @@ class Reserva(db.Model):
     estado_pago = db.Column(db.Boolean, nullable=True)
 
     id_cargador = db.Column(db.Integer, db.ForeignKey("cargador.id_cargador"), nullable=False)
-    id_vehiculo = db.Column(db.Integer, db.ForeignKey(
+    id_vehiculo = db.Column(db.String(25), db.ForeignKey(
         "vehiculo.matricula"), nullable=False)
     id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
 
     avisos = db.relationship("Aviso",  backref="reserva")
 
-    def __init__(self, fecha_entrada, fecha_salida, procetnaje_carga, precio_carga_completa, precio_carga_actual, estado, tarifa, asistida, estado_pago, id_cargador, id_vehiculo, id_cliente):
+    def __init__(self, fecha_entrada, fecha_salida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado, tarifa, asistida, estado_pago, id_cargador, id_vehiculo, id_cliente):
         self.fecha_entrada = fecha_entrada
         self.fecha_salida = fecha_salida
-        self.procetnaje_carga = procetnaje_carga
+        self.procetnaje_carga = porcentaje_carga
         self.precio_carga_completa = precio_carga_completa
         self.precio_carga_actual = precio_carga_actual
         self.estado = estado
@@ -149,6 +127,7 @@ class Reserva(db.Model):
 class ReservaSchema(SQLAlchemyAutoSchema):
     # estacion= fields.Nested(EstacionSchema)
     class Meta:
+        include_fk = True
         model = Reserva
 
 

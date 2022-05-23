@@ -23,9 +23,14 @@ def post_reservas():
         fecha_inicio_str = datetime.strptime(fecha_inicio, '%d-%m-%Y %H:%M')
         matricula = request.json["id_vehiculo"]
         DNI = request.json["id_cliente"]
-
+        tarifa = request.json["tarifa"]
+        asistida = request.json["asistida"]
+        porcentaje_carga = request.json["porcentaje_carga"]
+        precio_carga_completa = request.json["precio_carga_completo"]
+        precio_carga_actual = request.json["precio_carga_actual"]
+        estado_pago = request.json["estado_pago"]
         # TODO: comprobar fecha final es mayor fecha inicial
-        id = control.post_reserva(estacion, matricula, fecha_inicio_str, fecha_final_str, DNI)
+        id = control.post_reserva(estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI)
         respuesta = control.get_reservas_id(id)
         return jsonify(respuesta)
 

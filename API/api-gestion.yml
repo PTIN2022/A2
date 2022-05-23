@@ -1201,12 +1201,34 @@ paths:
                     value:  >-
                         [
                           {
-                            "fecha_entrada": "2022-04-18T11:00:00",
-                            "fecha_salida": "2022-04-18T18:00:00",
-                            "id_cargador": 1,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": true,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.798066",
+                            "fecha_salida": "2022-05-23T13:49:59.798066",
+                            "id_cargador": 257,
+                            "id_cliente": 1,
                             "id_reserva": 1,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 10.1,
+                            "precio_carga_completa": 25.2,
+                            "procetnaje_carga": 50,
+                            "tarifa": 90.99
+                          },
+                          {
+                            "asistida": true,
+                            "estado": false,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.808033",
+                            "fecha_salida": "2022-05-23T13:49:59.808033",
+                            "id_cargador": 258,
+                            "id_cliente": 1,
+                            "id_reserva": 2,
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 60,
+                            "precio_carga_completa": 50,
+                            "procetnaje_carga": 33,
+                            "tarifa": 44.44
                           }
                         ]
           '400':
@@ -1235,6 +1257,12 @@ paths:
                   - fecha_final
                   - id_vehiculo
                   - id_cliente
+                  - tarifa
+                  - asistida
+                  - porcentaje_carga
+                  - precio_carga_completo
+                  - precio_carga_actual
+                  - estado_pago
               properties:
                 id_estacion:
                   type: string
@@ -1246,12 +1274,30 @@ paths:
                   type: string
                 id_cliente:
                   type: string
+                tarifa:
+                  type: number
+                asistida:
+                  type: boolean
+                porcentaje_carga:
+                  type: number
+                precio_carga_completo:
+                  type: number
+                precio_carga_actual:
+                  type: number
+                estado_pago:
+                  type: boolean
               example:
                 id_estacion: "VG1"
                 fecha_inicio: "18-04-2022 11:00"
                 fecha_final: "18-04-2022 18:00"
                 id_vehiculo: "LKE2378"
                 id_cliente: "1238712N"
+                tarifa: 12,7
+                asistida: True
+                porcentaje_carga: 30
+                precio_carga_completo: 30
+                precio_carga_actual: 5
+                estado_pago: True
       responses:
         '200':
           description: Peticion correcta
@@ -1261,13 +1307,19 @@ paths:
                 Meter reserva:
                   value:  >-
                       {
-                        "id_cliente": "1238712N",
-                        "fecha_entrada": "2022-04-18T18:00:00",
-                        "fecha_salida": "2022-04-18T11:00:00",
+                        "asistida": true,
+                        "estado": true,
+                        "estado_pago": true,
+                        "fecha_entrada": "2022-05-23T13:49:59.798066",
+                        "fecha_salida": "2022-05-23T13:49:59.798066",
+                        "id_cargador": 257,
+                        "id_cliente": 1,
                         "id_reserva": 1,
-                        "id_estacion": 1,
-                        "id_vehiculo": "LKE2378",
-                        "id_cargador": 2
+                        "id_vehiculo": "2WRQ7QQ",
+                        "precio_carga_actual": 10.1,
+                        "precio_carga_completa": 25.2,
+                        "procetnaje_carga": 50,
+                        "tarifa": 90.99
                       }
         '400':
           description: Peticion incorrecta
@@ -1301,20 +1353,34 @@ paths:
                   value: >-
                         [
                           {
-                            "fecha_entrada": "2022-07-18T11:00:00",
-                            "fecha_salida": "2022-07-18T18:00:00",
-                            "id_cargador": 1,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": true,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.798066",
+                            "fecha_salida": "2022-05-23T13:49:59.798066",
+                            "id_cargador": 257,
+                            "id_cliente": 1,
                             "id_reserva": 1,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 10.1,
+                            "precio_carga_completa": 25.2,
+                            "procetnaje_carga": 50,
+                            "tarifa": 90.99
                           },
                           {
-                            "fecha_entrada": "2022-07-18T12:00:00",
-                            "fecha_salida": "2022-07-18T115:00:00",
-                            "id_cargador": 2,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": false,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.808033",
+                            "fecha_salida": "2022-05-23T13:49:59.808033",
+                            "id_cargador": 258,
+                            "id_cliente": 1,
                             "id_reserva": 2,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 60,
+                            "precio_carga_completa": 50,
+                            "procetnaje_carga": 33,
+                            "tarifa": 44.44
                           }
                         ]
                 Sin reservas:
@@ -1347,24 +1413,38 @@ paths:
               examples:
                 Con reservas:
                   value: >-
-                        [
-                          {
-                            "fecha_entrada": "2022-07-18T11:00:00",
-                            "fecha_salida": "2022-07-18T18:00:00",
-                            "id_cargador": 1,
-                            "id_cliente": "1238712N",
-                            "id_reserva": 1,
-                            "id_vehiculo": "LKE2378"
-                          },
-                          {
-                            "fecha_entrada": "2022-07-18T12:00:00",
-                            "fecha_salida": "2022-07-18T115:00:00",
-                            "id_cargador": 2,
-                            "id_cliente": "1238712N",
-                            "id_reserva": 2,
-                            "id_vehiculo": "LKE2378"
-                          }
-                        ]
+                      [
+                        {
+                          "asistida": true,
+                          "estado": true,
+                          "estado_pago": true,
+                          "fecha_entrada": "2022-05-23T13:49:59.798066",
+                          "fecha_salida": "2022-05-23T13:49:59.798066",
+                          "id_cargador": 257,
+                          "id_cliente": 1,
+                          "id_reserva": 1,
+                          "id_vehiculo": "2WRQ7QQ",
+                          "precio_carga_actual": 10.1,
+                          "precio_carga_completa": 25.2,
+                          "procetnaje_carga": 50,
+                          "tarifa": 90.99
+                        },
+                        {
+                          "asistida": true,
+                          "estado": false,
+                          "estado_pago": true,
+                          "fecha_entrada": "2022-05-23T13:49:59.808033",
+                          "fecha_salida": "2022-05-23T13:49:59.808033",
+                          "id_cargador": 258,
+                          "id_cliente": 1,
+                          "id_reserva": 2,
+                          "id_vehiculo": "2WRQ7QQ",
+                          "precio_carga_actual": 60,
+                          "precio_carga_completa": 50,
+                          "procetnaje_carga": 33,
+                          "tarifa": 44.44
+                        }
+                      ]
                 Sin reservas:
                   value: '[]'
         '401':
@@ -1397,20 +1477,34 @@ paths:
                   value: >-
                         [
                           {
-                            "fecha_entrada": "2022-07-18T11:00:00",
-                            "fecha_salida": "2022-07-18T18:00:00",
-                            "id_cargador": 1,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": true,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.798066",
+                            "fecha_salida": "2022-05-23T13:49:59.798066",
+                            "id_cargador": 257,
+                            "id_cliente": 1,
                             "id_reserva": 1,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 10.1,
+                            "precio_carga_completa": 25.2,
+                            "procetnaje_carga": 50,
+                            "tarifa": 90.99
                           },
                           {
-                            "fecha_entrada": "2022-07-18T12:00:00",
-                            "fecha_salida": "2022-07-18T115:00:00",
-                            "id_cargador": 2,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": false,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.808033",
+                            "fecha_salida": "2022-05-23T13:49:59.808033",
+                            "id_cargador": 258,
+                            "id_cliente": 1,
                             "id_reserva": 2,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 60,
+                            "precio_carga_completa": 50,
+                            "procetnaje_carga": 33,
+                            "tarifa": 44.44
                           }
                         ]
                 Sin reservas:
@@ -1443,14 +1537,21 @@ paths:
                 examples:
                   Reservas:
                     value:  >-
-                        {
-                          "fecha_entrada": "2022-04-18T11:00:00",
-                          "fecha_salida": "2022-04-18T18:00:00",
-                          "id_cargador": 1,
-                          "id_cliente": "1238712N",
-                          "id_reserva": 1,
-                          "id_vehiculo": "LKE2378"
-                        }
+                          {
+                            "asistida": true,
+                            "estado": true,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.798066",
+                            "fecha_salida": "2022-05-23T13:49:59.798066",
+                            "id_cargador": 257,
+                            "id_cliente": 1,
+                            "id_reserva": 1,
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 10.1,
+                            "precio_carga_completa": 25.2,
+                            "procetnaje_carga": 50,
+                            "tarifa": 90.99
+                          }
           '401':
             description: Not login
             content:

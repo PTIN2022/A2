@@ -34,13 +34,18 @@ def get_reservas_matricula(matricula):
 
 
 def get_reservas_dni(dni):
-    i = Reserva.query.filter(Reserva.id_cliente == dni)
-    return ReservaSchema(many=True).dump(i)
+    cl = Cliente.query.filter(Cliente.dni == dni).one_or_none()
+    res = ReservaSchema(many=True).dump(cl.reservas)
+    return res
 
 
-def post_reserva(id_estacion, matricula, fecha_inicio_str, fecha_final_str, DNI):
+def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI):
     i = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
     cargador_encontrado = False
+    cl = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
+    vh = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()
+    if not cl or not vh:
+        return None
     if i:
         random.shuffle(i.cargadores)  # Se hace un shuffle para que no siempre se use el mismo cargador para evitar el desgaste del mismo
         for cargador in i.cargadores:
@@ -58,7 +63,7 @@ def post_reserva(id_estacion, matricula, fecha_inicio_str, fecha_final_str, DNI)
                             cargador_ocupado = True
 
                 if not cargador_ocupado:
-                    i = Reserva(fecha_inicio_str, fecha_final_str, cargador.id_cargador, matricula, DNI)
+                    i = Reserva(fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, True, tarifa, asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari)
                     db.session.add(i)
                     db.session.commit()
                     cargador_encontrado = True
