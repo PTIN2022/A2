@@ -3,7 +3,7 @@ info:
   title: API portal de gestion
   version: '1.0'
 servers:
-  - url: http://127.0.0.1:8080/
+  - url: http://127.0.0.1:5000/
     description: Developments
   - url: http://craaxkvm.epsevg.upc.es:23701/
     description: Server
@@ -346,24 +346,26 @@ paths:
                 Con clientes:
                   value: [
                           {
-                            "id_cliente": 1,
-                            "nombre": "Pablo",
-                            "apellido": "Escobar",
-                            "email": "pablo@gmail.com",
-                            "DNI": "23769543B",
-                            "foto": "http://?????????/clientes/pablo.png",
-                            "telefono": "643876101",
-                            "username": "xXpabloXx",
+                            "apellido": "Roca",
+                            "dni": "1234G",
+                            "email": "pere.roca@boss.com",
+                            "foto": "Dueño",
+                            "id_usuari": 1,
+                            "nombre": "Pere",
+                            "password": "hola",
+                            "telefono": 622554433,
+                            "username": "pr"
                           },
                           {
-                            "id_cliente": 2,
-                            "nombre": "Javier",
-                            "apellido": "Sanchez",
-                            "email": "javi@gmail.com",
-                            "DNI": "23769612h",
-                            "foto": "http://?????????/clientes/javi.png",
-                            "telefono": "643876101",
-                            "username": "xXpabloXx",
+                            "apellido": "Gamero",
+                            "dni": "1235G",
+                            "email": "raul.gamero@boss.com",
+                            "foto": "Cliente",
+                            "id_usuari": 2,
+                            "nombre": "Raul",
+                            "password": "hola",
+                            "telefono": 622554433,
+                            "username": "rg"
                           }
                         ]
 
@@ -384,7 +386,7 @@ paths:
         requestBody:
             required: true
             content:
-              multipart/form-data:
+              application/json:
                 schema:
                   type: object
                   required:
@@ -395,6 +397,7 @@ paths:
                     - foto
                     - telefono
                     - username
+                    - password
                   properties:
                     nombre:
                       type: string
@@ -410,17 +413,21 @@ paths:
                       type: string
                     username:
                       type: string
+                    password:
+                      type: string
                     #profileImage:
                     #  type: string
                     #  format: binary
 
                   example:
-                    name: "Pere"
-                    lastname: "Roca"
-                    telf: "622554433"
+                    nombre: "Pere"
+                    apellido: "Roca"
                     email: "pere.roca@boss.com"
-                    rol: "Dueño"
-                    password: "proca"
+                    DNI: "1234G"
+                    foto: "Dueño"
+                    telefono: "622554433"
+                    username: "pr"
+                    password: "hola"
         responses:
           '200':
             description: Peticion correcta
@@ -430,15 +437,16 @@ paths:
                   Meter cliente:
                     value: [
                       {
-                        "id_cliente": 1,
-                        "nombre": "Pablo",
-                        "apellido": "Escobar",
-                        "email": "pablo@gmail.com",
-                        "DNI": "23769543B",
-                        "foto": "http://?????????/clientes/pablo.png",
-                        "telefono": "643876101",
-                        "username": "xXpabloXx",
-                      },
+                        "apellido": "Roca",
+                        "dni": "1234G",
+                        "email": "pere.roca@boss.com",
+                        "foto": "Dueño",
+                        "id_usuari": 1,
+                        "nombre": "Pere",
+                        "password": "hola",
+                        "telefono": 622554433,
+                        "username": "pr"
+                      }
                       ]
           '400':
               description: Peticion incorrecta
@@ -456,7 +464,7 @@ paths:
                     error:
                       value: >-
                         {"error": "User not authorized."}
-  /clientes/bydni/{DNI}:
+  /clientes/profile/{DNI}:
     # pedimos un cliente dado su id
     get:
       summary: Obtiene un cliente dado su DNI
@@ -478,14 +486,15 @@ paths:
                   value:
                       [
                         {
-                          "id_cliente": 1,
-                          "nombre": "Pablo",
-                          "apellido": "Escobar",
-                          "email": "pablo@gmail.com",
-                          "DNI": "23769543B",
-                          "foto": "http://?????????/clientes/pablo.png",
-                          "telefono": "643876101",
-                          "username": "xXpabloXx",
+                          "apellido": "Roca",
+                          "dni": "1234G",
+                          "email": "pere.roca@boss.com",
+                          "foto": "Dueño",
+                          "id_usuari": 1,
+                          "nombre": "Pere",
+                          "password": "hola",
+                          "telefono": 622554433,
+                          "username": "pr"
                         }
                       ]
                 Cliente no encontrado:
@@ -505,7 +514,7 @@ paths:
               examples:
                 error:
                   value: >-
-                      {"error": "Client not found."}
+                      {"error": "User not found."}
     # modificar cliente de la lista de clientes
     put:
         summary: Modifica un trabajador
@@ -520,17 +529,15 @@ paths:
         requestBody:
           required: true
           content:
-            multipart/form-data:
+            application/json:
               schema:
                   type: object
                   required:
                     - nombre
                     - apellido
                     - email
-                    - DNI
                     - foto
                     - telefono
-                    - username
                   properties:
                     nombre:
                       type: string
@@ -538,17 +545,20 @@ paths:
                       type: string
                     email:
                       type: string
-                    DNI:
-                      type: string
                     foto:
                       type: string
                     telefono:
                       type: string
-                    username:
-                      type: string
                     #profileImage:
                     #  type: string
                     #  format: binary
+                  example:
+                    nombre: "Raul"
+                    apellido: "Gamero"
+                    email: "raul.gamero@boss.com"
+                    foto: "noob.png"
+                    telefono: "622554433"
+                    
         responses:
           '200':
             description: Peticion correcta
@@ -557,16 +567,17 @@ paths:
                 examples:
                   Trabajador actualizado:
                     value: >-
-                          {
-                            "id_cliente": 2,
-                            "nombre": "Javier",
-                            "apellido": "Sanchez",
-                            "email": "javi@gmail.com",
-                            "DNI": "23769612h",
-                            "foto": "http://?????????/clientes/javi.png",
-                            "telefono": "643876101",
-                            "username": "xXpabloXx",
-                          }
+                        {
+                          "apellido": "Roca",
+                          "dni": "1234G",
+                          "email": "pere.roca@boss.com",
+                          "foto": "Dueño",
+                          "id_usuari": 1,
+                          "nombre": "Pere",
+                          "password": "hola",
+                          "telefono": 622554433,
+                          "username": "pr"
+                        }
           '400':
             description: Peticion incorrecta
             content:
@@ -601,7 +612,7 @@ paths:
             application/json:
               examples:
                 Incidencias:
-                  value: {"msg": "User deleted correctly."}
+                  value: {"msg": "Client deleted correctly."}
                 Incidencia no encontrada:
                   value: '[]'
         '401':
@@ -619,6 +630,107 @@ paths:
               examples:
                 error:
                   value: >-
-                    {"error": "User not found."}
+                    {"error": "Client not found."}
+                    
+  /clientes/profile/{DNI}/reservas:
+      # pedimos reservas clientes dado su DNI
+      get:
+        summary: Obtiene reservas clientes dado su DNI
+        tags:
+          - Clientes
+        parameters:
+          - in: path
+            name: DNI
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Default error sample response
+            content:
+              application/json:
+                examples:
+                  Cliente encontrado:
+                    value:
+                        [
+                          {
+                            "fecha_entrada": "2022-04-18T11:00:00",
+                            "fecha_salida": "2022-04-18T18:00:00",
+                            "id_cargador": 1,
+                            "id_cliente": 1,
+                            "id_reserva": 1,
+                            "id_vehiculo": "LKE2378"
+                          }
+                        ]
+                  Cliente no encontrado:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+          '404':
+            description: Not found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not found."}
+  /clientes/change_password/{DNI}:
+    # modificar contraseña cliente
+    put:
+        summary: Modifica un trabajador
+        tags:
+          - Clientes
+        parameters:
+        - in: path
+          name: DNI
+          required: true
+          schema:
+            type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                  type: object
+                  required:
+                    - actual_password
+                    - new_password
+                  properties:
+                    actual_password:
+                      type: string
+                    new_password:
+                      type: string
+                  example:
+                    actual_password: "hola"
+                    new_password: "admin"
+                    
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Trabajador actualizado:
+                    value: {"msg": "Password changed succesfully."}
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter cliente:
+                    value: {"error": "Malformed request syntax."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: {"error": "User not found."}
 #######################################################################################################
 

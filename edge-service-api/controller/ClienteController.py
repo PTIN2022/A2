@@ -1,5 +1,7 @@
 from models.cliente import Cliente, ClienteSchema
+from models.reserva import Reserva, ReservaSchema
 from utils.db import db
+from sqlalchemy.inspection import inspect
 
 
 def get_all_clientes():
@@ -19,7 +21,11 @@ def post_cliente(nombre, apellido, email, DNI, foto, telefono, username, passwor
     return ClienteSchema().dump(c)
 
 
-def modify_cliente(nombre, apellido, email, DNI, foto, telefono, username, password):
+def get_cliente_reservas(DNI):
+    r = Reserva.query.filter(Reserva.id_cliente == DNI).all()
+    return ReservaSchema(many=True).dump(r)
+
+def modify_cliente(nombre, apellido, email, DNI, foto, telefono):
     c = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
     if c:
         if nombre:
@@ -30,10 +36,6 @@ def modify_cliente(nombre, apellido, email, DNI, foto, telefono, username, passw
             c.telefono = telefono
         if email:
             c.email = email
-        if username:
-            c.username = username
-        if password:
-            c.password = password
         if foto:
             c.foto = foto
 
@@ -41,6 +43,19 @@ def modify_cliente(nombre, apellido, email, DNI, foto, telefono, username, passw
         return ClienteSchema().dump(c)
 
     return None
+
+
+def modify_password(DNI, last_password, new_password):
+    c = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
+    if c:
+        if c.password == last_password:
+            c.password = new_password
+            db.session.commit()
+            return True
+        else:
+            return False
+    else:
+        return False
 
 def delete_cliente_dni(DNI):
     c = Cliente.query.filter(Cliente.dni == DNI).one_or_none()

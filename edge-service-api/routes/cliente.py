@@ -7,35 +7,44 @@ clientes = Blueprint('clientes', __name__)
 @clientes.route('/clientes', methods=['GET'])
 def get_clientes():
     respuesta = control.get_all_clientes()
-    return jsonify(respuesta)
-# habra que hacer el error 401
+    return jsonify(respuesta), 200
+    # habra que hacer control de quien hacer el get all
 
 
-@clientes.route('/clientes/bydni/<DNI>', methods=['GET'])
+@clientes.route('/clientes/profile/<DNI>', methods=['GET'])
 def get_clientes_dni(DNI):
     respuesta = control.get_cliente_dni(DNI)
     if respuesta:
         return jsonify(respuesta), 200
     else:
-        return jsonify({"error": "cliente not found."}), 404
+        return jsonify({"error": "User not found."}), 404
 # habra que meter el error 401
+
+
+@clientes.route('/clientes/profile/<DNI>/reservas', methods=['GET'])
+def get_clientes_reservas(DNI):
+    respuesta = control.get_cliente_reservas(DNI)
+    if respuesta:
+        return jsonify(respuesta), 200
+    else:
+        return jsonify({"error": "Reserva not found for this user."}), 404
 
 
 @clientes.route('/clientes', methods=['POST'])
 def post_cliente():
-    nombre = request.form.to_dict()["nombre"]
-    apellido = request.form.to_dict()["apellido"]
-    email = request.form.to_dict()["email"]
-    DNI = request.form.to_dict()["DNI"]
-    foto = request.form.to_dict()["foto"]
-    telefono = request.form.to_dict()["telefono"]
-    username = request.form.to_dict()["username"]
-    password = "123"
+    nombre = request.json["nombre"]
+    apellido = request.json["apellido"]
+    email = request.json["email"]
+    DNI = request.json["DNI"]
+    foto = request.json["foto"]
+    telefono = request.json["telefono"]
+    username = request.json["username"]
+    password = request.json["password"]
     c = control.post_cliente(nombre, apellido, email, DNI, foto, telefono, username, password)
     return jsonify(c)
 
 
-@clientes.route('/clientes/bydni/<DNI>', methods=["PUT"])
+@clientes.route('/clientes/profile/<DNI>', methods=["PUT"])
 def modify_cliente_dni(DNI):
     nombre = None
     apellido = None
@@ -45,34 +54,42 @@ def modify_cliente_dni(DNI):
     username = None
     telefono = None
 
-    if "nombre" in request.form.to_dict():
-        nombre = request.form.to_dict()["nombre"]
-    if "apellido" in request.form.to_dict():
-        apellido = request.form.to_dict()["apellido"]
-    if "email" in request.form.to_dict():
-        email = request.form.to_dict()["email"]
-    if "telefono" in request.form.to_dict():
-        telefono = request.form.to_dict()["telefono"]
-    if "password" in request.form.to_dict():
-        password = request.form.to_dict()["password"]
-    if "username" in request.form.to_dict():
-        username = request.form.to_dict()["username"]
-    if "foto" in request.form.to_dict():
+    try:
+        nombre = request.json["nombre"]
+        apellido = request.json["apellido"]
+        email = request.json["email"]
+        telefono = request.json["telefono"]
         foto = "https://editor.swagger.io/"
-    respuesta = control.modify_cliente(nombre, apellido, email, DNI, foto, telefono, username, password)
+    except:
+    	return jsonify({"error": "Malformed request syntax."}), 400
+    respuesta = control.modify_cliente(nombre, apellido, email, DNI, foto, telefono)
     
     if respuesta:
-        return jsonify({"msg": "cliente deleted succesfully"}), 200
+        return jsonify({"msg": "User modified succesfully"}), 200
     else:
-        return jsonify({"error": "cliente not found."}), 404
+        return jsonify({"error": "User not found."}), 404
 # habra que hacer error 401
 
 
-@clientes.route('/clientes/bydni/<DNI>', methods=["DELETE"])
+@clientes.route('/clientes/change_password/<DNI>', methods=["PUT"])
+def modify_password(DNI):
+    try:
+        last_password = request.json["actual_password"]
+        new_password = request.json["new_password"]
+    except:
+    	return jsonify({"error": "Malformed request syntax."}), 400
+    respuesta = control.modify_password(DNI, last_password, new_password)
+    if respuesta:
+        return jsonify({"msg": "Password changed succesfully."}), 200
+    else:
+        return jsonify({"error": "User not found."}), 404
+
+
+@clientes.route('/clientes/profile/<DNI>', methods=["DELETE"])
 def deleted_cliente_dni(DNI):
     deleted = control.delete_cliente_dni(DNI)
     if deleted:
-        return jsonify({"msg": "cliente deleted succesfully"}), 200
+        return jsonify({"msg": "User deleted succesfully"}), 200
     else:
-        return jsonify({"error": "cliente not found."}), 404
+        return jsonify({"error": "User not found."}), 404
 # habra que hacer error 401

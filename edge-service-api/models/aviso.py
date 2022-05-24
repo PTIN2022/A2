@@ -1,6 +1,6 @@
 from utils.db import db
 #from models.cliente import Cliente  # noqa: F401
-from models.reserva import Reserva  # noqa: F401
+#from models.reserva import Reserva  # noqa: F401
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
@@ -10,8 +10,8 @@ class Aviso(db.Model):
     texto = db.Column(db.String(300), nullable=False)
     hora = db.Column(db.DateTime, nullable=False)
 
-    # id_reserva = db.Column(db.Integer, db.ForeignKey("reserva.id_reserva"), nullable=False)
-    # id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
+    id_reserva = db.Column(db.Integer, db.ForeignKey("reserva.id_reserva"), nullable=False)
+    id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
 
     def __init__(self, tipo, texto, hora, id_reserva, id_cliente):  # need
         self.tipo = tipo

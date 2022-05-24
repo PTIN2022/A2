@@ -4,7 +4,6 @@ import models.aviso  # noqa: F401
 
 
 class Usuari_t(db.Model):
-
     id_usuari = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     tipo = db.Column(db.String(20), nullable=False)
     nombre = db.Column(db.String(30), nullable=False)
