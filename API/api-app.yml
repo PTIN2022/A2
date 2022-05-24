@@ -3,10 +3,16 @@ info:
   title: API portal de gestion
   version: '1.0'
 servers:
-  - url: http://127.0.0.1:5000/
-    description: Developments
-  - url: http://craaxkvm.epsevg.upc.es:23701/
-    description: Server
+  - url: http://127.0.0.1:5000
+    description: Development
+  - url: http://127.0.0.1/api
+    description: Development HTTP docker-compose
+  - url: https://127.0.0.1/api
+    description: Development HTTPS docker-compose
+  - url: http://craaxkvm.epsevg.upc.es:23701/api
+    description: Production HTTP
+  - url: https://craaxkvm.epsevg.upc.es:23700/api
+    description: Production HTTPS
 paths:
   # reservas
   /reservas:
@@ -100,7 +106,6 @@ paths:
                 Error al meter reserva:
                   value: >-
                     {"error": "Malformed request syntax."}
-
   /reservas/estacion/{id_estacion}:
     # pedimos una lista de reservas por una estacion dada
     get:
@@ -281,7 +286,6 @@ paths:
                   error:
                     value: >-
                         {"error": "User not authenticated."}
-
           '404':
             description: Not found
             content:
@@ -290,7 +294,6 @@ paths:
                   error:
                     value: >-
                         {"error": "Reserva not found."}
-
       #borrar reserva
       delete:
         summary: Elimina reserva por ID
@@ -328,7 +331,283 @@ paths:
                   error:
                     value: >-
                       {"error": "Reserva not found."}
+#########################################################################################
 
+
+  /estaciones:
+      # pedimos una lista de las estaciones
+      get:
+        summary: Obtiene una lista de estaciones
+        tags:
+        - Estaciones
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Con estaciones:
+                    value: >-
+                      [
+                          {
+                            "capacidad": 32,
+                            "ciudad": "España",
+                            "direccion": "mi casa",
+                            "id_estacion": 1,
+                            "latitud": 59.26258315325391,
+                            "longitud": 82.104931574632,
+                            "nombre_est": "VG0",
+                            "ocupacion_actual": 9,
+                            "pais": "Vilanova",
+                            "potencia_contratada": 309,
+                            "potencia_usada": 226,
+                            "telefono": "690389157",
+                            "zona": 5
+                          },
+                          {
+                            "capacidad": 32,
+                            "ciudad": "España",
+                            "direccion": "mi casa",
+                            "id_estacion": 2,
+                            "latitud": 57.77617625032384,
+                            "longitud": 12.35933821353951,
+                            "nombre_est": "VG1",
+                            "ocupacion_actual": 6,
+                            "pais": "Vilanova",
+                            "potencia_contratada": 431,
+                            "potencia_usada": 95,
+                            "telefono": "690389157",
+                            "zona": 1
+                          }
+                      ]
+                  Sin estaciones:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+  /estaciones/{id}:
+      get:
+        summary: Obtiene informacion de una estacion y sus surtidores
+        tags:
+        - Estaciones
+        parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  estacion:
+                    value: >-
+                          {
+                            "capacidad": 32,
+                            "cargadores": [
+                              {
+                                "estado": "True",
+                                "id_cargador": 1,
+                                "posicion": 32
+                              },
+                              {
+                                "estado": "False",
+                                "id_cargador": 2,
+                                "posicion": 31
+                              },
+                              {
+                                "estado": "False",
+                                "id_cargador": 3,
+                                "posicion": 12
+                              },
+                              {
+                                "estado": "False",
+                                "id_cargador": 4,
+                                "posicion": 13
+                              }
+                            ],
+                            "ciudad": "España",
+                            "direccion": "mi casa",
+                            "id_estacion": 1,
+                            "latitud": 12,
+                            "longitud": 13,
+                            "nombre_est": "VG30",
+                            "ocupacion_actual": 23,
+                            "pais": "Vilanova",
+                            "potencia_contratada": 720,
+                            "potencia_usada": 130,
+                            "telefono": "690389157",
+                            "zona": 3
+                          }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Station not found."}
+#borrar incidencia
+  /estaciones/coor/{lat}/{long}:
+      get:
+        summary: Obtiene las estaciones más cercanas por las coordenadas que se le pasen en la URI
+        tags:
+        - Estaciones
+        parameters:
+        - in: path
+          name: lat
+          required: true
+          schema:
+            type: number
+        - in: path
+          name: long
+          required: true
+          schema:
+            type: number
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  estacion:
+                    value: >-
+                        {
+                          "Estaciones": [
+                            {
+                              "capacidad": 32,
+                                "cargadores": [
+                                  {
+                                    "estado": "True",
+                                    "id_cargador": 1,
+                                    "posicion": 32
+                                  },
+                                  {
+                                    "estado": "False",
+                                    "id_cargador": 2,
+                                    "posicion": 31
+                                  },
+                                  {
+                                    "estado": "False",
+                                    "id_cargador": 3,
+                                    "posicion": 12
+                                  },
+                                  {
+                                    "estado": "False",
+                                    "id_cargador": 4,
+                                    "posicion": 13
+                                  }
+                                ],
+                              "ciudad": "España",
+                              "direccion": "mi casa",
+                              "id_estacion": 1,
+                              "latitud": 12,
+                              "longitud": 13,
+                              "nombre_est": "VG30",
+                              "ocupacion_actual": 23,
+                              "pais": "Vilanova",
+                              "potencia_contratada": 720,
+                              "potencia_usada": 130,
+                              "telefono": "690389157",
+                              "zona": 3
+                            },
+                            {
+                              "capacidad": 32,
+                              "cargadores": [],
+                              "ciudad": "España",
+                              "direccion": "mi casa",
+                              "id_estacion": 30,
+                              "latitud": 15.333991225795597,
+                              "longitud": 20.112191933383876,
+                              "nombre_est": "VG28",
+                              "ocupacion_actual": 19,
+                              "pais": "Vilanova",
+                              "potencia_contratada": 496,
+                              "potencia_usada": 455,
+                              "telefono": "690389157",
+                              "zona": 2
+                            },
+                            {
+                              "capacidad": 32,
+                              "cargadores": [],
+                              "ciudad": "España",
+                              "direccion": "mi casa",
+                              "id_estacion": 8,
+                              "latitud": 10.310335286671437,
+                              "longitud": 23.36392378582253,
+                              "nombre_est": "VG6",
+                              "ocupacion_actual": 1,
+                              "pais": "Vilanova",
+                              "potencia_contratada": 643,
+                              "potencia_usada": 238,
+                              "telefono": "690389157",
+                              "zona": 4
+                            },
+                            {
+                              "capacidad": 32,
+                              "cargadores": [],
+                              "ciudad": "España",
+                              "direccion": "mi casa",
+                              "id_estacion": 12,
+                              "latitud": 15.622761909852207,
+                              "longitud": 27.34148410638893,
+                              "nombre_est": "VG10",
+                              "ocupacion_actual": 8,
+                              "pais": "Vilanova",
+                              "potencia_contratada": 821,
+                              "potencia_usada": 252,
+                              "telefono": "690389157",
+                              "zona": 4
+                            },
+                            {
+                              "capacidad": 32,
+                              "cargadores": [],
+                              "ciudad": "España",
+                              "direccion": "mi casa",
+                              "id_estacion": 23,
+                              "latitud": 3.6752802128221025,
+                              "longitud": 31.098887261123572,
+                              "nombre_est": "VG21",
+                              "ocupacion_actual": 15,
+                              "pais": "Vilanova",
+                              "potencia_contratada": 503,
+                              "potencia_usada": 204,
+                              "telefono": "690389157",
+                              "zona": 4
+                            }
+                          ]
+                        }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Station not found."}
 #########################################################################################
 # clientes
   /clientes:
