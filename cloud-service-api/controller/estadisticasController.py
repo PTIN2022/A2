@@ -1,5 +1,5 @@
 import sqlalchemy
-from models.model import *
+from models.model import EstacionSchema, Estacion, Horas, HorasSchema, Consumo, ConsumoSchema
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -9,11 +9,13 @@ def get_all_estadisticas():
     if est:
         estacion_total = {}
         estacion_total["estaciones"] = []
-        results = Horas.query.order_by(sqlalchemy.desc(Horas.dia)).all()
+        results = Horas.query.order_by(sqlalchemy.desc(Horas.id)).all()
         data_inicio = HorasSchema().dump(results[-1])
         data_final = HorasSchema().dump(results[0])
-        date_inicio_aux = datetime.strptime(data_inicio['dia'], '%Y-%m-%d').date()
-        date_final_aux = datetime.strptime(data_final['dia'], '%Y-%m-%d').date()
+        print(data_inicio)
+        print(data_final)
+        date_inicio_aux = datetime.strptime(data_inicio["id"], '%Y-%m-%dT%H:%M:%S').date()
+        date_final_aux = datetime.strptime(data_final["id"], '%Y-%m-%dT%H:%M:%S').date()
         for i in est:
             estacion_dict = EstacionSchema().dump(i)
             new_estacion_json = {}

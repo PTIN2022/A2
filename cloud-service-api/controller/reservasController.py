@@ -1,7 +1,7 @@
 import random
 
 from utils.db import db
-from models.model import *
+from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
 from datetime import datetime
 
 

@@ -63,17 +63,17 @@ def fakedata():
         db.session.add(p2)
         db.session.commit()
 
-#         h1 = Horas(datetime.today())  # , p1.id_cargador
-#         h2 = Horas(datetime.today())  # , p2.id_cargador
-#         db.session.add(h1)
-#         db.session.add(h2)
-#         db.session.commit()
+        h1 = Horas(datetime.today())  # , p1.id_cargador
+        # h2 = Horas(datetime.today())  # , p2.id_cargador
+        db.session.add(h1)
+        # db.session.add(h2)
+        db.session.commit()
 
-#         co1 = Consumo(p1.id_cargador, h1.id, 50, 100)
-#         co2 = Consumo(p2.id_cargador, h2.id, 70, 90)
-#         db.session.add(co1)
-#         db.session.add(co2)
-#         db.session.commit()
+        co1 = Consumo(p1.id_cargador, h1.id, 50, 100)
+        co2 = Consumo(p2.id_cargador, h1.id, 70, 90)
+        db.session.add(co1)
+        db.session.add(co2)
+        db.session.commit()
         
         ####Modelos####
         model_list = ["500e Cabrio eléctrico", "Taycan eléctrico","e-tron GT eléctrico", "Leaf eléctrico", "Ioniq eléctrico", "i3 eléctrico", "ID.3 eléctrico", "2 eléctrico", "UX300e eléctrico", "EV6 eléctrico"]

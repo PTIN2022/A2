@@ -1,5 +1,5 @@
 from utils.db import db
-from models.model import *
+from models.model import Averia, AveriaSchema
 
 
 def get_all_incidencias():

@@ -153,7 +153,7 @@ class Ticket(db.Model):
 	id_ticket = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
 	fecha = db.Column(db.DateTime, nullable=False)
 	asunto = db.Column(db.String(30), nullable=False)
-	estado = db.Column(db.String(30), nullable=False)
+	estado = db.Column(db.Boolean, nullable=False)
 	mensaje = db.Column(db.String(300), nullable=False)
 
 	id_cliente = db.Column('id_cliente', db.ForeignKey('cliente.id_usuari'), nullable=False)
@@ -276,9 +276,9 @@ class Cliente(Usuari_t):
         {},
     )
 
-    avisos = db.relationship("Aviso",  backref="cliente")
-    reservas = db.relationship("Reserva",  backref="cliente")
-    ticket = db.relationship("Ticket",  backref="cliente")
+    avisos = db.relationship("Aviso",  backref="aviso")
+    reservas = db.relationship("Reserva",  backref="reserva")
+    ticket = db.relationship("Ticket",  backref="ticket")
 
     vehiculos = db.relationship('Vehiculo', secondary=vehiculo_cliente, lazy='subquery', backref=db.backref('Cliente', lazy=True))
 
