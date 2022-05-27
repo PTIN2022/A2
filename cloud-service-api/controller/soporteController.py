@@ -8,14 +8,19 @@ def get_all_soporte():
 
 
 def post_soporte(descripcion, fecha, estado, id_cliente, asunto):
-    s = Ticket(fecha, asunto, descripcion, estado, id_cliente)
-    db.session.add(s)
-    db.session.commit()
-    return s.id_ticket
+    c = Cliente.query.filter(Cliente.dni == id_cliente).one_or_none()
+    if c:
+        s = Ticket(fecha, asunto, descripcion, estado, c.id_cliente)
+        db.session.add(s)
+        db.session.commit()
+        return s.id_ticket
+    return None
 
 
 def get_soporte_user_id(user_id):
-    s = Cliente.query.filter(Cliente.id_cliente == user_id).one_or_none()
+    s = Cliente.query.filter(Cliente.dni == user_id).one_or_none()
+    print(s)
+    print(s.ticket)
     if s:
         soporte_dict = ClienteSchema().dump(s)
         soporte_dict["Tickets"] = TicketSchema(many=True).dump(s.ticket)
@@ -23,10 +28,10 @@ def get_soporte_user_id(user_id):
     return None
 
 
-def post_soporte_by_ticket(mensaje, fecha, ticket_id, id_cliente):
+def post_soporte_by_ticket(mensaje, fecha, ticket_id, id_user):
     soporte = Ticket.query.filter(Ticket.id_ticket == ticket_id).one_or_none()
     if soporte:
-        s = Mensaje(mensaje, fecha, id_cliente, ticket_id)
+        s = Mensaje(mensaje, fecha, id_user, ticket_id)
         db.session.add(s)
         db.session.commit()
         return MensajeSchema().dump(s)

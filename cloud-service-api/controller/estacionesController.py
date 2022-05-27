@@ -13,16 +13,13 @@ def get_estacion_by_id(id):
         estacion_dict = EstacionSchema().dump(i)
 
         estacion_dict["Cargadores"] = CargadorSchema(many=True).dump(i.cargadores)
-        #for cargador in i.cargadores:
-        #    estacion_dict["Cargadores"].append(CargadorSchema().dump(cargador))
-
         return estacion_dict
 
     return None
 
 # Este no se yo si vale la pena mantenerlo
 def delete_plaza(id, id_plaza):
-    i = Cargador.query.filter(Cargador.id == id_plaza).one_or_none()
+    i = Cargador.query.filter(Cargador.id_cargador == id_plaza).one_or_none()
     if i:
         db.session.delete(i)
         db.session.commit()

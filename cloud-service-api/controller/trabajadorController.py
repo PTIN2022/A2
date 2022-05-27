@@ -12,33 +12,41 @@ def get_trabajador_dni(dni):
     return TrabajadorSchema().dump(t)
 
 
-def post_trabajador(DNI, name, lastname, telf, email, rol, last_access, picture):
-    t = Trabajador(DNI, name, lastname, telf, email, rol, int(last_access), picture)
+def post_trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, last_access, question, id_estacion):
+    t = Trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, last_access, question, id_estacion)
     db.session.add(t)
     db.session.commit()
     return TrabajadorSchema().dump(t)
 
 
 # habra que mojararlo (last_access, picture...)
-def modify_trabajador(DNI, dni_change=None, name=None, lastname=None, telf=None, email=None, rol=None, last_access=None, picture=None):
-    t = Trabajador.query.filter(Trabajador.dni == DNI).one_or_none()
+def modify_trabajador(dni, nombre, apellido, email, dni_change, foto, telefono, username, password, cargo, estado, question, id_estacion):
+    t = Trabajador.query.filter(Trabajador.dni == dni).one_or_none()
     if t:
-        if name:
-            t.name = name
-        if lastname:
-            t.lastname = lastname
-        if telf:
-            t.telf = telf
+        if nombre:
+            t.nombre = nombre
+        if apellido:
+            t.apellido = apellido
         if email:
             t.email = email
-        if rol:
-            t.rol = rol
-        if last_access:
-            t.last_access = last_access
-        if picture:
-            t.picture = picture
         if dni_change:
             t.dni = dni_change
+        if foto:
+            t.foto = foto
+        if telefono:
+            t.telefono = telefono
+        if username:
+            t.username = username
+        if password:
+            t.password = password
+        if cargo:
+            t.cargo = cargo
+        if estado:
+            t.estado = estado
+        if question:
+            t.question = question
+        if id_estacion:
+            t.id_estacion = id_estacion
 
         db.session.commit()
         return TrabajadorSchema().dump(t)

@@ -569,6 +569,8 @@ paths:
                       type: string
                     rol:
                       type: string
+                    username:
+                      type: string
                     password:
                       type: string
                     profileImage:
@@ -582,6 +584,7 @@ paths:
                     email: "pere.roca@boss.com"
                     rol: "Dueño"
                     password: "proca"
+                    username: "proca"
         responses:
           '200':
             description: Peticion correcta

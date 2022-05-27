@@ -24,6 +24,6 @@ def get_estacion_by_id(id):
 def delete_plaza(id, id_plaza):
     respuesta = control.delete_plaza(id, id_plaza)
     if respuesta:
-        return jsonify(respuesta), 200
+        return jsonify({"msg": "Data deleted correctly."}), 200
     else:
         return jsonify({"error": "Plaza or Estacion not found"}), 404

@@ -230,8 +230,8 @@ class Trabajador(Usuari_t):
         'polymorphic_identity': 'trabajador',
     }
 
-    def __init__(self, nombre, apellido, email,dni, foto, telefono, username, password, cargo, estado, ultimo_acceso, question, id_estacion):
-        super(Trabajador, self).__init__(nombre, apellido, email,dni, foto, telefono, username,password)
+    def __init__(self, nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, ultimo_acceso, question, id_estacion):
+        super(Trabajador, self).__init__(nombre, apellido, email,dni, foto, telefono, username, password)
         self.cargo = cargo
         self.estado = estado
         self.ultimo_acceso = ultimo_acceso

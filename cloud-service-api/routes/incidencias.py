@@ -44,7 +44,7 @@ def get_incidencia_by_id(id):
 @incidencias.route('/incidencias/<id>', methods=["PUT"])
 def modify_incidencia(id):
     estacion = None
-    direccion = None
+    trabajador = None
     fecha_averia = None
     descripcion = None
     estado = None
@@ -62,8 +62,9 @@ def modify_incidencia(id):
     if "trabajador" in request.json:
         trabajador = request.json["trabajador"]
     if "estado" in request.json:
-        print(request.json["estado"])
-        estado = utils.strtobool(str(request.json["estado"]))
+        estado = str(request.json["estado"])
+    if "descripcion" in request.json:
+        descripcion = str(request.json["descripcion"])
 
     respuesta = control.modify_incidencia(id, estacion, fecha_averia, descripcion, estado, trabajador)
     if respuesta:
