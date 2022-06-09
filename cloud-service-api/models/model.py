@@ -22,10 +22,12 @@ class Averia(db.Model):
         self.id_trabajador = id_trabajador
         self.name_estacion = id_estacion
 
+
 class AveriaSchema(SQLAlchemyAutoSchema):
     class Meta:
         include_fk = True
         model = Averia
+
 
 class Aviso(db.Model):
     id_aviso = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
@@ -36,7 +38,7 @@ class Aviso(db.Model):
     id_reserva = db.Column(db.Integer, db.ForeignKey("reserva.id_reserva"), nullable=False)
     id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
 
-    def __init__(self, tipo,texto, hora, id_reserva,id_cliente): #need
+    def __init__(self, tipo, texto, hora, id_reserva, id_cliente):
         self.tipo = tipo
         self.texto = texto
         self.hora = hora
@@ -45,25 +47,27 @@ class Aviso(db.Model):
 
 
 class AvisoSchema(SQLAlchemyAutoSchema):
-    # estacion= fields.Nested(EstacionSchema)
+    #  estacion =  fields.Nested(EstacionSchema)
     class Meta:
         model = Aviso
 
+
 class Mensaje(db.Model):
 
-	id_mensaje = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-	contenido = db.Column(db.String(300), nullable=False)
-	date = db.Column(db.DateTime, nullable=False)
-	id_usuari = db.Column(db.Integer, db.ForeignKey('usuari_t.id_usuari'), nullable=False)
+    id_mensaje = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    contenido = db.Column(db.String(300), nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
+    id_usuari = db.Column(db.Integer, db.ForeignKey('usuari_t.id_usuari'), nullable=False)
 
-	id_ticket = db.Column(db.Integer, db.ForeignKey(
-		'ticket.id_ticket'), nullable=False)
+    id_ticket = db.Column(db.Integer, db.ForeignKey(
+        'ticket.id_ticket'), nullable=False)
 
-	def __init__(self, contenido,date, id_usuari, id_ticket):
-		self.contenido = contenido
-		self.date = date
-		self.id_usuari = id_usuari
-		self.id_ticket = id_ticket
+    def __init__(self, contenido, date, id_usuari, id_ticket):
+        self.contenido = contenido
+        self.date = date
+        self.id_usuari = id_usuari
+        self.id_ticket = id_ticket
+
 
 class MensajeSchema(SQLAlchemyAutoSchema):
     class Meta:
@@ -85,13 +89,13 @@ class Pago(db.Model):
         self.id_cliente = id_cliente
         self.estado = estado
 
+
 class PagoSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Pago
 
 
 class Reserva(db.Model):
-
     id_reserva = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     fecha_entrada = db.Column(db.DateTime, nullable=False)
     fecha_salida = db.Column(db.DateTime, nullable=False)
@@ -108,7 +112,7 @@ class Reserva(db.Model):
         "vehiculo.matricula"), nullable=False)
     id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
 
-    avisos = db.relationship("Aviso",  backref="reserva")
+    avisos = db.relationship("Aviso", backref="reserva")
 
     def __init__(self, fecha_entrada, fecha_salida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado, tarifa, asistida, estado_pago, id_cargador, id_vehiculo, id_cliente):
         self.fecha_entrada = fecha_entrada
@@ -124,47 +128,49 @@ class Reserva(db.Model):
         self.id_vehiculo = id_vehiculo
         self.id_cliente = id_cliente
 
+
 class ReservaSchema(SQLAlchemyAutoSchema):
-    # estacion= fields.Nested(EstacionSchema)
+    #  estacion =  fields.Nested(EstacionSchema)
     class Meta:
         include_fk = True
         model = Reserva
 
 
 class Sesiones(db.Model):
-	codigo = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-	inicio_sesion = db.Column(db.DateTime, nullable=False)
-	final_sesion = db.Column(db.DateTime, nullable=False)
+    codigo = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    inicio_sesion = db.Column(db.DateTime, nullable=False)
+    final_sesion = db.Column(db.DateTime, nullable=False)
 
-	id_trabajador = db.Column('id_trabajador', db.ForeignKey(
+    id_trabajador = db.Column('id_trabajador', db.ForeignKey(
             'trabajador.id_usuari'), nullable=False)
 
-	def __init__(self, inicio_sesion, final_sesion,id_trabajador):
-		self.inicio_sesion = inicio_sesion
-		self.final_sesion = final_sesion
-		self.id_trabajador = id_trabajador
+    def __init__(self, inicio_sesion, final_sesion, id_trabajador):
+        self.inicio_sesion = inicio_sesion
+        self.final_sesion = final_sesion
+        self.id_trabajador = id_trabajador
+
 
 class SesionesSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Sesiones
 
+
 class Ticket(db.Model):
+    id_ticket = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    fecha = db.Column(db.DateTime, nullable=False)
+    asunto = db.Column(db.String(30), nullable=False)
+    estado = db.Column(db.Boolean, nullable=False)
+    mensaje = db.Column(db.String(300), nullable=False)
 
-	id_ticket = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-	fecha = db.Column(db.DateTime, nullable=False)
-	asunto = db.Column(db.String(30), nullable=False)
-	estado = db.Column(db.Boolean, nullable=False)
-	mensaje = db.Column(db.String(300), nullable=False)
+    id_cliente = db.Column('id_cliente', db.ForeignKey('cliente.id_usuari'), nullable=False)
+    mensajes = db.relationship("Mensaje",  backref="ticket")
 
-	id_cliente = db.Column('id_cliente', db.ForeignKey('cliente.id_usuari'), nullable=False)
-	mensajes = db.relationship("Mensaje",  backref="ticket")
-
-	def __init__(self, fecha, asunto, mensaje,estado, id_cliente):
-		self.fecha = fecha
-		self.asunto = asunto
-		self.mensaje = mensaje
-		self.estado = estado
-		self.id_cliente = id_cliente
+    def __init__(self, fecha, asunto, mensaje, estado, id_cliente):
+        self.fecha = fecha
+        self.asunto = asunto
+        self.mensaje = mensaje
+        self.estado = estado
+        self.id_cliente = id_cliente
 
 
 class TicketSchema(SQLAlchemyAutoSchema):
@@ -172,9 +178,7 @@ class TicketSchema(SQLAlchemyAutoSchema):
         model = Ticket
 
 
-
 class Usuari_t(db.Model):
-
     id_usuari = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(30), nullable=False)
     apellido = db.Column(db.String(30), nullable=False)
@@ -184,7 +188,7 @@ class Usuari_t(db.Model):
     telefono = db.Column(db.Integer, nullable=False)
     username = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(30), nullable=False)
-    type=db.Column(db.String(50))
+    type = db.Column(db.String(50))
 
     mensajes = db.relationship("Mensaje",  backref="usuari_t")
 
@@ -193,7 +197,7 @@ class Usuari_t(db.Model):
         'polymorphic_on': type
     }
 
-    def __init__(self, nombre, apellido, email,dni, foto, telefono, username, password):
+    def __init__(self, nombre, apellido, email, dni, foto, telefono, username, password):
         self.nombre = nombre
         self.apellido = apellido
         self.email = email
@@ -203,10 +207,12 @@ class Usuari_t(db.Model):
         self.username = username
         self.password = password
 
+
 class Usuari_tSchema(SQLAlchemyAutoSchema):
-    # estacion= fields.Nested(EstacionSchema)
+    # estacion =  fields.Nested(EstacionSchema)
     class Meta:
         model = Usuari_t
+
 
 class Trabajador(Usuari_t):
 
@@ -231,7 +237,7 @@ class Trabajador(Usuari_t):
     }
 
     def __init__(self, nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, ultimo_acceso, question, id_estacion):
-        super(Trabajador, self).__init__(nombre, apellido, email,dni, foto, telefono, username, password)
+        super(Trabajador, self).__init__(nombre, apellido, email, dni, foto, telefono, username, password)
         self.cargo = cargo
         self.estado = estado
         self.ultimo_acceso = ultimo_acceso
@@ -244,8 +250,7 @@ class TrabajadorSchema(SQLAlchemyAutoSchema):
         model = Trabajador
 
 
-
-vehiculo_cliente = db.Table("vehiculo-cliente", 
+vehiculo_cliente = db.Table("vehiculo-cliente",
     db.Column('matricula', db.ForeignKey('vehiculo.matricula'), nullable=False, primary_key=True),
     db.Column('id_cliente', db.ForeignKey('cliente.id_usuari'), nullable=False, primary_key=True)
 )
@@ -260,14 +265,16 @@ class Vehiculo(db.Model):
 
     modelos = db.Column(db.String(100), db.ForeignKey("modelo.modelo"), nullable=False)
 
-    def __init__(self, matricula, procentaje_bat,modelos):
+    def __init__(self, matricula, procentaje_bat, modelos):
         self.matricula = matricula
         self.procentaje_bat = procentaje_bat
         self.modelos = modelos
 
+
 class VehiculoSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Vehiculo
+
 
 class Cliente(Usuari_t):
     id_cliente = db.Column('id_usuari', db.ForeignKey('usuari_t.id_usuari'), nullable=False, primary_key=True)
@@ -286,30 +293,32 @@ class Cliente(Usuari_t):
         'polymorphic_identity': 'cliente',
     }
 
-    def __init__(self, nombre, apellido, email,dni, foto, telefono, username, password):
-        super(Cliente, self).__init__(nombre, apellido, email,dni, foto, telefono, username,password)
+    def __init__(self, nombre, apellido, email, dni, foto, telefono, username, password):
+        super(Cliente, self).__init__(nombre, apellido, email, dni, foto, telefono, username, password)
+
 
 class ClienteSchema(SQLAlchemyAutoSchema):
-    vehiculos = Nested(VehiculoSchema, many=True)
+    vehiculos = Nested(VehiculoSchema, many = True)
+
     class Meta:
         model = Cliente
 
 class Modelo(db.Model):
 
-	modelo = db.Column(db.String(100), nullable=False, primary_key=True)
-	marca = db.Column(db.String(30), nullable=False)
-	
-	# potencia_carga --> si es true = Carga Rapida, False = Normal
-	potencia_carga = db.Column(db.Boolean, nullable=True)
-	capacidad = db.Column(db.FLOAT, nullable=False)
+    modelo = db.Column(db.String(100), nullable=False, primary_key=True)
+    marca = db.Column(db.String(30), nullable=False)
 
-	vehiculo = db.relationship("Vehiculo",  backref="modelo")
+    # potencia_carga --> si es true=Carga Rapida, False=Normal
+    potencia_carga = db.Column(db.Boolean, nullable=True)
+    capacidad = db.Column(db.FLOAT, nullable=False)
 
-	def __init__(self, modelo,marca, potencia_carga, capacidad):
-		self.modelo = modelo
-		self.marca = marca
-		self.potencia_carga = potencia_carga
-		self.capacidad = capacidad
+    vehiculo = db.relationship("Vehiculo",  backref="modelo")
+
+    def __init__(self, modelo, marca, potencia_carga, capacidad):
+        self.modelo = modelo
+        self.marca = marca
+        self.potencia_carga = potencia_carga
+        self.capacidad = capacidad
 
 
 class ModeloSchema(SQLAlchemyAutoSchema):
@@ -322,15 +331,16 @@ class ModeloSchema(SQLAlchemyAutoSchema):
 class Horas(db.Model):
     id = db.Column(db.DateTime, nullable=False, primary_key=True)
 
-    def __init__(self, date):  #,id_cargador
+    def __init__(self, date):  #, id_cargador
         self.id = date
+
 
 class HorasSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Horas
 
-class Cargador(db.Model):
 
+class Cargador(db.Model):
     id_cargador = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     estado = db.Column(db.String(30), nullable=False)
     posicion = db.Column(db.Integer, nullable=False)
@@ -350,6 +360,7 @@ class CargadorSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Cargador
 
+
 class Consumo(db.Model):
     id_cargador = db.Column(db.ForeignKey('cargador.id_cargador'), nullable=False, primary_key=True)
     id_horas = db.Column(db.ForeignKey('horas.id'), nullable=False, primary_key=True)
@@ -361,6 +372,7 @@ class Consumo(db.Model):
         self.id_horas = id_horas
         self.potencia_consumida = potencia_consumida
         self.potencia_maxima = potencia_maxima
+
 
 class ConsumoSchema(SQLAlchemyAutoSchema):
     class Meta:
@@ -375,7 +387,7 @@ promocion_estacion = db.Table('promocion-stacion',
 
 class Estacion(db.Model):
     id_estacion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    nombre_est = db.Column(db.String(20), nullable=False, unique = True) #unico
+    nombre_est = db.Column(db.String(20), nullable=False, unique=True) #unico
     latitud = db.Column(db.Integer, nullable=False)
     longitud = db.Column(db.Integer, nullable=False)
     capacidad = db.Column(db.Integer, nullable=False)
@@ -409,6 +421,7 @@ class Estacion(db.Model):
         self.pais = pais
         #self.encargado = encargado
 
+
 class EstacionSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Estacion
@@ -424,13 +437,14 @@ class Promociones(db.Model):
     descripcion = db.Column(db.String(300), nullable=False)
     estaciones = db.relationship("Estacion", secondary=promocion_estacion, lazy='subquery', backref=db.backref('promociones', lazy=True))
 
-    def __init__(self, descuento, cantidad_usados, fecha_inicio, fecha_fin, estado, descripcion):
+    def __init__(self, descuento, fecha_inicio, fecha_fin, estado, descripcion, cantidad_usados=0):
         self.descuento = descuento
         self.cantidad_usados = cantidad_usados
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
         self.estado = estado
         self.descripcion = descripcion
+
 
 class PromocionesSchema(SQLAlchemyAutoSchema):
     class Meta:

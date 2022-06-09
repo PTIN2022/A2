@@ -1,5 +1,5 @@
 import sqlalchemy
-from models.model import EstacionSchema, Estacion, Horas, HorasSchema, Consumo, ConsumoSchema
+from models.model import EstacionSchema, Estacion, Consumo, ConsumoSchema
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
