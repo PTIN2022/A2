@@ -1,8 +1,6 @@
 import os
 import time
 import json
-import string
-import random
 
 from utils.db import db
 from utils.fake_data import fakedata
@@ -10,7 +8,7 @@ from flask import Flask
 from flask_mqtt import Mqtt
 from datetime import datetime
 
-from models.model import *
+from models.model import * # noqa F403
 from routes.trabajador import trabajador
 from routes.soporte import soporte
 from routes.estaciones import estaciones

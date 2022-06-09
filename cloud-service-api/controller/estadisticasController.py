@@ -1,7 +1,4 @@
-import sqlalchemy
 from models.model import EstacionSchema, Estacion, Consumo, ConsumoSchema
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
 
 
 def get_all_estadisticas():
@@ -12,22 +9,17 @@ def get_all_estadisticas():
         new_estacion_json = {}
         new_estacion_json["dias"] = []
         data = {}
-        potencia_max_cons = 0
         for cargador in e.cargadores:
-            c_list = Consumo.query.filter(Consumo.id_cargador == cargador.id_cargador and Consumo.id_horas > date_inicio and Consumo.id_horas < data_final)
+            c_list = Consumo.query.filter(Consumo.id_cargador == cargador.id_cargador)
             for cons in c_list:
-                
-                print(ConsumoSchema().dump(cons))
                 key = cons.id_horas.strftime("%Y-%m-%d")
                 if key in data:
                     if cons.potencia_consumida > data[key]["potencia_max_cons"]:
                         data[key]["potencia_max_cons"] = cons.potencia_consumida
-                        
                 else:
                     data[key] = {}
                     data[key]["dia"] = key
                     data[key]["potencia_max_cons"] = cons.potencia_consumida
-
         new_estacion_json["dias"] = list(data.values())
         new_estacion_json["estacion"] = estacion_dict["nombre_est"]
         new_estacion_json["direccion"] = estacion_dict["direccion"]
@@ -44,12 +36,9 @@ def get_estadisticas_by_estacion(id, data_inicio, data_final):
         new_estacion_json = {}
         new_estacion_json["dias"] = []
         data = {}
-        potencia_max_cons = 0
         for cargador in e.cargadores:
-            c_list = Consumo.query.filter(Consumo.id_cargador == cargador.id_cargador and Consumo.id_horas > date_inicio and Consumo.id_horas < data_final)
+            c_list = Consumo.query.filter(Consumo.id_cargador == cargador.id_cargador and Consumo.id_horas > data_inicio and Consumo.id_horas < data_final)
             for cons in c_list:
-                
-                print(ConsumoSchema().dump(cons))
                 key = cons.id_horas.strftime("%Y-%m-%d")
                 if key in data:
                     if cons.potencia_consumida > data[key]["potencia_max_cons"]:
@@ -59,7 +48,6 @@ def get_estadisticas_by_estacion(id, data_inicio, data_final):
                     data[key] = {}
                     data[key]["dia"] = key
                     data[key]["potencia_max_cons"] = cons.potencia_consumida
-
         new_estacion_json["dias"] = list(data.values())
         new_estacion_json["estacion"] = estacion_dict["nombre_est"]
         new_estacion_json["direccion"] = estacion_dict["direccion"]

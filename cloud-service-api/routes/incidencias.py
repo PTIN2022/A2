@@ -1,7 +1,7 @@
 import controller.incidenciaController as control
 
 from datetime import datetime
-from utils import utils, errors
+from utils import errors
 from flask import Blueprint, jsonify, request
 
 incidencias = Blueprint('incidencias', __name__)

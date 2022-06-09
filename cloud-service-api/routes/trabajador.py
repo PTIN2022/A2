@@ -44,17 +44,17 @@ def post_trabajador():
 
 @trabajador.route('/trabajador/<dni>', methods=["PUT"])
 def modify_trabajador(dni):
-    nombre = None 
-    apellido = None 
-    email = None 
-    dni_change = None 
-    foto = None 
-    telefono = None 
-    username = None 
-    password = None 
-    cargo = None 
-    estado = None 
-    question = None 
+    nombre = None
+    apellido = None
+    email = None
+    dni_change = None
+    foto = None
+    telefono = None
+    username = None
+    password = None
+    cargo = None
+    estado = None
+    question = None
     id_estacion = None
 
     if "nombre," in request.form.to_dict():

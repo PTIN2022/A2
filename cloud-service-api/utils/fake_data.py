@@ -1,59 +1,61 @@
 import string
 import random
 from faker import Faker
-from models.model import *
+from utils.db import db
+from models.model import Estacion, Cliente, Trabajador, Promociones, Cargador, Sesiones, Averia, Modelo, Consumo, Horas, Vehiculo, Reserva, Ticket, Mensaje, Aviso
 from datetime import datetime
+
 
 def fakedata():
         fake = Faker()
-        ####Estaciones####
-        e = Estacion("VG1", 41.217606, 1.727072, 32, "Rambla de L'exposicio",20,"Zona industrial", 1,130, "+34762487248", "Vilanova i la geltru", "España")  # , t.id_trabajador
+        # Estaciones
+        e = Estacion("VG1", 41.217606, 1.727072, 32, "Rambla de L'exposicio", 20, "Zona industrial", 1, 130, "+34762487248", "Vilanova i la geltru", "España")  # , t.id_trabajador
         db.session.add(e)
-        e2 = Estacion("VG2", 41.221002, 1.730369, 32, "Rambla de A",20,"Zona mayonesa", 15,130,"+34762854712", "Vilanova i la geltru", "España")  # , t.id_trabajador
+        e2 = Estacion("VG2", 41.221002, 1.730369, 32, "Rambla de A", 20, "Zona mayonesa", 15, 130,"+34762854712", "Vilanova i la geltru", "España")  # , t.id_trabajador
         db.session.add(e2)
-        e3 = Estacion("VG3", 41.225431, 1.7337627, 32, "A veces",20,"Zona M de motomami", 8,130, "+34785123478", "Vilanova i la geltru", "España")  # , t.id_trabajador
+        e3 = Estacion("VG3", 41.225431, 1.7337627, 32, "A veces", 20, "Zona M de motomami", 8, 130, "+34785123478", "Vilanova i la geltru", "España")  # , t.id_trabajador
         db.session.add(e3)
-        e4 = Estacion("VG4", 41.227420, 1.728166, 32, "Rambla de Shrek",20,"Zona memes de baki", 1,130, "+34745821523", "Vilanova i la geltru", "España")  # , t.id_trabajador
+        e4 = Estacion("VG4", 41.227420, 1.728166, 32, "Rambla de Shrek", 20, "Zona memes de baki", 1, 130, "+34745821523", "Vilanova i la geltru", "España")  # , t.id_trabajador
         db.session.add(e4)
-        e5 = Estacion("VG5", 41.229674, 1.721478, 32, "Casoplon del coletas",20,"Zona SEAX", 14,130, "+34797458744", "Vilanova i la geltru", "España")  # , t.id_trabajador
+        e5 = Estacion("VG5", 41.229674, 1.721478, 32, "Casoplon del coletas", 20, "Zona SEAX", 14, 130, "+34797458744", "Vilanova i la geltru", "España")  # , t.id_trabajador
         db.session.add(e5)
-        e6 = Estacion("VG6", 41.222119, 1.718915, 32, "Casa de ibai",20,"Zona el bicho", 20,130, "+34768220011", "Vilanova i la geltru", "España")  # , t.id_trabajador
+        e6 = Estacion("VG6", 41.222119, 1.718915, 32, "Casa de ibai", 20, "Zona el bicho", 20, 130, "+34768220011", "Vilanova i la geltru", "España")  # , t.id_trabajador
         db.session.add(e6)
-        e7 = Estacion("VG7", 41.223434, 1.710113, 32, "Rambla de Redes Multimedia",20,"Zona XAMU", 26,130, "+34798544552", "Vilanova i la geltru", "España")  # , t.id_trabajador
+        e7 = Estacion("VG7", 41.223434, 1.710113, 32, "Rambla de Redes Multimedia", 20, "Zona XAMU", 26, 130, "+34798544552", "Vilanova i la geltru", "España")  # , t.id_trabajador
         db.session.add(e7)
-        e8 = Estacion("VG8", 41.217122, 1.709477, 32, "Bar pepin",20,"Zona vip", 32,130, "+34768855471", "Vilanova i la geltru", "España")  # , t.id_trabajador
+        e8 = Estacion("VG8", 41.217122, 1.709477, 32, "Bar pepin", 20, "Zona vip", 32, 130, "+34768855471", "Vilanova i la geltru", "España")  # , t.id_trabajador
         db.session.add(e8)
         db.session.commit()
         estacioness = [e,e2,e3,e4,e5,e6,e7,e8]
 
 
-        c = Cliente("sergi", "garcia", "meh@gmail.com","245363Y", "foto_chula", 4674387249, "sergi.ib", "mehmeh123")
+        c = Cliente("sergi", "garcia", "meh@gmail.com", "245363Y", "foto_chula", 4674387249, "sergi.ib", "mehmeh123")
         db.session.add(c)
         db.session.commit()
 
-        t = Trabajador("sergi", "garcia", "meh@gmail.com","24536FT", "foto_chula", 4674387249, "sergi.ib", "mehmeh123", "jefe", "Activo", datetime.today(), "Amigo de la infancia?", e.id_estacion)
+        t = Trabajador("sergi", "garcia", "meh@gmail.com", "24536FT", "foto_chula", 4674387249, "sergi.ib", "mehmeh123", "jefe", "Activo", datetime.today(), "Amigo de la infancia?", e.id_estacion)
         db.session.add(t)
         db.session.commit()
 
-#         #e.encargado = t.id_trabajador
-#         #db.session.commit()
+        # e.encargado = t.id_trabajador
+        # db.session.commit()
 
 
-#         p = Promociones(32, 2, datetime.today(), datetime.today(), "activa", "superdescuento")
-#         p.estaciones.append(e)
-#         db.session.add(p)
-#         db.session.commit()
+        p = Promociones(32, 2, datetime.today(), datetime.today(), "activa", "superdescuento")
+        p.estaciones.append(e)
+        db.session.add(p)
+        db.session.commit()
 
-        ####Cargadores####
+        # Cargadores
         for i in estacioness:
             for j in range(32):
-                estadoss = ["ocupado","libre"]
-                tiposs = ["Carga Normal","Carga Rápida"]
+                estadoss = ["ocupado", "libre"]
+                tiposs = ["Carga Normal", "Carga Rápida"]
                 estado = random.choice(estadoss)
                 posicion = j
                 tipo = random.choice(tiposs)
                 sta = i.id_estacion
-                carg = Cargador(estado,posicion,tipo,sta)
+                carg = Cargador(estado, posicion, tipo, sta)
                 db.session.add(carg)
         db.session.commit()
 
@@ -118,72 +120,68 @@ def fakedata():
 #         c.vehiculos.append(v)
         db.session.commit()
 
-        r1 = Reserva(datetime.today(), datetime.today(), 50, 25.2,10.1, True, 90.99, True,True,p1.id_cargador, v.matricula, c.id_cliente)
-        r2 = Reserva(datetime.today(), datetime.today(), 33, 50, 60,
-                     False, 44.44, True,True,p2.id_cargador, v.matricula, c.id_cliente)
+        r1 = Reserva(datetime.today(), datetime.today(), 50, 25.2, 10.1, True, 90.99, True, True, p1.id_cargador, v.matricula, c.id_cliente)
+        r2 = Reserva(datetime.today(), datetime.today(), 33, 50, 60, False, 44.44, True, True, p2.id_cargador, v.matricula, c.id_cliente)
         db.session.add(r1)
         db.session.add(r2)
         db.session.commit()
 
-#         a = Aviso("Cancelación","motomamiiiiii",datetime.today(), r1.id_reserva, c.id_cliente)#c.id_cliente
-#         db.session.add(a)
-#         db.session.commit()
+        a = Aviso("Cancelación", "motomamiiiiii", datetime.today(), r1.id_reserva, c.id_cliente)
+        db.session.add(a)
+        db.session.commit()
 
-#         ticket = Ticket(datetime.today(), "Error App",
-#                         "No me deja reservar en la estacion de Rambla Exposicio, no se que le pasa", "Pendiente", c.id_cliente)
-#         db.session.add(ticket)
-#         db.session.commit()
+        ticket = Ticket(datetime.today(), "Error App", "No me deja reservar en la estacion de Rambla Exposicio, no se que le pasa", "Pendiente", c.id_cliente)
+        db.session.add(ticket)
+        db.session.commit()
 
-#         m = Mensaje("Me parece que lo haceis todo mal, salu2",datetime.today(), c.id_cliente, ticket.id_ticket)
-#         db.session.add(m)
-#         db.session.commit()
+        m = Mensaje("Me parece que lo haceis todo mal, salu2", datetime.today(), c.id_cliente, ticket.id_ticket)
+        db.session.add(m)
+        db.session.commit()
 
-#         av = Averia(datetime.today(), "Pendiente",
-#                         "No funciona la estación por mantenimiento", t.id_trabajador, e.id_estacion)
-#         db.session.add(av)
-#         db.session.commit()
+        av = Averia(datetime.today(), "Pendiente", "No funciona la estación por mantenimiento", t.id_trabajador, e.id_estacion)
+        db.session.add(av)
+        db.session.commit()
 
-#         s = Sesiones(datetime.today(), datetime.today(), t.id_trabajador)
-#         db.session.add(s)
-#         db.session.commit()
-#         ####CLiente####
-#         for i in range(50):
-#             l = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L',
-#              'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z']
-#             num = '{:08}'.format(random.randrange(1, 10**8))
-#             nombre = fake.first_name()
-#             apellido = fake.last_name()
-#             email = fake.free_email()
-#             dni = num + random.choice(l)
-#             foto = fake.name()
-#             telefono = '{:09}'.format(random.randrange(1, 10**8))
-#             username = nombre + num
-#             password = apellido + num
+        s = Sesiones(datetime.today(), datetime.today(), t.id_trabajador)
+        db.session.add(s)
+        db.session.commit()
+        ####CLiente####
+        for i in range(50):
+            l = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z']
+            num = '{:08}'.format(random.randrange(1, 10**8))
+            nombre = fake.first_name()
+            apellido = fake.last_name()
+            email = fake.free_email()
+            dni = num + random.choice(l)
+            foto = fake.name()
+            telefono = '{:09}'.format(random.randrange(1, 10**8))
+            username = nombre + num
+            password = apellido + num
 
-#             usuario_te = Cliente(nombre, apellido, email, dni, foto, telefono, username, password)
-#             db.session.add(usuario_te)
-#             db.session.commit()
-        
+            usuario_te = Cliente(nombre, apellido, email, dni, foto, telefono, username, password)
+            db.session.add(usuario_te)
+            db.session.commit()
 
-# ####Trabajador####
-#         for i in range(10):
-#             l = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L',
-#              'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z']
-#             num = '{:08}'.format(random.randrange(1, 10**8))
-#             nombre = fake.first_name()
-#             apellido = fake.last_name()
-#             email = fake.free_email()
-#             dni = num + random.choice(l)
-#             foto = fake.name()
-#             telefono = '{:09}'.format(random.randrange(1, 10**8))
-#             username = nombre + num
-#             password = apellido + num
-#             cargos = ['administrador','encargado','trabajador']
-#             estados = ['Activo','Inactivo']
-#             cargo = random.choice(cargos)
-#             estado = random.choice(estados)
-#             estacion = random.choice(estacioness)
 
-#             tr = Trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, datetime.today(), "Amigo de la infancia?", estacion.id_estacion)
-#             db.session.add(tr)
-#             db.session.commit()
+####Trabajador####
+        for i in range(10):
+            l = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L',
+             'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z']
+            num = '{:08}'.format(random.randrange(1, 10**8))
+            nombre = fake.first_name()
+            apellido = fake.last_name()
+            email = fake.free_email()
+            dni = num + random.choice(l)
+            foto = fake.name()
+            telefono = '{:09}'.format(random.randrange(1, 10**8))
+            username = nombre + num
+            password = apellido + num
+            cargos = ['administrador','encargado','trabajador']
+            estados = ['Activo','Inactivo']
+            cargo = random.choice(cargos)
+            estado = random.choice(estados)
+            estacion = random.choice(estacioness)
+
+            tr = Trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, datetime.today(), "Amigo de la infancia?", estacion.id_estacion)
+            db.session.add(tr)
+            db.session.commit()

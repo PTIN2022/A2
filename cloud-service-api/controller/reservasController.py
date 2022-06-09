@@ -2,9 +2,7 @@ from utils.db import db
 from datetime import datetime
 import random
 
-from utils.db import db
 from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
-from datetime import datetime
 
 
 def get_all_reservas():
@@ -69,7 +67,8 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                             cargador_ocupado = True
 
                 if not cargador_ocupado:
-                    i = Reserva(fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, True, tarifa, asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari)
+                    i = Reserva(fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, True, tarifa, 
+                    asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari)
                     db.session.add(i)
                     db.session.commit()
                     cargador_encontrado = True
