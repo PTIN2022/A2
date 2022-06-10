@@ -162,7 +162,6 @@ def fakedata():
         db.session.add(usuario_te)
         db.session.commit()
 
-
     # Trabajador
     for i in range(10):
         num = '{:08}'.format(random.randrange(1, 10**8))
