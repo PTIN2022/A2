@@ -285,7 +285,7 @@ class Cliente(Usuari_t):
     reservas = db.relationship("Reserva", backref="reserva", cascade="delete, merge, save-update")
     ticket = db.relationship("Ticket", backref="ticket")
 
-    vehiculos = db.relationship('Vehiculo', secondary=vehiculo_cliente,lazy='subquery', backref=db.backref('Cliente', lazy=True))
+    vehiculos = db.relationship('Vehiculo', secondary=vehiculo_cliente, lazy='subquery', backref=db.backref('Cliente', lazy=True))
 
     __mapper_args__ = {
         'polymorphic_identity': 'cliente',

@@ -45,7 +45,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
     vh = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()
     if not cl:
         return {"error": "cliente no existe"}
-    
+
     if not vh:
         return {"error": "vehiculo no existe"}
 

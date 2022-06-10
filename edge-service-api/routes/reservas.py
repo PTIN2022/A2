@@ -31,7 +31,7 @@ def post_reservas():
         estado_pago = request.json["estado_pago"]
         # TODO: comprobar fecha final es mayor fecha inicial
         reserva = control.post_reserva(estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI)
-        if type(reserva) == dict :
+        if type(reserva) == dict:
             return jsonify(reserva), 406
         else:
             respuesta = control.get_reservas_id(reserva)
