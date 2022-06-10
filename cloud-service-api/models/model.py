@@ -203,7 +203,7 @@ class Usuari_t(db.Model):
         self.email = email
         self.dni = dni
         self.foto = foto
-        self.telefono = telefono
+        self.telefono = str(telefono)
         self.username = username
         self.password = password
 
