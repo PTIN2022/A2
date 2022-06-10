@@ -63,8 +63,8 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
 
                 if not cargador_ocupado:
                     i = Reserva(
-                    fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, 
-                    True, tarifa, asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari
+                        fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual,
+                        True, tarifa, asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari
                     )
                     db.session.add(i)
                     db.session.commit()

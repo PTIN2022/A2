@@ -11,7 +11,7 @@ def fakedata():
     # Estaciones
     e = Estacion("VG1", 41.217606, 1.727072, 32, "Rambla de L'exposicio", 20, "Zona industrial", 1, 130, "+34762487248", "Vilanova i la geltru", "España")  # , t.id_trabajador
     db.session.add(e)
-    e2 = Estacion("VG2", 41.221002, 1.730369, 32, "Rambla de A", 20, "Zona mayonesa", 15, 130,"+34762854712", "Vilanova i la geltru", "España")  # , t.id_trabajador
+    e2 = Estacion("VG2", 41.221002, 1.730369, 32, "Rambla de A", 20, "Zona mayonesa", 15, 130, "+34762854712", "Vilanova i la geltru", "España")  # , t.id_trabajador
     db.session.add(e2)
     e3 = Estacion("VG3", 41.225431, 1.7337627, 32, "A veces", 20, "Zona M de motomami", 8, 130, "+34785123478", "Vilanova i la geltru", "España")  # , t.id_trabajador
     db.session.add(e3)
@@ -77,7 +77,7 @@ def fakedata():
 
     # Modelos
     model_list = [
-        "500e Cabrio eléctrico", "Taycan eléctrico", "e-tron GT eléctrico", "Leaf eléctrico", 
+        "500e Cabrio eléctrico", "Taycan eléctrico", "e-tron GT eléctrico", "Leaf eléctrico",
         "Ioniq eléctrico", "i3 eléctrico", "ID.3 eléctrico", "2 eléctrico", "UX300e eléctrico", "EV6 eléctrico"
     ]
 
@@ -145,14 +145,14 @@ def fakedata():
     s = Sesiones(datetime.today(), datetime.today(), t.id_trabajador)
     db.session.add(s)
     db.session.commit()
-    ####CLiente####
-    l = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z']
+    # CLiente
+    lista_letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z']
     for i in range(50):
         num = '{:08}'.format(random.randrange(1, 10**8))
         nombre = fake.first_name()
         apellido = fake.last_name()
         email = fake.free_email()
-        dni = num + random.choice(l)
+        dni = num + random.choice(lista_letras)
         foto = fake.name()
         telefono = '{:09}'.format(random.randrange(1, 10**8))
         username = nombre + num
@@ -163,13 +163,13 @@ def fakedata():
         db.session.commit()
 
 
-####Trabajador####
+    # Trabajador
     for i in range(10):
         num = '{:08}'.format(random.randrange(1, 10**8))
         nombre = fake.first_name()
         apellido = fake.last_name()
         email = fake.free_email()
-        dni = num + random.choice(l)
+        dni = num + random.choice(lista_letras)
         foto = fake.name()
         telefono = '{:09}'.format(random.randrange(1, 10**8))
         username = nombre + num
