@@ -37,9 +37,7 @@ def fakedata():
     db.session.commit()
 
     # e.encargado = t.id_trabajador
-    # db.session.commit()
-
-    p = Promociones(32, 2, datetime.today(), datetime.today(), "activa", "superdescuento")
+    p = Promociones(32, datetime.today(), datetime.today(), "activa", "superdescuento", 1)
     p.estaciones.append(e)
     db.session.add(p)
     db.session.commit()
@@ -130,7 +128,7 @@ def fakedata():
     db.session.add(a)
     db.session.commit()
 
-    ticket = Ticket(datetime.today(), "Error App", "No me deja reservar en la estacion de Rambla Exposicio, no se que le pasa", "Pendiente", c.id_cliente)
+    ticket = Ticket(datetime.today(), "Error App", "No me deja reservar en la estacion de Rambla Exposicio, no se que le pasa", True, c.id_cliente)
     db.session.add(ticket)
     db.session.commit()
 
