@@ -4,10 +4,7 @@ from utils.db import db
 from flask import Flask
 from routes.reservas import reservas
 from routes.estaciones import estaciones
-from models.model import *
-from random import randint
 from utils.fake_data import fakedata
-import random
 
 
 def init_db():

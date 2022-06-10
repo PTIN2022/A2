@@ -8,7 +8,7 @@ from flask import Flask
 from flask_mqtt import Mqtt
 from datetime import datetime
 
-from models.model import * # noqa F403
+from models.model import Reserva
 from routes.trabajador import trabajador
 from routes.soporte import soporte
 from routes.estaciones import estaciones

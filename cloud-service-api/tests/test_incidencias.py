@@ -114,7 +114,7 @@ def test_modify_incidencia(client):
 
     response = client.put("/api/incidencias/2", data=json.dumps({"estado": "true"}), headers=headers)
     assert response.status_code == 200
-    out_data[1]["estado"] = "true" 
+    out_data[1]["estado"] = "true"
     assert response.json == out_data[1]
 
     response = client.get("/api/incidencias/2")

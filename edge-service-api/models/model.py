@@ -250,7 +250,8 @@ class TrabajadorSchema(SQLAlchemyAutoSchema):
         model = Trabajador
 
 
-vehiculo_cliente = db.Table("vehiculo-cliente",
+vehiculo_cliente = db.Table(
+    "vehiculo-cliente",
     db.Column('matricula', db.ForeignKey('vehiculo.matricula'), nullable=False, primary_key=True),
     db.Column('id_cliente', db.ForeignKey('cliente.id_usuari'), nullable=False, primary_key=True)
 )
@@ -259,10 +260,7 @@ vehiculo_cliente = db.Table("vehiculo-cliente",
 class Vehiculo(db.Model):
     matricula = db.Column(db.String(25), nullable=False, primary_key=True)
     procentaje_bat = db.Column(db.Integer, nullable=False)
-
     reservas = db.relationship("Reserva",  backref="vehiculo")
-
-
     modelos = db.Column(db.String(100), db.ForeignKey("modelo.modelo"), nullable=False)
 
     def __init__(self, matricula, procentaje_bat, modelos):
@@ -298,20 +296,18 @@ class Cliente(Usuari_t):
 
 
 class ClienteSchema(SQLAlchemyAutoSchema):
-    vehiculos = Nested(VehiculoSchema, many = True)
+    vehiculos = Nested(VehiculoSchema, many=True)
 
     class Meta:
         model = Cliente
 
-class Modelo(db.Model):
 
+class Modelo(db.Model):
     modelo = db.Column(db.String(100), nullable=False, primary_key=True)
     marca = db.Column(db.String(30), nullable=False)
-
     # potencia_carga --> si es true=Carga Rapida, False=Normal
     potencia_carga = db.Column(db.Boolean, nullable=True)
     capacidad = db.Column(db.FLOAT, nullable=False)
-
     vehiculo = db.relationship("Vehiculo",  backref="modelo")
 
     def __init__(self, modelo, marca, potencia_carga, capacidad):
@@ -326,12 +322,10 @@ class ModeloSchema(SQLAlchemyAutoSchema):
         model = Modelo
 
 
-
-
 class Horas(db.Model):
     id = db.Column(db.DateTime, nullable=False, primary_key=True)
 
-    def __init__(self, date):  #, id_cargador
+    def __init__(self, date):
         self.id = date
 
 
@@ -345,7 +339,6 @@ class Cargador(db.Model):
     estado = db.Column(db.String(30), nullable=False)
     posicion = db.Column(db.Integer, nullable=False)
     tipo = db.Column(db.String(100), nullable=False)
-
     estacion_id = db.Column(db.Integer, db.ForeignKey("estacion.id_estacion"), nullable=False)
     reservas = db.relationship("Reserva",  backref="Cargador")
 
@@ -379,7 +372,9 @@ class ConsumoSchema(SQLAlchemyAutoSchema):
         include_fk = True
         model = Consumo
 
-promocion_estacion = db.Table('promocion-stacion',
+
+promocion_estacion = db.Table(
+    'promocion-stacion',
     db.Column('id_estacion', db.ForeignKey('estacion.id_estacion'), nullable=False),
     db.Column('id_promo', db.ForeignKey('promociones.id_promo'), nullable=False)
 )
@@ -387,7 +382,7 @@ promocion_estacion = db.Table('promocion-stacion',
 
 class Estacion(db.Model):
     id_estacion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    nombre_est = db.Column(db.String(20), nullable=False, unique=True) #unico
+    nombre_est = db.Column(db.String(20), nullable=False, unique=True)  # unico
     latitud = db.Column(db.Integer, nullable=False)
     longitud = db.Column(db.Integer, nullable=False)
     capacidad = db.Column(db.Integer, nullable=False)
@@ -399,12 +394,10 @@ class Estacion(db.Model):
     telefono = db.Column(db.String(50), nullable=False)
     ciudad = db.Column(db.String(100), nullable=False)
     pais = db.Column(db.String(100), nullable=False)
-
     cargadores = db.relationship("Cargador",  backref="estacion")
     trabajadores = db.relationship("Trabajador",  backref="estacion")
     averia = db.relationship("Averia",  backref="estacion")
-
-    #encargado = db.Column('id_trabajador', db.ForeignKey('trabajador.id_usuari'), nullable=True)
+    # encargado = db.Column('id_trabajador', db.ForeignKey('trabajador.id_usuari'), nullable=True)
 
     def __init__(self, nombre_est, latitud, longitud, capacidad, direccion, potencia_contratada, zona, ocupation_actual, potencia_usada, telefono, ciudad, pais):  # encargado
         self.nombre_est = nombre_est
@@ -419,7 +412,7 @@ class Estacion(db.Model):
         self.telefono = telefono
         self.ciudad = ciudad
         self.pais = pais
-        #self.encargado = encargado
+        # self.encargado = encargado
 
 
 class EstacionSchema(SQLAlchemyAutoSchema):
@@ -437,7 +430,7 @@ class Promociones(db.Model):
     descripcion = db.Column(db.String(300), nullable=False)
     estaciones = db.relationship("Estacion", secondary=promocion_estacion, lazy='subquery', backref=db.backref('promociones', lazy=True))
 
-    def __init__(self, descuento, cantidad_usados, fecha_inicio, fecha_fin, estado, descripcion):
+    def __init__(self, descuento, fecha_inicio, fecha_fin, estado, descripcion, cantidad_usados=0):
         self.descuento = descuento
         self.cantidad_usados = cantidad_usados
         self.fecha_inicio = fecha_inicio

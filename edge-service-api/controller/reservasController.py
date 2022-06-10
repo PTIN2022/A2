@@ -1,9 +1,7 @@
 from utils.db import db
 from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
 from datetime import datetime
-import paho.mqtt.publish as publish
 import random
-import json
 
 
 def get_all_reservas():
@@ -39,6 +37,7 @@ def get_reservas_dni(dni):
     res = ReservaSchema(many=True).dump(cl.reservas)
     return res
 
+
 def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI):
     i = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
     cargador_encontrado = False
@@ -63,7 +62,10 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                             cargador_ocupado = True
 
                 if not cargador_ocupado:
-                    i = Reserva(fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, True, tarifa, asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari)
+                    i = Reserva(
+                    fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, 
+                    True, tarifa, asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari
+                    )
                     db.session.add(i)
                     db.session.commit()
                     cargador_encontrado = True

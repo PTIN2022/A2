@@ -1,4 +1,4 @@
-from models.model import EstacionSchema, Estacion, Consumo, ConsumoSchema
+from models.model import EstacionSchema, Estacion, Consumo
 
 
 def get_all_estadisticas():
@@ -26,8 +26,9 @@ def get_all_estadisticas():
         new_estacion_json["kwh_max"] = estacion_dict["potencia_contratada"]
         new_estacion_json["kwh_now"] = estacion_dict["potencia_usada"]
         est_cons_list.append(new_estacion_json)
-   
-    return est_cons_list 
+
+    return est_cons_list
+
 
 def get_estadisticas_by_estacion(id, data_inicio, data_final):
     e = Estacion.query.filter(Estacion.id_estacion == id).one_or_none()
@@ -43,7 +44,6 @@ def get_estadisticas_by_estacion(id, data_inicio, data_final):
                 if key in data:
                     if cons.potencia_consumida > data[key]["potencia_max_cons"]:
                         data[key]["potencia_max_cons"] = cons.potencia_consumida
-                        
                 else:
                     data[key] = {}
                     data[key]["dia"] = key

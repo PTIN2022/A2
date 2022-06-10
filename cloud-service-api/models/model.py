@@ -262,6 +262,7 @@ class Vehiculo(db.Model):
     procentaje_bat = db.Column(db.Integer, nullable=False)
     reservas = db.relationship("Reserva",  backref="vehiculo")
     modelos = db.Column(db.String(100), db.ForeignKey("modelo.modelo"), nullable=False)
+
     def __init__(self, matricula, procentaje_bat, modelos):
         self.matricula = matricula
         self.procentaje_bat = procentaje_bat
@@ -296,6 +297,7 @@ class Cliente(Usuari_t):
 
 class ClienteSchema(SQLAlchemyAutoSchema):
     vehiculos = Nested(VehiculoSchema, many=True)
+
     class Meta:
         model = Cliente
 
@@ -323,7 +325,7 @@ class ModeloSchema(SQLAlchemyAutoSchema):
 class Horas(db.Model):
     id = db.Column(db.DateTime, nullable=False, primary_key=True)
 
-    def __init__(self, date):  #, id_cargador
+    def __init__(self, date):
         self.id = date
 
 
@@ -370,6 +372,7 @@ class ConsumoSchema(SQLAlchemyAutoSchema):
         include_fk = True
         model = Consumo
 
+
 promocion_estacion = db.Table(
     'promocion-stacion',
     db.Column('id_estacion', db.ForeignKey('estacion.id_estacion'), nullable=False),
@@ -379,7 +382,7 @@ promocion_estacion = db.Table(
 
 class Estacion(db.Model):
     id_estacion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    nombre_est = db.Column(db.String(20), nullable=False, unique=True) #unico
+    nombre_est = db.Column(db.String(20), nullable=False, unique=True)  # unico
     latitud = db.Column(db.Integer, nullable=False)
     longitud = db.Column(db.Integer, nullable=False)
     capacidad = db.Column(db.Integer, nullable=False)
@@ -394,9 +397,8 @@ class Estacion(db.Model):
     cargadores = db.relationship("Cargador",  backref="estacion")
     trabajadores = db.relationship("Trabajador",  backref="estacion")
     averia = db.relationship("Averia",  backref="estacion")
-
-
     # encargado = db.Column('id_trabajador', db.ForeignKey('trabajador.id_usuari'), nullable=True)
+
     def __init__(self, nombre_est, latitud, longitud, capacidad, direccion, potencia_contratada, zona, ocupation_actual, potencia_usada, telefono, ciudad, pais):  # encargado
         self.nombre_est = nombre_est
         self.latitud = latitud
