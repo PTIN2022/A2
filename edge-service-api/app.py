@@ -4,6 +4,7 @@ from utils.db import db
 from flask import Flask
 from routes.reservas import reservas
 from routes.estaciones import estaciones
+from routes.clientes import clientes
 from utils.fake_data import fakedata
 from multiprocessing import Lock
 
@@ -30,6 +31,7 @@ app.config["TESTING"] = False
 
 app.register_blueprint(reservas, url_prefix="/api")
 app.register_blueprint(estaciones, url_prefix="/api")
+app.register_blueprint(clientes, url_prefix="/api")
 
 if os.path.exists("./test.db"):
     os.remove("./test.db")
