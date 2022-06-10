@@ -33,8 +33,9 @@ app.register_blueprint(reservas, url_prefix="/api")
 app.register_blueprint(estaciones, url_prefix="/api")
 app.register_blueprint(clientes, url_prefix="/api")
 
-if os.path.exists("./test.db"):
-    os.remove("./test.db")
+if insert:
+    if os.path.exists("./test.db"):
+        os.remove("./test.db")
 
 lock.acquire()
 try:

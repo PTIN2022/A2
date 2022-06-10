@@ -43,8 +43,12 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
     cargador_encontrado = False
     cl = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
     vh = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()
-    if not cl or not vh:
-        return None
+    if not cl:
+        return {"error": "cliente no existe"}
+    
+    if not vh:
+        return {"error": "vehiculo no existe"}
+
     if i:
         random.shuffle(i.cargadores)  # Se hace un shuffle para que no siempre se use el mismo cargador para evitar el desgaste del mismo
         for cargador in i.cargadores:
@@ -64,14 +68,15 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                 if not cargador_ocupado:
                     i = Reserva(
                         fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual,
-                        True, tarifa, asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari
+                        True, float(tarifa), asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari
                     )
                     db.session.add(i)
                     db.session.commit()
                     cargador_encontrado = True
                     return i.id_reserva
+
     if not cargador_encontrado:
-        return None
+        return {"error": "no hay cargador libre en este horario"}
 
 
 def remove_reserva(id):
