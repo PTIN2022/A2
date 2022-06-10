@@ -4,7 +4,7 @@ from utils.db import db
 from flask import Flask
 from routes.reservas import reservas
 from routes.estaciones import estaciones
-from utils.fake_data import fakedata
+# from utils.fake_data import fakedata
 from multiprocessing import Lock
 
 
@@ -12,7 +12,7 @@ def init_db():
     time.sleep(5)
     db.init_app(app)
     with app.app_context():
-        #db.drop_all()  # TODO: REMOVE AT THE END OF THE PROYECT
+        #  db.drop_all()  # TODO: REMOVE AT THE END OF THE PROYECT
         db.create_all()
 
 
@@ -33,8 +33,8 @@ lock.acquire()
 
 try:
     init_db()
-    #with app.app_context():
-    #    fakedata()
+    # with app.app_context():
+    #     fakedata()
 
 finally:
     lock.release()
