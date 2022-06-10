@@ -7,6 +7,7 @@ from utils.fake_data import fakedata
 from flask import Flask
 from flask_mqtt import Mqtt
 from datetime import datetime
+from multiprocessing import Lock
 
 from models.model import Reserva
 from routes.trabajador import trabajador
@@ -23,7 +24,7 @@ def init_db():
     time.sleep(5)
     db.init_app(app)
     with app.app_context():
-        #db.drop_all()  # TODO: REMOVE AT THE END OF THE PROYECT
+        db.drop_all()  # TODO: REMOVE AT THE END OF THE PROYECT
         db.create_all()
 
 
@@ -51,6 +52,7 @@ app.register_blueprint(soporte, url_prefix='/api')
 app.register_blueprint(estadisticas, url_prefix='/api')
 
 
+lock = Lock()
 mqtt = Mqtt(app)
 mqtt.subscribe('estacion/#')
 
@@ -83,9 +85,16 @@ def handle_mqtt_message(client, userdata, message):
 if os.path.exists("./test.db"):
     os.remove("./test.db")
 
-init_db()
-#with app.app_context():
-#    fakedata()
+lock.acquire()
+
+try:
+    init_db()
+    with app.app_context():
+        fakedata()
+
+finally:
+    lock.release()
+
 
 if __name__ == "__main__":  # pragma: no cover
     print("=========================================")
