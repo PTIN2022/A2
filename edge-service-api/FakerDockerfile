@@ -1,0 +1,8 @@
+FROM python:3.10
+
+COPY requirements/requirements.txt .
+RUN pip install -r requirements.txt
+COPY . /opt/stack
+WORKDIR /opt/stack
+
+CMD export SQLALCHEMY_DATABASE_URI="mysql://root:root-change-me-on-production@mysql/data" && export INSERT_FAKER="True" && python app.py

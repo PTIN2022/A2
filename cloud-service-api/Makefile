@@ -4,6 +4,10 @@ help:
 run: env ## Arranca el flask (.venv) en modo desarrollo. Server correra en: 127.0.0.1:5000
 	. .venv/bin/activate && python app.py 
 
+fake-data: ## Mete la fakedata en el sql
+	docker build -t fake -f FakerDockerfile .
+	docker run -it --network a2_default fake
+
 run-gunicorn: env ## Arranca el flask (.venv) en modo desarrollo. Server correra en: 127.0.0.1:5000
 	. .venv/bin/activate && gunicorn -b 0.0.0.0:8080 app:app --timeout 300
 

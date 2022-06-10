@@ -4,16 +4,21 @@ from utils.db import db
 from flask import Flask
 from routes.reservas import reservas
 from routes.estaciones import estaciones
-# from utils.fake_data import fakedata
+from utils.fake_data import fakedata
 from multiprocessing import Lock
 
+insert = bool(os.getenv('INSERT_FAKER', False))
 
 def init_db():
     time.sleep(5)
     db.init_app(app)
     with app.app_context():
-        #  db.drop_all()  # TODO: REMOVE AT THE END OF THE PROYECT
+        if insert:
+            db.drop_all()
         db.create_all()
+
+        if insert:
+            fakedata()
 
 
 lock = Lock()
@@ -30,12 +35,8 @@ if os.path.exists("./test.db"):
     os.remove("./test.db")
 
 lock.acquire()
-
 try:
     init_db()
-    # with app.app_context():
-    #     fakedata()
-
 finally:
     lock.release()
 
@@ -44,4 +45,6 @@ if __name__ == "__main__":  # pragma: no cover
     print("=========================================")
     print("Test me on: http://ptin2022.github.io/A2/")
     print("=========================================")
-    app.run(host="0.0.0.0")
+    
+    if not insert:
+        app.run(host="0.0.0.0")

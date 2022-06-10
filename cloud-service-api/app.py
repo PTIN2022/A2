@@ -3,7 +3,7 @@ import time
 import json
 
 from utils.db import db
-# from utils.fake_data import fakedata
+from utils.fake_data import fakedata
 from flask import Flask
 from flask_mqtt import Mqtt
 from datetime import datetime
@@ -24,8 +24,13 @@ def init_db():
     time.sleep(5)
     db.init_app(app)
     with app.app_context():
-        # db.drop_all()  # TODO: REMOVE AT THE END OF THE PROYECT
+        insert = bool(os.getenv('INSERT_FAKER', False))
+        if insert:
+            db.drop_all()
         db.create_all()
+
+        if insert:
+            fakedata()
 
 
 app = Flask(__name__)
@@ -41,6 +46,8 @@ app.config['MQTT_PASSWORD'] = os.getenv('MQTT_PASSWORD', '')  # set the password
 app.config['MQTT_KEEPALIVE'] = int(os.getenv('MQTT_KEEPALIVE', "5"))  # set the time interval for sending a ping to the broker to 5 seconds
 app.config['MQTT_TLS_ENABLED'] = os.getenv('MQTT_TLS_ENABLED', False)  # set TLS to disabled for testing purposes
 app.config["ON_TEST"] = bool(os.getenv('ON_TEST', False))
+
+print(app.config["SQLALCHEMY_DATABASE_URI"])
 
 app.register_blueprint(incidencias, url_prefix='/api')
 app.register_blueprint(estaciones, url_prefix='/api')
@@ -85,13 +92,10 @@ def handle_mqtt_message(client, userdata, message):
 if os.path.exists("./test.db"):
     os.remove("./test.db")
 
-lock.acquire()
 
+lock.acquire()
 try:
     init_db()
-    # with app.app_context():
-    #     fakedata()
-
 finally:
     lock.release()
 
@@ -100,4 +104,7 @@ if __name__ == "__main__":  # pragma: no cover
     print("=========================================")
     print("Test me on: http://ptin2022.github.io/A2/")
     print("=========================================")
-    app.run(host="0.0.0.0")
+    
+    insert = bool(os.getenv('INSERT_FAKER', False))
+    if not insert:
+        app.run(host="0.0.0.0")
