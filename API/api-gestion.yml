@@ -1273,7 +1273,7 @@ paths:
                 fecha_final: "18-04-2022 18:00"
                 id_vehiculo: "LKE2378"
                 id_cliente: "1238712N"
-                tarifa: 12,7
+                tarifa: 12.7
                 asistida: True
                 porcentaje_carga: 30
                 precio_carga_completo: 30
@@ -2415,4 +2415,78 @@ paths:
                 examples:
                   error:
                     value: {"error": "Promocion not found."}
+#########################################################################################
+  /login:
+    post:
+      summary: Login en el sistema
+      tags: 
+      - Autenticacion
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
 
+              example:
+                email: "meh@meh.com"
+                password: "supersegura"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Success Login: 
+                  value: >-
+                    {
+                      "token": "tokencito.jwt"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: {'error' : 'Invalid credendtials'}
+  /logout:
+    get:
+      summary: "Log Out"
+      tags:
+      - Autenticacion
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Success Login: 
+                  value: >-
+                    {
+                      "msg": "Success logout"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: {"error": "Something went wrong."}
+  
+components:
+  securitySchemes:
+    token:
+      type: apiKey
+      description: API key to authorize requests.
+      name: x-access-tokens
+      in: header
+security:
+  - token: [] 

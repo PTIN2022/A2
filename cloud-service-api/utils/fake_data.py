@@ -8,6 +8,7 @@ from models.model import Estacion, Cliente, Trabajador, Promociones, \
     Cargador, Modelo, Consumo, Horas, Vehiculo, Reserva
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from utils.utils import encrypt_password
 
 
 def fakedata():
@@ -195,7 +196,7 @@ def fakedata():
             foto,
             telefono,
             username,
-            password,
+            encrypt_password(password),
             )
         db.session.add(ce)
         clientes.append(ce)
@@ -203,8 +204,72 @@ def fakedata():
         db.session.commit()
 
     # ### TRABAJADOR
-
+    # Creamos 3 tipos de trabajadores
+    
     trabajadores = []
+    estacion = random.choice(estacioness)
+    ultimo_acceso = fake.date_time_between(start_date='-2y', end_date='now')
+    telefono = '{:09}'.format(random.randrange(1, 10 ** 8))
+    tr = Trabajador(
+        'Alfredo',
+        'Manresa',
+        'tugmail@adas',
+        'a111111111',
+        'asda',
+        telefono,
+        'alfredo',
+        encrypt_password('1'),
+        'administrador',
+        'Activo',
+        ultimo_acceso,
+        'Amigo de la infancia?',
+        estacion.id_estacion,
+    )
+    db.session.add(tr)
+    trabajadores.append(tr)
+    db.session.commit()
+    estacion = random.choice(estacioness)
+    ultimo_acceso = fake.date_time_between(start_date='-2y', end_date='now')
+    telefono = '{:09}'.format(random.randrange(1, 10 ** 8))
+    tr = Trabajador(
+        'Marc',
+        'Capdevila',
+        'tugmail2@adas',
+        'b222222222',
+        'asda',
+        telefono,
+        'marc',
+        encrypt_password('1'),
+        'encargado',
+        'Activo',
+        ultimo_acceso,
+        'Amigo de la infancia?',
+        estacion.id_estacion,
+    )
+    db.session.add(tr)
+    trabajadores.append(tr)
+    db.session.commit()
+    estacion = random.choice(estacioness)
+    ultimo_acceso = fake.date_time_between(start_date='-2y', end_date='now')
+    telefono = '{:09}'.format(random.randrange(1, 10 ** 8))
+    tr = Trabajador(
+        'Cinta',
+        'Gonzalez',
+        'tugmail3@adas',
+        'c333333333',
+        'asda',
+        telefono,
+        'marc',
+        encrypt_password('1'),
+        'trabajador',
+        'Activo',
+        ultimo_acceso,
+        'Amigo de la infancia?',
+        estacion.id_estacion,
+    )
+    db.session.add(tr)
+    trabajadores.append(tr)
+    db.session.commit()
     for i in range(100):
 
         letras = [
@@ -259,7 +324,7 @@ def fakedata():
             foto,
             telefono,
             username,
-            password,
+            encrypt_password(password),
             cargo,
             estado,
             ultimo_acceso,

@@ -2,7 +2,7 @@ from utils.db import db
 from datetime import datetime
 import random
 
-from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
+from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo, Cargador
 
 
 def get_all_reservas():
@@ -12,11 +12,15 @@ def get_all_reservas():
 
 def get_reservas_id(id):
     i = Reserva.query.filter(Reserva.id_reserva == id).one_or_none()
-    return ReservaSchema().dump(i)
+    j=[]
+    if i:
+        j = Cargador.query.filter(Cargador.id_cargador==i.id_cargador).one_or_none()
+    return ReservaSchema().dump(i), j.estacion_id
 
 
 def get_reservas_estacion(id_estacion):
-    i = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
+    print(id_estacion)
+    i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
     reservas_desde_ahora = []
     if i:
         ahora = datetime.today()
@@ -40,22 +44,22 @@ def get_reservas_dni(dni):
 
 
 def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI):
-    cliente = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
-    if not cliente:
-        return None
-
-    i = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
+    print("adios")
+    i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
     cargador_encontrado = False
     cl = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
     vh = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()
     if not cl or not vh:
+        print("ERROR: No existe na")
         return None
     if i:
         random.shuffle(i.cargadores)  # Se hace un shuffle para que no siempre se use el mismo cargador para evitar el desgaste del mismo
+        print("adios1")
         for cargador in i.cargadores:
             if not cargador_encontrado:
                 cargador_ocupado = False
                 for reserva in cargador.reservas:
+                    print("adios2")
                     if not cargador_ocupado:
                         reserva = ReservaSchema().dump(reserva)
                         reserva_inicio_data = datetime.strptime(reserva["fecha_entrada"], '%Y-%m-%dT%H:%M:%S')
@@ -67,6 +71,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                             cargador_ocupado = True
 
                 if not cargador_ocupado:
+                    print("Se ha añadido")
                     i = Reserva(
                         fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, True, tarifa,
                         asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari

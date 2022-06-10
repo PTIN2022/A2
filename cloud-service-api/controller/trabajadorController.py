@@ -1,6 +1,6 @@
 from utils.db import db
 from models.model import Trabajador, TrabajadorSchema
-
+from utils.utils import encrypt_password
 
 def get_all_trabajadores():
     t = Trabajador.query.all()
@@ -13,6 +13,10 @@ def get_trabajador_dni(dni):
 
 
 def post_trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, last_access, question, id_estacion):
+    password = encrypt_password(password)
+    t = Trabajador.query.filter(Trabajador.dni == dni).one_or_none()
+    if t:
+        return None
     t = Trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, last_access, question, id_estacion)
     db.session.add(t)
     db.session.commit()
@@ -38,6 +42,7 @@ def modify_trabajador(dni, nombre, apellido, email, dni_change, foto, telefono, 
         if username:
             t.username = username
         if password:
+            password = encrypt_password(password)
             t.password = password
         if cargo:
             t.cargo = cargo

@@ -212,6 +212,7 @@ class Usuari_tSchema(SQLAlchemyAutoSchema):
     # estacion =  fields.Nested(EstacionSchema)
     class Meta:
         model = Usuari_t
+        exclude = ('password',)
 
 
 class Trabajador(Usuari_t):
@@ -248,6 +249,7 @@ class Trabajador(Usuari_t):
 class TrabajadorSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Trabajador
+        exclude = ('password',)
 
 
 vehiculo_cliente = db.Table(
@@ -300,6 +302,7 @@ class ClienteSchema(SQLAlchemyAutoSchema):
 
     class Meta:
         model = Cliente
+        exclude = ('password',)
 
 
 class Modelo(db.Model):
