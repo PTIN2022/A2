@@ -1,7 +1,7 @@
 import controller.incidenciaController as control
 
 from datetime import datetime
-from utils import utils, errors
+from utils import errors
 from flask import Blueprint, jsonify, request
 
 incidencias = Blueprint('incidencias', __name__)
@@ -17,11 +17,11 @@ def get_incidencias():
 def post_incidencias():
     try:
         estacion = request.json["estacion"]
-        direccion = request.json["direccion"]
+        estado = request.json["estado"]
         fecha_averia = request.json["fecha_averia"]
         fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%Y-%m-%d'))
         descripcion = request.json["descripcion"]
-        id = control.post_incidencia(estacion, direccion, fecha_averia, descripcion)
+        id = control.post_incidencia(estacion, fecha_averia, descripcion, estado)
 
         respuesta = control.get_incidencias_id(id)
         return jsonify(respuesta)
@@ -44,7 +44,7 @@ def get_incidencia_by_id(id):
 @incidencias.route('/incidencias/<id>', methods=["PUT"])
 def modify_incidencia(id):
     estacion = None
-    direccion = None
+    trabajador = None
     fecha_averia = None
     descripcion = None
     estado = None
@@ -59,13 +59,14 @@ def modify_incidencia(id):
         except ValueError:
             return jsonify({"error": "Malformed request syntax."}), 400
 
-    if "descripcion" in request.json:
-        descripcion = request.json["descripcion"]
+    if "trabajador" in request.json:
+        trabajador = request.json["trabajador"]
     if "estado" in request.json:
-        print(request.json["estado"])
-        estado = utils.strtobool(str(request.json["estado"]))
+        estado = str(request.json["estado"])
+    if "descripcion" in request.json:
+        descripcion = str(request.json["descripcion"])
 
-    respuesta = control.modify_incidencia(id, estacion, direccion, fecha_averia, descripcion, estado)
+    respuesta = control.modify_incidencia(id, estacion, fecha_averia, descripcion, estado, trabajador)
     if respuesta:
         return jsonify(respuesta), 200
     else:

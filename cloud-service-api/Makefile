@@ -5,7 +5,7 @@ run: env ## Arranca el flask (.venv) en modo desarrollo. Server correra en: 127.
 	. .venv/bin/activate && python app.py 
 
 run-gunicorn: env ## Arranca el flask (.venv) en modo desarrollo. Server correra en: 127.0.0.1:5000
-	. .venv/bin/activate && gunicorn -b 0.0.0.0:8080 app:app
+	. .venv/bin/activate && gunicorn -b 0.0.0.0:8080 app:app --timeout 300
 
 env: ## Configura el virtualenv
 	test -d .venv || python3 -m virtualenv .venv || virtualenv .venv

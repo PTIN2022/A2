@@ -1,5 +1,4 @@
-from models.estacion import Estacion, EstacionSchema
-from models.cargador import CargadorSchema
+from models.model import Estacion, EstacionSchema, CargadorSchema
 from utils.db import db
 
 
@@ -12,13 +11,8 @@ def get_estacion_by_id(id):
     i = Estacion.query.filter(Estacion.id_estacion == id).one_or_none()
     if i:
         estacion_dict = EstacionSchema().dump(i)
-
-        estacion_dict["cargadores"] = []
-        for cargador in i.cargadores:
-            estacion_dict["cargadores"].append(CargadorSchema().dump(cargador))
-
+        estacion_dict["Cargadores"] = CargadorSchema(many=True).dump(i.cargadores)
         return estacion_dict
-
     return None
 
 
@@ -38,7 +32,8 @@ def get_estacion_by_coor(lat_str=0, long_str=0):
         if len(lista_order) < 5:
             valor = len(lista_order)
         for i in range(valor):
-            est_obj = get_estacion_by_id(coor[i][2])
+            i = Estacion.query.filter(Estacion.id_estacion == coor[i][2]).one_or_none()  # TODO: esto esta bien?
+            est_obj = EstacionSchema().dump(i)
             if est_obj:
                 lista_estaciones["Estaciones"].append(est_obj)
     return lista_estaciones

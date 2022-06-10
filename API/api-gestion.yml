@@ -3,7 +3,7 @@ info:
   title: API portal de gestion
   version: '1.0'
 servers:
-  - url: http://127.0.0.1:5000
+  - url: http://127.0.0.1:5000/api
     description: Development
   - url: http://127.0.0.1/api
     description: Development HTTP docker-compose
@@ -29,24 +29,31 @@ paths:
               examples:
                 Con incidencias:
                   value: [
-                          {
-                            "incidenciaId": 1,
-                            "estación": "VG1",
-                            "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "2022-04-18",
-                            "estado": false,
-                            "descripción": "El cargador de la planta 2 m plaza 1 no funciona"
-                          },
-                          {
-                            "incidenciaId": 2,
-                            "estación": "VG2",
-                            "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "2022-04-18 ",
-                            "estado": false,
-                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
-                          }
-                        ]
-
+                        {
+                          "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                          "estado": "Arreglando",
+                          "fecha": "2022-04-18T00:00:00",
+                          "id_averia": 1,
+                          "id_trabajador": 1,
+                          "name_estacion": "VG1"
+                        },
+                        {
+                          "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                          "estado": "Arreglando",
+                          "fecha": "2022-04-18T00:00:00",
+                          "id_averia": 3,
+                          "id_trabajador": null,
+                          "name_estacion": "VG1"
+                        },
+                        {
+                          "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                          "estado": "Arreglando",
+                          "fecha": "2022-04-18T00:00:00",
+                          "id_averia": 4,
+                          "id_trabajador": null,
+                          "name_estacion": "VG1"
+                        }
+                      ]
                 Sin incidencias:
                   value: '[]'
         '401':
@@ -70,13 +77,13 @@ paths:
                 type: object
                 required:
                   - estacion
-                  - direccion
+                  - estado
                   - fecha_averia
                   - descripcion
                 properties:
                   estacion:
                     type: string
-                  direccion:
+                  estado:
                     type: string
                   fecha_averia:
                     type: string
@@ -84,7 +91,7 @@ paths:
                     type: string
                 example:
                   estacion: VG1
-                  direccion: "Av.Victor Balaguer 2"
+                  estado: "Arreglando"
                   fecha_averia: "2022-04-18"
                   descripcion: "El cargador de la planta 2 m plaza 1 no funciona"
         responses:
@@ -96,11 +103,12 @@ paths:
                   Meter incidencia:
                     value:  >-
                         {
-                          "estacion": "VG1",
-                          "direccion": "Av.Victor Balaguer 2",
-                          "fecha_averia": "2022-04-18",
-                          "estado": "true",
-                          "descripcion": "El cargador de la planta 2 m plaza 1 funciona"
+                          "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                          "estado": "Arreglando",
+                          "fecha": "2022-04-18T00:00:00",
+                          "id_averia": 4,
+                          "id_trabajador": null,
+                          "name_estacion": "VG1"
                         }
           '400':
             description: Peticion incorrecta
@@ -133,20 +141,20 @@ paths:
                   value: >-
                         [
                           {
-                            "incidenciaId": 1,
-                            "estación": "VG1",
-                            "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "2022-04-18 ",
-                            "estado": false,
-                            "descripción": "El cargador de la planta 2 m plaza 1 no funciona"
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                            "estado": "Arreglando",
+                            "fecha": "2022-04-18T00:00:00",
+                            "id_averia": 3,
+                            "id_trabajador": null,
+                            "name_estacion": "VG1"
                           },
                           {
-                            "incidenciaId": 2,
-                            "estacion": "VG2",
-                            "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "2022-04-18 ",
-                            "estado": false,
-                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                            "estado": "Arreglando",
+                            "fecha": "2022-04-18T00:00:00",
+                            "id_averia": 4,
+                            "id_trabajador": null,
+                            "name_estacion": "VG1"
                           }
                         ]
                 Sin incidencias:
@@ -180,12 +188,12 @@ paths:
                   Incidencias:
                     value: >-
                           {
-                            "incidencia_id": 1,
-                            "estacion": "VG1",
-                            "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "2022-04-18",
-                            "estado": false,
-                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                            "estado": "Arreglando",
+                            "fecha": "2022-04-18T00:00:00",
+                            "id_averia": 4,
+                            "id_trabajador": null,
+                            "name_estacion": "VG1"
                           }
                   Incidencia no encontrada:
                     value: '[]'
@@ -230,9 +238,11 @@ paths:
                       type: string
                     estado:
                       type: boolean
+                    trabajador:
+                      type: integer
                   example:
                     estacion: VG1
-                    direccion: "Av.Victor Balaguer 2"
+                    trabajador: 1
                     fecha_averia: "18/04/022"
                     descripcion: "El cargador de la planta 2 m plaza 1 no funciona"
                     estado: false
@@ -252,12 +262,12 @@ paths:
                     Incidencia actualizada:
                       value: >-
                           {
-                            "incidencia_id": 1,
-                            "estacion": "VG1",
-                            "direccion": "Av.Victor Balaguer 2",
-                            "fecha_averia": "2022-04-18",
-                            "estado": false,
-                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona"
+                            "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
+                            "estado": "Arreglando",
+                            "fecha": "2022-04-18T00:00:00",
+                            "id_averia": 4,
+                            "id_trabajador": 1,
+                            "name_estacion": "VG1"
                           }
             '400':
               description: Peticion incorrecta
@@ -559,6 +569,8 @@ paths:
                       type: string
                     rol:
                       type: string
+                    username:
+                      type: string
                     password:
                       type: string
                     profileImage:
@@ -572,6 +584,7 @@ paths:
                     email: "pere.roca@boss.com"
                     rol: "Dueño"
                     password: "proca"
+                    username: "proca"
         responses:
           '200':
             description: Peticion correcta
@@ -780,22 +793,22 @@ paths:
                 examples:
                   Peticion a soporte:
                     value: >- 
-                      [
-                        {
-                          "user_id": 1,
-                          "ticket_id": 2,
-                          "fecha": "2022-04-21T13:00:00",
-                          "descripcion": "Problema con la aplicación móvil",
-                          "estado": false
-                        },
-                        {
-                          "user_id": 2,
-                          "ticket_id": 3,
-                          "fecha": "2022-04-22T13:00:00",
-                          "descripcion": "Problema con las reservas",
-                          "estado": false
-                        }
-                      ]
+                        [
+                          {
+                            "asunto": "App no me va",
+                            "estado": false,
+                            "fecha": "2022-05-26T16:52:37.020462",
+                            "id_ticket": 1,
+                            "mensaje": "Problema con la aplicación movil"
+                          },
+                          {
+                            "asunto": "App no me va",
+                            "estado": false,
+                            "fecha": "2022-05-26T16:54:17.253574",
+                            "id_ticket": 2,
+                            "mensaje": "Problema con la aplicación movil"
+                          }
+                        ]
                   Sin peticiones a soporte:
                     value: '[]'
           '401':
@@ -820,14 +833,22 @@ paths:
               required:
                 - descripcion
                 - estado
+                - cliente
+                - asunto
               properties:
                 descripcion:
                   type: string
                 estado:
                   type: boolean
+                asunto:
+                  type: string
+                cliente: 
+                  type: integer
             example:
-              descripcion: "Problema con la aplicación movil"
+              asunto: "App no me va"
               estado: False
+              cliente: 1
+              descripcion: "Problema con la aplicación movil"
               
       responses:
         '200':
@@ -839,9 +860,12 @@ paths:
                   value: >-
                     [
                       {
-                        "fecha": "2022-04-01T13:00:00",
-                        "descripcion": "Problema con la aplicación móvil",
-                        "estado": false
+                        "Mensajes": [],
+                        "asunto": "App no me va",
+                        "estado": false,
+                        "fecha": "2022-05-26T16:54:17.253574",
+                        "id_ticket": 2,
+                        "mensaje": "Problema con la aplicación movil"
                       }
                     ]
         '400':
@@ -880,31 +904,19 @@ paths:
               examples:
                Consultando petición a soporte tecnico:
                   value: {
-                      "ticket_id": 0123456789,
-                      "user_id": 0123456789,
-                      "descripcion": "No se porque no carga mi coche",
-                      "fecha": "2022-04-01T13:00:00",
-                      "estado": false,
-                      "Mensajes": [ {
-                          "msg_id": 1,
-                          "user_id": 123456789,
-                          "mensaje": "No se porque no carga mi coche",
-                          "fecha" : "2022-04-01T14:00:00"
-                        },
-                        {
-                          "msg_id": 2,
-                          "user_id": 111,
-                          "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
-                          "fecha" : "2022-04-01T14:30:00"
-                        },
-                        {
-                          "msg_id": 3,
-                          "user_id": 123456789,
-                          "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
-                          "fecha" : "2022-04-01T14:43:00"
+                          "Mensajes": [
+                            {
+                              "contenido": "aloha",
+                              "date": "2022-05-26T16:52:40.062432",
+                              "id_mensaje": 1
+                            }
+                          ],
+                          "asunto": "App no me va",
+                          "estado": false,
+                          "fecha": "2022-05-26T16:52:37.020462",
+                          "id_ticket": 1,
+                          "mensaje": "Problema con la aplicación movil"
                         }
-                      ]
-                    }
         '404':
           description: Ticket no encontrado
           content:
@@ -921,7 +933,7 @@ paths:
                     value: >- 
                       {"error": "User not authorized."}
     post:
-      summary: Dado un usuario en concreto pueda generar un mensaje para un ticket
+      summary: Dado un usuario (por ahora, luego se asignará con el token) en concreto pueda generar un mensaje para un ticket
       tags:
         - Soporte tecnico
       parameters:
@@ -938,11 +950,15 @@ paths:
               type: object
               required:
                 - mensaje
+                - cliente
               properties:
                 mensaje:
                   type: string
+                cliente:
+                  type: integer
               example:
                 mensaje: "no se que me esta contando"
+                cliente: 1
       responses:
         '200':
           description: Peticion correcta
@@ -951,31 +967,19 @@ paths:
               examples:
                 Insertar petición a soporte tecnico:
                   value: {
-                        "ticket_id": 0123456789,
-                        "user_id":  0123456789,
-                        "descripcion": "No se porque no carga mi coche",
-                        "fecha": "2022-04-01T13:00:00",
-                        "estado": false,
-                        "Mensajes": [ {
-                          "msg_id": 1,
-                            "user_id": 0123456789,
-                            "mensaje": "No se porque no carga mi coche",
-                            "fecha" : "2022-04-01T14:00:00"
-                          },
-                          {
-                            "msg_id": 2,
-                            "user_id": 111,
-                            "mensaje": "Hola Pablo, ¿ha provado de darle el boton verde?",
-                            "fecha" : "2022-04-01T14:30:00"
-                          },
-                          {
-                            "msg_id": 3,
-                            "user_id": 123456789,
-                            "mensaje": "¿Que boton verde? ¡Hay muchos y soy daltonico!",
-                            "fecha" : "2022-04-01T14:43:00"
-                          }
-                        ]
-                      }
+                          "Mensajes": [
+                            {
+                              "contenido": "aloha",
+                              "date": "2022-05-26T16:52:40.062432",
+                              "id_mensaje": 1
+                            }
+                          ],
+                          "asunto": "App no me va",
+                          "estado": false,
+                          "fecha": "2022-05-26T16:52:37.020462",
+                          "id_ticket": 1,
+                          "mensaje": "Problema con la aplicación movil"
+                        }
         '400':
           description: Ticket incorrecto
           content:
@@ -1061,7 +1065,7 @@ paths:
         name: user_id
         required: true
         schema: 
-          type: string
+          type: integer
       responses:
         '200':
           description: Peticion correcta
@@ -1070,36 +1074,28 @@ paths:
               examples:
                 Trabajador:
                   value:  
-                    [
-                      {
-                          "ticket_id": 0123456789,
-                          "user_id":  0123456789,
-                          "descripcion": "No se porque no carga mi coche",
-                          "fecha": "2022-04-22T18:00:00",
+                    {
+                      "Tickets": [
+                        {
+                          "asunto": "App no me va",
                           "estado": false,
-                          "Mensajes": [ {
-                            "msg_id": 1,
-                              "user_id": 0123456789,
-                              "mensaje": "No se porque no carga mi coche",
-                              "fecha" : "2022-04-22T19:00:00"
-                          }
-                          ]
-                      },
-                      {
-                          "ticket_id": 01231236789,
-                          "user_id":  0123456789,
-                          "descripcion": "Estoy atrapado",
-                          "fecha": "2022-04-01T13:00:00",
-                          "estado": false,
-                          "Mensajes": [ {
-                            "msg_id": 1,
-                              "user_id": 0123456789,
-                              "mensaje": "Estoy atrapado",
-                              "fecha" : "2022-04-01T14:00:00"
-                          }
-                          ]
-                      }
-                    ]
+                          "fecha": "2022-05-26T16:52:37.020462",
+                          "id_ticket": 1,
+                          "mensaje": "Problema con la aplicación movil"
+                        }
+                      ],
+                      "apellido": "garcia",
+                      "dni": "245363Y",
+                      "email": "meh@gmail.com",
+                      "foto": "foto_chula",
+                      "id_usuari": 1,
+                      "nombre": "sergi",
+                      "password": "mehmeh123",
+                      "telefono": 4674387249,
+                      "type": "cliente",
+                      "username": "sergi.ib",
+                      "vehiculos": []
+                    }
         '401':
           description: Not login
           content:
@@ -1118,17 +1114,12 @@ paths:
                     {"error": "User not found."}
                   
     
-  /soporte/{ticket_id}/{msg_id}:
+  /soporte/delete_missage/{msg_id}:
     delete:
       summary: Elimina un mensaje de una peticion
       tags:
         - Soporte tecnico
       parameters:
-      - in: path
-        name: ticket_id
-        required: true
-        schema:
-          type: integer
       - in: path
         name: msg_id
         required: true
@@ -1191,12 +1182,34 @@ paths:
                     value:  >-
                         [
                           {
-                            "fecha_entrada": "2022-04-18T11:00:00",
-                            "fecha_salida": "2022-04-18T18:00:00",
-                            "id_cargador": 1,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": true,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.798066",
+                            "fecha_salida": "2022-05-23T13:49:59.798066",
+                            "id_cargador": 257,
+                            "id_cliente": 1,
                             "id_reserva": 1,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 10.1,
+                            "precio_carga_completa": 25.2,
+                            "procetnaje_carga": 50,
+                            "tarifa": 90.99
+                          },
+                          {
+                            "asistida": true,
+                            "estado": false,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.808033",
+                            "fecha_salida": "2022-05-23T13:49:59.808033",
+                            "id_cargador": 258,
+                            "id_cliente": 1,
+                            "id_reserva": 2,
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 60,
+                            "precio_carga_completa": 50,
+                            "procetnaje_carga": 33,
+                            "tarifa": 44.44
                           }
                         ]
           '400':
@@ -1225,6 +1238,12 @@ paths:
                   - fecha_final
                   - id_vehiculo
                   - id_cliente
+                  - tarifa
+                  - asistida
+                  - porcentaje_carga
+                  - precio_carga_completo
+                  - precio_carga_actual
+                  - estado_pago
               properties:
                 id_estacion:
                   type: string
@@ -1236,12 +1255,30 @@ paths:
                   type: string
                 id_cliente:
                   type: string
+                tarifa:
+                  type: number
+                asistida:
+                  type: boolean
+                porcentaje_carga:
+                  type: number
+                precio_carga_completo:
+                  type: number
+                precio_carga_actual:
+                  type: number
+                estado_pago:
+                  type: boolean
               example:
                 id_estacion: "VG1"
                 fecha_inicio: "18-04-2022 11:00"
                 fecha_final: "18-04-2022 18:00"
                 id_vehiculo: "LKE2378"
                 id_cliente: "1238712N"
+                tarifa: 12,7
+                asistida: True
+                porcentaje_carga: 30
+                precio_carga_completo: 30
+                precio_carga_actual: 5
+                estado_pago: True
       responses:
         '200':
           description: Peticion correcta
@@ -1251,13 +1288,19 @@ paths:
                 Meter reserva:
                   value:  >-
                       {
-                        "id_cliente": "1238712N",
-                        "fecha_entrada": "2022-04-18T18:00:00",
-                        "fecha_salida": "2022-04-18T11:00:00",
+                        "asistida": true,
+                        "estado": true,
+                        "estado_pago": true,
+                        "fecha_entrada": "2022-05-23T13:49:59.798066",
+                        "fecha_salida": "2022-05-23T13:49:59.798066",
+                        "id_cargador": 257,
+                        "id_cliente": 1,
                         "id_reserva": 1,
-                        "id_estacion": 1,
-                        "id_vehiculo": "LKE2378",
-                        "id_cargador": 2
+                        "id_vehiculo": "2WRQ7QQ",
+                        "precio_carga_actual": 10.1,
+                        "precio_carga_completa": 25.2,
+                        "procetnaje_carga": 50,
+                        "tarifa": 90.99
                       }
         '400':
           description: Peticion incorrecta
@@ -1291,20 +1334,34 @@ paths:
                   value: >-
                         [
                           {
-                            "fecha_entrada": "2022-07-18T11:00:00",
-                            "fecha_salida": "2022-07-18T18:00:00",
-                            "id_cargador": 1,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": true,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.798066",
+                            "fecha_salida": "2022-05-23T13:49:59.798066",
+                            "id_cargador": 257,
+                            "id_cliente": 1,
                             "id_reserva": 1,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 10.1,
+                            "precio_carga_completa": 25.2,
+                            "procetnaje_carga": 50,
+                            "tarifa": 90.99
                           },
                           {
-                            "fecha_entrada": "2022-07-18T12:00:00",
-                            "fecha_salida": "2022-07-18T115:00:00",
-                            "id_cargador": 2,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": false,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.808033",
+                            "fecha_salida": "2022-05-23T13:49:59.808033",
+                            "id_cargador": 258,
+                            "id_cliente": 1,
                             "id_reserva": 2,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 60,
+                            "precio_carga_completa": 50,
+                            "procetnaje_carga": 33,
+                            "tarifa": 44.44
                           }
                         ]
                 Sin reservas:
@@ -1337,24 +1394,38 @@ paths:
               examples:
                 Con reservas:
                   value: >-
-                        [
-                          {
-                            "fecha_entrada": "2022-07-18T11:00:00",
-                            "fecha_salida": "2022-07-18T18:00:00",
-                            "id_cargador": 1,
-                            "id_cliente": "1238712N",
-                            "id_reserva": 1,
-                            "id_vehiculo": "LKE2378"
-                          },
-                          {
-                            "fecha_entrada": "2022-07-18T12:00:00",
-                            "fecha_salida": "2022-07-18T115:00:00",
-                            "id_cargador": 2,
-                            "id_cliente": "1238712N",
-                            "id_reserva": 2,
-                            "id_vehiculo": "LKE2378"
-                          }
-                        ]
+                      [
+                        {
+                          "asistida": true,
+                          "estado": true,
+                          "estado_pago": true,
+                          "fecha_entrada": "2022-05-23T13:49:59.798066",
+                          "fecha_salida": "2022-05-23T13:49:59.798066",
+                          "id_cargador": 257,
+                          "id_cliente": 1,
+                          "id_reserva": 1,
+                          "id_vehiculo": "2WRQ7QQ",
+                          "precio_carga_actual": 10.1,
+                          "precio_carga_completa": 25.2,
+                          "procetnaje_carga": 50,
+                          "tarifa": 90.99
+                        },
+                        {
+                          "asistida": true,
+                          "estado": false,
+                          "estado_pago": true,
+                          "fecha_entrada": "2022-05-23T13:49:59.808033",
+                          "fecha_salida": "2022-05-23T13:49:59.808033",
+                          "id_cargador": 258,
+                          "id_cliente": 1,
+                          "id_reserva": 2,
+                          "id_vehiculo": "2WRQ7QQ",
+                          "precio_carga_actual": 60,
+                          "precio_carga_completa": 50,
+                          "procetnaje_carga": 33,
+                          "tarifa": 44.44
+                        }
+                      ]
                 Sin reservas:
                   value: '[]'
         '401':
@@ -1387,20 +1458,34 @@ paths:
                   value: >-
                         [
                           {
-                            "fecha_entrada": "2022-07-18T11:00:00",
-                            "fecha_salida": "2022-07-18T18:00:00",
-                            "id_cargador": 1,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": true,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.798066",
+                            "fecha_salida": "2022-05-23T13:49:59.798066",
+                            "id_cargador": 257,
+                            "id_cliente": 1,
                             "id_reserva": 1,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 10.1,
+                            "precio_carga_completa": 25.2,
+                            "procetnaje_carga": 50,
+                            "tarifa": 90.99
                           },
                           {
-                            "fecha_entrada": "2022-07-18T12:00:00",
-                            "fecha_salida": "2022-07-18T115:00:00",
-                            "id_cargador": 2,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": false,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.808033",
+                            "fecha_salida": "2022-05-23T13:49:59.808033",
+                            "id_cargador": 258,
+                            "id_cliente": 1,
                             "id_reserva": 2,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 60,
+                            "precio_carga_completa": 50,
+                            "procetnaje_carga": 33,
+                            "tarifa": 44.44
                           }
                         ]
                 Sin reservas:
@@ -1433,14 +1518,21 @@ paths:
                 examples:
                   Reservas:
                     value:  >-
-                        {
-                          "fecha_entrada": "2022-04-18T11:00:00",
-                          "fecha_salida": "2022-04-18T18:00:00",
-                          "id_cargador": 1,
-                          "id_cliente": "1238712N",
-                          "id_reserva": 1,
-                          "id_vehiculo": "LKE2378"
-                        }
+                          {
+                            "asistida": true,
+                            "estado": true,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.798066",
+                            "fecha_salida": "2022-05-23T13:49:59.798066",
+                            "id_cargador": 257,
+                            "id_cliente": 1,
+                            "id_reserva": 1,
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 10.1,
+                            "precio_carga_completa": 25.2,
+                            "procetnaje_carga": 50,
+                            "tarifa": 90.99
+                          }
           '401':
             description: Not login
             content:
@@ -1563,6 +1655,7 @@ paths:
                     - foto
                     - telefono
                     - username
+                    - password
                   properties:
                     nombre:
                       type: string
@@ -1575,12 +1668,11 @@ paths:
                     foto:
                       type: string
                     telefono:
-                      type: string
+                      type: integer
                     username:
                       type: string
-                    #profileImage:
-                    #  type: string
-                    #  format: binary
+                    password:
+                      type: string
 
                   example:
                     name: "Pere"

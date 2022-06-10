@@ -1,64 +1,56 @@
-from models.soporte import Soporte, SoporteSchema
-from models.chat import Chat, ChatSchema
 from utils.db import db
+from models.model import ClienteSchema, Ticket, TicketSchema, Mensaje, MensajeSchema, Cliente
 
 
 def get_all_soporte():
-    i = Soporte.query.all()
-    return SoporteSchema(many=True).dump(i)
+    i = Ticket.query.all()
+    return TicketSchema(many=True).dump(i)
 
 
-def post_soporte(descripcion, fecha, estado):
-    s = Soporte(descripcion, fecha, estado)
-    db.session.add(s)
-    db.session.commit()
-    return s.ticket_id
+def post_soporte(descripcion, fecha, estado, id_cliente, asunto):
+    c = Cliente.query.filter(Cliente.dni == id_cliente).one_or_none()
+    if c:
+        s = Ticket(fecha, asunto, descripcion, estado, c.id_cliente)
+        db.session.add(s)
+        db.session.commit()
+        return s.id_ticket
+    return None
 
 
 def get_soporte_user_id(user_id):
-    s = Soporte.query.filter(Soporte.user_id == user_id).one_or_none()
-    # if s:
-    #     soporte_dict = SoporteSchema().dump(s)
+    s = Cliente.query.filter(Cliente.dni == user_id).one_or_none()
+    print(s)
+    print(s.ticket)
+    if s:
+        soporte_dict = ClienteSchema().dump(s)
+        soporte_dict["Tickets"] = TicketSchema(many=True).dump(s.ticket)
+        return soporte_dict
+    return None
 
-    #     soporte_dict["Chat"] = []
-    #     for chat in s.chats:
-    #         soporte_dict["Chat"].append(ChatSchema().dump(chat))
-    return SoporteSchema(many=True).dump(s)
 
-
-def post_soporte_by_ticket(ticket_id, mensaje, fecha):
-    soporte = Soporte.query.filter(Soporte.ticket_id == ticket_id).one_or_none()
+def post_soporte_by_ticket(mensaje, fecha, ticket_id, id_user):
+    soporte = Ticket.query.filter(Ticket.id_ticket == ticket_id).one_or_none()
     if soporte:
-        s = Chat(ticket_id, mensaje, fecha)
+        s = Mensaje(mensaje, fecha, id_user, ticket_id)
         db.session.add(s)
         db.session.commit()
-        return ChatSchema().dump(s)
+        return MensajeSchema().dump(s)
     else:
         return None
 
 
 def get_soporte_ticket_id(ticket_id):
-    i = Soporte.query.filter(Soporte.ticket_id == ticket_id).one_or_none()
+    i = Ticket.query.filter(Ticket.id_ticket == ticket_id).one_or_none()
 
     if i:
-        soporte_dict = SoporteSchema().dump(i)
-
-        soporte_dict["Mensajes"] = []
-        for mensaje in i.chat:
-            soporte_dict["Mensajes"].append(ChatSchema().dump(mensaje))
-
+        soporte_dict = TicketSchema().dump(i)
+        soporte_dict["Mensajes"] = MensajeSchema(many=True).dump(i.mensajes)
         return soporte_dict
     return None
-    # if s:
-    #     soporte_dict = SoporteSchema().dump(s)
-
-    #     soporte_dict["Chat"] = []
-    #     for chat in s.chats:
-    #         soporte_dict["Chat"].append(ChatSchema().dump(chat))
 
 
 def delete_soporte_ticket_id(ticket_id):
-    s = Soporte.query.filter(Soporte.ticket_id == ticket_id).one_or_none()
+    s = Ticket.query.filter(Ticket.id_ticket == ticket_id).one_or_none()
     if s:
         db.session.delete(s)
         db.session.commit()
@@ -66,8 +58,8 @@ def delete_soporte_ticket_id(ticket_id):
     return False
 
 
-def delete_message_by_user(ticket_id, msg_id):
-    s = Chat.query.filter(Chat.msg_id == msg_id).one_or_none()
+def delete_message_by_user(msg_id):
+    s = Mensaje.query.filter(Mensaje.id_mensaje == msg_id).one_or_none()
     if s:
         db.session.delete(s)
         db.session.commit()

@@ -1,5 +1,5 @@
-from models.cliente import Cliente, ClienteSchema
 from utils.db import db
+from models.model import Cliente, ClienteSchema
 
 
 def get_all_clientes():

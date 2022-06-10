@@ -9,4 +9,5 @@ marshmallow_sqlalchemy
 gunicorn
 flask_mqtt
 python-dateutil
+Faker
 mysqlclient
