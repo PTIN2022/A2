@@ -6,8 +6,7 @@ trabajador = Blueprint('trabajadores', __name__)
 
 
 @trabajador.route('/trabajador', methods=['GET'])
-@token_required
-def get_trabajadores(current_user):
+def get_trabajadores():
     respuesta = control.get_all_trabajadores()
     return jsonify(respuesta)
 # habra que hacer el error 401
@@ -32,10 +31,11 @@ def post_trabajador():
     email = request.form.to_dict()["email"]
     rol = request.form.to_dict()["rol"]
     password = request.form.to_dict()["password"]
+    estacion = request.form.to_dict()["estacion"]
     last_access = '-1'
     picture = "https://editor.swagger.io/"
 
-    t = control.post_trabajador(dni, name, lastname, telf, email, rol, password, last_access, picture)
+    t = control.post_trabajador(dni, name, lastname, telf, email, rol, password, last_access, picture, estacion)
     if t:
         return jsonify(t)
     else:
@@ -69,8 +69,10 @@ def modify_trabajador(dni):
         dni_change = request.form.to_dict()["dni"]
     if "password" in request.form.to_dict():
         password = request.form.to_dict()["password"]
+    if "estacion" in request.form.to_dict():
+        estacion = request.form.to_dict()["estacion"]
 
-    respuesta = control.modify_trabajador(dni, dni_change, name, lastname, telf, email, rol, last_access, picture, password)
+    respuesta = control.modify_trabajador(dni, dni_change, name, lastname, telf, email, rol, last_access, picture, password, estacion)
 
     if respuesta:
         return jsonify(respuesta), 200

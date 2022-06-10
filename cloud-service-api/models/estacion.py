@@ -1,13 +1,15 @@
+from enum import unique
 from utils.db import db
 import models.cargador  # noqa: F401
-import models.promocion  # noqa: F401
+import models.cargador  # noqa: F401
+import models.trabajador  # noqa: F401
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
 class Estacion(db.Model):
 
     id_estacion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    nombre_est = db.Column(db.String(20), nullable=False)
+    nombre_est = db.Column(db.String(20), nullable=False, unique=True)
     direccion = db.Column(db.String(100), nullable=False)
     kwh_max = db.Column(db.Integer, nullable=False)
     kwh_now = db.Column(db.Integer, nullable=False)
@@ -19,6 +21,7 @@ class Estacion(db.Model):
     longitud = db.Column(db.Integer, nullable=False)
     imagen = db.Column(db.String(320), nullable=False)
     cargadores = db.relationship("Cargador",  backref="estacion")
+    trabajadores = db.relationship("Trabajador",  backref="trabajador")
 
     def __init__(self, estacion, direccion, kwh_max, kwh_now, ocupation_max, ocupation_now, surface_in_meters, boss, latitud, longitud, imagen):
         self.nombre_est = estacion

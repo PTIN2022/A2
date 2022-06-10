@@ -1,6 +1,7 @@
 from utils.db import db
 from models.reserva import Reserva, ReservaSchema
 from models.estacion import Estacion
+from models.cargador import Cargador, CargadorSchema
 from datetime import datetime
 import random
 
@@ -12,11 +13,14 @@ def get_all_reservas():
 
 def get_reservas_id(id):
     i = Reserva.query.filter(Reserva.id_reserva == id).one_or_none()
-    return ReservaSchema().dump(i)
+    j=[]
+    if i:
+        j = Cargador.query.filter(Cargador.id_cargador==i.id_cargador).one_or_none()
+    return ReservaSchema().dump(i), j.estacion_id
 
 
 def get_reservas_estacion(id_estacion):
-    i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
+    i = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
     reservas_desde_ahora = []
     if i:
         ahora = datetime.today()
@@ -30,16 +34,22 @@ def get_reservas_estacion(id_estacion):
 
 def get_reservas_matricula(matricula):
     i = Reserva.query.filter(Reserva.id_vehiculo == matricula)
-    return ReservaSchema(many=True).dump(i)
+    j=[]
+    if i:
+        j = Cargador.query.filter(Cargador.id_cargador==i.id_cargador).one_or_none()
+    return ReservaSchema().dump(i), j.estacion_id
 
 
 def get_reservas_dni(dni):
     i = Reserva.query.filter(Reserva.id_cliente == dni)
-    return ReservaSchema(many=True).dump(i)
+    j=[]
+    if i:
+        j = Cargador.query.filter(Cargador.id_cargador==i.id_cargador).one_or_none()
+    return ReservaSchema().dump(i), j.estacion_id
 
 
 def post_reserva(id_estacion, matricula, fecha_inicio_str, fecha_final_str, DNI):
-    i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
+    i = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
     cargador_encontrado = False
     if i:
         random.shuffle(i.cargadores)  # Se hace un shuffle para que no siempre se use el mismo cargador para evitar el desgaste del mismo

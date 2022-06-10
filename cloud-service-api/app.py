@@ -1,5 +1,6 @@
 import os
 import json
+from models.trabajador import Trabajador
 from utils.db import db
 from flask import Flask
 from flask_mqtt import Mqtt
@@ -18,7 +19,7 @@ from routes.clientes import clientes
 from routes.reservas import reservas
 from routes.estadisticas import estadisticas
 from routes.login import login, logout
-
+from utils.utils import encrypt_password
 
 def init_db():
     db.init_app(app)
@@ -87,8 +88,15 @@ with app.app_context():
     e = Estacion("VG3", "mi casa", 720, 85, 23, 20, 130, "Alfredo_Manresa", 1300, 2000, "url")
     db.session.add(e)
     db.session.commit()
-    p1 = Cargador("cargando", "coordenada", e.id_estacion)
-    p2 = Cargador("cargando", "cordenada", e.id_estacion)
+    p1 = Cargador("cargando", "coordenada", e.nombre_est)
+    p2 = Cargador("cargando", "cordenada", e.nombre_est)
+    t = Trabajador("323223A", "Alberto", "Quijote", "78410230", "x33333x@gmail.com", "tecnic", encrypt_password("x1"), "-1", "?", "VG3" )
+    t1 = Trabajador("1111111A", "Julio", "Quijote", "78410230", "x44444x@gmail.com", "responsable", encrypt_password("x1"), "-1", "?", "VG3" )
+    t2 = Trabajador("2222222A", "Mario", "Quijote", "78410230", "x55555x@gmail.com", "admin", encrypt_password("x1"), "-1", "?", "VG3" )
+    db.session.add(t2)
+    db.session.add(t1)
+    db.session.add(t)
+    db.session.commit()
     db.session.add(p1)
     db.session.add(p2)
     db.session.commit()

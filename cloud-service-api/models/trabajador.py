@@ -12,8 +12,9 @@ class Trabajador(db.Model):
     password = db.Column(db.String(20), nullable=False)
     last_access = db.Column(db.String(20), nullable=False)
     picture = db.Column(db.String(300), nullable=False)
+    id_estacion = db.Column(db.String(20), db.ForeignKey("estacion.nombre_est"), nullable=False)
 
-    def __init__(self, dni, name, lastname, telf, email, rol, password, last_access, picture):
+    def __init__(self, dni, name, lastname, telf, email, rol, password, last_access, picture, estacion):
         self.dni = dni
         self.name = name
         self.lastname = lastname
@@ -23,9 +24,11 @@ class Trabajador(db.Model):
         self.password = password
         self.last_access = last_access
         self.picture = picture
+        self.id_estacion=estacion
 
 
 class TrabajadorSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Trabajador
+        include_fk = True
         exclude = ('password',)

@@ -18,7 +18,7 @@ class Cliente(db.Model):
     telefono = db.Column(db.Integer, nullable=False)
     username = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(30), nullable=False)
-    reservas = db.relationship("Reserva",  backref="cliente")
+    #reservas = db.relationship("Reserva",  backref="cliente")
 
     def __init__(self, nombre, apellido, email, dni, foto, telefono, username, password):
         # self.tipo = tipo

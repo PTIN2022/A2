@@ -13,20 +13,20 @@ def get_trabajador_dni(dni):
     return TrabajadorSchema().dump(t)
 
 
-def post_trabajador(DNI, name, lastname, telf, email, rol, password, last_access, picture):
+def post_trabajador(DNI, name, lastname, telf, email, rol, password, last_access, picture, estacion):
     password = encrypt_password(password)
     t = Trabajador.query.filter(Trabajador.dni == DNI).one_or_none()
     if t:
         return None
 
-    t = Trabajador(DNI, name, lastname, telf, email, rol, password, int(last_access), picture)
+    t = Trabajador(DNI, name, lastname, telf, email, rol, password, int(last_access), picture, estacion)
     db.session.add(t)
     db.session.commit()
     return TrabajadorSchema().dump(t)
 
 
 # habra que mojararlo (last_access, picture...)
-def modify_trabajador(DNI, dni_change=None, name=None, lastname=None, telf=None, email=None, rol=None, picture=None, last_acces=None, password=None):
+def modify_trabajador(DNI, dni_change=None, name=None, lastname=None, telf=None, email=None, rol=None, picture=None, last_acces=None, password=None, estacion=None):
     t = Trabajador.query.filter(Trabajador.dni == DNI).one_or_none()
     if t:
         if name:
@@ -48,6 +48,8 @@ def modify_trabajador(DNI, dni_change=None, name=None, lastname=None, telf=None,
         if password:
             password = encrypt_password(password)
             t.password = password
+        if estacion:
+            t.id_estacion = estacion
 
         db.session.commit()
         return TrabajadorSchema().dump(t)
