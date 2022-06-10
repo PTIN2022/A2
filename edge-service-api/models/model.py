@@ -180,14 +180,14 @@ class TicketSchema(SQLAlchemyAutoSchema):
 
 class Usuari_t(db.Model):
     id_usuari = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    nombre = db.Column(db.String(30), nullable=False)
-    apellido = db.Column(db.String(30), nullable=False)
-    email = db.Column(db.String(30), nullable=False)
+    nombre = db.Column(db.String(60), nullable=False)
+    apellido = db.Column(db.String(60), nullable=False)
+    email = db.Column(db.String(60), nullable=False)
     dni = db.Column(db.String(15), nullable=False, unique=True)
-    foto = db.Column(db.String(15), nullable=False)
-    telefono = db.Column(db.Integer, nullable=False)
-    username = db.Column(db.String(30), nullable=False)
-    password = db.Column(db.String(30), nullable=False)
+    foto = db.Column(db.String(300), nullable=False)
+    telefono = db.Column(db.String(50), nullable=False)
+    username = db.Column(db.String(60), nullable=False)
+    password = db.Column(db.String(60), nullable=False)
     type = db.Column(db.String(50))
 
     mensajes = db.relationship("Mensaje",  backref="usuari_t")

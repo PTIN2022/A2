@@ -185,7 +185,7 @@ class Usuari_t(db.Model):
     email = db.Column(db.String(60), nullable=False)
     dni = db.Column(db.String(15), nullable=False, unique=True)
     foto = db.Column(db.String(300), nullable=False)
-    telefono = db.Column(db.Integer, nullable=False)
+    telefono = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(60), nullable=False)
     password = db.Column(db.String(60), nullable=False)
     type = db.Column(db.String(50))
