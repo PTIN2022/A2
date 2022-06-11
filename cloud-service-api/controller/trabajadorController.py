@@ -15,7 +15,7 @@ def get_trabajador_dni(dni):
 def post_trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, last_access, question, id_estacion):
     e = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
     if e:
-        t = Trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, last_access, question, id_estacion)
+        t = Trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, last_access, question, e)
         db.session.add(t)
         db.session.commit()
         return TrabajadorSchema().dump(t)
