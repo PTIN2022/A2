@@ -9,6 +9,7 @@ from multiprocessing import Lock
 
 insert = bool(os.getenv('INSERT_FAKER', False))
 
+
 def init_db():
     time.sleep(5)
     db.init_app(app)
@@ -45,6 +46,6 @@ if __name__ == "__main__":  # pragma: no cover
     print("=========================================")
     print("Test me on: http://ptin2022.github.io/A2/")
     print("=========================================")
-    
+
     if not insert:
         app.run(host="0.0.0.0")

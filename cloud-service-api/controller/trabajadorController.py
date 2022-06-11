@@ -19,7 +19,7 @@ def post_trabajador(nombre, apellido, email, dni, foto, telefono, username, pass
         db.session.add(t)
         db.session.commit()
         return TrabajadorSchema().dump(t)
-    
+
     return None
 
 
@@ -50,7 +50,7 @@ def modify_trabajador(dni, nombre, apellido, email, dni_change, foto, telefono, 
         if question:
             t.question = question
         if id_estacion:
-            e = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()  
+            e = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
             if (e):
                 t.id_estacion = e
 
