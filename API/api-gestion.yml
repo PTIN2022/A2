@@ -507,7 +507,7 @@ paths:
                     value: >-
                       [
                         {
-                            "name": "Pere Roca",
+                            "nombre": "Pere Roca",
                             "rol": "dueño",
                             "last_access": -1
                         },
@@ -549,29 +549,39 @@ paths:
                 schema:
                   type: object
                   required:
-                    - name
-                    - lastname
-                    - telf
+                    - nombre
+                    - apellido
+                    - telefono
                     - email
-                    - rol
+                    - cargo
                     - dni
+                    - estado
+                    - username
                     - password
+                    - question
+                    - id_estacion
                   properties:
                     dni:
                       type: string
-                    name:
+                    nombre:
                       type: string
-                    lastname:
+                    apellido:
                       type: string
                     email:
                       type: string
-                    telf:
+                    telefono:
                       type: string
-                    rol:
+                    cargo:
                       type: string
+                    estado:
+                      type: boolean
                     username:
                       type: string
                     password:
+                      type: string
+                    question:
+                      type: string
+                    id_estacion:
                       type: string
                     profileImage:
                       type: string
@@ -1913,70 +1923,70 @@ paths:
                   Reservas:
                     value:  >-
                         [
-                        	{
-                        		"estacion": "VG1",
-                        		"direccion": "Av.Victor Balaguer 2",
-                        		"kwh_max": 720,
-                        		"kwh_now": 75,
-                        		"dias": [
-                        			{
-                        				"dia": "2022-05-10",
-                        				"potencia_max_cons": 720
-                        			},
-                        			{
-                        				"dia": "2022-05-11",
-                        				"potencia_max_cons": 720
-                        			},
-                        			{
-                        				"dia": "2022-05-12",
-                        				"potencia_max_cons": 720
-                        			},
-                        			{
-                        				"dia": "2022-05-13",
-                        				"potencia_max_cons": 560
-                        			},
-                        			{
-                        				"dia": "2022-05-14",
-                        				"potencia_max_cons": 330
-                        			},
-                        			{
-                        				"dia": "2022-05-12",
-                        				"potencia_max_cons": 120
-                        			}
-                        		]
-                        	},
-                        	{
-                        		"estacion": "VG2",
-                        		"direccion": "Av. Alberto 2",
-                        		"kwh_max": 330,
-                        		"kwh_now": 75,
-                        		"dias": [
-                        			{
-                        				"dia": "2022-05-10",
-                        				"potencia_max_cons": 123
-                        			},
-                        			{
-                        				"dia": "2022-05-11",
-                        				"potencia_max_cons": 432
-                        			},
-                        			{
-                        				"dia": "2022-05-12",
-                        				"potencia_max_cons": 432
-                        			},
-                        			{
-                        				"dia": "2022-05-13",
-                        				"potencia_max_cons": 233
-                        			},
-                        			{
-                        				"dia": "2022-05-14",
-                        				"potencia_max_cons": 200
-                        			},
-                        			{
-                        				"dia": "2022-05-12",
-                        				"potencia_max_cons": 500
-                        			}
-                        		]
-                        	}
+                          {
+                            "estacion": "VG1",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "kwh_max": 720,
+                            "kwh_now": 75,
+                            "dias": [
+                              {
+                                "dia": "2022-05-10",
+                                "potencia_max_cons": 720
+                              },
+                              {
+                                "dia": "2022-05-11",
+                                "potencia_max_cons": 720
+                              },
+                              {
+                                "dia": "2022-05-12",
+                                "potencia_max_cons": 720
+                              },
+                              {
+                                "dia": "2022-05-13",
+                                "potencia_max_cons": 560
+                              },
+                              {
+                                "dia": "2022-05-14",
+                                "potencia_max_cons": 330
+                              },
+                              {
+                                "dia": "2022-05-12",
+                                "potencia_max_cons": 120
+                              }
+                            ]
+                          },
+                          {
+                            "estacion": "VG2",
+                            "direccion": "Av. Alberto 2",
+                            "kwh_max": 330,
+                            "kwh_now": 75,
+                            "dias": [
+                              {
+                                "dia": "2022-05-10",
+                                "potencia_max_cons": 123
+                              },
+                              {
+                                "dia": "2022-05-11",
+                                "potencia_max_cons": 432
+                              },
+                              {
+                                "dia": "2022-05-12",
+                                "potencia_max_cons": 432
+                              },
+                              {
+                                "dia": "2022-05-13",
+                                "potencia_max_cons": 233
+                              },
+                              {
+                                "dia": "2022-05-14",
+                                "potencia_max_cons": 200
+                              },
+                              {
+                                "dia": "2022-05-12",
+                                "potencia_max_cons": 500
+                              }
+                            ]
+                          }
                         ]
                         
           '401':
@@ -2026,30 +2036,30 @@ paths:
                     Reservas:
                       value:  >-
                         [
-                        	{
-                        		"estacion": "VG1",
-                        		"direccion": "Av.Victor Balaguer 2",
-                        		"kwh_max": 720,
-                        		"kwh_now": 75,
-                        		"dias": [
-                        			{
-                        				"dia": "2022-05-12",
-                        				"potencia_max_cons": 720
-                        			},
-                        			{
-                        				"dia": "2022-05-13",
-                        				"potencia_max_cons": 560
-                        			},
-                        			{
-                        				"dia": "2022-05-14",
-                        				"potencia_max_cons": 330
-                        			},
-                        			{
-                        				"dia": "2022-05-12",
-                        				"potencia_max_cons": 120
-                        			}
-                        		]
-                        	}
+                          {
+                            "estacion": "VG1",
+                            "direccion": "Av.Victor Balaguer 2",
+                            "kwh_max": 720,
+                            "kwh_now": 75,
+                            "dias": [
+                              {
+                                "dia": "2022-05-12",
+                                "potencia_max_cons": 720
+                              },
+                              {
+                                "dia": "2022-05-13",
+                                "potencia_max_cons": 560
+                              },
+                              {
+                                "dia": "2022-05-14",
+                                "potencia_max_cons": 330
+                              },
+                              {
+                                "dia": "2022-05-12",
+                                "potencia_max_cons": 120
+                              }
+                            ]
+                          }
                         ]
             '400':
               description: Malformed
