@@ -13,7 +13,7 @@ incidencias = Blueprint('incidencias', __name__)
 @token_required
 def get_incidencias(current_trabajador):
     if current_trabajador.cargo == "trabajador":
-        e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion)
+        e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion).one_or_none()
         respuesta = control.get_incidencias_estacion(e.nombre_est)
     elif current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado":
         respuesta = control.get_all_incidencias()
@@ -26,7 +26,7 @@ def post_incidencias(current_trabajador):
     try:
         estacion = request.json["estacion"]
         if current_trabajador.cargo == "trabajador":
-            e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion)
+            e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion).one_or_none()
             if e.nombre_est != estacion:
                 return jsonify({"error": "User not authorized."}), 401
         estado = request.json["estado"]
@@ -52,7 +52,7 @@ def get_incidencia_by_id(current_trabajador, id):
     
     respuesta = control.get_incidencias_id(id)
     if current_trabajador.cargo == "trabajador":
-        e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion)
+        e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion).one_or_none()
         if respuesta["name_estacion"] != e.nombre_est:
             return jsonify({"error": "User not authorized."}), 401
     if respuesta and (current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador"):
@@ -72,7 +72,7 @@ def modify_incidencia(current_trabajador, id):
         estado = None
         respuesta = control.get_incidencias_id(id)
         if current_trabajador.cargo == "trabajador":
-            e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion)
+            e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion).one_or_none()
             if respuesta:
                 if respuesta["name_estacion"] != e.nombre_est:
                     return jsonify({"error": "User not authorized."}), 401
@@ -82,7 +82,7 @@ def modify_incidencia(current_trabajador, id):
         if "estacion" in request.json:
             estacion = request.json["estacion"]
             if current_trabajador.cargo == "trabajador":
-                e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion)
+                e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion).one_or_none()
                 if estacion != e.nombre_est:
                     return jsonify({"error": "User not authorized."}), 401
         
@@ -113,7 +113,7 @@ def modify_incidencia(current_trabajador, id):
 @token_required
 def get_incidencia_by_estacio(current_trabajador, estacion):
     if current_trabajador.cargo == "trabajador":
-        e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion)
+        e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion).one_or_none()
         if estacion != e.nombre_est:
             return jsonify({"error": "User not authorized."}), 401
     if  current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
@@ -131,7 +131,7 @@ def get_incidencia_by_estacio(current_trabajador, estacion):
 def deleted_incidencias(current_trabajador, id):
     respuesta = control.get_incidencias_id(id)
     if current_trabajador.cargo == "trabajador":
-        e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion)
+        e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion).one_or_none()
         if respuesta:
             if respuesta["name_estacion"] != e.nombre_est:
                 return jsonify({"error": "User not authorized."}), 401

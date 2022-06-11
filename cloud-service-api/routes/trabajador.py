@@ -1,11 +1,13 @@
 import controller.trabajadorController as control
 from flask import Blueprint, jsonify, request
 from datetime import datetime
+from utils.utils import token_required
 
 trabajador = Blueprint('trabajadores', __name__)
 
 
 @trabajador.route('/trabajador', methods=['GET'])
+@token_required
 def get_trabajadores():
     respuesta = control.get_all_trabajadores()
     return jsonify(respuesta)
@@ -13,6 +15,7 @@ def get_trabajadores():
 
 
 @trabajador.route('/trabajador/<dni>', methods=['GET'])
+@token_required
 def get_trabajadores_dni(dni):
     respuesta = control.get_trabajador_dni(dni)
     if respuesta:
@@ -23,6 +26,7 @@ def get_trabajadores_dni(dni):
 
 
 @trabajador.route('/trabajador', methods=['POST'])
+@token_required
 def post_trabajador():
     nombre = request.form.to_dict()["nombre"]
     apellido = request.form.to_dict()["apellido"]
@@ -43,7 +47,8 @@ def post_trabajador():
 
 
 @trabajador.route('/trabajador/<dni>', methods=["PUT"])
-def modify_trabajador(dni):
+@token_required
+def modify_trabajador(current_trabajador, dni):
     nombre = None
     apellido = None
     email = None
@@ -74,7 +79,10 @@ def modify_trabajador(dni):
     if "password" in request.form.to_dict():
         password = request.form.to_dict()["password"]
     if "cargo" in request.form.to_dict():
-        cargo = request.form.to_dict()["cargo"]
+        if current_trabajador.cargo == "administrador":
+            cargo = request.form.to_dict()["cargo"]
+        else:
+            return jsonify({"error": "User not authorized."}), 401
     if "estado" in request.form.to_dict():
         estado = request.form.to_dict()["estado"]
     if "question" in request.form.to_dict():
@@ -92,6 +100,7 @@ def modify_trabajador(dni):
 
 
 @trabajador.route('/trabajador/<dni>', methods=["DELETE"])
+@token_required
 def deleted_trabajador(dni):
     deleted = control.delete_trabajador(dni)
     if deleted:
