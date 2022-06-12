@@ -23,6 +23,7 @@ def get_all_estadisticas(current_trabajador):
 
 
 @estadisticas.route('/estadisticas/<estacion>/<data_inicio>/<data_final>', methods=["GET"])
+@token_required
 def get_estadisticas_by_estacion(current_trabajador, estacion, data_inicio, data_final):
     if current_trabajador.cargo == "encargado":
         if str(current_trabajador.id_estacion) != str(estacion):

@@ -23,7 +23,6 @@ def get_reservas(current_trabajador):
 @token_required
 def post_reservas(current_trabajador):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
-        print("hola")
         estacion = request.json["id_estacion"]
         if ( estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado" ) or ( estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador" ):
             print(estacion)
