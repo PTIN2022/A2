@@ -49,7 +49,6 @@ def post_incidencias(current_trabajador):
 @incidencias.route('/incidencias/<id>', methods=["GET"])
 @token_required
 def get_incidencia_by_id(current_trabajador, id):
-    
     respuesta = control.get_incidencias_id(id)
     if current_trabajador.cargo == "trabajador":
         e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion).one_or_none()
@@ -85,7 +84,7 @@ def modify_incidencia(current_trabajador, id):
                 e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion).one_or_none()
                 if estacion != e.nombre_est:
                     return jsonify({"error": "User not authorized."}), 401
-        
+
         if "fecha_averia" in request.json:
             try:
                 fecha_averia = request.json["fecha_averia"]
@@ -116,7 +115,7 @@ def get_incidencia_by_estacio(current_trabajador, estacion):
         e = Estacion.query.filter(Estacion.id_estacion == current_trabajador.id_estacion).one_or_none()
         if estacion != e.nombre_est:
             return jsonify({"error": "User not authorized."}), 401
-    if  current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
+    if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
         respuesta = control.get_incidencias_estacion(estacion)
         if respuesta:
             return jsonify(respuesta), 200
@@ -137,7 +136,7 @@ def deleted_incidencias(current_trabajador, id):
                 return jsonify({"error": "User not authorized."}), 401
         else:
             return jsonify({"error": "Incidencia not found."}), 404
-    if  current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
+    if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
         deleted = control.remove_incidencia(id)
         if deleted:
             return jsonify({"msg": "Data deleted correctly."}), 200

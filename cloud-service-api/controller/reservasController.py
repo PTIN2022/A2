@@ -12,9 +12,9 @@ def get_all_reservas():
 
 def get_reservas_id(id):
     i = Reserva.query.filter(Reserva.id_reserva == id).one_or_none()
-    j=[]
+    j = []
     if i:
-        j = Cargador.query.filter(Cargador.id_cargador==i.id_cargador).one_or_none()
+        j = Cargador.query.filter(Cargador.id_cargador == i.id_cargador).one_or_none()
     return ReservaSchema().dump(i), j.estacion_id
 
 

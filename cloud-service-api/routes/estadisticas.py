@@ -3,7 +3,6 @@ import controller.estadisticasController as control
 from flask import Blueprint, jsonify
 from utils import errors
 from utils.utils import token_required
-from models.model import Estacion
 
 estadisticas = Blueprint('estadisticas', __name__)
 

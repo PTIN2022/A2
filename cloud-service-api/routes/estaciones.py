@@ -21,6 +21,7 @@ def get_estaciones(current_trabajador):
         else:
             return jsonify({"error": "Estacion not found"}), 404
 
+
 @estaciones.route('/estaciones/<id>', methods=["GET"])
 @token_required
 def get_estacion_by_id(current_trabajador, id):
@@ -33,12 +34,13 @@ def get_estacion_by_id(current_trabajador, id):
     else:
         return jsonify({"error": "User not authorized."}), 401
 
+
 @estaciones.route('/estaciones/<id>/<id_plaza>', methods=["DELETE"])
 @token_required
 def delete_plaza(current_trabajador, id, id_plaza):
     if current_trabajador.cargo == "encargado":
-            if str(current_trabajador.id_estacion) != str(id):
-                return jsonify({"error": "User not authorized."}), 401
+        if str(current_trabajador.id_estacion) != str(id):
+            return jsonify({"error": "User not authorized."}), 401
     if current_trabajador.cargo == "encargado" or current_trabajador.cargo == "administrador":
         respuesta = control.delete_plaza(id, id_plaza)
         if respuesta:

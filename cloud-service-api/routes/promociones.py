@@ -45,7 +45,7 @@ def get_promo_by_estado(current_trabajador, estado):
 @token_required
 def post_promocion(current_trabajador):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado":
-    
+
         descuento = request.form.to_dict()["descuento"]
         fecha_inicio = request.form.to_dict()["fecha_inicio"]
         fecha_fin = request.form.to_dict()["fecha_fin"]
@@ -65,7 +65,7 @@ def post_promocion(current_trabajador):
 @token_required
 def modify_promocion(current_trabajador, id_promo):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado":
-    
+
         descuento = None
         fecha_inicio = None
         fecha_fin = None
@@ -97,11 +97,11 @@ def modify_promocion(current_trabajador, id_promo):
 @token_required
 def deleted_promocion(current_trabajador, id_promo):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado":
-    
+
         deleted = control.delete_promocion(id_promo)
         if deleted:
             return jsonify({"msg": "Promocion deleted succesfully"}), 200
         else:
             return jsonify({"error": "Promocion not found."}), 404
-    else:   
+    else:
         return jsonify({"error": "User not authorized."}), 401

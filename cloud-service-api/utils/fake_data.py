@@ -205,7 +205,7 @@ def fakedata():
 
     # ### TRABAJADOR
     # Creamos 3 tipos de trabajadores
-    
+
     trabajadores = []
     estacion = random.choice(estacioness)
     ultimo_acceso = fake.date_time_between(start_date='-2y', end_date='now')

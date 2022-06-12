@@ -5,6 +5,7 @@ from flask import jsonify, request
 from flask import current_app as app
 from models.model import Trabajador
 
+
 # https://stackoverflow.com/questions/42248342/yes-no-prompt-in-python3-using-strtobool
 def strtobool(val):
     """Convert a string representation of truth to true (1) or false (0).
@@ -19,7 +20,6 @@ def strtobool(val):
         return False
     else:
         raise ValueError("invalid truth value %r" % (val,))
-
 
 
 # https://www.bacancytechnology.com/blog/flask-jwt-authentication

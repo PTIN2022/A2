@@ -2,7 +2,6 @@ import os
 import time
 import json
 
-from sqlalchemy import true
 
 from utils.db import db
 from utils.fake_data import fakedata
@@ -21,7 +20,7 @@ from routes.reservas import reservas
 from routes.promociones import promociones
 from routes.estadisticas import estadisticas
 from routes.login import login, logout
-from utils.utils import encrypt_password
+
 
 def init_db():
     time.sleep(5)
