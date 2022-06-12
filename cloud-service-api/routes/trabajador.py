@@ -33,9 +33,53 @@ def get_trabajadores_dni(current_trabajador, dni):
 
 @trabajador.route('/trabajador', methods=['POST'])
 @token_required
+<<<<<<< HEAD
 def post_trabajador(current_trabajador):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado":
         nombre = request.form.to_dict()["nombre"]
+=======
+def post_trabajador():
+    nombre = request.form.to_dict()["nombre"]
+    apellido = request.form.to_dict()["apellido"]
+    email = request.form.to_dict()["email"]
+    dni = request.form.to_dict()["dni"]
+    foto = "https://this-person-does-not-exist.com/img/avatar-754c5f55152107173073b232e864e6b.jpg"
+    telefono = request.form.to_dict()["telefono"]
+    username = request.form.to_dict()["username"]
+    password = request.form.to_dict()["password"]
+    cargo = request.form.to_dict()["cargo"]
+    estado = request.form.to_dict()["estado"]
+    question = request.form.to_dict()["question"]
+    id_estacion = request.form.to_dict()["id_estacion"]
+    last_access = datetime.fromtimestamp(0)
+
+    t = control.post_trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, last_access, question, id_estacion)
+    if t:
+        return jsonify(t)
+    else:
+        return jsonify({"error": "No se pudo encontrar esta estacion"})
+
+
+@trabajador.route('/trabajador/<dni>', methods=["PUT"])
+@token_required
+def modify_trabajador(current_trabajador, dni):
+    nombre = None
+    apellido = None
+    email = None
+    dni_change = None
+    foto = None
+    telefono = None
+    username = None
+    password = None
+    cargo = None
+    estado = None
+    question = None
+    id_estacion = None
+
+    if "nombre," in request.form.to_dict():
+        nombre = request.form.to_dict()["nombre,"]
+    if "apellido" in request.form.to_dict():
+>>>>>>> 5214015607746def1be9f67cc2516ffdbab918ec
         apellido = request.form.to_dict()["apellido"]
         email = request.form.to_dict()["email"]
         dni = request.form.to_dict()["dni"]
