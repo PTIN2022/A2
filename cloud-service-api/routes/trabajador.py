@@ -39,11 +39,14 @@ def post_trabajador():
     cargo = request.form.to_dict()["cargo"]
     estado = request.form.to_dict()["estado"]
     question = request.form.to_dict()["question"]
-    id_estacion = int(request.form.to_dict()["id_estacion"])
+    id_estacion = request.form.to_dict()["id_estacion"]
     last_access = datetime.fromtimestamp(0)
 
     t = control.post_trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, last_access, question, id_estacion)
-    return jsonify(t)
+    if t:
+        return jsonify(t)
+    else:
+        return jsonify({"error": "No se pudo encontrar esta estacion"})
 
 
 @trabajador.route('/trabajador/<dni>', methods=["PUT"])
