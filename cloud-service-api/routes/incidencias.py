@@ -34,8 +34,8 @@ def post_incidencias(current_trabajador):
         fecha_averia = datetime.date(datetime.strptime(fecha_averia, '%Y-%m-%d'))
         descripcion = request.json["descripcion"]
         if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
-                id = control.post_incidencia(estacion, fecha_averia, descripcion, estado)
-                respuesta = control.get_incidencias_id(id)
+            id = control.post_incidencia(estacion, fecha_averia, descripcion, estado)
+            respuesta = control.get_incidencias_id(id)
         else:
             return jsonify({"error": "User not authorized."}), 401
         return jsonify(respuesta)

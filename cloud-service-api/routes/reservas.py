@@ -25,9 +25,7 @@ def get_reservas(current_trabajador):
 def post_reservas(current_trabajador):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
         estacion = request.json["id_estacion"]
-        if (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado") or (
-            estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador"
-            ):
+        if (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado") or (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador"):  # noqa E501
             print(estacion)
             print(str(current_trabajador.id_estacion))
             return jsonify({"error": "User not authorized."}), 401
@@ -64,9 +62,7 @@ def post_reservas(current_trabajador):
 def get_reserva_by_id(current_trabajador, id):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
         respuesta, estacion = control.get_reservas_id(id)
-        if (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado") or (
-            estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador"
-            ):
+        if (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado") or (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador"):  # noqa E501
             return jsonify({"error": "User not authorized."}), 401
         if respuesta:
             return jsonify(respuesta), 200
@@ -80,9 +76,7 @@ def get_reserva_by_id(current_trabajador, id):
 @token_required
 def get_reserva_by_estacio(current_trabajador, id_estacion):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
-        if (id_estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado") or (
-            id_estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador"
-            ):
+        if (id_estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado") or (id_estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador"):  # noqa E501
             return jsonify({"error": "User not authorized."}), 401
         respuesta = control.get_reservas_estacion(id_estacion)
         if respuesta:
@@ -92,14 +86,13 @@ def get_reserva_by_estacio(current_trabajador, id_estacion):
     else:
         return jsonify({"error": "User not authorized."}), 401
 
+
 @reservas.route('/reservas/bymatricula/<matricula>', methods=["GET"])
 @token_required
 def get_reserva_by_matricula(current_trabajador, matricula):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
         respuesta, estacion = control.get_reservas_matricula(matricula)
-        if (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado") or (
-            estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador"
-            ):
+        if (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado") or (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador"):  # noqa E501
             return jsonify({"error": "User not authorized."}), 401
         if respuesta:
             return jsonify(respuesta), 200
@@ -108,14 +101,13 @@ def get_reserva_by_matricula(current_trabajador, matricula):
     else:
         return jsonify({"error": "User not authorized."}), 401
 
+
 @reservas.route('/reservas/bydni/<dni>', methods=["GET"])
 @token_required
 def get_reserva_by_dni(current_trabajador, dni):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
         respuesta, estacion = control.get_reservas_dni(dni)
-        if (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado") or (
-            estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador"
-            ):
+        if (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado") or (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador"):  # noqa E501
             return jsonify({"error": "User not authorized."}), 401
         if respuesta:
             return jsonify(respuesta), 200
@@ -130,9 +122,7 @@ def get_reserva_by_dni(current_trabajador, dni):
 def deleted_reservas(current_trabajador, id):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
         respuesta, estacion = control.get_reservas_id(id)
-        if (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado") or (
-            estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador"
-            ):
+        if (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "encargado") or (estacion != str(current_trabajador.id_estacion) and current_trabajador.cargo == "trabajador"):  # noqa E501
             return jsonify({"error": "User not authorized."}), 401
         if respuesta:
             deleted = control.remove_reserva(id)
