@@ -1,7 +1,10 @@
 from datetime import datetime
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 from controller import estacionesController, promocionesEstacionesController
 from routes import promocionesEstaciones
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 from models.promocionEstacion import PromocionEstacion, PromocionEstacionSchema
@@ -36,8 +39,11 @@ def post_promociones(descuento, fecha_inicio_post, fecha_fin_post, estado, descr
         return PromocionSchema().dump(p)
     except (ValueError):  # noqa: E722
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         return ValueError
 =======
+=======
+>>>>>>> Stashed changes
         return None
 >>>>>>> Stashed changes
 
@@ -54,7 +60,11 @@ def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=No
             if fecha_fin:
                 p.fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%dT%H:%M:%S')
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             if estado == "true":
+=======
+            if estado == 'true':
+>>>>>>> Stashed changes
 =======
             if estado == 'true':
 >>>>>>> Stashed changes

@@ -13,6 +13,9 @@ class Promocion(db.Model):
     
 =======
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     def __init__(self, descuento, fecha_inicio, fecha_fin, estado, descripcion):
         self.descuento = descuento
