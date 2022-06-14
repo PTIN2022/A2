@@ -8,7 +8,7 @@ def get_all_soporte():
 
 
 def post_soporte(descripcion, fecha, estado, id_cliente, asunto):
-    c = Cliente.query.filter(Cliente.dni == id_cliente).one_or_none()
+    c = Cliente.query.filter(Cliente.id_cliente == id_cliente).one_or_none()
     if c:
         s = Ticket(fecha, asunto, descripcion, estado, c.id_cliente)
         db.session.add(s)
