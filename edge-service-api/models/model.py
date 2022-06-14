@@ -300,6 +300,7 @@ class ClienteSchema(SQLAlchemyAutoSchema):
 
     class Meta:
         model = Cliente
+        exclude = ('password',)
 
 
 class Modelo(db.Model):

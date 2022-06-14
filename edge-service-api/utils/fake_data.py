@@ -8,6 +8,7 @@ from models.model import Estacion, Cliente, Trabajador, Promociones, \
     Cargador, Modelo, Consumo, Horas, Vehiculo, Reserva
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from utils.utils import encrypt_password
 
 
 def fakedata():
@@ -146,9 +147,23 @@ def fakedata():
         e7,
         e8,
         ]
-
-    # ### CLIENTE
+        
     clientes = []
+    ce = Cliente(
+        "mario",
+        "hola",
+        "prueba@gmail.com",
+        "123319N",
+        "url",
+        189237389,
+        "mariuski",
+        encrypt_password("1"),
+        )
+    db.session.add(ce)
+    clientes.append(ce)
+
+    db.session.commit()
+    # ### CLIENTE
     for i in range(100):
         letras = [
             'A',
@@ -195,7 +210,7 @@ def fakedata():
             foto,
             telefono,
             username,
-            password,
+            encrypt_password(password),
             )
         db.session.add(ce)
         clientes.append(ce)

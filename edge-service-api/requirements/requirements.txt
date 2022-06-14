@@ -12,3 +12,4 @@ wheel
 Faker
 random2
 mysqlclient
+pyjwt
