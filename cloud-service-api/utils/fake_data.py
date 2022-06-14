@@ -48,7 +48,7 @@ def fakedata():
     e3 = Estacion(  # , t.id_trabajador
         'VG3',
         41.225431,
-        1.7337627,
+        1.737627,
         32,
         'A veces',
         20,
