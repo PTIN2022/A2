@@ -281,9 +281,9 @@ class Cliente(Usuari_t):
         {},
     )
 
-    avisos = db.relationship("Aviso",  backref="aviso", cascade="all, delete-orphan")
-    reservas = db.relationship("Reserva",  backref="reserva", cascade="all, delete-orphan")
-    ticket = db.relationship("Ticket",  backref="ticket", cascade="all, delete-orphan")
+    avisos = db.relationship("Aviso", backref="aviso")
+    reservas = db.relationship("Reserva", backref="reserva", cascade="delete, merge, save-update")
+    ticket = db.relationship("Ticket", backref="ticket")
 
     vehiculos = db.relationship('Vehiculo', secondary=vehiculo_cliente, lazy='subquery', backref=db.backref('Cliente', lazy=True))
 
