@@ -5,7 +5,6 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
 class Estacion(db.Model):
-
     id_estacion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     nombre_est = db.Column(db.String(20), nullable=False)
     direccion = db.Column(db.String(100), nullable=False)

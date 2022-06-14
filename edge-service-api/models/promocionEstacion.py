@@ -5,8 +5,8 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
 class PromocionEstacion(db.Model):
-    id_estacion = db.Column('id_estacion', db.ForeignKey('estacion.id_estacion'), nullable=False)
-    id_promo = db.Column('id_promo', db.ForeignKey('promocion.id_promo'), nullable=False)
+    id_estacion = db.Column('id_estacion',db.Integer, nullable=False, primary_key=True)
+    id_promo = db.Column('id_promo',db.Integer, nullable=False, primary_key=True)
     __table_args__ = (
         db.PrimaryKeyConstraint(id_estacion, id_promo),
         {},

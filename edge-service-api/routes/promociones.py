@@ -19,6 +19,7 @@ def post_promocion():
     descripcion = request.form.to_dict()["descripcion"]
 
     p = control.post_promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
+    print(str(type(p)))
     if p:
         return jsonify(p), 200
     else:
@@ -80,9 +81,19 @@ def get_promo_by_estado(estado):
 
 
 # NO usar aun
-@promociones.route('/promociones/estaciones/<id_electrolinera>', methods=['GET'])
-def get_promo_by_electrolinera(id_electrolinera):
-    respuesta = control.get_promo_estacion(id_electrolinera)
+@promociones.route('/promociones/estaciones/', methods=['GET'])
+def get_promo_by_electrolineras():
+    respuesta = control.get_promo_estaciones()
+    print("JSON -> "+str(type(respuesta)))
+    if respuesta:
+        return jsonify(respuesta), 200
+    else:
+        return jsonify({"error": "Malformed request syntax."}), 400
+
+
+@promociones.route('/promociones/{estaciones}', methods=['GET'])
+def get_promo_by_electrolinera(estaciones):
+    respuesta = control.get_promo_estacion(estaciones)
     if respuesta:
         return jsonify(respuesta), 200
     else:

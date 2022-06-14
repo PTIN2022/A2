@@ -1,4 +1,6 @@
 from datetime import datetime
+from controller import estacionesController, promocionesEstacionesController
+from routes import promocionesEstaciones
 from models.promocionEstacion import PromocionEstacion, PromocionEstacionSchema
 from models.promociones import Promocion, PromocionSchema
 from utils.db import db
@@ -21,10 +23,16 @@ def post_promociones(descuento, fecha_inicio_post, fecha_fin_post, estado, descr
         fecha_fin = datetime.strptime(fecha_fin_post, '%Y-%m-%dT%H:%M:%S')
         p = Promocion(descuento, fecha_inicio, fecha_fin, estado, descripcion)
         db.session.add(p)
+        db.session.flush()
+        
+        pec = promocionesEstacionesController.post_promociones_estaciones(
+            PromocionSchema().dump(p)["id_promo"],
+            estacionesController.get_all_estaciones()[0]["id_estacion"]
+        )
         db.session.commit()
         return PromocionSchema().dump(p)
     except (ValueError):  # noqa: E722
-        return None
+        return ValueError
 
 
 def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=None, estado=False, descripcion=None):
@@ -64,11 +72,20 @@ def delete_promocion(id_promo):
 
 def get_promo_estado(estado):
     if estado == "true":
-        p.estado = True
+        estado = True
     else:
-        p.estado = False
+        estado = False
     p = Promocion.query.filter(Promocion.estado == estado).all()
     return PromocionSchema(many=True).dump(p)
+
+
+def get_promo_estaciones():
+    p = estacionesController.get_all_estaciones()
+    for estacion in p:
+        print("Estacion.ID_estacion: "+str(estacion["id_estacion"]))
+        ep = promocionesEstaciones.get_promociones_estaciones()
+        print(str(ep))
+    return ep
 
 
 def get_promo_estacion(id_electrolinera):
