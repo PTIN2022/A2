@@ -308,7 +308,7 @@ class Modelo(db.Model):
     # potencia_carga --> si es true=Carga Rapida, False=Normal
     potencia_carga = db.Column(db.Boolean, nullable=True)
     capacidad = db.Column(db.FLOAT, nullable=False)
-    vehiculo = db.relationship("Vehiculo",  backref="modelo")
+    vehiculo = db.relationship("Vehiculo",  backref="modelo", cascade="all, delete-orphan")
 
     def __init__(self, modelo, marca, potencia_carga, capacidad):
         self.modelo = modelo
@@ -340,7 +340,7 @@ class Cargador(db.Model):
     posicion = db.Column(db.Integer, nullable=False)
     tipo = db.Column(db.String(100), nullable=False)
     estacion_id = db.Column(db.Integer, db.ForeignKey("estacion.id_estacion"), nullable=False)
-    reservas = db.relationship("Reserva",  backref="Cargador")
+    reservas = db.relationship("Reserva",  backref="Cargador", cascade="all, delete-orphan")
 
     def __init__(self, estado, posicion, tipo, estacion_id):
         self.estado = estado
@@ -383,8 +383,8 @@ promocion_estacion = db.Table(
 class Estacion(db.Model):
     id_estacion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     nombre_est = db.Column(db.String(20), nullable=False, unique=True)  # unico
-    latitud = db.Column(db.Integer, nullable=False)
-    longitud = db.Column(db.Integer, nullable=False)
+    latitud = db.Column(db.Float, nullable=False)
+    longitud = db.Column(db.Float, nullable=False)
     capacidad = db.Column(db.Integer, nullable=False)
     direccion = db.Column(db.String(300), nullable=False)
     potencia_contratada = db.Column(db.Integer, nullable=False)

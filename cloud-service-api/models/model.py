@@ -383,8 +383,8 @@ promocion_estacion = db.Table(
 class Estacion(db.Model):
     id_estacion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     nombre_est = db.Column(db.String(20), nullable=False, unique=True)  # unico
-    latitud = db.Column(db.Integer, nullable=False)
-    longitud = db.Column(db.Integer, nullable=False)
+    latitud = db.Column(db.Float, nullable=False)
+    longitud = db.Column(db.Float, nullable=False)
     capacidad = db.Column(db.Integer, nullable=False)
     direccion = db.Column(db.String(300), nullable=False)
     potencia_contratada = db.Column(db.Integer, nullable=False)
