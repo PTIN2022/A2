@@ -9,7 +9,11 @@ class Promocion(db.Model):
     fecha_fin = db.Column(db.DateTime, nullable=False)
     estado = db.Column(db.String(30), nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
+<<<<<<< Updated upstream
     
+=======
+
+>>>>>>> Stashed changes
     def __init__(self, descuento, fecha_inicio, fecha_fin, estado, descripcion):
         self.descuento = descuento
         self.fecha_inicio = fecha_inicio
