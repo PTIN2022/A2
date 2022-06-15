@@ -1,12 +1,12 @@
 import json
 from utils.db import db
 import paho.mqtt.publish as publish
-from models.model import Estacion, Reserva, ReservaSchema, Cargador
+from models.model import Estacion, Cargador
 from datetime import datetime, timedelta
 
 
-EDGE_BROKER = "test.mosquitto.org"
-EDGE_PORT = 1883
+EDGE_BROKER = "craaxkvm.epsevg.upc.es"
+EDGE_PORT = 23702
 QOS = 2
 
 AVERIAS = {
@@ -33,13 +33,15 @@ def process_camera_event(matricula, id_estacio):
                         print("Hay una reserva valida, abriendo barrera...")
                         publish.single("gesys/estaciones/{}/camara".format(id_estacio),
                                        payload="1", qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
+                        print("SEND: ABRIR")
                         return
     else:
         print("Estacion no encontrada...")
 
-    print("Reserva no encontrada mandando no abrir barrera...") # TODO: useless?
+    print("Reserva no encontrada mandando no abrir barrera...")  # TODO: useless?
     publish.single("gesys/estaciones/{}/camara".format(id_estacio),
                    payload="0", qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
+    print("SEND: CERRAR")
 
 
 def process_averias(id_carga, num_averia):
@@ -50,11 +52,10 @@ def process_averias(id_carga, num_averia):
         c.estado = AVERIAS[num_averia]
         db.session.commit()
         print(c.estado)
-        #TODO: subir al cloud
-        
+        # TODO: subir al cloud
+
     else:
         print("Cargador no encontrado")
-    
 
 
 def process_msg(topic, raw_payload):
