@@ -1,12 +1,14 @@
 import json
-from utils.db import db
 import paho.mqtt.publish as publish
+
+from utils.db import db
+from flask import current_app
 from models.model import Estacion, Cargador
 from datetime import datetime, timedelta
 
 
-EDGE_BROKER = "craaxkvm.epsevg.upc.es"
-EDGE_PORT = 23702
+EDGE_BROKER= current_app.config["MQTT_BROKER_URL"]
+EDGE_PORT = current_app.config["MQTT_BROKER_PORT"]
 QOS = 2
 
 AVERIAS = {
