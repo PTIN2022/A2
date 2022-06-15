@@ -399,6 +399,20 @@ def fakedata():
     # ###Vehiculos        ####
 
     vehiculos = []
+    modelo = random.choice(model_list)
+    vehiculoBueno = Vehiculo("2450GDF", 100, modelo)
+    vehiculoBueno2 = Vehiculo("4950KZK", 100, modelo)
+    vehiculoBueno3 = Vehiculo("5134FFJ", 100, modelo)
+    vehiculoBueno4 = Vehiculo("LU50KZK", 100, modelo)
+    db.session.add(vehiculoBueno)
+    db.session.add(vehiculoBueno2)
+    db.session.add(vehiculoBueno3)
+    db.session.add(vehiculoBueno4)
+    vehiculos.append(vehiculoBueno)
+    vehiculos.append(vehiculoBueno2)
+    vehiculos.append(vehiculoBueno3)
+    vehiculos.append(vehiculoBueno4)
+
     for i in range(50):
 
         letras = ''.join(random.choices(string.ascii_uppercase, k=3))
@@ -423,8 +437,12 @@ def fakedata():
 
     db.session.commit()
 
-    # ### RESERVAS
+    clientes[0].vehiculos.append(vehiculoBueno)
+    clientes[0].vehiculos.append(vehiculoBueno2)
+    clientes[0].vehiculos.append(vehiculoBueno3)
+    clientes[0].vehiculos.append(vehiculoBueno4)
 
+    # ### RESERVAS
     reservas = []
     for i in range(100):
 
