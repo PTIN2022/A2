@@ -2,6 +2,7 @@ import os
 import time
 from utils.db import db
 from flask import Flask
+from flask_cors import CORS
 from flask_mqtt import Mqtt
 from mqtt import process_msg
 from routes.reservas import reservas
@@ -27,6 +28,7 @@ def init_db():
 
 lock = Lock()
 app = Flask(__name__)
+CORS(app)
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///test.db")
