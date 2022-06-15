@@ -5,6 +5,7 @@ import json
 from utils.db import db
 from utils.fake_data import fakedata
 from flask import Flask
+from flask_cors import CORS
 from flask_mqtt import Mqtt
 from datetime import datetime
 from multiprocessing import Lock
@@ -34,7 +35,7 @@ def init_db():
 
 
 app = Flask(__name__)
-
+CORS(app)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///test.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review

@@ -1,4 +1,5 @@
 from utils.db import db
+from utils.utils import strtobool
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
@@ -426,7 +427,7 @@ class Promociones(db.Model):
     cantidad_usados = db.Column(db.Integer, nullable=False)
     fecha_inicio = db.Column(db.DateTime, nullable=False)
     fecha_fin = db.Column(db.DateTime, nullable=False)
-    estado = db.Column(db.String(30), nullable=False)
+    estado = db.Column(db.Boolean, nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
     estaciones = db.relationship("Estacion", secondary=promocion_estacion, lazy='subquery', backref=db.backref('promociones', lazy=True))
 
@@ -435,7 +436,7 @@ class Promociones(db.Model):
         self.cantidad_usados = cantidad_usados
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
-        self.estado = estado
+        self.estado = strtobool(str(estado))
         self.descripcion = descripcion
 
 
