@@ -436,7 +436,7 @@ class Promociones(db.Model):
         self.cantidad_usados = cantidad_usados
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
-        self.estado = strtobool(str(estado))
+        self.estado = strtobool(estado)
         self.descripcion = descripcion
 
 
