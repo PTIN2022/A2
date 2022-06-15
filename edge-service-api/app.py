@@ -42,6 +42,7 @@ app.config['MQTT_TLS_ENABLED'] = os.getenv('MQTT_TLS_ENABLED', False)  # set TLS
 mqtt = Mqtt(app)
 mqtt.subscribe('gesys/edge/#')
 
+
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
     mqtt.subscribe('gesys/edge/#')
