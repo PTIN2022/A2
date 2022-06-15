@@ -434,7 +434,6 @@ paths:
                       {"error": "Reserva not found."}
 #########################################################################################
 
-
   /estaciones:
       # pedimos una lista de las estaciones
       get:

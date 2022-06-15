@@ -19,7 +19,6 @@ def post_promocion():
     descripcion = request.form.to_dict()["descripcion"]
 
     p = control.post_promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
-    print(str(type(p)))
     if p:
         return jsonify(p), 200
     else:
@@ -63,8 +62,8 @@ def modify_promocion(id_promocion):
 
 
 @promociones.route('/promociones/<id_promocion>', methods=["DELETE"])
-def deleted_promocion(id_promo):
-    deleted = control.delete_promocion(id_promo)
+def deleted_promocion(id_promocion):
+    deleted = control.delete_promocion(id_promocion)
     if deleted:
         return jsonify({"msg": "Promocion deleted succesfully"}), 200
     else:
@@ -74,6 +73,7 @@ def deleted_promocion(id_promo):
 @promociones.route('/promociones/<estado>', methods=['GET'])
 def get_promo_by_estado(estado):
     respuesta = control.get_promo_estado(estado)
+    print(respuesta)
     if respuesta:
         return jsonify(respuesta), 200
     else:

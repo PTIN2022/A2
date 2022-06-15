@@ -4,7 +4,7 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
 class Reserva(db.Model):
-
+    __table_args__ = {'extend_existing': True}
     id_reserva = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     fecha_entrada = db.Column(db.DateTime, nullable=False)
     fecha_salida = db.Column(db.DateTime, nullable=False)
@@ -19,6 +19,7 @@ class Reserva(db.Model):
     # id_cliente = db.Column(db.String(9), db.ForeignKey("cliente.id_usuari"), nullable=False)
     id_cliente = db.Column(db.String(20), nullable=False)  # TODO: foreingk key
     # avisos = db.relationship("Aviso",  backref="reserva")
+    
 
     # def __init__(self, fecha_entrada, fecha_salida, tiempo_consumido, tiempo_restante, precio_carga_completa, precio_carga_actual, estado, id_cargador, id_vehiculo, id_cliente):
     def __init__(self, fecha_entrada, fecha_salida, id_cargador, id_vehiculo, id_cliente):
