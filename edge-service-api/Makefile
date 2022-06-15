@@ -31,3 +31,9 @@ clean: ## Elimina los ficheros basura del proyecto
 	rm -rf .pytest_cache .venv
 	find -iname "*.pyc" -delete
 	find -type d -iname "__pycache__" -delete
+
+simulate-camera-event:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/camara" -m '{"matricula": "HH12D23", "id_estacio": "VG1", "id_camara": 23}'
+
+simulate-barrier-listener:
+	mosquitto_sub -h test.mosquitto.org -p 1883 -q 2 -t "/gesys/estacion/camaras/23" -C 1

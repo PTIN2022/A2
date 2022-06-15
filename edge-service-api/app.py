@@ -2,6 +2,8 @@ import os
 import time
 from utils.db import db
 from flask import Flask
+from flask_mqtt import Mqtt
+from mqtt import process_msg
 from routes.reservas import reservas
 from routes.estaciones import estaciones
 from routes.clientes import clientes
@@ -26,9 +28,30 @@ def init_db():
 lock = Lock()
 app = Flask(__name__)
 
+
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///test.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
+app.config['MQTT_BROKER_URL'] = os.getenv('MQTT_BROKER_URL', 'test.mosquitto.org')  # use the free broker from HIVEMQ
+app.config['MQTT_BROKER_PORT'] = int(os.getenv('MQTT_BROKER_PORT', "1883"))  # default port for non-tls connection
+app.config['MQTT_USERNAME'] = os.getenv('MQTT_USERNAME', '')  # set the username here if you need authentication for the broker
+app.config['MQTT_PASSWORD'] = os.getenv('MQTT_PASSWORD', '')  # set the password here if the broker demands authentication
+app.config['MQTT_KEEPALIVE'] = int(os.getenv('MQTT_KEEPALIVE', "5"))  # set the time interval for sending a ping to the broker to 5 seconds
+app.config['MQTT_TLS_ENABLED'] = os.getenv('MQTT_TLS_ENABLED', False)  # set TLS to disabled for testing purposes
+
+mqtt = Mqtt(app)
+mqtt.subscribe('gesys/#')
+
+@mqtt.on_connect()
+def handle_connect(client, userdata, flags, rc):
+    mqtt.subscribe('gesys/#')
+
+
+@mqtt.on_message()
+def handle_mqtt_message(client, userdata, message):
+    with app.app_context():
+        process_msg(message.topic, message.payload.decode())
+
 
 app.register_blueprint(reservas, url_prefix="/api")
 app.register_blueprint(estaciones, url_prefix="/api")
