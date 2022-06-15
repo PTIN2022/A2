@@ -1,13 +1,23 @@
 import json
 from utils.db import db
 import paho.mqtt.publish as publish
-from models.model import Estacion, Reserva, ReservaSchema
+from models.model import Estacion, Reserva, ReservaSchema, Cargador
 from datetime import datetime, timedelta
 
 
 EDGE_BROKER = "test.mosquitto.org"
 EDGE_PORT = 1883
 QOS = 2
+
+AVERIAS = {
+
+    0: "ok",
+    1: "enchufe",
+    2: "voltaje",
+    3: "pantalla",
+    4: "circuito interno"
+
+}
 
 
 def process_camera_event(matricula, id_estacio):
@@ -32,8 +42,19 @@ def process_camera_event(matricula, id_estacio):
                    payload="0", qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
 
 
-def deniseMethod(id_punto_carga, averia):
-    pass
+def process_averias(id_carga, num_averia):
+    print("---------------------------------")
+    print("Tratando averias")
+    c = Cargador.query.filter(Cargador.id_cargador == id_carga).one_or_none()
+    if c:
+        c.estado = AVERIAS[num_averia]
+        db.session.commit()
+        print(c.estado)
+        #TODO: subir al cloud
+        
+    else:
+        print("Cargador no encontrado")
+    
 
 
 def process_msg(topic, raw_payload):
@@ -56,7 +77,7 @@ def process_msg(topic, raw_payload):
     elif topic == "gesys/edge/puntoCarga/averia":
         # Expected: {"idPuntoCarga": 2, "averia": 0}
         if "idPuntoCarga" in payload and "averia" in payload:
-            deniseMethod(payload["idPuntoCarga"], payload["averia"])
+            process_averias(payload["idPuntoCarga"], payload["averia"])
     else:
         print("Mensaje recibido, pero nunca fue tratado...")
 

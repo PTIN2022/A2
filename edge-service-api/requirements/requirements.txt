@@ -9,7 +9,6 @@ Flask-MQTT==1.1.1
 paho-mqtt==1.6.1
 marshmallow_sqlalchemy
 gunicorn
-paho-mqtt
 wheel
 Faker
 random2

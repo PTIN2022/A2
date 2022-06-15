@@ -37,3 +37,19 @@ simulate-camera-event:
 
 simulate-barrier-listener:
 	mosquitto_sub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/estaciones/VG1/camara" 
+
+simulate-averias0:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/averia" -m '{"idPuntoCarga": 2, "averia": 0}'
+	
+simulate-averias1:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/averia" -m '{"idPuntoCarga": 2, "averia": 1}'
+	
+simulate-averias2:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/averia" -m '{"idPuntoCarga": 2, "averia": 2}'
+	
+simulate-averias3:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/averia" -m '{"idPuntoCarga": 2, "averia": 3}'
+	
+simulate-averias4:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/averia" -m '{"idPuntoCarga": 2, "averia": 4}'
+	
