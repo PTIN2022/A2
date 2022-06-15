@@ -33,7 +33,7 @@ clean: ## Elimina los ficheros basura del proyecto
 	find -type d -iname "__pycache__" -delete
 
 simulate-camera-event:
-	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/camara" -m '{"matricula": "HH12D23", "id_estacio": "VG1", "id_camara": 23}'
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/camara" -m '{"matricula": "HH12D23", "id_estacio": "VG1"}'
 
 simulate-barrier-listener:
-	mosquitto_sub -h test.mosquitto.org -p 1883 -q 2 -t "/gesys/estacion/camaras/23" -C 1
+	mosquitto_sub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/estaciones/VG1/camara" 

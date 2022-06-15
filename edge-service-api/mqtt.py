@@ -10,7 +10,7 @@ EDGE_PORT = 1883
 QOS = 2
 
 
-def process_camera_event(matricula, id_estacio, idCamara):
+def process_camera_event(matricula, id_estacio):
     print("---------------------------------")
     print("Tratando proceso de camara")
     i = Estacion.query.filter(Estacion.nombre_est == id_estacio).one_or_none()
@@ -21,15 +21,19 @@ def process_camera_event(matricula, id_estacio, idCamara):
                 if reserva.id_vehiculo == matricula:
                     if (reserva.fecha_entrada - timedelta(minutes=5)) < ahora < reserva.fecha_salida:
                         print("Hay una reserva valida, abriendo barrera...")
-                        publish.single("/gesys/estacion/camaras/{}".format(idCamara),
+                        publish.single("gesys/estaciones/{}/camara".format(id_estacio),
                                        payload="1", qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
                         return
     else:
-        print("Estacion no encontrada...")\
+        print("Estacion no encontrada...")
 
     print("Reserva no encontrada mandando no abrir barrera...") # TODO: useless?
-    publish.single("/gesys/estacion/camaras/{}".format(idCamara),
+    publish.single("gesys/estaciones/{}/camara".format(id_estacio),
                    payload="0", qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
+
+
+def deniseMethod(id_punto_carga, averia):
+    pass
 
 
 def process_msg(topic, raw_payload):
@@ -42,12 +46,17 @@ def process_msg(topic, raw_payload):
         payload = json.loads(raw_payload)
     except json.decoder.JSONDecodeError:
         print("#MQTT EXCEPTION PAYLOAD IS NOT A JSON")
+        return
 
     if topic == "gesys/edge/camara":
         # Expected: {"matricula": "34543FGC", "id_estacio": "VG1"}
-        if "matricula" in payload and "id_estacio" in payload and "id_camara" in payload:
-            process_camera_event(payload["matricula"], payload["id_estacio"], payload["id_camara"])
+        if "matricula" in payload and "id_estacio" in payload:
+            process_camera_event(payload["matricula"], payload["id_estacio"])
 
+    elif topic == "gesys/edge/puntoCarga/averia":
+        # Expected: {"idPuntoCarga": 2, "averia": 0}
+        if "idPuntoCarga" in payload and "averia" in payload:
+            deniseMethod(payload["idPuntoCarga"], payload["averia"])
     else:
         print("Mensaje recibido, pero nunca fue tratado...")
 
