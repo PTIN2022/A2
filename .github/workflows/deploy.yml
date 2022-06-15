@@ -6,14 +6,23 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    name: Deploy
+    name: Deploy cloud
     runs-on: ubuntu-latest
     steps:
-    - name: Deploying frontend on server
+    - name: Deploying cloud server
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY_ED25519 }}
+        host: ${{ secrets.HOST_CLOUD }}
+        username: ${{ secrets.USERNAME_CLOUD }}
+        key: ${{ secrets.KEY_ED25519_CLOUD }}
         port: ${{ secrets.PORT_CLOUD }}
         script: /home/user/deploy/cloud-back.sh
+
+    - name: Deploying edge server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_EDGE_1 }}
+        username: ${{ secrets.USERNAME_EDGE_1 }}
+        key: ${{ secrets.KEY_ED25519_EDGE_1 }}
+        port: ${{ secrets.PORT_EDGE_1 }}
+        script: /home/user/deploy/edge-back.sh

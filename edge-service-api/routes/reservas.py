@@ -16,17 +16,25 @@ def get_reservas():
 def post_reservas():
     try:
         print(request.json)
-        estacion = int(request.json["id_estacion"])
+        estacion = request.json["id_estacion"]
         fecha_inicio = request.json["fecha_inicio"]  # Dia y hora
         fecha_final = request.json["fecha_final"]
         fecha_final_str = datetime.strptime(fecha_final, '%d-%m-%Y %H:%M')
         fecha_inicio_str = datetime.strptime(fecha_inicio, '%d-%m-%Y %H:%M')
         matricula = request.json["id_vehiculo"]
         DNI = request.json["id_cliente"]
-
+        tarifa = request.json["tarifa"]
+        asistida = request.json["asistida"]
+        porcentaje_carga = request.json["porcentaje_carga"]
+        precio_carga_completa = request.json["precio_carga_completo"]
+        precio_carga_actual = request.json["precio_carga_actual"]
+        estado_pago = request.json["estado_pago"]
         # TODO: comprobar fecha final es mayor fecha inicial
-        id = control.post_reserva(estacion, matricula, fecha_inicio_str, fecha_final_str, DNI)
-        respuesta = control.get_reservas_id(id)
+        reserva = control.post_reserva(estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI)
+        if type(reserva) == dict:
+            return jsonify(reserva), 406
+        else:
+            respuesta = control.get_reservas_id(reserva)
         return jsonify(respuesta)
 
     except ValueError as e:
