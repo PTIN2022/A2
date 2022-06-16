@@ -76,7 +76,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                     )
                     db.session.add(i)
                     db.session.commit()
-                    publish.single("gesys/cloud/reservas", json.dumps(ReservaSchema().dump(i)), hostname="craaxkvm.epsevg.upc.es", port=23602, qos=2)
+                    publish.single("gesys/cloud/reservas", json.dumps(ReservaSchema().dump(i)), hostname="192.168.80.236", port=42069, qos=2)
                     cargador_encontrado = True
                     return i.id_reserva
 
