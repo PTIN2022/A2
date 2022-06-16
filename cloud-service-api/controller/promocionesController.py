@@ -1,4 +1,4 @@
-from models.model import Promociones, PromocionesSchema
+from models.model import Promociones, PromocionesSchema, Estacion, EstacionSchema
 from utils.db import db
 from datetime import datetime
 
@@ -14,42 +14,57 @@ def get_promo_id(id_promo):
 
 
 def get_promo_estado(estado):
-    if estado == 'true':
-        estado = True
-    else:
-        estado = False
     p = Promociones.query.filter(Promociones.estado == estado)
     return PromocionesSchema(many=True).dump(p)
 
 
-def post_promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion):
-    if estado == 'true':
-        estado = True
-    else:
-        estado = False
+def get_promo_estaciones(id_promo):
+    p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
+    a = p.estaciones
+    return EstacionSchema(many=True).dump(a)
+
+
+def get_promo_estacion(id_estacion):
+    # lista vacia donde estaran las promos que pertence a la estacion con id == id_estacion
+    respuesta = []
+    p = Promociones.query.all()
+    for promo in p:
+        a = promo.estaciones
+        estac = EstacionSchema(many=True).dump(a)
+        for i in estac:
+            if int(i["id_estacion"]) == int(id_estacion):
+                # añadimos a la lista la promo si coinciden los id
+                respuesta += [PromocionesSchema().dump(promo)]
+    return respuesta
+
+
+def post_promociones(id_estacion, descuento, fecha_inicio, fecha_fin, estado, descripcion):
     # Pasamos a datetime las fechas
     fecha_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%dT%H:%M:%S')
     fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%dT%H:%M:%S')
     p = Promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
     db.session.add(p)
     db.session.commit()
+    i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
+    p.estaciones.append(i)
+    db.session.commit()
     return PromocionesSchema().dump(p)
 
 
-def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=None, estado=None, descripcion=None):
+def modify_promociones(id_promo, id_estacion=None, descuento=None, fecha_inicio=None, fecha_fin=None, estado=None, descripcion=None):
     p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
     if p:
+        if id_estacion:
+            p.id_estacion = id_estacion
         if descuento:
             p.descuento = descuento
         if fecha_inicio:
+            fecha_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%dT%H:%M:%S')
             p.fecha_inicio = fecha_inicio
         if fecha_fin:
+            fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%dT%H:%M:%S')
             p.fecha_fin = fecha_fin
         if estado:
-            if estado == 'true':
-                estado = True
-            else:
-                estado = False
             p.estado = estado
         if descripcion:
             p.descripcion = descripcion

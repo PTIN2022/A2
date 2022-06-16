@@ -28,15 +28,34 @@ def get_promo_by_estado(estado):
         return jsonify({"error": "Malformed request syntax."}), 400
 
 
+@promociones.route('/promociones/<id_promo>/estacion', methods=['GET'])
+def get_estacion_by_promo(id_promo):
+    respuesta = control.get_promo_estaciones(id_promo)
+    if respuesta:
+        return jsonify(respuesta), 200
+    else:
+        return jsonify({"error": "Malformed request syntax."}), 400
+
+
+@promociones.route('/promociones/estacion/<id_estacion>', methods=['GET'])
+def get_promo_by_estacion(id_estacion):
+    respuesta = control.get_promo_estacion(id_estacion)
+    if respuesta:
+        return jsonify(respuesta), 200
+    else:
+        return jsonify({"error": "Malformed request syntax."}), 400
+
+
 @promociones.route('/promociones', methods=['POST'])
 def post_promocion():
-    descuento = request.form.to_dict()["descuento"]
-    fecha_inicio = request.form.to_dict()["fecha_inicio"]
-    fecha_fin = request.form.to_dict()["fecha_fin"]
-    estado = request.form.to_dict()["estado"]
-    descripcion = request.form.to_dict()["descripcion"]
+    id_estacion = request.json["id_estacion"]
+    descuento = request.json["descuento"]
+    fecha_inicio = request.json["fecha_inicio"]
+    fecha_fin = request.json["fecha_fin"]
+    estado = request.json["estado"]
+    descripcion = request.json["descripcion"]
 
-    p = control.post_promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
+    p = control.post_promociones(id_estacion, descuento, fecha_inicio, fecha_fin, estado, descripcion)
     if p:
         return jsonify(p), 200
     else:
@@ -45,24 +64,27 @@ def post_promocion():
 
 @promociones.route('/promociones/<id_promo>', methods=["PUT"])
 def modify_promocion(id_promo):
+    id_estacion = None
     descuento = None
     fecha_inicio = None
     fecha_fin = None
     estado = None
     descripcion = None
 
-    if "descuento" in request.form.to_dict():
-        descuento = request.form.to_dict()["descuento"]
-    if "fecha_inicio" in request.form.to_dict():
-        fecha_inicio = request.form.to_dict()["fecha_inicio"]
-    if "fecha_fin" in request.form.to_dict():
-        fecha_fin = request.form.to_dict()["fecha_fin"]
-    if "estado" in request.form.to_dict():
-        estado = request.form.to_dict()["estado"]
-    if "descripcion" in request.form.to_dict():
-        descripcion = request.form.to_dict()["descripcion"]
+    if "id_estacion" in request.json:
+        id_estacion = request.json["id_estacion"]
+    if "descuento" in request.json:
+        descuento = request.json["descuento"]
+    if "fecha_inicio" in request.json:
+        fecha_inicio = request.json["fecha_inicio"]
+    if "fecha_fin" in request.json:
+        fecha_fin = request.json["fecha_fin"]
+    if "estado" in request.json:
+        estado = request.json["estado"]
+    if "descripcion" in request.json:
+        descripcion = request.json["descripcion"]
 
-    respuesta = control.modify_promociones(id_promo, descuento, fecha_inicio, fecha_fin, estado, descripcion)
+    respuesta = control.modify_promociones(id_promo, id_estacion, descuento, fecha_inicio, fecha_fin, estado, descripcion)
 
     if respuesta:
         return jsonify(respuesta), 200

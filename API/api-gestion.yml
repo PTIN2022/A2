@@ -2103,6 +2103,7 @@ paths:
                     value: >-
                       [
                         {
+                          "cantidad_usados": 10,
                           "descripcion": "20% de descuento en la electrolinera de Vilanova!",
                           "descuento": 20,
                           "estado": "activa",
@@ -2111,6 +2112,7 @@ paths:
                           "id_promo": 1
                         },
                         {
+                          "cantidad_usados": 20,
                           "descripcion": "20% de descuento en la electrolinera de Barcelona!",
                           "descuento": 15,
                           "estado": "inactiva",
@@ -2119,6 +2121,7 @@ paths:
                           "id_promo": 2
                         },
                         {
+                          "cantidad_usados": 30,
                           "descripcion": "20% de descuento en la electrolinera de Sitges!",
                           "descuento": 25,
                           "estado": "activa",
@@ -2145,16 +2148,19 @@ paths:
         requestBody:
             required: true
             content:
-              multipart/form-data:
+               application/json:
                 schema:
                   type: object
                   required:
+                    - id_estacion
                     - descripcion
                     - descuento
                     - estado
                     - fecha_inicio
                     - fecha_fin
                   properties:
+                    id_estacion:
+                      type: integer
                     descuento:
                       type: integer
                     fecha_inicio:
@@ -2164,7 +2170,14 @@ paths:
                     descripcion:
                       type: string
                     estado:
-                      type: boolean
+                      type: string
+                  example:
+                    id_estacion: 1
+                    descripcion: "20% de descuento en la electrolinera de Sitges!"
+                    descuento: 25
+                    estado: "activa"
+                    fecha_inicio: "2022-04-18T10:00:00"
+                    fecha_fin: "2022-04-18T19:00:00"
         responses:
           '200':
             description: Peticion correcta
@@ -2174,9 +2187,10 @@ paths:
                   Meter trabajador:
                     value: >-
                       {
+                        "cantidad_usados": 0,
                         "descripcion": "20% de descuento en la electrolinera de Sitges!",
                         "descuento": 25,
-                        "estado": true,
+                        "estado": "activa",
                         "fecha_inicio": "2022-04-18T10:00:00",
                         "fecha_fin": "2022-04-18T19:00:00",
                         "id_promo": 3
@@ -2208,7 +2222,7 @@ paths:
         name: estado
         required: true
         schema:
-          type: boolean
+          type: string
       responses:
         '200':
           description: Peticion correcta
@@ -2219,17 +2233,19 @@ paths:
                   value: >-
                       [
                         {
+                          "cantidad_usados": 10,
                           "descripcion": "20% de descuento en la electrolinera de Vilanova!",
                           "descuento": 20,
-                          "estado": true,
+                          "estado": "activa",
                           "fecha_inicio": "2022-04-18T11:00:00",
                           "fecha_fin": "2022-04-18T21:00:00",
                           "id_promo": 1
                         },
                         {
+                          "cantidad_usados": 20,
                           "descripcion": "20% de descuento en la electrolinera de Sitges!",
                           "descuento": 25,
-                          "estado": true,
+                          "estado": "activa",
                           "fecha_inicio": "2022-04-18T10:00:00",
                           "fecha_fin": "2022-04-18T19:00:00",
                           "id_promo": 3
@@ -2239,9 +2255,10 @@ paths:
                   value: >-
                       [
                         {
+                          "cantidad_usados": 30,
                           "descripcion": "20% de descuento en la electrolinera de Barcelona!",
                           "descuento": 15,
-                          "estado": false,
+                          "estado": "inactiva",
                           "fecha_inicio": "2022-04-18T17:00:00",
                           "fecha_fin": "2022-04-18T22:00:00",
                           "id_promo": 2
@@ -2249,6 +2266,131 @@ paths:
                       ]
                 Sin_promociones:
                   value: '[]'
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
+        '403':
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+  /promociones/estacion/{id_estacion}:
+  # pedimos una lista de promociones dado una estacion
+    get:
+      summary: Obtiene una lista de promociones dado una estacion
+      tags:
+      - Promociones
+      parameters:
+      - in: path
+        name: id_estacion
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con promociones activas:
+                  value: >-
+                      [
+                        {
+                          "cantidad_usados": 10,
+                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
+                          "descuento": 20,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T11:00:00",
+                          "fecha_fin": "2022-04-18T21:00:00",
+                          "id_promo": 1
+                        },
+                        {
+                          "cantidad_usados": 20,
+                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                          "descuento": 25,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T10:00:00",
+                          "fecha_fin": "2022-04-18T19:00:00",
+                          "id_promo": 3
+                        }
+                      ]
+                Sin_promociones_activas:
+                  value: >-
+                      [
+                        {
+                          "cantidad_usados": 30,
+                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
+                          "descuento": 15,
+                          "estado": "inactiva",
+                          "fecha_inicio": "2022-04-18T17:00:00",
+                          "fecha_fin": "2022-04-18T22:00:00",
+                          "id_promo": 2
+                        }
+                      ]
+                Sin_promociones:
+                  value: '[]'
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter incidencia:
+                    value: {"error": "Malformed request syntax."}
+        '403':
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+  /promociones/{id_promo}/estacion:
+    # devuelve las estaciones a las que pertence una promocion
+    get:
+      summary: Devuelve las estaciones a las que pertence una promocion
+      tags:
+      - Promociones
+      parameters:
+      - in: path
+        name: id_promo
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Pertence a estacion:
+                  value: >-
+                      [
+                        {
+                          "cantidad_usados": 0,
+                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
+                          "descuento": 20,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T11:00:00",
+                          "fecha_fin": "2022-04-18T21:00:00",
+                          "id_promo": 1
+                        },
+                        {
+                          "cantidad_usados": 0,
+                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                          "descuento": 25,
+                          "estado": "activa",
+                          "fecha_inicio": "2022-04-18T10:00:00",
+                          "fecha_fin": "2022-04-18T19:00:00",
+                          "id_promo": 3
+                        }
+                      ]
         '400':
             description: Peticion incorrecta
             content:
@@ -2285,12 +2427,14 @@ paths:
                 Trabajador:
                   value: >-
                       {
+                        "cantidad_usados": 20,
                         "descripcion": "20% de descuento en la electrolinera de Sitges!",
                         "descuento": 25,
-                        "estado": true,
+                        "estado": "activa",
                         "fecha_inicio": "2022-04-18T10:00:00",
                         "fecha_fin": "2022-04-18T19:00:00",
-                        "id_promo": 3
+                        "id_promo": 3,
+                        "id_estacion": 3
                       }
         '400':
             description: Peticion incorrecta
@@ -2330,21 +2474,36 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                estado:
-                  type: boolean
-                descuento:
-                  type: integer
-                fecha_inicio:
-                  type: string
-                fecha_fin:
-                  type: string
-                descripcion:
-                  type: string
-
+               application/json:
+                schema:
+                  type: object
+                  required:
+                    - id_estacion
+                    - descripcion
+                    - descuento
+                    - estado
+                    - fecha_inicio
+                    - fecha_fin
+                  properties:
+                    id_estacion:
+                      type: integer
+                    descuento:
+                      type: integer
+                    fecha_inicio:
+                      type: string
+                    fecha_fin:
+                      type: string
+                    descripcion:
+                      type: string
+                    estado:
+                      type: boolean
+                  example:
+                    id_estacion: 2
+                    descripcion: "30% de descuento en la electrolinera de Sitges!"
+                    descuento: 30
+                    estado: "activa"
+                    fecha_inicio: "2022-04-18T10:00:00"
+                    fecha_fin: "2022-04-18T19:00:00"
       responses:
         '200':
           description: Peticion correcta
@@ -2354,9 +2513,10 @@ paths:
                 Trabajador actualizado:
                   value: >-
                       {
-                        "descripcion": "20% de descuento en la electrolinera de Sitges!",
-                        "descuento": 25,
-                        "estado": true,
+                        "cantidad_usados": 20,
+                        "descripcion": "30% de descuento en la electrolinera de Sitges!",
+                        "descuento": 30,
+                        "estado": "activa",
                         "fecha_inicio": "2022-04-18T10:00:00",
                         "fecha_fin": "2022-04-18T19:00:00",
                         "id_promo": 3
