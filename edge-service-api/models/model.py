@@ -375,7 +375,7 @@ class ConsumoSchema(SQLAlchemyAutoSchema):
 
 
 promocion_estacion = db.Table(
-    'promocion-estacion',
+    'promocion-stacion',
     db.Column('id_estacion', db.ForeignKey('estacion.id_estacion'), nullable=False),
     db.Column('id_promo', db.ForeignKey('promociones.id_promo'), nullable=False)
 )

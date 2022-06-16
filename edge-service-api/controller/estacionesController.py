@@ -1,4 +1,4 @@
-from models.model import Estacion, EstacionSchema, Cargador, CargadorSchema
+from models.model import Estacion, EstacionSchema, CargadorSchema
 from utils.db import db
 
 

@@ -23,7 +23,7 @@ freeze: clean env
 
 freeze-dev: clean dev-env
 	. .venv/bin/activate && pip freeze > requirements/requirements-dev.txt
-
+    
 test: dev-env
 	. .venv/bin/activate && pytest --cov-report term-missing --cov=./ -s -vv
 
