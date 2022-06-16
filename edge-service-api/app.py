@@ -7,6 +7,8 @@ from flask_mqtt import Mqtt
 from mqtt import process_msg
 from routes.reservas import reservas
 from routes.estaciones import estaciones
+from routes.promociones import promociones
+from models.model import Estacion, Cargador
 from routes.clientes import clientes
 from utils.fake_data import fakedata
 from multiprocessing import Lock
@@ -31,7 +33,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///test.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
 app.config['MQTT_BROKER_URL'] = os.getenv('MQTT_BROKER_URL', 'test.mosquitto.org')  # use the free broker from HIVEMQ
@@ -56,6 +58,9 @@ def handle_mqtt_message(client, userdata, message):
         process_msg(message.topic, message.payload.decode())
 
 
+#app.register_blueprint(reservas)
+app.register_blueprint(promociones, url_prefix="/api")
+#app.register_blueprint(promocionesEstaciones)
 app.register_blueprint(reservas, url_prefix="/api")
 app.register_blueprint(estaciones, url_prefix="/api")
 app.register_blueprint(clientes, url_prefix="/api")
@@ -70,6 +75,10 @@ try:
 finally:
     lock.release()
 
+    e = Estacion(1,"Estacion Vilanova", 41, 32, "Rambla de L'exposicio", 20, "Zona residencial", 1, 1, "+34762487248", "Vilanova i la geltru", "Espanya")
+    print(e)
+    p1 = Cargador("cargando", "coordenada", "USB-c", e.id_estacion)
+    p2 = Cargador("cargando", "coordenada", "USB-c", e.id_estacion)
 
 if __name__ == "__main__":  # pragma: no cover
     print("=========================================")
