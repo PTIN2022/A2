@@ -1,10 +1,11 @@
+import random
+
+import json
 from utils.db import db
-from models.reserva import Reserva, ReservaSchema
-from models.estacion import Estacion
+from flask import current_app
 from datetime import datetime
 import paho.mqtt.publish as publish
-import random
-import json
+from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
 
 
 def get_all_reservas():
@@ -18,7 +19,7 @@ def get_reservas_id(id):
 
 
 def get_reservas_estacion(id_estacion):
-    i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
+    i = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
     reservas_desde_ahora = []
     if i:
         ahora = datetime.today()
@@ -36,13 +37,22 @@ def get_reservas_matricula(matricula):
 
 
 def get_reservas_dni(dni):
-    i = Reserva.query.filter(Reserva.id_cliente == dni)
-    return ReservaSchema(many=True).dump(i)
+    cl = Cliente.query.filter(Cliente.dni == dni).one_or_none()
+    res = ReservaSchema(many=True).dump(cl.reservas)
+    return res
 
 
-def post_reserva(id_estacion, matricula, fecha_inicio_str, fecha_final_str, DNI):
-    i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
+def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI):
+    i = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
     cargador_encontrado = False
+    cl = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
+    vh = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()
+    if not cl:
+        return {"error": "cliente no existe"}
+
+    if not vh:
+        return {"error": "vehiculo no existe"}
+
     if i:
         random.shuffle(i.cargadores)  # Se hace un shuffle para que no siempre se use el mismo cargador para evitar el desgaste del mismo
         for cargador in i.cargadores:
@@ -60,15 +70,18 @@ def post_reserva(id_estacion, matricula, fecha_inicio_str, fecha_final_str, DNI)
                             cargador_ocupado = True
 
                 if not cargador_ocupado:
-                    i = Reserva(fecha_inicio_str, fecha_final_str, cargador.id_cargador, matricula, DNI)
+                    i = Reserva(
+                        fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual,
+                        True, float(tarifa), asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari
+                    )
                     db.session.add(i)
                     db.session.commit()
-                    hostname = "craaxkvm.epsevg.upc.es"
-                    publish.single("estacion/"+str(id_estacion)+"/cargador/"+str(cargador.id_cargador)+"/reserva", json.dumps(ReservaSchema().dump(i)), hostname, port=23602, qos=2)
+                    publish.single("gesys/cloud/reservas", json.dumps(ReservaSchema().dump(i)), hostname="192.168.80.236", port=42069, qos=2)
                     cargador_encontrado = True
                     return i.id_reserva
+
     if not cargador_encontrado:
-        return None
+        return {"error": "no hay cargador libre en este horario"}
 
 
 def remove_reserva(id):

@@ -4,6 +4,10 @@ help:
 run: env ## Arranca el flask (.venv) en modo desarrollo. Server correra en: 127.0.0.1:5000
 	. .venv/bin/activate && python app.py 
 
+fake-data: ## Mete la fake data en el sql
+	docker build -t fake -f FakerDockerfile .
+	docker run -it --network a2_default fake
+
 run-gunicorn: env ## Arranca el flask (.venv) en modo desarrollo. Server correra en: 127.0.0.1:5000
 	. .venv/bin/activate && gunicorn -b 0.0.0.0:8080 app:app
 
@@ -27,3 +31,25 @@ clean: ## Elimina los ficheros basura del proyecto
 	rm -rf .pytest_cache .venv
 	find -iname "*.pyc" -delete
 	find -type d -iname "__pycache__" -delete
+
+simulate-camera-event:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/camara" -m '{"matricula": "HH12D23", "id_estacio": "VG1"}'
+
+simulate-barrier-listener:
+	mosquitto_sub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/estaciones/VG1/camara" 
+
+simulate-averias0:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/averia" -m '{"idPuntoCarga": 2, "averia": 0}'
+	
+simulate-averias1:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/averia" -m '{"idPuntoCarga": 2, "averia": 1}'
+	
+simulate-averias2:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/averia" -m '{"idPuntoCarga": 2, "averia": 2}'
+	
+simulate-averias3:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/averia" -m '{"idPuntoCarga": 2, "averia": 3}'
+	
+simulate-averias4:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/averia" -m '{"idPuntoCarga": 2, "averia": 4}'
+	

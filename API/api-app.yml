@@ -3,11 +3,25 @@ info:
   title: API portal de gestion
   version: '1.0'
 servers:
+<<<<<<< HEAD
   - url: http://127.0.0.1:8080/
     description: Developments
   - url: http://craaxkvm.epsevg.upc.es:23701/
     description: Server
+=======
+  - url: http://127.0.0.1:5000/api
+    description: Development
+  - url: http://127.0.0.1/api
+    description: Development HTTP docker-compose
+  - url: https://127.0.0.1/api
+    description: Development HTTPS docker-compose
+  - url: http://craaxkvm.epsevg.upc.es:23701/api
+    description: Production HTTP
+  - url: https://craaxkvm.epsevg.upc.es:23700/api
+    description: Production HTTPS
+>>>>>>> dbbbb392ee07d4ff953d687ac71f65b4f291caff
 paths:
+  # reservas
   # reservas
   /reservas:
     get:
@@ -24,12 +38,34 @@ paths:
                     value:  >-
                         [
                           {
-                            "fecha_entrada": "2022-04-18T11:00:00",
-                            "fecha_salida": "2022-04-18T18:00:00",
-                            "id_cargador": 1,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": true,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.798066",
+                            "fecha_salida": "2022-05-23T13:49:59.798066",
+                            "id_cargador": 257,
+                            "id_cliente": 1,
                             "id_reserva": 1,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 10.1,
+                            "precio_carga_completa": 25.2,
+                            "procetnaje_carga": 50,
+                            "tarifa": 90.99
+                          },
+                          {
+                            "asistida": true,
+                            "estado": false,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.808033",
+                            "fecha_salida": "2022-05-23T13:49:59.808033",
+                            "id_cargador": 258,
+                            "id_cliente": 1,
+                            "id_reserva": 2,
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 60,
+                            "precio_carga_completa": 50,
+                            "procetnaje_carga": 33,
+                            "tarifa": 44.44
                           }
                         ]
           '400':
@@ -58,9 +94,15 @@ paths:
                   - fecha_final
                   - id_vehiculo
                   - id_cliente
+                  - tarifa
+                  - asistida
+                  - porcentaje_carga
+                  - precio_carga_completo
+                  - precio_carga_actual
+                  - estado_pago
               properties:
                 id_estacion:
-                  type: integer
+                  type: string
                 fecha_inicio:
                   type: string
                 fecha_final:
@@ -69,12 +111,30 @@ paths:
                   type: string
                 id_cliente:
                   type: string
+                tarifa:
+                  type: number
+                asistida:
+                  type: boolean
+                porcentaje_carga:
+                  type: number
+                precio_carga_completo:
+                  type: number
+                precio_carga_actual:
+                  type: number
+                estado_pago:
+                  type: boolean
               example:
-                id_estacion: 1
-                fecha_inicio: "18-04-2022 11:00"
-                fecha_final: "18-04-2022 18:00"
-                id_vehiculo: "LKE2378"
-                id_cliente: "1238712N"
+                id_estacion: "VG1"
+                fecha_inicio: "16-06-2022 10:50"
+                fecha_final: "16-06-2022 11:00"
+                id_vehiculo: "4950KZK"
+                id_cliente: "23432234F"
+                tarifa: 12.7
+                asistida: True
+                porcentaje_carga: 30
+                precio_carga_completo: 30
+                precio_carga_actual: 5
+                estado_pago: True
       responses:
         '200':
           description: Peticion correcta
@@ -84,13 +144,19 @@ paths:
                 Meter reserva:
                   value:  >-
                       {
-                        "id_cliente": "1238712N",
-                        "fecha_entrada": "2022-04-18T18:00:00",
-                        "fecha_salida": "2022-04-18T11:00:00",
+                        "asistida": true,
+                        "estado": true,
+                        "estado_pago": true,
+                        "fecha_entrada": "2022-05-23T13:49:59.798066",
+                        "fecha_salida": "2022-05-23T13:49:59.798066",
+                        "id_cargador": 257,
+                        "id_cliente": 1,
                         "id_reserva": 1,
-                        "id_estacion": 1,
-                        "id_vehiculo": "LKE2378",
-                        "id_cargador": 2
+                        "id_vehiculo": "2WRQ7QQ",
+                        "precio_carga_actual": 10.1,
+                        "precio_carga_completa": 25.2,
+                        "procetnaje_carga": 50,
+                        "tarifa": 90.99
                       }
         '400':
           description: Peticion incorrecta
@@ -100,6 +166,11 @@ paths:
                 Error al meter reserva:
                   value: >-
                     {"error": "Malformed request syntax."}
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> dbbbb392ee07d4ff953d687ac71f65b4f291caff
   /reservas/estacion/{id_estacion}:
     # pedimos una lista de reservas por una estacion dada
     get:
@@ -111,7 +182,7 @@ paths:
           name: id_estacion
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: Obtiene un lista de reservas por estacion desde la fecha actual al futuro
@@ -122,20 +193,34 @@ paths:
                   value: >-
                         [
                           {
-                            "fecha_entrada": "2022-07-18T11:00:00",
-                            "fecha_salida": "2022-07-18T18:00:00",
-                            "id_cargador": 1,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": true,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.798066",
+                            "fecha_salida": "2022-05-23T13:49:59.798066",
+                            "id_cargador": 257,
+                            "id_cliente": 1,
                             "id_reserva": 1,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 10.1,
+                            "precio_carga_completa": 25.2,
+                            "procetnaje_carga": 50,
+                            "tarifa": 90.99
                           },
                           {
-                            "fecha_entrada": "2022-07-18T12:00:00",
-                            "fecha_salida": "2022-07-18T115:00:00",
-                            "id_cargador": 2,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": false,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.808033",
+                            "fecha_salida": "2022-05-23T13:49:59.808033",
+                            "id_cargador": 258,
+                            "id_cliente": 1,
                             "id_reserva": 2,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 60,
+                            "precio_carga_completa": 50,
+                            "procetnaje_carga": 33,
+                            "tarifa": 44.44
                           }
                         ]
                 Sin reservas:
@@ -168,24 +253,38 @@ paths:
               examples:
                 Con reservas:
                   value: >-
-                        [
-                          {
-                            "fecha_entrada": "2022-07-18T11:00:00",
-                            "fecha_salida": "2022-07-18T18:00:00",
-                            "id_cargador": 1,
-                            "id_cliente": "1238712N",
-                            "id_reserva": 1,
-                            "id_vehiculo": "LKE2378"
-                          },
-                          {
-                            "fecha_entrada": "2022-07-18T12:00:00",
-                            "fecha_salida": "2022-07-18T115:00:00",
-                            "id_cargador": 2,
-                            "id_cliente": "1238712N",
-                            "id_reserva": 2,
-                            "id_vehiculo": "LKE2378"
-                          }
-                        ]
+                      [
+                        {
+                          "asistida": true,
+                          "estado": true,
+                          "estado_pago": true,
+                          "fecha_entrada": "2022-05-23T13:49:59.798066",
+                          "fecha_salida": "2022-05-23T13:49:59.798066",
+                          "id_cargador": 257,
+                          "id_cliente": 1,
+                          "id_reserva": 1,
+                          "id_vehiculo": "2WRQ7QQ",
+                          "precio_carga_actual": 10.1,
+                          "precio_carga_completa": 25.2,
+                          "procetnaje_carga": 50,
+                          "tarifa": 90.99
+                        },
+                        {
+                          "asistida": true,
+                          "estado": false,
+                          "estado_pago": true,
+                          "fecha_entrada": "2022-05-23T13:49:59.808033",
+                          "fecha_salida": "2022-05-23T13:49:59.808033",
+                          "id_cargador": 258,
+                          "id_cliente": 1,
+                          "id_reserva": 2,
+                          "id_vehiculo": "2WRQ7QQ",
+                          "precio_carga_actual": 60,
+                          "precio_carga_completa": 50,
+                          "procetnaje_carga": 33,
+                          "tarifa": 44.44
+                        }
+                      ]
                 Sin reservas:
                   value: '[]'
         '401':
@@ -218,20 +317,34 @@ paths:
                   value: >-
                         [
                           {
-                            "fecha_entrada": "2022-07-18T11:00:00",
-                            "fecha_salida": "2022-07-18T18:00:00",
-                            "id_cargador": 1,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": true,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.798066",
+                            "fecha_salida": "2022-05-23T13:49:59.798066",
+                            "id_cargador": 257,
+                            "id_cliente": 1,
                             "id_reserva": 1,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 10.1,
+                            "precio_carga_completa": 25.2,
+                            "procetnaje_carga": 50,
+                            "tarifa": 90.99
                           },
                           {
-                            "fecha_entrada": "2022-07-18T12:00:00",
-                            "fecha_salida": "2022-07-18T115:00:00",
-                            "id_cargador": 2,
-                            "id_cliente": "1238712N",
+                            "asistida": true,
+                            "estado": false,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.808033",
+                            "fecha_salida": "2022-05-23T13:49:59.808033",
+                            "id_cargador": 258,
+                            "id_cliente": 1,
                             "id_reserva": 2,
-                            "id_vehiculo": "LKE2378"
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 60,
+                            "precio_carga_completa": 50,
+                            "procetnaje_carga": 33,
+                            "tarifa": 44.44
                           }
                         ]
                 Sin reservas:
@@ -264,14 +377,21 @@ paths:
                 examples:
                   Reservas:
                     value:  >-
-                        {
-                          "fecha_entrada": "2022-04-18T11:00:00",
-                          "fecha_salida": "2022-04-18T18:00:00",
-                          "id_cargador": 1,
-                          "id_cliente": "1238712N",
-                          "id_reserva": 1,
-                          "id_vehiculo": "LKE2378"
-                        }
+                          {
+                            "asistida": true,
+                            "estado": true,
+                            "estado_pago": true,
+                            "fecha_entrada": "2022-05-23T13:49:59.798066",
+                            "fecha_salida": "2022-05-23T13:49:59.798066",
+                            "id_cargador": 257,
+                            "id_cliente": 1,
+                            "id_reserva": 1,
+                            "id_vehiculo": "2WRQ7QQ",
+                            "precio_carga_actual": 10.1,
+                            "precio_carga_completa": 25.2,
+                            "procetnaje_carga": 50,
+                            "tarifa": 90.99
+                          }
           '401':
             description: Not login
             content:
@@ -326,7 +446,7 @@ paths:
                 examples:
                   error:
                     value: >-
-                      {"error": "Reserva not found."}
+                      {"error": "Reserva not found."
 
 #########################################################################################
   /promociones:
@@ -613,6 +733,7 @@ paths:
                   value: >-
                       [
                         {
+<<<<<<< HEAD
                           "descripcion": "20% de descuento en la electrolinera de Vilanova!",
                           "descuento": 20,
                           "estado": true,
@@ -627,6 +748,96 @@ paths:
                           "fecha_inicio": "2022-04-18T10:00:00",
                           "fecha_fin": "2022-04-18T19:00:00",
                           "id_promo": 3
+=======
+                          "capacidad": 32,
+                          "ciudad": "Vilanova i la geltru",
+                          "direccion": "Rambla de L'exposicio",
+                          "id_estacion": 1,
+                          "latitud": 41,
+                          "longitud": 1,
+                          "nombre_est": "VG1",
+                          "ocupation_actual": 1,
+                          "pais": "España",
+                          "potencia_contratada": 20,
+                          "potencia_usada": 130,
+                          "telefono": "+34762487248",
+                          "zona": "Zona industrial"
+                        },
+                        {
+                          "capacidad": 32,
+                          "ciudad": "Vilanova i la geltru",
+                          "direccion": "Rambla de A",
+                          "id_estacion": 2,
+                          "latitud": 41,
+                          "longitud": 1,
+                          "nombre_est": "VG2",
+                          "ocupation_actual": 15,
+                          "pais": "España",
+                          "potencia_contratada": 20,
+                          "potencia_usada": 130,
+                          "telefono": "+34762854712",
+                          "zona": "Zona mayonesa"
+                        },
+                        {
+                          "capacidad": 32,
+                          "ciudad": "Vilanova i la geltru",
+                          "direccion": "A veces",
+                          "id_estacion": 3,
+                          "latitud": 41,
+                          "longitud": 1,
+                          "nombre_est": "VG3",
+                          "ocupation_actual": 8,
+                          "pais": "España",
+                          "potencia_contratada": 20,
+                          "potencia_usada": 130,
+                          "telefono": "+34785123478",
+                          "zona": "Zona M de motomami"
+                        },
+                        {
+                          "capacidad": 32,
+                          "ciudad": "Vilanova i la geltru",
+                          "direccion": "Rambla de Shrek",
+                          "id_estacion": 4,
+                          "latitud": 41,
+                          "longitud": 1,
+                          "nombre_est": "VG4",
+                          "ocupation_actual": 1,
+                          "pais": "España",
+                          "potencia_contratada": 20,
+                          "potencia_usada": 130,
+                          "telefono": "+34745821523",
+                          "zona": "Zona memes de baki"
+                        },
+                        {
+                          "capacidad": 32,
+                          "ciudad": "Vilanova i la geltru",
+                          "direccion": "Casoplon del coletas",
+                          "id_estacion": 5,
+                          "latitud": 41,
+                          "longitud": 1,
+                          "nombre_est": "VG5",
+                          "ocupation_actual": 14,
+                          "pais": "España",
+                          "potencia_contratada": 20,
+                          "potencia_usada": 130,
+                          "telefono": "+34797458744",
+                          "zona": "Zona SEAX"
+                        },
+                        {
+                          "capacidad": 32,
+                          "ciudad": "Vilanova i la geltru",
+                          "direccion": "Casa de ibai",
+                          "id_estacion": 6,
+                          "latitud": 41,
+                          "longitud": 1,
+                          "nombre_est": "VG6",
+                          "ocupation_actual": 20,
+                          "pais": "España",
+                          "potencia_contratada": 20,
+                          "potencia_usada": 130,
+                          "telefono": "+34768220011",
+                          "zona": "Zona el bicho"
+>>>>>>> dbbbb392ee07d4ff953d687ac71f65b4f291caff
                         }
                       ]
                 Sin promociones activas:
@@ -702,6 +913,7 @@ paths:
           required: true
           schema:
             type: integer
+<<<<<<< HEAD
       responses:
         '200':
           description: Por defecto sacamos una lista de promociones
@@ -712,6 +924,357 @@ paths:
                   value:  >-
                     {"id_estacion" : 1,"Nombre_est": "ElectroVilanova","latitud" : "233º 23' 45''","longitud": "233º 23' 45''","capacidad": "64 plazas","direccion": "C/ Victor i Balaguer 5","potencia_contratada" : "3 Mwh","zona": "VB1","ocupacion_actual": "alta","potencia_usada": "2.5 Mwh","telefono": "93555228866","ciudad": "Vilanova i la Geltru","pais": "España","promociones": [{"id_promo":1,"descuento":10,"cantidad_cupones":100,"cantidad_usados":20,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"Por la ignauracion de la electrolinera"},{"id_promo":2,"descuento":11,"cantidad_cupones":75,"cantidad_usados":2,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"La promocion se consigue mediante por sorteo"}]}
                 No_promociones:
+=======
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  estacion:
+                    value: >-
+                          {
+                            "capacidad": 32,
+                            "cargadores": [
+                              {
+                                "estado": "True",
+                                "id_cargador": 1,
+                                "posicion": 32
+                              },
+                              {
+                                "estado": "False",
+                                "id_cargador": 2,
+                                "posicion": 31
+                              },
+                              {
+                                "estado": "False",
+                                "id_cargador": 3,
+                                "posicion": 12
+                              },
+                              {
+                                "estado": "False",
+                                "id_cargador": 4,
+                                "posicion": 13
+                              }
+                            ],
+                            "ciudad": "España",
+                            "direccion": "mi casa",
+                            "id_estacion": 1,
+                            "latitud": 12,
+                            "longitud": 13,
+                            "nombre_est": "VG30",
+                            "ocupacion_actual": 23,
+                            "pais": "Vilanova",
+                            "potencia_contratada": 720,
+                            "potencia_usada": 130,
+                            "telefono": "690389157",
+                            "zona": 3
+                          }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Station not found."}
+#borrar incidencia
+  /estaciones/coor/{lat}/{long}:
+      get:
+        summary: Obtiene las estaciones más cercanas por las coordenadas que se le pasen en la URI
+        tags:
+        - Estaciones
+        parameters:
+        - in: path
+          name: lat
+          required: true
+          schema:
+            type: number
+        - in: path
+          name: long
+          required: true
+          schema:
+            type: number
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  estacion:
+                    value: >-
+                        {
+                          "Estaciones": [
+                            {
+                              "capacidad": 32,
+                              "ciudad": "España",
+                              "direccion": "mi casa",
+                              "id_estacion": 1,
+                              "latitud": 12,
+                              "longitud": 13,
+                              "nombre_est": "VG30",
+                              "ocupacion_actual": 23,
+                              "pais": "Vilanova",
+                              "potencia_contratada": 720,
+                              "potencia_usada": 130,
+                              "telefono": "690389157",
+                              "zona": 3
+                            },
+                            {
+                              "capacidad": 32,
+                              "cargadores": [],
+                              "ciudad": "España",
+                              "direccion": "mi casa",
+                              "id_estacion": 30,
+                              "latitud": 15.333991225795597,
+                              "longitud": 20.112191933383876,
+                              "nombre_est": "VG28",
+                              "ocupacion_actual": 19,
+                              "pais": "Vilanova",
+                              "potencia_contratada": 496,
+                              "potencia_usada": 455,
+                              "telefono": "690389157",
+                              "zona": 2
+                            },
+                            {
+                              "capacidad": 32,
+                              "cargadores": [],
+                              "ciudad": "España",
+                              "direccion": "mi casa",
+                              "id_estacion": 8,
+                              "latitud": 10.310335286671437,
+                              "longitud": 23.36392378582253,
+                              "nombre_est": "VG6",
+                              "ocupacion_actual": 1,
+                              "pais": "Vilanova",
+                              "potencia_contratada": 643,
+                              "potencia_usada": 238,
+                              "telefono": "690389157",
+                              "zona": 4
+                            },
+                            {
+                              "capacidad": 32,
+                              "cargadores": [],
+                              "ciudad": "España",
+                              "direccion": "mi casa",
+                              "id_estacion": 12,
+                              "latitud": 15.622761909852207,
+                              "longitud": 27.34148410638893,
+                              "nombre_est": "VG10",
+                              "ocupacion_actual": 8,
+                              "pais": "Vilanova",
+                              "potencia_contratada": 821,
+                              "potencia_usada": 252,
+                              "telefono": "690389157",
+                              "zona": 4
+                            },
+                            {
+                              "capacidad": 32,
+                              "cargadores": [],
+                              "ciudad": "España",
+                              "direccion": "mi casa",
+                              "id_estacion": 23,
+                              "latitud": 3.6752802128221025,
+                              "longitud": 31.098887261123572,
+                              "nombre_est": "VG21",
+                              "ocupacion_actual": 15,
+                              "pais": "Vilanova",
+                              "potencia_contratada": 503,
+                              "potencia_usada": 204,
+                              "telefono": "690389157",
+                              "zona": 4
+                            }
+                          ]
+                        }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Station not found."}
+
+# clientes
+  /clientes:
+    # pedimos una lista de las incidencias
+    get:
+      summary: Obtiene una lista de clientes
+      tags:
+      - Clientes
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con clientes:
+                  value: [
+                          {
+                            "id_cliente": 1,
+                            # tipo ??????????
+                            "nombre": "Pablo",
+                            "apellido": "Escobar",
+                            "email": "pablo@gmail.com",
+                            "DNI": "23769543B",
+                            "foto": "http://?????????/clientes/pablo.png",
+                            "telefono": "643876101",
+                            "username": "xXpabloXx",
+                          },
+                          {
+                            "id_cliente": 2,
+                            # tipo ??????????
+                            "nombre": "Javier",
+                            "apellido": "Sanchez",
+                            "email": "javi@gmail.com",
+                            "DNI": "23769612h",
+                            "foto": "http://?????????/clientes/javi.png",
+                            "telefono": "643876101",
+                            "username": "xXpabloXx",
+                          }
+                        ]
+
+                Sin clientes:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+    post:
+        summary: Inserta un nuevo cliente
+        tags:
+        - Clientes
+        requestBody:
+            required: true
+            content:
+              multipart/form-data:
+                schema:
+                  type: object
+                  required:
+                    - nombre
+                    - apellido
+                    - email
+                    - DNI
+                    - foto
+                    - telefono
+                    - username
+                    - password
+                  properties:
+                    nombre:
+                      type: string
+                    apellido:
+                      type: string
+                    email:
+                      type: string
+                    DNI:
+                      type: string
+                    foto:
+                      type: string
+                    telefono:
+                      type: integer
+                    username:
+                      type: string
+                    password:
+                      type: string
+
+                  example:
+                    name: "Pere"
+                    lastname: "Roca"
+                    telf: "622554433"
+                    email: "pere.roca@boss.com"
+                    rol: "Dueño"
+                    password: "proca"
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Meter cliente:
+                    value: [
+                      {
+                        "id_cliente": 1,
+                        # tipo ??????????
+                        "nombre": "Pablo",
+                        "apellido": "Escobar",
+                        "email": "pablo@gmail.com",
+                        "DNI": "23769543B",
+                        "foto": "http://?????????/clientes/pablo.png",
+                        "telefono": "643876101",
+                        "username": "xXpabloXx",
+                      },
+                      ]
+          '400':
+              description: Peticion incorrecta
+              content:
+                application/json:
+                  examples:
+                    Error al meter incidencia:
+                      value: {"error": "Malformed request syntax."}
+
+          '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "User not authorized."}
+  /clientes/{id}:
+    # pedimos un cliente dado su id
+    get:
+      summary: Obtiene un cliente por un id dado
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                Cliente encontrado:
+                  value:
+                      [
+                        {
+                          "id_cliente": 1,
+                          # tipo ??????????
+                          "nombre": "Pablo",
+                          "apellido": "Escobar",
+                          "email": "pablo@gmail.com",
+                          "DNI": "23769543B",
+                          "foto": "http://?????????/clientes/pablo.png",
+                          "telefono": "643876101",
+                          "username": "xXpabloXx",
+                        },
+                      ]
+                Cliente no encontrado:
+>>>>>>> dbbbb392ee07d4ff953d687ac71f65b4f291caff
                   value: '[]'
         '401':
           description: Not login
@@ -728,4 +1291,138 @@ paths:
               examples:
                 error:
                   value: >-
+<<<<<<< HEAD
                       {"error": "Promociones not found."}
+=======
+                      {"error": "Client not found."}
+  #borrar cliente
+    delete:
+      summary: Elimina cliente por id
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Cliente eliminado delete
+          content:
+            application/json:
+              examples:
+                Incidencias:
+                  value: "{\"msg\": \"Client deleted correctly.\"}"
+                Incidencia no encontrada:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Client not found."}
+                    
+  /clientes/bydni/{DNI}:
+    # pedimos un cliente dado su id
+    get:
+      summary: Obtiene un cliente dado su DNI
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: DNI
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                Cliente encontrado:
+                  value:
+                      [
+                        {
+                          "id_cliente": 1,
+                          # tipo ??????????
+                          "nombre": "Pablo",
+                          "apellido": "Escobar",
+                          "email": "pablo@gmail.com",
+                          "DNI": "23769543B",
+                          "foto": "http://?????????/clientes/pablo.png",
+                          "telefono": "643876101",
+                          "username": "xXpabloXx",
+                        }
+                      ]
+                Cliente no encontrado:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "User not authenticated."}
+        '404':
+          description: Not found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "Client not found."}
+  #borrar cliente
+  
+    delete:
+      summary: Elimina cliente por id
+      tags:
+        - Clientes
+      parameters:
+        - in: path
+          name: DNI
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Cliente eliminado delete
+          content:
+            application/json:
+              examples:
+                Incidencias:
+                  value: "{\"msg\": \"Client deleted correctly.\"}"
+                Incidencia no encontrada:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "User not authenticated."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Client not found."}
+
+#######################################################################################################
+
+>>>>>>> dbbbb392ee07d4ff953d687ac71f65b4f291caff

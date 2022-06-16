@@ -2,59 +2,79 @@ import os
 import time
 from utils.db import db
 from flask import Flask
+from flask_cors import CORS
+from flask_mqtt import Mqtt
+from mqtt import process_msg
 from routes.reservas import reservas
 from routes.estaciones import estaciones
-from models.cargador import Cargador
-from models.estacion import Estacion
-from random import randint
-import random
+from routes.clientes import clientes
+from utils.fake_data import fakedata
+from multiprocessing import Lock
+
+insert = bool(os.getenv('INSERT_FAKER', False))
 
 
 def init_db():
     time.sleep(5)
     db.init_app(app)
     with app.app_context():
-        db.drop_all()  # TODO: REMOVE AT THE END OF THE PROYECT
+        if insert:
+            db.drop_all()
         db.create_all()
 
+        if insert:
+            fakedata()
 
+
+lock = Lock()
 app = Flask(__name__)
+CORS(app)
+
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///test.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
 app.config["TESTING"] = False
+app.config['MQTT_BROKER_URL'] = os.getenv('MQTT_BROKER_URL', 'test.mosquitto.org')  # use the free broker from HIVEMQ
+app.config['MQTT_BROKER_PORT'] = int(os.getenv('MQTT_BROKER_PORT', 1883))  # default port for non-tls connection
+app.config['MQTT_USERNAME'] = os.getenv('MQTT_USERNAME', '')  # set the username here if you need authentication for the broker
+app.config['MQTT_PASSWORD'] = os.getenv('MQTT_PASSWORD', '')  # set the password here if the broker demands authentication
+app.config['MQTT_KEEPALIVE'] = int(os.getenv('MQTT_KEEPALIVE', "5"))  # set the time interval for sending a ping to the broker to 5 seconds
+app.config['MQTT_TLS_ENABLED'] = os.getenv('MQTT_TLS_ENABLED', False)  # set TLS to disabled for testing purposes
+
+mqtt = Mqtt(app)
+mqtt.subscribe('gesys/edge/#')
+
+
+@mqtt.on_connect()
+def handle_connect(client, userdata, flags, rc):
+    mqtt.subscribe('gesys/edge/#')
+
+
+@mqtt.on_message()
+def handle_mqtt_message(client, userdata, message):
+    with app.app_context():
+        process_msg(message.topic, message.payload.decode())
+
 
 app.register_blueprint(reservas, url_prefix="/api")
 app.register_blueprint(estaciones, url_prefix="/api")
+app.register_blueprint(clientes, url_prefix="/api")
 
-if os.path.exists("./test.db"):
-    os.remove("./test.db")
+if insert:
+    if os.path.exists("./test.db"):
+        os.remove("./test.db")
 
-init_db()
-with app.app_context():
-    e = Estacion("VG30", 12.000, 13.0000, 32, "mi casa", 720, 3, 23, 130, 690389157, "España", "Vilanova")
-    db.session.add(e)
-    db.session.commit()
-    p1 = Cargador(True, 11, e.id_estacion)
-    p2 = Cargador(False, 10, e.id_estacion)
-    db.session.add(p1)
-    db.session.add(p2)
-    db.session.commit()
-    for i in range(30):
-        nombre_est = "VG" + str(i)
-        pot = randint(300, 900)
-        plazas_oc = randint(0, 23)
-        potencia_cons = randint(0, pot)
-        zona = randint(1, 5)
-        lat = random.uniform(1.1, 80.1)
-        long = random.uniform(1.1, 90.1)
-        e1 = Estacion(nombre_est, lat, long, 32, "mi casa", pot, zona, plazas_oc, potencia_cons, 690389157, "España", "Vilanova")
-        db.session.add(e1)
-        db.session.commit()
+lock.acquire()
+try:
+    init_db()
+finally:
+    lock.release()
 
 
 if __name__ == "__main__":  # pragma: no cover
     print("=========================================")
     print("Test me on: http://ptin2022.github.io/A2/")
     print("=========================================")
-    app.run(host="0.0.0.0")
+
+    if not insert:
+        app.run(host="0.0.0.0")

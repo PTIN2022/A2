@@ -18,7 +18,9 @@ def post_soporte():
         fecha = datetime.now()
         descripcion = request.json["descripcion"]
         estado = request.json["estado"]
-        ticket_id = control.post_soporte(descripcion, fecha, estado)
+        id_cliente = request.json["cliente"]
+        asunto = request.json["asunto"]
+        ticket_id = control.post_soporte(descripcion, fecha, estado, id_cliente, asunto)
         ticket = control.get_soporte_ticket_id(ticket_id)
         return jsonify(ticket), 200
 
@@ -53,7 +55,8 @@ def post_soporte_by_ticket(ticket_id):
     try:
         mensaje = request.form.to_dict()["mensaje"]
         fecha = datetime.now()
-        resultado = control.post_soporte_by_ticket(ticket_id, mensaje, fecha)
+        id_cliente = request.form.to_dict()["cliente"]
+        resultado = control.post_soporte_by_ticket(mensaje, fecha, ticket_id, id_cliente)
         if resultado:
             respuesta = control.get_soporte_ticket_id(ticket_id)
             return jsonify(respuesta), 200
@@ -76,7 +79,7 @@ def get_soporte_user_id(user_id):
         return jsonify({"error": "Ticket not found."}), 404
 
 
-@soporte.route('/soporte/<ticket_id>/<msg_id>', methods=['DELETE'])
+@soporte.route('/soporte/delete_missage/<msg_id>', methods=['DELETE'])
 def delete_message_by_user(ticket_id, msg_id):
     respuesta = control.delete_message_by_user(ticket_id, msg_id)
     if respuesta:

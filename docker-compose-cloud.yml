@@ -10,6 +10,8 @@ services:
     environment:
         SQLALCHEMY_DATABASE_URI: $SQLALCHEMY_DATABASE_URI
         PYTHONUNBUFFERED: 1
+        MQTT_BROKER_URL: $MQTT_BROKER_URL
+        MQTT_BROKER_PORT: $MQTT_BROKER_PORT
     restart: unless-stopped
 
   front:
@@ -43,10 +45,11 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ~/.gesys/cloud-mysql:/var/lib/mysql
+      - ~/.gesys/cloud-mysql-final:/var/lib/mysql
     environment:
         MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
         MYSQL_DATABASE: $MYSQL_DATABASE
+        MYSQL_ROOT_HOST: "%"
     restart: unless-stopped
 
 volumes:
