@@ -10,6 +10,8 @@ services:
     environment:
         SQLALCHEMY_DATABASE_URI: $SQLALCHEMY_DATABASE_URI
         PYTHONUNBUFFERED: 1
+        MQTT_BROKER_URL: $MQTT_BROKER_URL
+        MQTT_BROKER_PORT: $MQTT_BROKER_PORT
     restart: unless-stopped
 
   front:
