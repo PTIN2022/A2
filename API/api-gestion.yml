@@ -2099,7 +2099,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Trabajadores:
+                  Promociones:
                     value: >-
                       [
                         {
@@ -2184,7 +2184,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Meter trabajador:
+                  Meter promocion:
                     value: >-
                       {
                         "cantidad_usados": 0,
@@ -2200,7 +2200,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter incidencia:
+                  Error al meter promo:
                     value: {"error": "Malformed request syntax."}
           '403':
             description: Denied access
@@ -2271,7 +2271,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter incidencia:
+                  Error al meter promo:
                     value: {"error": "Malformed request syntax."}
         '403':
             description: Denied access
@@ -2299,7 +2299,7 @@ paths:
           content:
             application/json:
               examples:
-                Con promociones activas:
+                Con promociones:
                   value: >-
                       [
                         {
@@ -2319,11 +2319,7 @@ paths:
                           "fecha_inicio": "2022-04-18T10:00:00",
                           "fecha_fin": "2022-04-18T19:00:00",
                           "id_promo": 3
-                        }
-                      ]
-                Sin_promociones_activas:
-                  value: >-
-                      [
+                        },
                         {
                           "cantidad_usados": 30,
                           "descripcion": "20% de descuento en la electrolinera de Barcelona!",
@@ -2341,7 +2337,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter incidencia:
+                  Error al meter promo:
                     value: {"error": "Malformed request syntax."}
         '403':
             description: Denied access
@@ -2396,7 +2392,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter incidencia:
+                  Error al meter promo:
                     value: {"error": "Malformed request syntax."}
         '403':
             description: Denied access
@@ -2424,7 +2420,7 @@ paths:
           content:
             application/json:
               examples:
-                Trabajador:
+                Promo:
                   value: >-
                       {
                         "cantidad_usados": 20,
@@ -2441,7 +2437,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter incidencia:
+                  Error al meter promo:
                     value: {"error": "Malformed request syntax."}
         '403':
             description: Denied access
@@ -2484,6 +2480,7 @@ paths:
                     - estado
                     - fecha_inicio
                     - fecha_fin
+                    - cantidad_usados
                   properties:
                     id_estacion:
                       type: integer
@@ -2496,7 +2493,9 @@ paths:
                     descripcion:
                       type: string
                     estado:
-                      type: boolean
+                      type: string
+                    cantida_usados:
+                      type: integer
                   example:
                     id_estacion: 2
                     descripcion: "30% de descuento en la electrolinera de Sitges!"
@@ -2504,13 +2503,14 @@ paths:
                     estado: "activa"
                     fecha_inicio: "2022-04-18T10:00:00"
                     fecha_fin: "2022-04-18T19:00:00"
+                    cantidad_usados: 23
       responses:
         '200':
           description: Peticion correcta
           content:
             application/json:
               examples:
-                Trabajador actualizado:
+                Promo actualizada:
                   value: >-
                       {
                         "cantidad_usados": 20,
@@ -2526,7 +2526,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter incidencia:
+                  Error al meter promo:
                     value: {"error": "Malformed request syntax."}
         '403':
             description: Denied access
@@ -2560,7 +2560,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Trabajador:
+                  Promo:
                     value: >-
                       {"msg": "Promocion deleted succesfully"}
           '400':
@@ -2568,7 +2568,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter incidencia:
+                  Error al meter promo:
                     value: {"error": "Malformed request syntax."}
           '403':
             description: Denied access

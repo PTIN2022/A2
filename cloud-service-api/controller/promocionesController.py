@@ -20,8 +20,11 @@ def get_promo_estado(estado):
 
 def get_promo_estaciones(id_promo):
     p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
-    a = p.estaciones
-    return EstacionSchema(many=True).dump(a)
+    if p:
+        a = p.estaciones
+        return EstacionSchema(many=True).dump(a)
+    else:
+        return None
 
 
 def get_promo_estacion(id_estacion):
@@ -39,23 +42,29 @@ def get_promo_estacion(id_estacion):
 
 
 def post_promociones(id_estacion, descuento, fecha_inicio, fecha_fin, estado, descripcion):
-    # Pasamos a datetime las fechas
-    fecha_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%dT%H:%M:%S')
-    fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%dT%H:%M:%S')
-    p = Promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
-    db.session.add(p)
-    db.session.commit()
+    # Comprobamos existencias estacion
     i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
-    p.estaciones.append(i)
-    db.session.commit()
-    return PromocionesSchema().dump(p)
+    if i:
+        # Pasamos a datetime las fechas
+        fecha_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%dT%H:%M:%S')
+        fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%dT%H:%M:%S')
+        p = Promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
+        db.session.add(p)
+        db.session.commit()
+        p.estaciones.append(i)
+        db.session.commit()
+        return PromocionesSchema().dump(p)
+    else:
+    	return None
 
 
-def modify_promociones(id_promo, id_estacion=None, descuento=None, fecha_inicio=None, fecha_fin=None, estado=None, descripcion=None):
+def modify_promociones(id_promo, id_estacion=None, descuento=None, fecha_inicio=None, fecha_fin=None, estado=None, descripcion=None, cantidad_usados=None):
     p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
     if p:
-        if id_estacion:
-            p.id_estacion = id_estacion
+        i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
+        if i:
+            p.estaciones.append(i)
+            db.session.commit()
         if descuento:
             p.descuento = descuento
         if fecha_inicio:
@@ -68,6 +77,8 @@ def modify_promociones(id_promo, id_estacion=None, descuento=None, fecha_inicio=
             p.estado = estado
         if descripcion:
             p.descripcion = descripcion
+        if cantidad_usados:
+            p.cantidad_usados = cantidad_usados
         db.session.commit()
         return PromocionesSchema().dump(p)
     return None
