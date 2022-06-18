@@ -32,7 +32,7 @@ def get_promo_by_estado(estado):
 def get_estacion_by_promo(id_promo):
     respuesta = control.get_promo_estaciones(id_promo)
     if respuesta:
-        return jsonify(respuesta), 200
+        return jsonify(Estacion=respuesta), 200
     else:
         return jsonify({"error": "Promocion not found."}), 404
 
@@ -52,22 +52,22 @@ def get_promo_by_estacion(id_estacion):
 
 @promociones.route('/promociones', methods=['POST'])
 def post_promocion():
-    id_estacion = request.json["id_estacion"]
-    i = control.Estacion.query.filter(control.Estacion.id_estacion == id_estacion).one_or_none()
-    if i:
-        descuento = request.json["descuento"]
-        fecha_inicio = request.json["fecha_inicio"]
-        fecha_fin = request.json["fecha_fin"]
-        estado = request.json["estado"]
-        descripcion = request.json["descripcion"]
+    estaciones = request.json["id_estaciones"]
+    estaciones = estaciones.split("-")
+    for estacion in estaciones:
+        if not control.Estacion.query.filter(control.Estacion.id_estacion == estacion).one_or_none():
+            return jsonify({"error": "Estacion not found."}), 404
+    descuento = request.json["descuento"]
+    fecha_inicio = request.json["fecha_inicio"]
+    fecha_fin = request.json["fecha_fin"]
+    estado = request.json["estado"]
+    descripcion = request.json["descripcion"]
 
-        p = control.post_promociones(id_estacion, descuento, fecha_inicio, fecha_fin, estado, descripcion)
-        if p:
-            return jsonify(p), 200
-        else:
-            return jsonify({"error": "Malformed request syntax."}), 400
+    p = control.post_promociones(estaciones, descuento, fecha_inicio, fecha_fin, estado, descripcion)
+    if p:
+        return jsonify(p), 200
     else:
-        return jsonify({"error": "Estacion not found."}), 404
+        return jsonify({"error": "Malformed request syntax."}), 400
 
 
 @promociones.route('/promociones/<id_promo>', methods=["PUT"])
@@ -96,10 +96,10 @@ def modify_promocion(id_promo):
         estado = request.json["estado"]
     if "descripcion" in request.json:
         descripcion = request.json["descripcion"]
-    if "cantiddad_usados" in request.json:
-        descripcion = request.json["cantiddad_usados"]
+    if "cantidad_usados" in request.json:
+        descripcion = request.json["cantidad_usados"]
 
-    respuesta = control.modify_promociones(id_promo, id_estacion, descuento, fecha_inicio, fecha_fin, estado, descripcion, cantiddad_usados)
+    respuesta = control.modify_promociones(id_promo, id_estacion, descuento, fecha_inicio, fecha_fin, estado, descripcion, cantidad_usados)
 
     if respuesta:
         return jsonify(respuesta), 200
@@ -112,5 +112,17 @@ def deleted_promocion(id_promo):
     deleted = control.delete_promocion(id_promo)
     if deleted:
         return jsonify({"msg": "Promocion deleted succesfully"}), 200
+    else:
+        return jsonify({"error": "Promocion not found."}), 404
+
+
+@promociones.route('/promociones/<id_promo>/<id_estacion>', methods=["DELETE"])
+def deleted_estacion_from_promocion(id_promo, id_estacion):
+    i = control.Estacion.query.filter(control.Estacion.id_estacion == id_estacion).one_or_none()
+    if not i:
+        return jsonify({"error": "Estacion not found."}), 404
+    deleted = control.delete_estacion_promocion(id_promo, id_estacion)
+    if deleted:
+        return jsonify({"msg": "Estacion deleted succesfully of Promocion"}), 200
     else:
         return jsonify({"error": "Promocion not found."}), 404
