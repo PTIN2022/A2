@@ -202,6 +202,20 @@ def fakedata():
 
         db.session.commit()
 
+    clienteBueno = Cliente(
+        "The Client",
+        "meh",
+        "meh@meh.com",
+        "23432234F",
+        "X",
+        2343234,
+        "cli",
+        "pass",
+        )
+    db.session.add(clienteBueno)
+    clientes.append(clienteBueno)
+
+    db.session.commit()
     # ### TRABAJADOR
 
     trabajadores = []
@@ -437,14 +451,15 @@ def fakedata():
 
     db.session.commit()
 
-    clientes[0].vehiculos.append(vehiculoBueno)
-    clientes[0].vehiculos.append(vehiculoBueno2)
-    clientes[0].vehiculos.append(vehiculoBueno3)
-    clientes[0].vehiculos.append(vehiculoBueno4)
+    clienteBueno.vehiculos.append(vehiculoBueno)
+    clienteBueno.vehiculos.append(vehiculoBueno2)
+    clienteBueno.vehiculos.append(vehiculoBueno3)
+    clienteBueno.vehiculos.append(vehiculoBueno4)
+    db.session.commit()
 
-    # ### RESERVAS
+    # ## RESERVAS
     reservas = []
-    for i in range(100):
+    for i in range(5):
 
         fecha_entrada = fake.date_time_between(start_date='-2y', end_date='now')
         fecha_salida = fake.date_time_between(start_date='-2y', end_date='now')

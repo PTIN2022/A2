@@ -118,11 +118,11 @@ paths:
                   type: boolean
               example:
                 id_estacion: "VG1"
-                fecha_inicio: "18-04-2022 11:00"
-                fecha_final: "18-04-2022 18:00"
-                id_vehiculo: "LKE2378"
-                id_cliente: "1238712N"
-                tarifa: 12,7
+                fecha_inicio: "16-06-2022 10:50"
+                fecha_final: "16-06-2022 11:00"
+                id_vehiculo: "4950KZK"
+                id_cliente: "23432234F"
+                tarifa: 12.7
                 asistida: True
                 porcentaje_carga: 30
                 precio_carga_completo: 30

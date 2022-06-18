@@ -1,4 +1,5 @@
 import controller.promocionesController as control
+
 from flask import Blueprint, jsonify, request
 
 promociones = Blueprint('promociones', __name__)
