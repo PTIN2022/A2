@@ -1,8 +1,8 @@
-import json
 import os
-from utils.db import db
+import json
 import paho.mqtt.publish as publish
-# from flask import current_app
+
+from utils.db import db
 from models.model import Estacion, Cargador, Vehiculo
 from datetime import datetime, timedelta
 
