@@ -1,14 +1,15 @@
 import json
-import paho.mqtt.publish as publish
-
+import os
 from utils.db import db
-from flask import current_app
-from models.model import Estacion, Cargador
+import paho.mqtt.publish as publish
+# from flask import current_app
+from models.model import Estacion, Cargador, Vehiculo
 from datetime import datetime, timedelta
 
 
-EDGE_BROKER= current_app.config["MQTT_BROKER_URL"]
-EDGE_PORT = current_app.config["MQTT_BROKER_PORT"]
+EDGE_BROKER = os.getenv('MQTT_BROKER_URL', 'craaxkvm.epsevg.upc.es')
+EDGE_PORT = int(os.getenv('MQTT_BROKER_PORT', 23702))
+
 QOS = 2
 
 AVERIAS = {
@@ -60,6 +61,19 @@ def process_averias(id_carga, num_averia):
         print("Cargador no encontrado")
 
 
+def process_battery(bateria, id_matricula):
+    print("---------------------------------")
+    print("Tratando bateria vehículo")
+    m = Vehiculo.query.filter(Vehiculo.matricula == id_matricula).one_or_none()
+    if m:
+        m.procentaje_bat = bateria
+        db.session.commit()
+        print(m.procentaje_bat)
+        # TODO: subir al cloud
+    else:
+        print("Vehículo no encontrado")
+
+
 def process_msg(topic, raw_payload):
     print("=================================")
     print("TOPIC: {}".format(topic))
@@ -81,6 +95,11 @@ def process_msg(topic, raw_payload):
         # Expected: {"idPuntoCarga": 2, "averia": 0}
         if "idPuntoCarga" in payload and "averia" in payload:
             process_averias(payload["idPuntoCarga"], payload["averia"])
+
+    elif topic == "gesys/edge/vehiculo":
+        # Expected: {"battery": 0, "matricula":"34543FGC"}
+        if "battery" in payload and "matricula" in payload:
+            process_battery(payload["battery"], payload["matricula"])
     else:
         print("Mensaje recibido, pero nunca fue tratado...")
 
