@@ -97,7 +97,7 @@ def modify_promocion(id_promo):
     if "descripcion" in request.json:
         descripcion = request.json["descripcion"]
     if "cantidad_usados" in request.json:
-        descripcion = request.json["cantidad_usados"]
+        cantidad_usados = request.json["cantidad_usados"]
 
     respuesta = control.modify_promociones(id_promo, id_estacion, descuento, fecha_inicio, fecha_fin, estado, descripcion, cantidad_usados)
 
