@@ -2,7 +2,6 @@ import random
 
 import json
 from utils.db import db
-from flask import current_app
 from datetime import datetime
 import paho.mqtt.publish as publish
 from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
