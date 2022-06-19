@@ -5,6 +5,7 @@ import json
 from utils.db import db
 from utils.fake_data import fakedata
 from flask import Flask
+from flask_cors import CORS
 from flask_mqtt import Mqtt
 from datetime import datetime
 from multiprocessing import Lock
@@ -34,7 +35,7 @@ def init_db():
 
 
 app = Flask(__name__)
-
+CORS(app)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///test.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
@@ -61,12 +62,12 @@ app.register_blueprint(estadisticas, url_prefix='/api')
 
 lock = Lock()
 mqtt = Mqtt(app)
-mqtt.subscribe('estacion/#')
+mqtt.subscribe('gesys/cloud/#')
 
 
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
-    mqtt.subscribe('estacion/#')
+    mqtt.subscribe('gesys/cloud/#')
 
 
 @mqtt.on_message()
@@ -75,14 +76,12 @@ def handle_mqtt_message(client, userdata, message):
         topic=message.topic,
         payload=message.payload.decode()
     )
-    print(data)
     print(data["payload"])
-    print(type(data["payload"]))
     with app.app_context():
         data = json.loads(data["payload"])
         ini = datetime.strptime(data["fecha_entrada"], '%Y-%m-%dT%H:%M:%S')
         fin = datetime.strptime(data["fecha_salida"], '%Y-%m-%dT%H:%M:%S')
-        r = Reserva(ini, fin, data["id_cargador"], data["id_vehiculo"], data["id_cliente"])
+        r = Reserva(ini, fin, data["procetnaje_carga"], data["precio_carga_completa"], data["precio_carga_actual"], data["estado"], data["tarifa"], data["asistida"], data["estado_pago"], data["id_cargador"], data["id_vehiculo"], data["id_cliente"])
         db.session.add(r)
         db.session.commit()
 
