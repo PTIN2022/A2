@@ -15,7 +15,11 @@ def get_reservas_id(id):
     j = []
     if i:
         j = Cargador.query.filter(Cargador.id_cargador == i.id_cargador).one_or_none()
-    return ReservaSchema().dump(i), j.estacion_id
+    if j:
+        valor=j.estacion_id
+    else:
+        valor=None
+    return ReservaSchema().dump(i), valor
 
 
 def get_reservas_estacion(id_estacion):
@@ -44,8 +48,9 @@ def get_reservas_dni(dni):
 
 
 def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI):
-    print("adios")
     i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
+    if i.estado == "Inactiva":
+        return ("Estacion dañada")
     cargador_encontrado = False
     cl = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
     vh = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()

@@ -45,8 +45,10 @@ def post_reservas(current_trabajador):
             estado_pago = request.json["estado_pago"]
             # TODO: comprobar fecha final es mayor fecha inicial
             id = control.post_reserva(estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI)
+            if str(id) == "Estacion dañada":
+                return ({"error": "Station not available, may damaged. "}), 400
             respuesta = control.get_reservas_id(id)
-            return jsonify(respuesta)
+            return jsonify(respuesta[0])
         except ValueError as e:
             print(e)
             return jsonify(errors.malformed_error()), 400
