@@ -88,6 +88,31 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
     if not cargador_encontrado:
         return None
 
+def put_reserva_by_id(id, matricula = None, tarifa = None, asistida = None, porcentaje_carga = None, precio_carga_completa = None, precio_carga_actual = None, estado_pago = None, fecha_inicio_str = None, fecha_final_str = None):
+    i = Reserva.query.filter(Reserva.id_reserva == id).one_or_none()
+    if i:
+        if matricula:
+            i.matricula = matricula
+        if tarifa:
+            i.tarifa = tarifa
+        if asistida:
+            i.asistida = asistida
+        if porcentaje_carga:
+            i.porcentaje_carga = porcentaje_carga
+        if precio_carga_completa:
+            i.precio_carga_completa = precio_carga_completa
+        if precio_carga_actual:
+            i.precio_carga_actual = precio_carga_actual
+        if estado_pago:
+            i.estado_pago = estado_pago
+        if fecha_inicio_str:
+            i.fecha_inicio_str = fecha_inicio_str
+        if fecha_final_str:
+            i.fecha_final_str = fecha_final_str
+        db.session.commit()
+        return ReservaSchema().dump(i)
+    return None
+
 
 def remove_reserva(id):
     i = Reserva.query.filter(Reserva.id_reserva == id).one_or_none()
