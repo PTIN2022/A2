@@ -38,7 +38,10 @@ def post_incidencias(current_trabajador):
             respuesta = control.get_incidencias_id(id)
         else:
             return jsonify({"error": "User not authorized."}), 401
-        return jsonify(respuesta)
+        if respuesta:
+            return jsonify(respuesta)
+        else:
+            return jsonify({"error": "Station not found."}), 404
 
     except ValueError:
         return jsonify(errors.malformed_error()), 400
