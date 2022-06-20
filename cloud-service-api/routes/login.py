@@ -1,4 +1,5 @@
 import controller.loginController as control
+from utils.utils import token_required
 
 from flask import Blueprint, jsonify, request
 
@@ -18,5 +19,10 @@ def post_login():
 
 
 @logout.route('/logout', methods=['GET'])
-def get_logout():
-    return jsonify({'error': 'Invalid credendtials'}), 200
+@token_required
+def get_logout(current_trabajador):
+    if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
+        control.get_logout(current_trabajador)
+        return jsonify({'Succes': 'Logout done'}), 200
+    else:
+        return jsonify({'error': 'User not authorized'}), 400
