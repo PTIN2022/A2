@@ -630,7 +630,7 @@ paths:
                     value: >-
                       {"error": "Station not found."}
 #borrar incidencia
-  /estaciones/coor/{lat}/{long}:
+  /estaciones/coor/{lat}/{long}/{ratio}:
       get:
         summary: Obtiene las estaciones más cercanas por las coordenadas que se le pasen en la URI
         tags:
@@ -646,6 +646,11 @@ paths:
           required: true
           schema:
             type: number
+        - in: path
+          name: ratio
+          required: true
+          schema:
+            type: integer
         responses:
           '200':
             description: Peticion correcta

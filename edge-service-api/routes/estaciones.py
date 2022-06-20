@@ -28,11 +28,11 @@ def get_estacion_by_id(current_usuario, id):
         return jsonify({"error": "User not authorized."}), 401
 
 
-@estaciones.route('/estaciones/coor/<lat>/<long>', methods=["GET"])
+@estaciones.route('/estaciones/coor/<lat>/<long>/<ratio>', methods=["GET"])
 @token_required
-def get_estacion_by_coor(current_usuario, lat, long):
+def get_estacion_by_coor(current_usuario, lat, long, ratio):
     if current_usuario:
-        respuesta = control.get_estacion_by_coor(lat, long)
+        respuesta = control.get_estacion_by_coor(lat, long, ratio)
         if respuesta:
             return jsonify(respuesta), 200
         else:
