@@ -4,13 +4,14 @@ from models.model import ClienteSchema, Ticket, TicketSchema, Mensaje, MensajeSc
 
 def get_all_soporte():
     i = Ticket.query.all()
+    varlist=['fecha', 'asunto', 'mensaje', 'estado', 'id_cliente']
     return TicketSchema(many=True).dump(i)
 
 
-def post_soporte(descripcion, fecha, estado, id_cliente, asunto):
-    c = Cliente.query.filter(Cliente.dni == id_cliente).one_or_none()
+def post_soporte(descripcion, fecha, id_cliente, asunto):
+    c = Cliente.query.filter(Cliente.id_cliente == id_cliente).one_or_none()
     if c:
-        s = Ticket(fecha, asunto, descripcion, estado, c.id_cliente)
+        s = Ticket(fecha, asunto, descripcion, "Pendiente", c.id_cliente)
         db.session.add(s)
         db.session.commit()
         return s.id_ticket
@@ -35,6 +36,16 @@ def post_soporte_by_ticket(mensaje, fecha, ticket_id, id_user):
         db.session.add(s)
         db.session.commit()
         return MensajeSchema().dump(s)
+    else:
+        return None
+
+def put_soporte_by_ticket(ticket_id, estado=None):
+    soporte = Ticket.query.filter(Ticket.id_ticket == ticket_id).one_or_none()
+    if soporte:
+        if estado:
+            soporte.estado = estado
+        db.session.commit()
+        return TicketSchema().dump(soporte)
     else:
         return None
 
