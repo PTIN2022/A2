@@ -1,8 +1,7 @@
 from utils.db import db
-from utils.utils import strtobool
+# from utils.utils import strtobool
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-
 
 class Averia(db.Model):
 
@@ -72,6 +71,7 @@ class Mensaje(db.Model):
 
 class MensajeSchema(SQLAlchemyAutoSchema):
     class Meta:
+        include_fk = True
         model = Mensaje
 
 
@@ -160,7 +160,7 @@ class Ticket(db.Model):
     id_ticket = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     fecha = db.Column(db.DateTime, nullable=False)
     asunto = db.Column(db.String(30), nullable=False)
-    estado = db.Column(db.Boolean, nullable=False)
+    estado = db.Column(db.String(30), nullable=False)
     mensaje = db.Column(db.String(300), nullable=False)
 
     id_cliente = db.Column('id_cliente', db.ForeignKey('cliente.id_usuari'), nullable=False)
@@ -174,9 +174,6 @@ class Ticket(db.Model):
         self.id_cliente = id_cliente
 
 
-class TicketSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Ticket
 
 
 class Usuari_t(db.Model):
@@ -213,6 +210,7 @@ class Usuari_tSchema(SQLAlchemyAutoSchema):
     # estacion =  fields.Nested(EstacionSchema)
     class Meta:
         model = Usuari_t
+        exclude = ('password',)
 
 
 class Trabajador(Usuari_t):
@@ -249,6 +247,7 @@ class Trabajador(Usuari_t):
 class TrabajadorSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Trabajador
+        exclude = ('password',)
 
 
 vehiculo_cliente = db.Table(
@@ -303,6 +302,9 @@ class ClienteSchema(SQLAlchemyAutoSchema):
         model = Cliente
         exclude = ('password',)
 
+class TicketSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        fields = ('id_ticket', 'fecha', 'asunto', 'estado', 'mensaje', 'id_cliente')
 
 class Modelo(db.Model):
     modelo = db.Column(db.String(100), nullable=False, primary_key=True)
@@ -423,6 +425,20 @@ class EstacionSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Estacion
 
+# https://stackoverflow.com/questions/42248342/yes-no-prompt-in-python3-using-strtobool
+def strtobool(val):
+    """Convert a string representation of truth to true (1) or false (0).
+    True values are 'y', 'yes', 't', 'true', 'on', and '1'; false values
+    are 'n', 'no', 'f', 'false', 'off', and '0'.  Raises ValueError if
+    'val' is anything else.
+    """
+    val = val.lower()
+    if val in ('y', 'yes', 't', 'true', 'on', '1', 'activa', 'activo'):
+        return True
+    elif val in ('n', 'no', 'f', 'false', 'off', '0', 'desactiva', 'inactiva', 'inactivo'):
+        return False
+    else:
+        raise ValueError("invalid truth value %r" % (val,))
 
 class Promociones(db.Model):
     id_promo = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
@@ -439,7 +455,7 @@ class Promociones(db.Model):
         self.cantidad_usados = cantidad_usados
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
-        self.estado = strtobool(estado)
+        self.estado =  strtobool(estado)
         self.descripcion = descripcion
 
 

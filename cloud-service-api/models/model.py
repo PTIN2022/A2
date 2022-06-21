@@ -1,9 +1,7 @@
-from marshmallow import EXCLUDE, Schema
 from utils.db import db
 from utils.utils import strtobool
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from marshmallow import fields
 
 class Averia(db.Model):
 
