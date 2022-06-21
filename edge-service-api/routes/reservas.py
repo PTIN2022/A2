@@ -28,7 +28,7 @@ def post_reservas(current_usuario):
             fecha_final_str = datetime.strptime(fecha_final, '%d-%m-%Y %H:%M')
             fecha_inicio_str = datetime.strptime(fecha_inicio, '%d-%m-%Y %H:%M')
             matricula = request.json["id_vehiculo"]
-            DNI = request.json["id_cliente"]
+            DNI = current_usuario.dni
             tarifa = request.json["tarifa"]
             asistida = request.json["asistida"]
             porcentaje_carga = request.json["porcentaje_carga"]

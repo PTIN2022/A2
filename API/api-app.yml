@@ -120,9 +120,8 @@ paths:
                 id_estacion: "VG1"
                 fecha_inicio: "18-04-2022 11:00"
                 fecha_final: "18-04-2022 18:00"
-                id_vehiculo: "LKE2378"
-                id_cliente: "1238712N"
-                tarifa: 12,7
+                id_vehiculo: "655RR68"
+                tarifa: 12.7
                 asistida: True
                 porcentaje_carga: 30
                 precio_carga_completo: 30
