@@ -23,7 +23,6 @@ def get_reservas_id(id):
 
 
 def get_reservas_estacion(id_estacion):
-    print(id_estacion)
     i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
     reservas_desde_ahora = []
     if i:
@@ -50,21 +49,20 @@ def get_reservas_dni(dni):
 def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI):
     i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
     if i.estado == "Inactiva":
-        return ("Estacion dañada")
+        return {"error": "Station not available, may damaged. "}
     cargador_encontrado = False
     cl = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
     vh = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()
-    if not cl or not vh:
-        print("ERROR: No existe na")
-        return None
+    if not cl:
+        return {"error": "Cliente not exist. "}
+    if not vh:
+        return {"error": "Vehiculo not exist. "}
     if i:
         random.shuffle(i.cargadores)  # Se hace un shuffle para que no siempre se use el mismo cargador para evitar el desgaste del mismo
-        print("adios1")
         for cargador in i.cargadores:
             if not cargador_encontrado:
                 cargador_ocupado = False
                 for reserva in cargador.reservas:
-                    print("adios2")
                     if not cargador_ocupado:
                         reserva = ReservaSchema().dump(reserva)
                         reserva_inicio_data = datetime.strptime(reserva["fecha_entrada"], '%Y-%m-%dT%H:%M:%S')
@@ -76,7 +74,6 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                             cargador_ocupado = True
 
                 if not cargador_ocupado:
-                    print("Se ha añadido")
                     i = Reserva(
                         fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, True, tarifa,
                         asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari
@@ -86,7 +83,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                     cargador_encontrado = True
                     return i.id_reserva
     if not cargador_encontrado:
-        return None
+        return {"error": "Cargador for this station not available. "}
 
 def put_reserva_by_id(id, matricula = None, tarifa = None, asistida = None, porcentaje_carga = None, precio_carga_completa = None, precio_carga_actual = None, estado_pago = None, fecha_inicio_str = None, fecha_final_str = None):
     i = Reserva.query.filter(Reserva.id_reserva == id).one_or_none()

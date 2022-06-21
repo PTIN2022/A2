@@ -69,31 +69,29 @@ app.register_blueprint(login, url_prefix='/api')
 app.register_blueprint(logout, url_prefix='/api')
 
 lock = Lock()
-# mqtt = Mqtt(app)
-# mqtt.subscribe('estacion/#')
+mqtt = Mqtt(app)
+mqtt.subscribe('gesys/cloud/#')
 
 
-# @mqtt.on_connect()
-# def handle_connect(client, userdata, flags, rc):
-#     mqtt.subscribe('estacion/#')
+@mqtt.on_connect()
+def handle_connect(client, userdata, flags, rc):
+    mqtt.subscribe('gesys/cloud/#')
 
 
-# @mqtt.on_message()
-# def handle_mqtt_message(client, userdata, message):
-#     data = dict(
-#         topic=message.topic,
-#         payload=message.payload.decode()
-#     )
-#     print(data)
-#     print(data["payload"])
-#     print(type(data["payload"]))
-#     with app.app_context():
-#         data = json.loads(data["payload"])
-#         ini = datetime.strptime(data["fecha_entrada"], '%Y-%m-%dT%H:%M:%S')
-#         fin = datetime.strptime(data["fecha_salida"], '%Y-%m-%dT%H:%M:%S')
-#         r = Reserva(ini, fin, data["id_cargador"], data["id_vehiculo"], data["id_cliente"])
-#         db.session.add(r)
-#         db.session.commit()
+@mqtt.on_message()
+def handle_mqtt_message(client, userdata, message):
+    data = dict(
+        topic=message.topic,
+        payload=message.payload.decode()
+    )
+    print(data["payload"])
+    with app.app_context():
+        data = json.loads(data["payload"])
+        ini = datetime.strptime(data["fecha_entrada"], '%Y-%m-%dT%H:%M:%S')
+        fin = datetime.strptime(data["fecha_salida"], '%Y-%m-%dT%H:%M:%S')
+        r = Reserva(ini, fin, data["procetnaje_carga"], data["precio_carga_completa"], data["precio_carga_actual"], data["estado"], data["tarifa"], data["asistida"], data["estado_pago"], data["id_cargador"], data["id_vehiculo"], data["id_cliente"])
+        db.session.add(r)
+        db.session.commit()
 
 #     # TODO: pasarlo a otro fichero
 

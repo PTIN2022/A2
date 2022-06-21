@@ -9,17 +9,17 @@ estaciones = Blueprint('estaciones', __name__)
 @estaciones.route('/estaciones', methods=['GET'])
 @token_required
 def get_estaciones(current_trabajador):
-    if current_trabajador.cargo == "trabajador":
-        return jsonify({"error": "User not authorized."}), 401
-    elif current_trabajador.cargo == "administrador":
-        respuesta = control.get_all_estaciones()
-        return jsonify(respuesta)
-    elif current_trabajador.cargo == "encargado":
+    if current_trabajador.cargo == "trabajador" or current_trabajador.cargo == "encargado":
         respuesta = control.get_estacion_by_id(int(current_trabajador.id_estacion))
         if respuesta:
             return jsonify(respuesta), 200
         else:
             return jsonify({"error": "Estacion not found"}), 404
+    elif current_trabajador.cargo == "administrador":
+        respuesta = control.get_all_estaciones()
+        return jsonify(respuesta)
+    else:
+        return jsonify({"error": "User not authorized."}), 401
 
 
 @estaciones.route('/estaciones/<id>', methods=["GET"])
