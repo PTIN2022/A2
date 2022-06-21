@@ -1,7 +1,9 @@
 from datetime import datetime
 from controller import estacionesController
-from models.model import Promociones, PromocionesSchema
+from models.model import Promociones, PromocionesSchema, Estacion, EstacionSchema
 from utils.db import db
+from utils.utils import strtobool
+from flask import Blueprint, jsonify, request
 
 
 def get_all_promociones():
@@ -30,8 +32,9 @@ def post_promociones(descuento, fecha_inicio_post, fecha_fin_post, estado, descr
 
 def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=None, estado=False, descripcion=None):
     try:
-        p = get_promo_id(id_promo)
-        p = Promociones(p["descuento"], p["fecha_inicio"], p["fecha_fin"], p["estado"], p["descripcion"])
+        #p = get_promo_id(id_promo)
+        #p = Promociones(id_promo,p["descuento"], p["fecha_inicio"], p["fecha_fin"], p["estado"], p["descripcion"])
+        p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
         if p:
             if descuento:
                 p.descuento = descuento
@@ -39,16 +42,15 @@ def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=No
                 p.fecha_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%dT%H:%M:%S')
             if fecha_fin:
                 p.fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%dT%H:%M:%S')
-            if estado == 'true':
-                p.estado = True
-            else:
-                p.estado = False
+            if estado:
+                p.estado = strtobool(estado)
             if descripcion:
                 p.descripcion = descripcion
+            #db.session.query().filter_by(id = id_promo).update({"descuento":p["descuento"],"fecha_inicio":p["fecha_inicio"],"fecha_fin":p["fecha_fin"],"estado":p["estado"],"descrpicion":p["descripcion"]})
             db.session.commit()
             return PromocionesSchema().dump(p)
-    except (KeyError):
-        return post_promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
+    #except (KeyError):
+    #    return post_promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
     except (ValueError):
         return None
     return None
@@ -62,21 +64,26 @@ def delete_promocion(id_promo):
         return True
     return False
 
-
+#Mirar estado en rama raul
 def get_promo_estado(estado):
+    print(str(estado))
     p = Promociones.query.filter(Promociones.estado == estado).all()
     return PromocionesSchema(many=True).dump(p)
 
 
 def get_promo_estaciones():
-    p = estacionesController.get_all_estaciones()
-    for estacion in p:
-        print("Estacion.ID_estacion: "+str(estacion["id_estacion"]))
-        ep = promocionesEstaciones.get_promociones_estaciones()
-
-    return ep
+    p = Estacion.query.all()
+    if p:
+        schema = EstacionSchema(many=True).dump(p)
+        pschema = PromocionesSchema(many=True).dump(p.promociones)
+        return schema
+    return None
 
 
 def get_promo_estacion(id_electrolinera):
-    p = Promociones.query.filter(PromocionesEstacion.id_electrolinera == id_electrolinera)
-    return PromocionesSchema(many=True).dump(p)
+    p = Estacion.query.filter(Estacion.id_estacion == id_electrolinera).one_or_none()
+    if p:
+        schema = EstacionSchema().dump(p)
+        pschema = PromocionesSchema(many=True).dump(p.promociones)
+        return schema
+    return None

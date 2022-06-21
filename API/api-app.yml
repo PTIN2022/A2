@@ -1383,7 +1383,7 @@ paths:
               examples:
                 Usuario no identificado:
                   value: {"error": "User not authenticated."}
-  /promociones/estacion:
+  /promociones/estaciones:
     # pedimos una reserva, dado su id
       get:
         summary: Obtiene una lista de promociones en funcion de su id estaciones
@@ -1416,7 +1416,7 @@ paths:
                   error:
                     value: >-
                         {"error": "Promociones not found."}
-  /promociones/{id_estacion}:
+  /promociones/estaciones/{id_estacion}:
   # pedimos una reserva, dado su id
     get:
       summary: Obtiene una lista de promociones en funcion de su id estaciones

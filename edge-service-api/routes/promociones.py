@@ -80,20 +80,18 @@ def get_promo_by_estado(estado):
         return jsonify({"error": "Malformed request syntax."}), 400
 
 
-# NO usar aun
-@promociones.route('/promociones/estaciones/', methods=['GET'])
+@promociones.route('/promociones/estaciones', methods=['GET'])
 def get_promo_by_electrolineras():
     respuesta = control.get_promo_estaciones()
-    print("JSON -> "+str(type(respuesta)))
     if respuesta:
         return jsonify(respuesta), 200
     else:
         return jsonify({"error": "Malformed request syntax."}), 400
 
 
-@promociones.route('/promociones/{estaciones}', methods=['GET'])
-def get_promo_by_electrolinera(estaciones):
-    respuesta = control.get_promo_estacion(estaciones)
+@promociones.route('/promociones/estaciones/<id_estacion>', methods=['GET'])
+def get_promo_by_electrolinera(id_estacion):
+    respuesta = control.get_promo_estacion(id_estacion)
     if respuesta:
         return jsonify(respuesta), 200
     else:
