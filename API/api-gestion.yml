@@ -446,6 +446,122 @@ paths:
                   error:
                     value: >-
                       {"error": "Station not found."}
+      put:
+          summary: Modificar estacion
+          tags:
+          - Estaciones
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    latitud:
+                      type: number
+                    longitud:
+                      type: number
+                    capacidad:
+                      type: integer
+                    direccion:
+                      type: string
+                    estado:
+                      type: string
+                    telefono:
+                      type: string
+                    potencia_contratada:
+                      type: number
+                    potencia_usada:
+                      type: number   
+                    potencia_actual:
+                      type: number   
+                    zona:
+                      type: string                    
+                  example:
+                    latitud: 12.7
+                    longitud: 10.45
+                    capacidad: 32
+                    direccion: "Alfonso de Ramirez 23"
+                    estado: "Activa"
+                    telefono: "1823912"
+                    potencia_contratada: 120
+                    potencia_usada: 33.4
+                    potencia_actual: 21.2
+                    zona: "casa ibai"
+          parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+          responses:
+            #respuesta correcta
+            '200':
+              description: Estación actualizada
+              content:
+                application/json:
+                  examples:
+                    Incidencia actualizada:
+                      value: >-
+                          {
+                            "estacion": "VG3",
+                            "cordenadas": {
+                              "latitud": 41.224115,
+                              "longitud": 1.730610
+                            },
+                            "imagen": "http://?????????/estacion/VG3.png",
+                            "kwh_max": 20000,
+                            "ocupation_max": 8,
+                            "ocupation_now": 4,
+                            "plaza": [
+                              {
+                                "id": 1,
+                                "kwh_usage": 372,
+                                "battery_status": 372,
+                                "battery_max": 800,
+                                "cliente": "peroivi"
+                              },
+                              {
+                                "id": 7,
+                                "kwh_usage": 372,
+                                "battery_status": 372,
+                                "battery_max": 800,
+                                "cliente": "peroivi"
+                              },
+                              {
+                                "id": 3,
+                                "kwh_usage": 372,
+                                "battery_status": 372,
+                                "battery_max": 800,
+                                "cliente": "peroivi"
+                              },
+                              {
+                                "id": 6,
+                                "kwh_usage": 372,
+                                "battery_status": 372,
+                                "battery_max": 800,
+                                "cliente": "peroivi"
+                              }
+                            ]
+                          }
+            '400':
+              description: Peticion incorrecta
+              content:
+                application/json:
+                  examples:
+                    Error al meter estación:
+                      value: >-
+                        {"error": "Malformed request syntax."}
+            '404':
+              description: Not Found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "Estación not found."}
 #borrar incidencia
   /estaciones/{id}/{id_plaza}:
       delete:
@@ -806,14 +922,14 @@ paths:
                         [
                           {
                             "asunto": "App no me va",
-                            "estado": false,
+                            "estado": Pendiente,
                             "fecha": "2022-05-26T16:52:37.020462",
                             "id_ticket": 1,
                             "mensaje": "Problema con la aplicación movil"
                           },
                           {
                             "asunto": "App no me va",
-                            "estado": false,
+                            "estado": Pendiente,
                             "fecha": "2022-05-26T16:54:17.253574",
                             "id_ticket": 2,
                             "mensaje": "Problema con la aplicación movil"
@@ -848,15 +964,12 @@ paths:
               properties:
                 descripcion:
                   type: string
-                estado:
-                  type: boolean
                 asunto:
                   type: string
                 cliente: 
                   type: integer
             example:
               asunto: "App no me va"
-              estado: False
               cliente: 1
               descripcion: "Problema con la aplicación movil"
               
@@ -872,7 +985,7 @@ paths:
                       {
                         "Mensajes": [],
                         "asunto": "App no me va",
-                        "estado": false,
+                        "estado": Pendiente,
                         "fecha": "2022-05-26T16:54:17.253574",
                         "id_ticket": 2,
                         "mensaje": "Problema con la aplicación movil"
@@ -922,7 +1035,7 @@ paths:
                             }
                           ],
                           "asunto": "App no me va",
-                          "estado": false,
+                          "estado": En curso,
                           "fecha": "2022-05-26T16:52:37.020462",
                           "id_ticket": 1,
                           "mensaje": "Problema con la aplicación movil"
@@ -985,7 +1098,7 @@ paths:
                             }
                           ],
                           "asunto": "App no me va",
-                          "estado": false,
+                          "estado": En curso,
                           "fecha": "2022-05-26T16:52:37.020462",
                           "id_ticket": 1,
                           "mensaje": "Problema con la aplicación movil"
@@ -1012,7 +1125,69 @@ paths:
               examples:
                 error:
                   value: '{"error" :"Ticket not found."}'
-
+    put:
+        summary: Modificar status soporte
+        tags:
+        - Soporte tecnico
+        requestBody:
+          required: true
+          content:
+            application/json:
+             schema:
+              type: object
+              required:
+                - estado
+                - ticket_id
+              properties:
+                estado:
+                  type: string
+              example:
+                estado: Resuelto/No resuelto/En curso/Pendiente
+        parameters:
+        - in: path
+          name: ticket_id
+          required: true
+          schema:
+            type: integer
+        responses:
+          #respuesta correcta
+          '200':
+            description: Modificado status soporte
+            content:
+              application/json:
+                examples:
+                  Soporte actualizada:
+                    value: >-
+                      {
+                        "Mensajes": [
+                          {
+                            "contenido": "aloha",
+                            "date": "2022-05-26T16:52:40.062432",
+                            "id_mensaje": 1
+                          }
+                        ],
+                        "asunto": "App no me va",
+                        "estado": "En curso",
+                        "fecha": "2022-05-26T16:52:37.020462",
+                        "id_ticket": 1,
+                        "mensaje": "Problema con la aplicación movil"
+                      }
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter soporte:
+                    value: >-
+                      {"error": "Malformed request syntax."}
+          '404':
+            description: Not Found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "Soporte not found."}
   # Eliminacion del ticket o peticion al soporte tecnico
     delete:
       summary: Eliminar un ticket/una peticion del soporte del usuario
@@ -1088,7 +1263,7 @@ paths:
                       "Tickets": [
                         {
                           "asunto": "App no me va",
-                          "estado": false,
+                          "estado": En curso,
                           "fecha": "2022-05-26T16:52:37.020462",
                           "id_ticket": 1,
                           "mensaje": "Problema con la aplicación movil"
@@ -1278,7 +1453,7 @@ paths:
                 estado_pago:
                   type: boolean
               example:
-                id_estacion: "VG1"
+                id_estacion: "1"
                 fecha_inicio: "18-04-2022 11:00"
                 fecha_final: "18-04-2022 18:00"
                 id_vehiculo: "LKE2378"
@@ -1560,8 +1735,93 @@ paths:
                   error:
                     value: >-
                         {"error": "Reserva not found."}
-
-      #borrar reserva
+      put:
+        summary: Modifica una reserva
+        tags:
+        - Reservas
+        parameters:
+          - in: path
+            name: id
+            required: true
+            schema:
+              type: integer
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                    - fecha_inicio
+                    - fecha_final
+                    - id_vehiculo
+                    - tarifa
+                    - asistida
+                    - porcentaje_carga
+                    - precio_carga_completo
+                    - precio_carga_actual
+                    - estado_pago
+                properties:
+                  fecha_inicio:
+                    type: string
+                  fecha_final:
+                    type: string
+                  id_vehiculo:
+                    type: string
+                  tarifa:
+                    type: number
+                  asistida:
+                    type: boolean
+                  porcentaje_carga:
+                    type: number
+                  precio_carga_completo:
+                    type: number
+                  precio_carga_actual:
+                    type: number
+                  estado_pago:
+                    type: boolean
+                example:
+                  fecha_inicio: "18-04-2022 11:00"
+                  fecha_final: "18-04-2022 18:00"
+                  id_vehiculo: "LKE2378"
+                  tarifa: 12.7
+                  asistida: True
+                  porcentaje_carga: 30
+                  precio_carga_completo: 30
+                  precio_carga_actual: 5
+                  estado_pago: True
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Meter reserva:
+                    value:  >-
+                        {
+                          "asistida": true,
+                          "estado": true,
+                          "estado_pago": true,
+                          "fecha_entrada": "2022-05-23T13:49:59.798066",
+                          "fecha_salida": "2022-05-23T13:49:59.798066",
+                          "id_cargador": 257,
+                          "id_cliente": 1,
+                          "id_reserva": 1,
+                          "id_vehiculo": "2WRQ7QQ",
+                          "precio_carga_actual": 10.1,
+                          "precio_carga_completa": 25.2,
+                          "procetnaje_carga": 50,
+                          "tarifa": 90.99
+                        }
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter reserva:
+                    value: >-
+                      {"error": "Malformed request syntax."}
+        #borrar reserva
       delete:
         summary: Elimina reserva por ID
         tags:
