@@ -118,8 +118,8 @@ paths:
                   type: boolean
               example:
                 id_estacion: "VG1"
-                fecha_inicio: "18-04-2022 11:00"
-                fecha_final: "18-04-2022 18:00"
+                fecha_inicio: "20-06-2022 11:00"
+                fecha_final: "20-06-2022 18:00"
                 id_vehiculo: "655RR68"
                 tarifa: 12.7
                 asistida: True

@@ -8,6 +8,7 @@ from models.model import Estacion, Cliente, Trabajador, Promociones, \
     Cargador, Modelo, Consumo, Horas, Vehiculo, Reserva
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from utils.utils import encrypt_password
 
 
 def fakedata():
@@ -28,6 +29,7 @@ def fakedata():
         '+34762487248',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Activa'
         )
     db.session.add(e)
     e2 = Estacion(  # , t.id_trabajador
@@ -43,12 +45,13 @@ def fakedata():
         '+34762854712',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Activa'
         )
     db.session.add(e2)
     e3 = Estacion(  # , t.id_trabajador
         'VG3',
         41.225431,
-        1.7337627,
+        1.737627,
         32,
         'A veces',
         20,
@@ -58,6 +61,7 @@ def fakedata():
         '+34785123478',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Activa'
         )
     db.session.add(e3)
     e4 = Estacion(  # , t.id_trabajador
@@ -73,6 +77,7 @@ def fakedata():
         '+34745821523',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Activa'
         )
     db.session.add(e4)
     e5 = Estacion(  # , t.id_trabajador
@@ -88,6 +93,7 @@ def fakedata():
         '+34797458744',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Activa'
         )
     db.session.add(e5)
     e6 = Estacion(  # , t.id_trabajador
@@ -103,6 +109,7 @@ def fakedata():
         '+34768220011',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Activa'
         )
     db.session.add(e6)
     e7 = Estacion(  # , t.id_trabajador
@@ -118,6 +125,7 @@ def fakedata():
         '+34798544552',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Dañada'
         )
     db.session.add(e7)
     e8 = Estacion(  # , t.id_trabajador
@@ -133,6 +141,7 @@ def fakedata():
         '+34768855471',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Inactiva'
         )
     db.session.add(e8)
     db.session.commit()
@@ -195,16 +204,94 @@ def fakedata():
             foto,
             telefono,
             username,
-            password,
+            encrypt_password(password),
             )
         db.session.add(ce)
         clientes.append(ce)
 
         db.session.commit()
 
+    clienteBueno = Cliente(
+        "The Client",
+        "meh",
+        "meh@meh.com",
+        "23432234F",
+        "X",
+        2343234,
+        "cli",
+        "pass",
+        )
+    db.session.add(clienteBueno)
+    clientes.append(clienteBueno)
+
+    db.session.commit()
     # ### TRABAJADOR
+    # Creamos 3 tipos de trabajadores
 
     trabajadores = []
+    estacion = random.choice(estacioness)
+    ultimo_acceso = fake.date_time_between(start_date='-2y', end_date='now')
+    telefono = '{:09}'.format(random.randrange(1, 10 ** 8))
+    tr = Trabajador(
+        'Alfredo',
+        'Manresa',
+        'tugmail@adas',
+        'a111111111',
+        'asda',
+        telefono,
+        'alfredo',
+        encrypt_password('1'),
+        'administrador',
+        'Activo',
+        ultimo_acceso,
+        'Amigo de la infancia?',
+        estacion.id_estacion,
+    )
+    db.session.add(tr)
+    trabajadores.append(tr)
+    db.session.commit()
+    estacion = random.choice(estacioness)
+    ultimo_acceso = fake.date_time_between(start_date='-2y', end_date='now')
+    telefono = '{:09}'.format(random.randrange(1, 10 ** 8))
+    tr = Trabajador(
+        'Marc',
+        'Capdevila',
+        'tugmail2@adas',
+        'b222222222',
+        'asda',
+        telefono,
+        'marc',
+        encrypt_password('1'),
+        'encargado',
+        'Activo',
+        ultimo_acceso,
+        'Amigo de la infancia?',
+        estacion.id_estacion,
+    )
+    db.session.add(tr)
+    trabajadores.append(tr)
+    db.session.commit()
+    estacion = random.choice(estacioness)
+    ultimo_acceso = fake.date_time_between(start_date='-2y', end_date='now')
+    telefono = '{:09}'.format(random.randrange(1, 10 ** 8))
+    tr = Trabajador(
+        'Cinta',
+        'Gonzalez',
+        'tugmail3@adas',
+        'c333333333',
+        'asda',
+        telefono,
+        'marc',
+        encrypt_password('1'),
+        'trabajador',
+        'Activo',
+        ultimo_acceso,
+        'Amigo de la infancia?',
+        estacion.id_estacion,
+    )
+    db.session.add(tr)
+    trabajadores.append(tr)
+    db.session.commit()
     for i in range(100):
 
         letras = [
@@ -259,7 +346,7 @@ def fakedata():
             foto,
             telefono,
             username,
-            password,
+            encrypt_password(password),
             cargo,
             estado,
             ultimo_acceso,
@@ -399,6 +486,20 @@ def fakedata():
     # ###Vehiculos        ####
 
     vehiculos = []
+    modelo = random.choice(model_list)
+    vehiculoBueno = Vehiculo("2450GDF", 100, modelo)
+    vehiculoBueno2 = Vehiculo("4950KZK", 100, modelo)
+    vehiculoBueno3 = Vehiculo("5134FFJ", 100, modelo)
+    vehiculoBueno4 = Vehiculo("LU50KZK", 100, modelo)
+    db.session.add(vehiculoBueno)
+    db.session.add(vehiculoBueno2)
+    db.session.add(vehiculoBueno3)
+    db.session.add(vehiculoBueno4)
+    vehiculos.append(vehiculoBueno)
+    vehiculos.append(vehiculoBueno2)
+    vehiculos.append(vehiculoBueno3)
+    vehiculos.append(vehiculoBueno4)
+
     for i in range(50):
 
         letras = ''.join(random.choices(string.ascii_uppercase, k=3))
@@ -423,10 +524,15 @@ def fakedata():
 
     db.session.commit()
 
-    # ### RESERVAS
+    clienteBueno.vehiculos.append(vehiculoBueno)
+    clienteBueno.vehiculos.append(vehiculoBueno2)
+    clienteBueno.vehiculos.append(vehiculoBueno3)
+    clienteBueno.vehiculos.append(vehiculoBueno4)
+    db.session.commit()
 
+    # ## RESERVAS
     reservas = []
-    for i in range(100):
+    for i in range(5):
 
         fecha_entrada = fake.date_time_between(start_date='-2y', end_date='now')
         fecha_salida = fake.date_time_between(start_date='-2y', end_date='now')
