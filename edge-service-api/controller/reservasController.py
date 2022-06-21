@@ -40,8 +40,6 @@ def get_reservas_dni(dni):
 
 def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI):
     i = Estacion.query.filter(Estacion.nombre_est == id_estacion).one_or_none()
-    if i.estado == "Inactiva":
-        return ("Estacion dañada")
     cargador_encontrado = False
     cl = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
     vh = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()
@@ -52,6 +50,8 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
         return {"error": "vehiculo no existe"}
 
     if i:
+        if i.estado == "Inactiva":
+            return {"error": "Station not available, may damaged."}
         random.shuffle(i.cargadores)  # Se hace un shuffle para que no siempre se use el mismo cargador para evitar el desgaste del mismo
         for cargador in i.cargadores:
             if not cargador_encontrado:
