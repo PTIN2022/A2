@@ -66,6 +66,7 @@ def get_reserva_by_id(current_usuario, id):
     else:
         return jsonify({"error": "User not authorized."}), 401
 
+
 @reservas.route('/reservas/estacion/<id_estacion>', methods=["GET"])
 @token_required
 def get_reserva_by_estacio(current_usuario, id_estacion):
@@ -84,6 +85,7 @@ def get_reserva_by_matricula(current_usuario, matricula):
         return jsonify(respuesta), 200
     else:
         return jsonify({"error": "User not authorized."}), 401
+
 
 @reservas.route('/reservas/bydni/<dni>', methods=["GET"])
 @token_required
