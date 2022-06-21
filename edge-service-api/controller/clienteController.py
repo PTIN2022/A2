@@ -2,6 +2,7 @@ from utils.db import db
 from models.model import Cliente, ClienteSchema
 from utils.utils import encrypt_password
 
+
 def get_all_clientes():
     c = Cliente.query.all()
     return ClienteSchema(many=True).dump(c)

@@ -2,6 +2,7 @@ from models.model import Estacion, EstacionSchema, CargadorSchema
 from utils.db import db
 from math import radians, cos, sin, asin, sqrt
 
+
 def get_all_estaciones():
     i = Estacion.query.all()
     return EstacionSchema(many=True).dump(i)
@@ -41,7 +42,7 @@ def get_estacion_by_coor(lat_str=0, long_str=0, ratio=0):
 
 def get_ordered_list(points, x, y, ratio):
     points.sort(key=lambda p: (p[0] - x)**2 + (p[1] - y)**2)
-    points_ratio=[]
+    points_ratio = []
     for point in points:
         print(point)
         distance = haversine(x, y, point[0], point[1])
@@ -52,16 +53,13 @@ def get_ordered_list(points, x, y, ratio):
             break
     return points_ratio
 
+
 def haversine(lat1, lon1, lat2, lon2):
-
-      R = 6372.8 
-
-      dLat = radians(lat2 - lat1)
-      dLon = radians(lon2 - lon1)
-      lat1 = radians(lat1)
-      lat2 = radians(lat2)
-
-      a = sin(dLat/2)**2 + cos(lat1)*cos(lat2)*sin(dLon/2)**2
-      c = 2*asin(sqrt(a))
-
-      return R * c
+    R = 6372.8
+    dLat = radians(lat2 - lat1)
+    dLon = radians(lon2 - lon1)
+    lat1 = radians(lat1)
+    lat2 = radians(lat2)
+    a = sin(dLat/2)**2 + cos(lat1)*cos(lat2)*sin(dLon/2)**2
+    c = 2*asin(sqrt(a))
+    return R * c

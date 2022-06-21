@@ -8,7 +8,6 @@ reservas = Blueprint('reservas', __name__)
 
 
 @reservas.route('/reservas', methods=['GET'])
-
 @token_required
 def get_reservas(current_usuario):
     if current_usuario:
@@ -16,6 +15,7 @@ def get_reservas(current_usuario):
         return jsonify(respuesta)
     else:
         return jsonify({"error": "User not authorized."}), 401
+
 
 @reservas.route('/reservas', methods=['POST'])
 @token_required
@@ -53,6 +53,7 @@ def post_reservas(current_usuario):
     else:
         return jsonify({"error": "User not authorized."}), 401
 
+
 @reservas.route('/reservas/<id>', methods=["GET"])
 @token_required
 def get_reserva_by_id(current_usuario, id):
@@ -74,6 +75,7 @@ def get_reserva_by_estacio(current_usuario, id_estacion):
     else:
         return jsonify({"error": "User not authorized."}), 401
 
+
 @reservas.route('/reservas/bymatricula/<matricula>', methods=["GET"])
 @token_required
 def get_reserva_by_matricula(current_usuario, matricula):
@@ -91,6 +93,7 @@ def get_reserva_by_dni(current_usuario, dni):
         return jsonify(respuesta), 200
     else:
         return jsonify({"error": "User not authorized."}), 401
+
 
 @reservas.route('/reservas/<id>', methods=["DELETE"])
 @token_required

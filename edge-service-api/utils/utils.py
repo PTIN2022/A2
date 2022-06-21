@@ -37,20 +37,19 @@ def token_required(f):
             current_usuario = Cliente.query.filter(Cliente.email == data['email']).one_or_none()
         except jwt.exceptions.ExpiredSignatureError:
             return jsonify({'message': 'token is expired'})
-        except:  
+        except:  # noqa E722
             return jsonify({'message': 'token is invalid'})
-
         return f(current_usuario, *args, **kwargs)
-    return decorator        
+    return decorator
 
 
 def encrypt_password(password):
 
     key = hashlib.pbkdf2_hmac(
-        'sha256', # The hash digest algorithm for HMAC
-        password.encode('utf-8'), # Convert the password to bytes
-        app.config['SALT'], # Provide the salt
-        100000 # It is recommended to use at least 100,000 iterations of SHA-256 
+        'sha256',  # The hash digest algorithm for HMAC
+        password.encode('utf-8'),  # Convert the password to bytes
+        app.config['SALT'],  # Provide the salt
+        100000  # It is recommended to use at least 100,000 iterations of SHA-256
     )
 
     return key

@@ -155,7 +155,6 @@ def fakedata():
         e7,
         e8,
         ]
-        
     clientes = []
     ce = Cliente(
         "mario",
