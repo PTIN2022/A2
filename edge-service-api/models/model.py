@@ -1,4 +1,5 @@
 from utils.db import db
+from utils.utils import strtobool
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
@@ -281,9 +282,9 @@ class Cliente(Usuari_t):
         {},
     )
 
-    avisos = db.relationship("Aviso",  backref="aviso")
-    reservas = db.relationship("Reserva",  backref="reserva")
-    ticket = db.relationship("Ticket",  backref="ticket")
+    avisos = db.relationship("Aviso", backref="aviso")
+    reservas = db.relationship("Reserva", backref="reserva", cascade="delete, merge, save-update")
+    ticket = db.relationship("Ticket", backref="ticket")
 
     vehiculos = db.relationship('Vehiculo', secondary=vehiculo_cliente, lazy='subquery', backref=db.backref('Cliente', lazy=True))
 
@@ -308,7 +309,7 @@ class Modelo(db.Model):
     # potencia_carga --> si es true=Carga Rapida, False=Normal
     potencia_carga = db.Column(db.Boolean, nullable=True)
     capacidad = db.Column(db.FLOAT, nullable=False)
-    vehiculo = db.relationship("Vehiculo",  backref="modelo")
+    vehiculo = db.relationship("Vehiculo",  backref="modelo", cascade="all, delete-orphan")
 
     def __init__(self, modelo, marca, potencia_carga, capacidad):
         self.modelo = modelo
@@ -340,7 +341,7 @@ class Cargador(db.Model):
     posicion = db.Column(db.Integer, nullable=False)
     tipo = db.Column(db.String(100), nullable=False)
     estacion_id = db.Column(db.Integer, db.ForeignKey("estacion.id_estacion"), nullable=False)
-    reservas = db.relationship("Reserva",  backref="Cargador")
+    reservas = db.relationship("Reserva",  backref="Cargador", cascade="all, delete-orphan")
 
     def __init__(self, estado, posicion, tipo, estacion_id):
         self.estado = estado
@@ -383,8 +384,8 @@ promocion_estacion = db.Table(
 class Estacion(db.Model):
     id_estacion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     nombre_est = db.Column(db.String(20), nullable=False, unique=True)  # unico
-    latitud = db.Column(db.Integer, nullable=False)
-    longitud = db.Column(db.Integer, nullable=False)
+    latitud = db.Column(db.Float, nullable=False)
+    longitud = db.Column(db.Float, nullable=False)
     capacidad = db.Column(db.Integer, nullable=False)
     direccion = db.Column(db.String(300), nullable=False)
     potencia_contratada = db.Column(db.Integer, nullable=False)
@@ -426,7 +427,7 @@ class Promociones(db.Model):
     cantidad_usados = db.Column(db.Integer, nullable=False)
     fecha_inicio = db.Column(db.DateTime, nullable=False)
     fecha_fin = db.Column(db.DateTime, nullable=False)
-    estado = db.Column(db.String(30), nullable=False)
+    estado = db.Column(db.Boolean, nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
     estaciones = db.relationship("Estacion", secondary=promocion_estacion, lazy='subquery', backref=db.backref('promociones', lazy=True))
 
@@ -435,7 +436,7 @@ class Promociones(db.Model):
         self.cantidad_usados = cantidad_usados
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
-        self.estado = estado
+        self.estado = strtobool(estado)
         self.descripcion = descripcion
 
 

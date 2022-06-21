@@ -48,8 +48,6 @@ def get_reservas_dni(dni):
 
 def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI):
     i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
-    if i.estado == "Inactiva":
-        return {"error": "Station not available, may damaged. "}
     cargador_encontrado = False
     cl = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
     vh = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()
@@ -58,6 +56,8 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
     if not vh:
         return {"error": "Vehiculo not exist. "}
     if i:
+        if i.estado == "Inactiva":
+            return {"error": "Station not available, may damaged. "}
         random.shuffle(i.cargadores)  # Se hace un shuffle para que no siempre se use el mismo cargador para evitar el desgaste del mismo
         for cargador in i.cargadores:
             if not cargador_encontrado:
@@ -84,6 +84,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                     return i.id_reserva
     if not cargador_encontrado:
         return {"error": "Cargador for this station not available. "}
+
 
 def put_reserva_by_id(id, matricula = None, tarifa = None, asistida = None, porcentaje_carga = None, precio_carga_completa = None, precio_carga_actual = None, estado_pago = None, fecha_inicio_str = None, fecha_final_str = None):
     i = Reserva.query.filter(Reserva.id_reserva == id).one_or_none()

@@ -1,4 +1,5 @@
 import controller.promocionesController as control
+
 from flask import Blueprint, jsonify, request
 from utils.utils import token_required
 

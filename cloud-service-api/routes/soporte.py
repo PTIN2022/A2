@@ -17,6 +17,7 @@ def post_soporte():
     try:
         fecha = datetime.now()
         descripcion = request.json["descripcion"]
+        estado = request.json["estado"]
         id_cliente = request.json["cliente"]
         asunto = request.json["asunto"]
         ticket_id = control.post_soporte(descripcion, fecha, id_cliente, asunto)
