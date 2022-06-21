@@ -25,7 +25,7 @@ def post_soporte_by_ticket(mensaje, fecha, ticket_id, id_user):
         db.session.commit()
         return MensajeSchema().dump(s)
     else:
-        return { "error": "Ticket not exist or ticket is not from the user "}
+        return 0
 
 
 def get_soporte_ticket_id(id_user, ticket_id):
@@ -35,7 +35,7 @@ def get_soporte_ticket_id(id_user, ticket_id):
         soporte_dict = TicketSchema().dump(i)
         soporte_dict["Mensajes"] = MensajeSchema(many=True).dump(i.mensajes)
         return soporte_dict
-    return { "error": "Ticket not exist or ticket is not from the user "}
+    return 0
 
 
 def get_soporte_user_id(user_id):
@@ -44,7 +44,7 @@ def get_soporte_user_id(user_id):
         soporte_dict = ClienteSchema().dump(s)
         soporte_dict["Tickets"] = TicketSchema(many=True).dump(s.ticket)
         return soporte_dict
-    return {"error": "Cliente not exist. "}
+    return 0
 
 
 def delete_soporte_ticket_id(id_user, ticket_id):

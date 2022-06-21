@@ -46,8 +46,8 @@ def post_soporte(current_usuario):
 def get_soporte_ticket_id(current_usuario, ticket_id):
     if current_usuario:
         respuesta = control.get_soporte_ticket_id(current_usuario.id_cliente, ticket_id)
-        if type(respuesta) == dict:
-            return jsonify(respuesta), 400
+        if respuesta == 0:
+            return jsonify({ "error": "Ticket not exist or ticket is not from the user "}), 400
         if respuesta:
             return jsonify(respuesta), 200
         else:
@@ -75,8 +75,8 @@ def post_soporte_by_ticket(current_usuario, ticket_id):
         try:
             mensaje = request.form.to_dict()["mensaje"]
             resultado = control.post_soporte_by_ticket(mensaje, datetime.now(), ticket_id, current_usuario.id_cliente)
-            if type(resultado) == dict:
-                return jsonify(resultado), 400
+            if resultado == 0:
+                return jsonify({"error": "Ticket not found or Ticket is not from the user."}), 400
             if resultado:
                 respuesta = control.get_soporte_ticket_id(current_usuario.id_cliente, ticket_id)
                 return jsonify(respuesta), 200
