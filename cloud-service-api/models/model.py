@@ -1,8 +1,9 @@
+from marshmallow import EXCLUDE, Schema
 from utils.db import db
 from utils.utils import strtobool
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-
+from marshmallow import fields
 
 class Averia(db.Model):
 
@@ -72,6 +73,7 @@ class Mensaje(db.Model):
 
 class MensajeSchema(SQLAlchemyAutoSchema):
     class Meta:
+        include_fk = True
         model = Mensaje
 
 
@@ -160,7 +162,7 @@ class Ticket(db.Model):
     id_ticket = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     fecha = db.Column(db.DateTime, nullable=False)
     asunto = db.Column(db.String(30), nullable=False)
-    estado = db.Column(db.Boolean, nullable=False)
+    estado = db.Column(db.String(30), nullable=False)
     mensaje = db.Column(db.String(300), nullable=False)
 
     id_cliente = db.Column('id_cliente', db.ForeignKey('cliente.id_usuari'), nullable=False)
@@ -174,9 +176,6 @@ class Ticket(db.Model):
         self.id_cliente = id_cliente
 
 
-class TicketSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Ticket
 
 
 class Usuari_t(db.Model):
@@ -213,6 +212,7 @@ class Usuari_tSchema(SQLAlchemyAutoSchema):
     # estacion =  fields.Nested(EstacionSchema)
     class Meta:
         model = Usuari_t
+        exclude = ('password',)
 
 
 class Trabajador(Usuari_t):
@@ -249,6 +249,7 @@ class Trabajador(Usuari_t):
 class TrabajadorSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Trabajador
+        exclude = ('password',)
 
 
 vehiculo_cliente = db.Table(
@@ -301,7 +302,11 @@ class ClienteSchema(SQLAlchemyAutoSchema):
 
     class Meta:
         model = Cliente
+        exclude = ('password',)
 
+class TicketSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        fields = ('id_ticket', 'fecha', 'asunto', 'estado', 'mensaje', 'id_cliente')
 
 class Modelo(db.Model):
     modelo = db.Column(db.String(100), nullable=False, primary_key=True)
@@ -398,9 +403,10 @@ class Estacion(db.Model):
     cargadores = db.relationship("Cargador",  backref="estacion")
     trabajadores = db.relationship("Trabajador",  backref="estacion")
     averia = db.relationship("Averia",  backref="estacion")
+    estado = db.Column(db.String(20), nullable=False)
     # encargado = db.Column('id_trabajador', db.ForeignKey('trabajador.id_usuari'), nullable=True)
 
-    def __init__(self, nombre_est, latitud, longitud, capacidad, direccion, potencia_contratada, zona, ocupation_actual, potencia_usada, telefono, ciudad, pais):  # encargado
+    def __init__(self, nombre_est, latitud, longitud, capacidad, direccion, potencia_contratada, zona, ocupation_actual, potencia_usada, telefono, ciudad, pais, estado):  # encargado
         self.nombre_est = nombre_est
         self.latitud = latitud
         self.longitud = longitud
@@ -413,6 +419,7 @@ class Estacion(db.Model):
         self.telefono = telefono
         self.ciudad = ciudad
         self.pais = pais
+        self.estado = estado
         # self.encargado = encargado
 
 

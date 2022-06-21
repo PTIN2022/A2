@@ -20,7 +20,7 @@ def post_soporte():
         estado = request.json["estado"]
         id_cliente = request.json["cliente"]
         asunto = request.json["asunto"]
-        ticket_id = control.post_soporte(descripcion, fecha, estado, id_cliente, asunto)
+        ticket_id = control.post_soporte(descripcion, fecha, id_cliente, asunto)
         ticket = control.get_soporte_ticket_id(ticket_id)
         return jsonify(ticket), 200
 
@@ -39,6 +39,20 @@ def get_soporte_ticket_id(ticket_id):
         return jsonify(respuesta), 200
     else:
         return jsonify({"error": "Ticket not found."}), 404
+
+@soporte.route('/soporte/<ticket_id>', methods=['PUT'])
+def put_soporte_ticket_id(ticket_id):
+    estado = None
+    if "estado" in request.json:
+        estado = request.json["estado"]
+    else:
+        return jsonify({"error": "Malformed query."}), 400
+    respuesta = control.put_soporte_by_ticket(ticket_id, estado)
+    if respuesta:
+        return jsonify(respuesta), 200
+    else:
+        return jsonify({"error": "Ticket not found."}), 404
+
 
 
 @soporte.route('/soporte/<ticket_id>', methods=["DELETE"])
