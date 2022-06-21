@@ -13,4 +13,5 @@ wheel
 Faker
 random2
 mysqlclient
+pyjwt
 flask-cors

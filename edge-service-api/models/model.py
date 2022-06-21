@@ -301,6 +301,7 @@ class ClienteSchema(SQLAlchemyAutoSchema):
 
     class Meta:
         model = Cliente
+        exclude = ('password',)
 
 
 class Modelo(db.Model):
@@ -398,9 +399,10 @@ class Estacion(db.Model):
     cargadores = db.relationship("Cargador",  backref="estacion")
     trabajadores = db.relationship("Trabajador",  backref="estacion")
     averia = db.relationship("Averia",  backref="estacion")
+    estado = db.Column(db.String(20), nullable=False)
     # encargado = db.Column('id_trabajador', db.ForeignKey('trabajador.id_usuari'), nullable=True)
 
-    def __init__(self, nombre_est, latitud, longitud, capacidad, direccion, potencia_contratada, zona, ocupation_actual, potencia_usada, telefono, ciudad, pais):  # encargado
+    def __init__(self, nombre_est, latitud, longitud, capacidad, direccion, potencia_contratada, zona, ocupation_actual, potencia_usada, telefono, ciudad, pais, estado):  # encargado
         self.nombre_est = nombre_est
         self.latitud = latitud
         self.longitud = longitud
@@ -413,6 +415,7 @@ class Estacion(db.Model):
         self.telefono = telefono
         self.ciudad = ciudad
         self.pais = pais
+        self.estado = estado
         # self.encargado = encargado
 
 
