@@ -40,14 +40,13 @@ def post_soporte(current_usuario):
         return jsonify({"error": "User not authorized."}), 401
 
 
-
 @soporte.route('/soporte/<ticket_id>', methods=['GET'])
 @token_required
 def get_soporte_ticket_id(current_usuario, ticket_id):
     if current_usuario:
         respuesta = control.get_soporte_ticket_id(current_usuario.id_cliente, ticket_id)
         if respuesta == 0:
-            return jsonify({ "error": "Ticket not exist or ticket is not from the user "}), 400
+            return jsonify({"error": "Ticket not exist or ticket is not from the user "}), 400
         if respuesta:
             return jsonify(respuesta), 200
         else:
@@ -67,6 +66,7 @@ def delete_soporte_ticket_id(current_usuario, ticket_id):
             return jsonify({"error": "Ticket not found or Ticket is not from the user."}), 404
     else:
         return jsonify({"error": "User not authorized."}), 401
+
 
 @soporte.route('/soporte/<ticket_id>', methods=['POST'])
 @token_required

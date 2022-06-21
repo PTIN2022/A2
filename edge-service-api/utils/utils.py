@@ -8,7 +8,6 @@ from flask import current_app as app
 from models.model import Cliente
 
 
-
 def token_required(f):
     @wraps(f)
     def decorator(*args, **kwargs):

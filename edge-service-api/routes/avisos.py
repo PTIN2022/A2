@@ -25,15 +25,15 @@ def post_avisos(current_usuario):
         tipo = None
         texto = None
         if request.json["id_reserva"]:
-            id_reserva=request.json["id_reserva"]
+            id_reserva = request.json["id_reserva"]
         else:
             return jsonify({"error": "Malformed request, needed id_reserva."}), 400
         if request.json["tipo"]:
-            tipo=request.json["tipo"]
+            tipo = request.json["tipo"]
         else:
             return jsonify({"error": "Malformed request, needed tipo."}), 400
         if request.json["texto"]:
-            texto=request.json["texto"]
+            texto = request.json["texto"]
         else:
             return jsonify({"error": "Malformed request, needed texto."}), 400
 

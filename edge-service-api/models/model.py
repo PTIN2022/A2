@@ -3,6 +3,7 @@ from utils.db import db
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
+
 class Averia(db.Model):
 
     id_averia = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
@@ -174,8 +175,6 @@ class Ticket(db.Model):
         self.id_cliente = id_cliente
 
 
-
-
 class Usuari_t(db.Model):
     id_usuari = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(60), nullable=False)
@@ -302,9 +301,11 @@ class ClienteSchema(SQLAlchemyAutoSchema):
         model = Cliente
         exclude = ('password',)
 
+
 class TicketSchema(SQLAlchemyAutoSchema):
     class Meta:
         fields = ('id_ticket', 'fecha', 'asunto', 'estado', 'mensaje', 'id_cliente')
+
 
 class Modelo(db.Model):
     modelo = db.Column(db.String(100), nullable=False, primary_key=True)
@@ -425,6 +426,7 @@ class EstacionSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Estacion
 
+
 # https://stackoverflow.com/questions/42248342/yes-no-prompt-in-python3-using-strtobool
 def strtobool(val):
     """Convert a string representation of truth to true (1) or false (0).
@@ -439,6 +441,7 @@ def strtobool(val):
         return False
     else:
         raise ValueError("invalid truth value %r" % (val,))
+
 
 class Promociones(db.Model):
     id_promo = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
@@ -455,7 +458,7 @@ class Promociones(db.Model):
         self.cantidad_usados = cantidad_usados
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
-        self.estado =  strtobool(estado)
+        self.estado = strtobool(estado)
         self.descripcion = descripcion
 
 

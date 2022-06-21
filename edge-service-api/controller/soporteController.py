@@ -18,7 +18,7 @@ def post_soporte(descripcion, fecha, id_cliente, asunto):
 
 
 def post_soporte_by_ticket(mensaje, fecha, ticket_id, id_user):
-    soporte = Ticket.query.filter(Ticket.id_ticket == ticket_id, Ticket.id_cliente==id_user).one_or_none()
+    soporte = Ticket.query.filter(Ticket.id_ticket == ticket_id, Ticket.id_cliente == id_user).one_or_none()
     if soporte:
         s = Mensaje(mensaje, fecha, id_user, ticket_id)
         db.session.add(s)
