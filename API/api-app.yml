@@ -1435,6 +1435,195 @@ paths:
                   value: '{"error": "Message have been deleted."}'
 
 #########################################################################################
+#########################################################################################
+  
+  /avisos:
+    get:
+        summary: (NOT USE ME, ONLY FOR CHECKS) Obtiene una lista de todos los avisos
+        tags: 
+        - Avisos
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Peticion a aviso:
+                    value: {
+                            "Mensajes": [
+                            ],
+                            "asunto": "App no me va",
+                            "estado": En curso,
+                            "fecha": "2022-05-26T16:52:37.020462",
+                            "id_ticket": 1,
+                            "mensaje": "Problema con la aplicación movil"
+                          }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+    post:
+      summary: Publica un aviso dado una reserva 
+      tags:
+        - Avisos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id_reserva
+                - tipo
+                - texto
+              properties:
+                id_reserva:
+                  type: integer
+                tipo:
+                  type: string
+                texto: 
+                  type: integer
+            example:
+              id_reserva: 1
+              tipo: "Bateria llena."
+              texto: "Tiene la betería llena."
+              
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar aviso:
+                  value: {
+                            "Mensajes": [
+                            ],
+                            "asunto": "App no me va",
+                            "estado": En curso,
+                            "fecha": "2022-05-26T16:52:37.020462",
+                            "id_ticket": 1,
+                            "mensaje": "Problema con la aplicación movil"
+                          }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+
+  /avisos/byreserva/{id_reserva}:
+    get:
+      summary: Encontrar los avisos dado una reserva
+      tags:
+        - Avisos
+      parameters:
+      - in: path
+        name: id_reserva
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+               Consultando petición a aviso:
+                  value: {
+                          "Mensajes": [
+                            {
+                              "contenido": "aloha",
+                              "date": "2022-05-26T16:52:40.062432",
+                              "id_mensaje": 1
+                            }
+                          ],
+                          "asunto": "App no me va",
+                          "estado": En curso,
+                          "fecha": "2022-05-26T16:52:37.020462",
+                          "id_ticket": 1,
+                          "mensaje": "Problema con la aplicación movil"
+                        }
+        '404':
+          description: Aviso no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Aviso not exist or there is not any aviso for that reserva and user."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+  /avisos/{id_aviso}:
+    delete:
+      summary: Elimina un aviso
+      tags:
+        - Avisos
+      parameters:
+      - in: path
+        name: id_aviso
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Aviso correcto
+          content:
+            application/json:
+              examples:
+                Eliminando una petición de Avisos:
+                  value: |-
+                    {
+                      "msg": "Aviso deleted succesfully."
+                    }
+        '400':
+          description: Aviso incorrecto
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Aviso not exist or aviso is not for the user"}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+        '404':
+          description: Aviso no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" : "Aviso not found."}'
+        '410':
+          description: Aviso ya eliminado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Aviso have been deleted."}'
+                  
+##########################################################################################
   /login:
     post:
       summary: Login en el sistema
