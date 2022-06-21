@@ -1,7 +1,10 @@
-from utils.db import db
-from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
-from datetime import datetime
 import random
+
+import json
+from utils.db import db
+from datetime import datetime
+import paho.mqtt.publish as publish
+from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
 
 
 def get_all_reservas():
@@ -43,8 +46,12 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
     cargador_encontrado = False
     cl = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
     vh = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()
-    if not cl or not vh:
-        return None
+    if not cl:
+        return {"error": "cliente no existe"}
+
+    if not vh:
+        return {"error": "vehiculo no existe"}
+
     if i:
         random.shuffle(i.cargadores)  # Se hace un shuffle para que no siempre se use el mismo cargador para evitar el desgaste del mismo
         for cargador in i.cargadores:
@@ -64,14 +71,16 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                 if not cargador_ocupado:
                     i = Reserva(
                         fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual,
-                        True, tarifa, asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari
+                        True, float(tarifa), asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari
                     )
                     db.session.add(i)
                     db.session.commit()
+                    publish.single("gesys/cloud/reservas", json.dumps(ReservaSchema().dump(i)), hostname="192.168.80.236", port=42069, qos=2)
                     cargador_encontrado = True
                     return i.id_reserva
+
     if not cargador_encontrado:
-        return None
+        return {"error": "no hay cargador libre en este horario"}
 
 
 def remove_reserva(id):

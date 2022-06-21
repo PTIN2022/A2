@@ -1,5 +1,6 @@
 from marshmallow import EXCLUDE, Schema
 from utils.db import db
+from utils.utils import strtobool
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow import fields
@@ -282,9 +283,9 @@ class Cliente(Usuari_t):
         {},
     )
 
-    avisos = db.relationship("Aviso",  backref="aviso", cascade="all, delete-orphan")
-    reservas = db.relationship("Reserva",  backref="reserva", cascade="all, delete-orphan")
-    ticket = db.relationship("Ticket",  backref="ticket", cascade="all, delete-orphan")
+    avisos = db.relationship("Aviso", backref="aviso")
+    reservas = db.relationship("Reserva", backref="reserva", cascade="delete, merge, save-update")
+    ticket = db.relationship("Ticket", backref="ticket")
 
     vehiculos = db.relationship('Vehiculo', secondary=vehiculo_cliente, lazy='subquery', backref=db.backref('Cliente', lazy=True))
 
@@ -388,8 +389,8 @@ promocion_estacion = db.Table(
 class Estacion(db.Model):
     id_estacion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     nombre_est = db.Column(db.String(20), nullable=False, unique=True)  # unico
-    latitud = db.Column(db.Integer, nullable=False)
-    longitud = db.Column(db.Integer, nullable=False)
+    latitud = db.Column(db.Float, nullable=False)
+    longitud = db.Column(db.Float, nullable=False)
     capacidad = db.Column(db.Integer, nullable=False)
     direccion = db.Column(db.String(300), nullable=False)
     potencia_contratada = db.Column(db.Integer, nullable=False)
@@ -433,7 +434,7 @@ class Promociones(db.Model):
     cantidad_usados = db.Column(db.Integer, nullable=False)
     fecha_inicio = db.Column(db.DateTime, nullable=False)
     fecha_fin = db.Column(db.DateTime, nullable=False)
-    estado = db.Column(db.String(30), nullable=False)
+    estado = db.Column(db.Boolean, nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
     estaciones = db.relationship("Estacion", secondary=promocion_estacion, lazy='subquery', backref=db.backref('promociones', lazy=True))
 
@@ -442,7 +443,7 @@ class Promociones(db.Model):
         self.cantidad_usados = cantidad_usados
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
-        self.estado = estado
+        self.estado = strtobool(estado)
         self.descripcion = descripcion
 
 
