@@ -1,7 +1,10 @@
-from utils.db import db
-from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
-from datetime import datetime
 import random
+
+import json
+from utils.db import db
+from datetime import datetime
+import paho.mqtt.publish as publish
+from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
 
 
 def get_all_reservas():
@@ -74,6 +77,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                     )
                     db.session.add(i)
                     db.session.commit()
+                    publish.single("gesys/cloud/reservas", json.dumps(ReservaSchema().dump(i)), hostname="192.168.80.236", port=42069, qos=2)
                     cargador_encontrado = True
                     return i.id_reserva
 

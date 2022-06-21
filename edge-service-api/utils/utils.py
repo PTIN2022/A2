@@ -1,3 +1,4 @@
+
 import hashlib
 import jwt
 
@@ -5,6 +6,7 @@ from functools import wraps
 from flask import jsonify, request
 from flask import current_app as app
 from models.model import Cliente
+
 
 # https://stackoverflow.com/questions/42248342/yes-no-prompt-in-python3-using-strtobool
 def strtobool(val):
@@ -14,9 +16,9 @@ def strtobool(val):
     'val' is anything else.
     """
     val = val.lower()
-    if val in ('y', 'yes', 't', 'true', 'on', '1'):
+    if val in ('y', 'yes', 't', 'true', 'on', '1', 'activa', 'activo'):
         return True
-    elif val in ('n', 'no', 'f', 'false', 'off', '0'):
+    elif val in ('n', 'no', 'f', 'false', 'off', '0', 'desactiva', 'inactiva', 'inactivo'):
         return False
     else:
         raise ValueError("invalid truth value %r" % (val,))

@@ -8,6 +8,7 @@ reservas = Blueprint('reservas', __name__)
 
 
 @reservas.route('/reservas', methods=['GET'])
+
 @token_required
 def get_reservas(current_usuario):
     if current_usuario:
