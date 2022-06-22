@@ -13,6 +13,7 @@ from multiprocessing import Lock
 from routes.login import login, logout
 from routes.soporte import soporte
 from routes.avisos import avisos
+from routes.pagos import pagos
 
 insert = bool(os.getenv('INSERT_FAKER', False))
 
@@ -72,6 +73,7 @@ app.register_blueprint(login, url_prefix='/api')
 app.register_blueprint(logout, url_prefix='/api')
 app.register_blueprint(soporte, url_prefix='/api')
 app.register_blueprint(avisos, url_prefix='/api')
+app.register_blueprint(pagos, url_prefix='/api')
 
 if insert:
     if os.path.exists("./test.db"):
