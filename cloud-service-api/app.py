@@ -2,6 +2,7 @@ import os
 import time
 import json
 
+
 from utils.db import db
 from utils.fake_data import fakedata
 from flask import Flask
@@ -19,6 +20,7 @@ from routes.clientes import clientes
 from routes.reservas import reservas
 from routes.promociones import promociones
 from routes.estadisticas import estadisticas
+from routes.login import login, logout
 
 
 def init_db():
@@ -47,6 +49,12 @@ app.config['MQTT_PASSWORD'] = os.getenv('MQTT_PASSWORD', '')  # set the password
 app.config['MQTT_KEEPALIVE'] = int(os.getenv('MQTT_KEEPALIVE', "5"))  # set the time interval for sending a ping to the broker to 5 seconds
 app.config['MQTT_TLS_ENABLED'] = os.getenv('MQTT_TLS_ENABLED', False)  # set TLS to disabled for testing purposes
 app.config["ON_TEST"] = bool(os.getenv('ON_TEST', False))
+# secrets.token_hex(32) TODO: regenerate with a real secret on the server
+app.config['SECRET_KEY'] = 'bf9d91da2b703c30e770279ee82b17692def66a956b25b7c2d92f4088dfea293'
+
+# salt = os.urandom(32) TODO: regenerate with a real secret on the servers
+app.config['SALT'] = '\xd2\x1f\xca\x0c\xc5\xe6:)\xa9\xeb<\x07j\r\xb6\xef\xda$\xb8\xc5XJak\xab\x9d\x0e\x99\xaf\xc7\x94\xba'.encode("utf-8")
+app.config["EXPIRE_TOKEN_TIME"] = 2*60  # mins
 
 print(app.config["SQLALCHEMY_DATABASE_URI"])
 
@@ -58,7 +66,8 @@ app.register_blueprint(reservas, url_prefix='/api')
 app.register_blueprint(promociones, url_prefix='/api')
 app.register_blueprint(soporte, url_prefix='/api')
 app.register_blueprint(estadisticas, url_prefix='/api')
-
+app.register_blueprint(login, url_prefix='/api')
+app.register_blueprint(logout, url_prefix='/api')
 
 lock = Lock()
 mqtt = Mqtt(app)
@@ -85,11 +94,11 @@ def handle_mqtt_message(client, userdata, message):
         db.session.add(r)
         db.session.commit()
 
-    # TODO: pasarlo a otro fichero
+#     # TODO: pasarlo a otro fichero
 
 
-if os.path.exists("./test.db"):
-    os.remove("./test.db")
+# if os.path.exists("./test.db"):
+#     os.remove("./test.db")
 
 
 lock.acquire()

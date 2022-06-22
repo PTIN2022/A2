@@ -53,3 +53,6 @@ simulate-averias3:
 simulate-averias4:
 	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/averia" -m '{"idPuntoCarga": 2, "averia": 4}'
 	
+simulate-bateria-vehiculo:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/vehiculo" -m '{"battery": 0, "matricula":"HH12D23"}'
+	

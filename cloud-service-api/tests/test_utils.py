@@ -1,5 +1,5 @@
 import pytest
-from utils.utils import strtobool
+from models.model import strtobool
 
 
 def test_str_bool():

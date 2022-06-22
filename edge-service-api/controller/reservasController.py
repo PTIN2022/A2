@@ -2,7 +2,6 @@ import random
 
 import json
 from utils.db import db
-from flask import current_app
 from datetime import datetime
 import paho.mqtt.publish as publish
 from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
@@ -54,6 +53,8 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
         return {"error": "vehiculo no existe"}
 
     if i:
+        if i.estado == "Inactiva":
+            return {"error": "Station not available, may damaged."}
         random.shuffle(i.cargadores)  # Se hace un shuffle para que no siempre se use el mismo cargador para evitar el desgaste del mismo
         for cargador in i.cargadores:
             if not cargador_encontrado:
