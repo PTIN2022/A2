@@ -3,12 +3,6 @@ info:
   title: API portal de gestion
   version: '1.0'
 servers:
-<<<<<<< HEAD
-  - url: http://127.0.0.1:8080/
-    description: Developments
-  - url: http://craaxkvm.epsevg.upc.es:23701/
-    description: Server
-=======
   - url: http://127.0.0.1:5000/api
     description: Development
   - url: http://127.0.0.1/api
@@ -19,7 +13,6 @@ servers:
     description: Production HTTP
   - url: https://craaxkvm.epsevg.upc.es:23700/api
     description: Production HTTPS
->>>>>>> dbbbb392ee07d4ff953d687ac71f65b4f291caff
 paths:
   # reservas
   /reservas:
