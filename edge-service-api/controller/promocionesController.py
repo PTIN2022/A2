@@ -32,8 +32,6 @@ def post_promociones(descuento, fecha_inicio_post, fecha_fin_post, estado, descr
 
 def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=None, estado=False, descripcion=None):
     try:
-        #p = get_promo_id(id_promo)
-        #p = Promociones(id_promo,p["descuento"], p["fecha_inicio"], p["fecha_fin"], p["estado"], p["descripcion"])
         p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
         if p:
             if descuento:
@@ -46,11 +44,8 @@ def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=No
                 p.estado = strtobool(estado)
             if descripcion:
                 p.descripcion = descripcion
-            #db.session.query().filter_by(id = id_promo).update({"descuento":p["descuento"],"fecha_inicio":p["fecha_inicio"],"fecha_fin":p["fecha_fin"],"estado":p["estado"],"descrpicion":p["descripcion"]})
             db.session.commit()
             return PromocionesSchema().dump(p)
-    #except (KeyError):
-    #    return post_promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
     except (ValueError):
         return None
     return None
@@ -84,9 +79,7 @@ def get_promo_estaciones():
 
 
 def get_promo_estacion(id_electrolinera):
-    print(str(id_electrolinera))
     p = Estacion.query.filter(Estacion.id_estacion == id_electrolinera).one_or_none()
-    print(str(p))
     if p:
         schema = EstacionSchema().dump(p)
         pschema = PromocionesSchema(many=True).dump(p.promociones)
