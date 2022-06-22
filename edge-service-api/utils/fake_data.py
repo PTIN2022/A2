@@ -317,6 +317,7 @@ def fakedata():
         promo = random.choice(promociones)
 
         promo.estaciones.append(estacion)
+        estacion.promociones.append(promo)
 
     db.session.commit()
 

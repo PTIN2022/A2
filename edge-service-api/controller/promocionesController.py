@@ -66,22 +66,24 @@ def delete_promocion(id_promo):
 
 #Mirar estado en rama raul
 def get_promo_estado(estado):
-    print(str(estado))
-    p = Promociones.query.filter(Promociones.estado == estado).all()
+    p = Promociones.query.filter(Promociones.estado == strtobool(estado))
     return PromocionesSchema(many=True).dump(p)
 
 
 def get_promo_estaciones():
     p = Estacion.query.all()
     if p:
-        schema = EstacionSchema(many=True).dump(p)
-        pschema = PromocionesSchema(many=True).dump(p.promociones)
+        Lista_estaciones = EstacionSchema(many=True).dump(p)
+        for estacion in Lista_estaciones:
+            promociones = PromocionesSchema(many=True).dump(estacion.promociones)
         return schema
     return None
 
 
 def get_promo_estacion(id_electrolinera):
+    print(str(id_electrolinera))
     p = Estacion.query.filter(Estacion.id_estacion == id_electrolinera).one_or_none()
+    print(str(p))
     if p:
         schema = EstacionSchema().dump(p)
         pschema = PromocionesSchema(many=True).dump(p.promociones)

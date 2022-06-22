@@ -63,6 +63,7 @@ def modify_promocion(id_promocion):
 
 @promociones.route('/promociones/<id_promocion>', methods=["DELETE"])
 def deleted_promocion(id_promocion):
+    print("asdfjashdfkjahsdklf")
     deleted = control.delete_promocion(id_promocion)
     if deleted:
         return jsonify({"msg": "Promocion deleted succesfully"}), 200
@@ -70,10 +71,9 @@ def deleted_promocion(id_promocion):
         return jsonify({"error": "Promocion not found."}), 404
 
 
-@promociones.route('/promociones/<estado>', methods=['GET'])
+@promociones.route('/promociones/estado/<estado>', methods=['GET'])
 def get_promo_by_estado(estado):
     respuesta = control.get_promo_estado(estado)
-    print(respuesta)
     if respuesta:
         return jsonify(respuesta), 200
     else:
@@ -83,6 +83,7 @@ def get_promo_by_estado(estado):
 @promociones.route('/promociones/estaciones', methods=['GET'])
 def get_promo_by_electrolineras():
     respuesta = control.get_promo_estaciones()
+    print(str(respuesta))
     if respuesta:
         return jsonify(respuesta), 200
     else:
@@ -91,7 +92,9 @@ def get_promo_by_electrolineras():
 
 @promociones.route('/promociones/estaciones/<id_estacion>', methods=['GET'])
 def get_promo_by_electrolinera(id_estacion):
+    print(str(id_estacion))
     respuesta = control.get_promo_estacion(id_estacion)
+    print(str(respuesta))
     if respuesta:
         return jsonify(respuesta), 200
     else:
