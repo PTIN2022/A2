@@ -1,4 +1,4 @@
-from models.model import Estacion, EstacionSchema, Cargador, CargadorSchema
+from models.model import Estacion, EstacionSchema
 from utils.db import db
 from math import radians, cos, sin, asin, sqrt
 

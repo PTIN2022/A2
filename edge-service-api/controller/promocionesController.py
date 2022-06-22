@@ -1,9 +1,7 @@
 from datetime import datetime
-from controller import estacionesController
 from models.model import Promociones, PromocionesSchema, Estacion, EstacionSchema
 from utils.db import db
 from utils.utils import strtobool
-from flask import Blueprint, jsonify, request
 
 
 def get_all_promociones():
@@ -19,6 +17,7 @@ def get_promo_id(id_promo):
 def post_promociones(descuento, fecha_inicio_post, fecha_fin_post, estado, descripcion):
     try:
         # Pasamos a datetime las fechas
+
         fecha_inicio = datetime.strptime(fecha_inicio_post, '%Y-%m-%dT%H:%M:%S')
         fecha_fin = datetime.strptime(fecha_fin_post, '%Y-%m-%dT%H:%M:%S')
         p = Promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
@@ -33,6 +32,8 @@ def post_promociones(descuento, fecha_inicio_post, fecha_fin_post, estado, descr
 def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=None, estado=False, descripcion=None):
     try:
         p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
+        p = get_promo_id(id_promo)
+        p = Promociones(p["descuento"], p["fecha_inicio"], p["fecha_fin"], p["estado"], p["descripcion"])
         if p:
             if descuento:
                 p.descuento = descuento
@@ -59,7 +60,7 @@ def delete_promocion(id_promo):
         return True
     return False
 
-#Mirar estado en rama raul
+
 def get_promo_estado(estado):
     p = Promociones.query.filter(Promociones.estado == strtobool(estado))
     return PromocionesSchema(many=True).dump(p)
@@ -72,9 +73,9 @@ def get_promo_estaciones():
         for estacion in lista_estaciones:
             estacion_dict = EstacionSchema().dump(estacion)
             promociones = PromocionesSchema(many=True).dump(estacion.promociones)
-            estacion_dict["promociones"] = promociones 
+            estacion_dict["promociones"] = promociones
             estacion_with_promos.append(estacion_dict)
-        return estacion_with_promos 
+        return estacion_with_promos
     return None
 
 
