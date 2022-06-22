@@ -16,7 +16,7 @@ def get_estacion_by_id(id):
         estacion_dict["Promoción activa"] = []
         if i.promociones:
             for promocion in i.promociones:
-                if promocion.estado == True:
+                if promocion.estado:
                     estacion_dict["Promoción activa"] = PromocionesSchema().dump(promocion)
         return estacion_dict
     return None
