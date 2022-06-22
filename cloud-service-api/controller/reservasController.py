@@ -75,7 +75,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                         precio_carga_actual -= desc
                         i = Reserva(
                         fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, True, tarifa,
-                        asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari, pro.id_promo
+                        asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari
                         )
                     else:
                         i = Reserva(
