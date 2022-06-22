@@ -56,3 +56,11 @@ simulate-averias4:
 simulate-bateria-vehiculo:
 	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/vehiculo" -m '{"battery": 0, "matricula":"HH12D23"}'
 	
+simulate-bateria-vehiculo-sub:
+	mosquitto_sub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/vehiculo/{matricula}"
+	
+simulate-carga-final-vehiculo:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/consumo" -m '{"idPuntoCarga": 2, "kwh": 432,"matricula":"34543FGC"}'
+	
+simulate-cargador-adecuado:
+	mosquitto_pub -h test.mosquitto.org -p 1883 -q 2 -t "gesys/edge/puntoCarga/vehiculo" -m '{"idPuntoCarga": 2, "matricula":"34543FGC"}'
