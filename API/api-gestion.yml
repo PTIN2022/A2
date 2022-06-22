@@ -1244,6 +1244,7 @@ paths:
               type: object
               required:
                   - id_estacion
+                  - id_promo
                   - fecha_inicio
                   - fecha_final
                   - id_vehiculo
@@ -1257,6 +1258,8 @@ paths:
               properties:
                 id_estacion:
                   type: string
+                id_promo:
+                  type: integer
                 fecha_inicio:
                   type: string
                 fecha_final:
@@ -1279,6 +1282,7 @@ paths:
                   type: boolean
               example:
                 id_estacion: "VG1"
+                id_promo: 1
                 fecha_inicio: "18-04-2022 11:00"
                 fecha_final: "18-04-2022 18:00"
                 id_vehiculo: "LKE2378"
