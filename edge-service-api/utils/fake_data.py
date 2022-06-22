@@ -398,16 +398,16 @@ def fakedata():
     # ###Modelos
 
     model_list = [
-        '500e Cabrio el\xc3\xa9ctrico',
-        'Taycan el\xc3\xa9ctrico',
-        'e-tron GT el\xc3\xa9ctrico',
-        'Leaf el\xc3\xa9ctrico',
-        'Ioniq el\xc3\xa9ctrico',
-        'i3 el\xc3\xa9ctrico',
-        'ID.3 el\xc3\xa9ctrico',
-        '2 el\xc3\xa9ctrico',
-        'UX300e el\xc3\xa9ctrico',
-        'EV6 el\xc3\xa9ctrico',
+        '500e Cabrio electrico',
+        'Taycan electrico',
+        'e-tron GT electrico',
+        'Leaf electrico',
+        'Ioniq electrico',
+        'i3 electrico',
+        'ID.3 electrico',
+        '2 electrico',
+        'UX300e electrico',
+        'EV6 electrico',
         ]
 
     mod = Modelo(model_list[0], 'Fiat', False, 42)
