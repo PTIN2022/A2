@@ -1622,7 +1622,285 @@ paths:
               examples:
                 error:
                   value: '{"error": "Aviso have been deleted."}'
-                  
+
+#######################################################################################################
+# vehiculos
+  /vehiculos:
+    get:
+      summary: Obtiene todos los vehiculos de todos los clientes
+      tags:
+        - Vehiculos
+      responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Con vehiculos:
+                    value:
+                          [
+                            {
+                              "matricula": "1111PRV",
+                              "porcentaje_bat": 55,
+                            },
+                            {
+                              "matricula": "1515PVR",
+                              "porcentaje_bat": 10,
+                            }
+                          ]
+                  Sin vehiculos:
+                    value: '[]'
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter reserva:
+                    value: >-
+                      {"error": "Malformed request syntax."}
+    # añadimos un nuevo vehiculo
+    post:
+      summary: Inserta un nuevo vehiculo
+      tags:
+      - Vehiculos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                  - matricula
+                  - modelo
+                  - porcentaje_bat
+              properties:
+                matricula:
+                  type: string
+                modelo:
+                  type: string
+                porcentaje_bat:
+                  type: integer
+              example:
+                matricula: "6493CZL"
+                modelo: "Golf"
+                porcentaje_bat: 15
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Meter vehiculo:
+                  value:  >-
+                      {
+                        "matricula": "1111PRV",
+                        "id_cliente": "1"
+                        "capacidad": "21321",
+                        "marca": "Toyota",
+                        "modelo": "Celica",
+                        "potencia_carga": True,
+                        "porcentaje_bat": 55,
+                      }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter vehiculo:
+                  value: >-
+                    {"error": "Malformed request syntax."}
+
+  /vehiculos/{matricula}:
+        # pedimos unvehiculo dada su matricula
+        get:
+          summary: Obtiene un vehiculo dada su matricula
+          tags:
+            - Vehiculos
+          parameters:
+            - in: path
+              name: matricula
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: Retorna el vehiculo correctamente
+              content:
+                application/json:
+                  examples:
+                    Vehiculo existe:
+                      value:  >-
+                          {
+                            "matricula": "1515PVR",
+                            "id_cliente": "2"
+                            "capacidad": "21321",
+                            "marca": "Nissan",
+                            "modelo": "Skyline",
+                            "potencia_carga": False,
+                            "porcentaje_bat": 10,
+                          }
+                    Vehiculo no existe:
+                      value: '[]'
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "User not authenticated."}
+
+            '404':
+              description: Not found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "Vehicle not found."}
+        # borramos vehiculo
+        delete: 
+          summary: Elimina vehiculo dada matricula
+          tags:
+            - Vehiculos
+          parameters:
+            - in: path
+              name: matricula
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: Eliminado vehiculo /delete
+              content:
+                application/json:
+                  examples:
+                    Vehiculo encontrado:
+                      value: "{\"msg\": \"Data deleted correctly.\"}"
+                    Vehiculo no encontrado:
+                      value: '[]'
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "User not authenticated."}
+            '404':
+              description: Not Found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "Vehiculo not found."}
+          # editar un vehiculo
+        put:
+            summary: Modificar vehiculo
+            tags:
+            - Vehiculos
+            requestBody:
+              required: true
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    required:
+                      - matricula
+                    properties:
+                      matricula:
+                        type: string
+                      porcentaje_bat:
+                        type: integer
+                    example:
+                      matricula: "1515PVR"
+                      porcentaje_bat: 10
+            parameters:
+            - in: path
+              name: matricula
+              required: true
+              schema:
+                type: string
+            responses:
+              #respuesta correcta
+              '200':
+                description: Vehiculo actualizado
+                content:
+                  application/json:
+                    examples:
+                      Incidencia actualizada:
+                        value: >-
+                            {
+                              "matricula": "1515PVR",
+                              "porcentaje_bat": 10
+                            }
+              '400':
+                description: Peticion incorrecta
+                content:
+                  application/json:
+                    examples:
+                      Error al modificar vehiculo:
+                        value: >-
+                          {"error": "Malformed request syntax."}
+              '404':
+                description: Not Found
+                content:
+                  application/json:
+                    examples:
+                      error:
+                        value: >-
+                          {"error": "vehiculo not found."}
+
+  /vehiculos/cliente/{id_cliente}:
+        # pedimos un vehiculo , dado su cliente
+        get:
+          summary: Obtiene un vehiculo dado el id cliente.
+          tags:
+            - Vehiculos
+          parameters:
+            - in: path
+              name: id_cliente
+              required: true
+              schema:
+                type: integer
+          responses:
+            '200':
+              description: Retorna el vehiculo correctamente
+              content:
+                application/json:
+                  examples:
+                    Vehiculo existe:
+                      value:  >-
+                          {
+                            "matricula": "1515PVR",
+                            "id_cliente": "2"
+                            "capacidad": "21321",
+                            "marca": "Nissan",
+                            "modelo": "Skyline",
+                            "potencia_carga": False,
+                            "porcentaje_bat": 10,
+                          }
+                    Vehiculo no existe:
+                      value: '[]'
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "User not authenticated."}
+
+            '404':
+              description: Not found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "Vehicle not found."}
+                          
 ##########################################################################################
   /login:
     post:

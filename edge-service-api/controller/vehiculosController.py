@@ -12,22 +12,24 @@ def get_all_vehiculos():
     return None
 
 
-def get_vehiculo_by_matricula(matricula):
+def get_vehiculo_by_matricula(cliente, matricula):
     i = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()
     if i:
-        vehiculo = VehiculoSchema().dump(i)
-        m = Modelo.query.filter(Modelo.modelo == i.modelos).one_or_none()
-        vehiculo["modelo"] = []
-        vehiculo["modelo"].append(ModeloSchema().dump(m))
-        return vehiculo
-    
+        if i in cliente.vehiculos:
+            vehiculo = VehiculoSchema().dump(i)
+            m = Modelo.query.filter(Modelo.modelo == i.modelos).one_or_none()
+            vehiculo["modelo"] = []
+            vehiculo["modelo"].append(ModeloSchema().dump(m))
+            return vehiculo
+        return None
     return None
 
 
-def post_vehiculo(matricula, modelo, porcentaje_bat):
+def post_vehiculo(cliente, matricula, modelo, porcentaje_bat):
     mod = Modelo.query.filter(Modelo.modelo == modelo).one_or_none()
     if mod:
         v = Vehiculo(matricula, porcentaje_bat, modelo)
+        cliente.vehiculos.append(v)
         db.session.add(v)
         db.session.commit()
         return VehiculoSchema().dump(v)
@@ -35,10 +37,10 @@ def post_vehiculo(matricula, modelo, porcentaje_bat):
     return None
 
 
-def get_vehiculo_by_idcliente(id_cliente):
-    i = Vehiculo.query.filter(Vehiculo.id_cliente == id_cliente)
-    if i:
-        Vehiculo_dict = VehiculoSchema().dump(i)
+def get_vehiculo_by_idcliente(cliente):
+    if cliente:
+        v = cliente.vehiculos
+        Vehiculo_dict = VehiculoSchema(many=True).dump(v)
         return Vehiculo_dict
 
     return None
@@ -53,13 +55,11 @@ def delete_vehiculo_matr(matricula):
     return False
 
 
-def modify_vehiculo(matricula, porcentaje_bat):
+def modify_vehiculo(cliente, matricula, porcentaje_bat):
     i = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()
     if i:
         if porcentaje_bat:
-            print ("aaa")
-            i.porcentaje_bat = porcentaje_bat
-            print ("ccccc", i.porcentaje_bat)
+            i.procentaje_bat = porcentaje_bat
         db.session.commit()
         return VehiculoSchema().dump(i)
     return None
