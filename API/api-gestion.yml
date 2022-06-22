@@ -2124,7 +2124,7 @@ paths:
                           "cantidad_usados": 30,
                           "descripcion": "20% de descuento en la electrolinera de Sitges!",
                           "descuento": 25,
-                          "estado": "activa",
+                          "estado": "inactiva",
                           "fecha_inicio": "2022-04-18T10:00:00",
                           "fecha_fin": "2022-04-18T19:00:00",
                           "id_promo": 3
@@ -2190,7 +2190,7 @@ paths:
                         "cantidad_usados": 0,
                         "descripcion": "20% de descuento en la electrolinera de Sitges!",
                         "descuento": 25,
-                        "estado": "activa",
+                        "estado": "inactiva",
                         "fecha_inicio": "2022-04-18T10:00:00",
                         "fecha_fin": "2022-04-18T19:00:00",
                         "id_promo": 3
@@ -2389,6 +2389,50 @@ paths:
                   error:
                     value: >-
                       {"error": "User not authenticated."}
+  /promociones/{id_promo}/{id_estacion}/activar:
+    put:
+    # modificar una promocion dado su id, tambien sirve para añadir estacion
+      summary: Activar una promocion dada una estacion y desactivar las demas
+      tags:
+        - Promociones
+      parameters:
+        - in: path
+          name: id_promo
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: id_estacion
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Promo:
+                  value: >-
+                      {
+                        "cantidad_usados": 20,
+                        "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                        "descuento": 25,
+                        "estado": "activa",
+                        "fecha_inicio": "2022-04-18T10:00:00",
+                        "fecha_fin": "2022-04-18T19:00:00",
+                        "id_promo": 3,
+                        "id_estacion": 3
+                      }
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Promocion not found."}
+
   /promociones/{id}:
   # pedimos una promocion dado su id.
     get:
@@ -2445,7 +2489,7 @@ paths:
       
     # modificar una promocion dado su id, tambien sirve para añadir estacion
     put:
-      summary: Modifica una promocion / añade estacion
+      summary: Modificar descripcion,descuento,fechas o cantidad de veces usado / añadir estacion
       tags:
         - Promociones
       parameters:
@@ -2464,7 +2508,6 @@ paths:
                     - id_estacion
                     - descripcion
                     - descuento
-                    - estado
                     - fecha_inicio
                     - fecha_fin
                     - cantidad_usados
@@ -2479,15 +2522,12 @@ paths:
                       type: string
                     descripcion:
                       type: string
-                    estado:
-                      type: string
                     cantida_usados:
                       type: integer
                   example:
                     id_estacion: 2
                     descripcion: "30% de descuento en la electrolinera de Sitges!"
                     descuento: 30
-                    estado: "activa"
                     fecha_inicio: "2022-04-18T10:00:00"
                     fecha_fin: "2022-04-18T19:00:00"
                     cantidad_usados: 23
@@ -2503,7 +2543,7 @@ paths:
                         "cantidad_usados": 20,
                         "descripcion": "30% de descuento en la electrolinera de Sitges!",
                         "descuento": 30,
-                        "estado": "activa",
+                        "estado": "inactiva",
                         "fecha_inicio": "2022-04-18T10:00:00",
                         "fecha_fin": "2022-04-18T19:00:00",
                         "id_promo": 3

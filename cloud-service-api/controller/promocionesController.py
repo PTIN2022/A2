@@ -49,6 +49,7 @@ def post_promociones(estaciones, descuento, fecha_inicio, fecha_fin, estado, des
     # Pasamos a datetime las fechas y creamos promo
     fecha_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%dT%H:%M:%S')
     fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%dT%H:%M:%S')
+    estado='inactiva'
     p = Promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
     db.session.add(p)
     db.session.commit()
@@ -60,7 +61,7 @@ def post_promociones(estaciones, descuento, fecha_inicio, fecha_fin, estado, des
     return PromocionesSchema().dump(p)
 
 
-def modify_promociones(id_promo, id_estacion=None, descuento=None, fecha_inicio=None, fecha_fin=None, estado=None, descripcion=None, cantidad_usados=None):
+def modify_promociones(id_promo, id_estacion=None, descuento=None, fecha_inicio=None, fecha_fin=None, descripcion=None, cantidad_usados=None):
     p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
     if p:
         i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
@@ -76,8 +77,6 @@ def modify_promociones(id_promo, id_estacion=None, descuento=None, fecha_inicio=
         if fecha_fin:
             fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%dT%H:%M:%S')
             p.fecha_fin = fecha_fin
-        if estado:
-            p.estado = estado
         if descripcion:
             p.descripcion = descripcion
         if cantidad_usados:
@@ -85,6 +84,40 @@ def modify_promociones(id_promo, id_estacion=None, descuento=None, fecha_inicio=
         db.session.commit()
         return PromocionesSchema().dump(p)
     return None
+
+
+def modify_estado(id_promo, id_estacion):
+    
+    p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
+    i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
+    if not p:
+        return "error: Promocion not found."
+    if not i:
+        return "error: Estacion not found."
+    if i in p.estaciones:
+    # lista vacia donde estaran las promos que pertence a la estacion con id == id_estacion
+        respuesta = []
+        p = Promociones.query.all()
+        for promo in p:
+            a = promo.estaciones
+            estac = EstacionSchema(many=True).dump(a)
+            for i in estac:
+                if int(i["id_estacion"]) == int(id_estacion):
+                # añadimos a la lista la promo si coinciden los id
+                    respuesta += [promo]
+        for promo in respuesta:
+            print(promo.id_promo)
+            print(id_promo)
+            if int(promo.id_promo) == int(id_promo):
+                promo.estado = 'activa'
+                db.session.commit()
+                print('He entrado')
+            else:
+                promo.estado = 'inactiva'
+                db.session.commit()
+        return True
+    else:
+        return None
 
 
 def delete_promocion(id_promo):

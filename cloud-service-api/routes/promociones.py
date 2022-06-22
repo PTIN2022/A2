@@ -76,7 +76,6 @@ def modify_promocion(id_promo):
     descuento = None
     fecha_inicio = None
     fecha_fin = None
-    estado = None
     descripcion = None
     cantidad_usados = None
 
@@ -92,19 +91,26 @@ def modify_promocion(id_promo):
         fecha_inicio = request.json["fecha_inicio"]
     if "fecha_fin" in request.json:
         fecha_fin = request.json["fecha_fin"]
-    if "estado" in request.json:
-        estado = request.json["estado"]
     if "descripcion" in request.json:
         descripcion = request.json["descripcion"]
     if "cantidad_usados" in request.json:
         cantidad_usados = request.json["cantidad_usados"]
 
-    respuesta = control.modify_promociones(id_promo, id_estacion, descuento, fecha_inicio, fecha_fin, estado, descripcion, cantidad_usados)
+    respuesta = control.modify_promociones(id_promo, id_estacion, descuento, fecha_inicio, fecha_fin, descripcion, cantidad_usados)
 
+    if respuesta:
+        return jsonify({"msg": "Promocion activated succesfully"}), 200
+    else:
+        return jsonify({"error": "Promocion not found."}), 404
+
+
+@promociones.route('/promociones/<id_promo>/<id_estacion>/activar', methods=["PUT"])
+def modificar_estado(id_promo, id_estacion):
+    respuesta = control.modify_estado(id_promo, id_estacion)
     if respuesta:
         return jsonify(respuesta), 200
     else:
-        return jsonify({"error": "Promocion not found."}), 404
+        return jsonify({"error": "Promocion not found for this estacion."}), 404
 
 
 @promociones.route('/promociones/<id_promo>', methods=["DELETE"])
@@ -116,7 +122,7 @@ def deleted_promocion(id_promo):
         return jsonify({"error": "Promocion not found."}), 404
 
 
-@promociones.route('/promociones/<id_promo>/<id_estacion>', methods=["DELETE"])
+@promociones.route('/promociones/<id_promo>/<id_estacion>/', methods=["DELETE"])
 def deleted_estacion_from_promocion(id_promo, id_estacion):
     i = control.Estacion.query.filter(control.Estacion.id_estacion == id_estacion).one_or_none()
     if not i:
