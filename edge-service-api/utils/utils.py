@@ -5,7 +5,7 @@ import jwt
 from functools import wraps
 from flask import jsonify, request
 from flask import current_app as app
-from models.model import Cliente
+# from models.model import Cliente
 
 
 # https://stackoverflow.com/questions/42248342/yes-no-prompt-in-python3-using-strtobool
