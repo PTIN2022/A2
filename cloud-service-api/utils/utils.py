@@ -35,4 +35,4 @@ def encrypt_password(password):
         app.config['SALT'],  # Provide the salt
         100000  # It is recommended to use at least 100,000 iterations of SHA-256
     )
-    return key
+    return str(key)
