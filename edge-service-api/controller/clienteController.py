@@ -1,6 +1,5 @@
 from utils.db import db
 from models.model import Cliente, ClienteSchema
-from utils.utils import encrypt_password
 
 
 def get_all_clientes():
@@ -19,7 +18,6 @@ def get_cliente_dni(DNI):
 
 
 def post_cliente(nombre, apellido, email, DNI, foto, telefono, username, password):
-    password = encrypt_password(password)
     c = Cliente(nombre, apellido, email, DNI, foto, telefono, username, password)
     db.session.add(c)
     db.session.commit()

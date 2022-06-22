@@ -84,7 +84,10 @@ try:
 finally:
     lock.release()
 
-
+    e = Estacion(1, "Estacion Vilanova", 41, 32, "Rambla de L'exposicio", 20, "Zona residencial", 1, 1, "+34762487248", "Vilanova i la geltru", "Espanya")
+    print(e)
+    p1 = Cargador("cargando", "coordenada", "USB-c", e.id_estacion)
+    p2 = Cargador("cargando", "coordenada", "USB-c", e.id_estacion)
 
 if __name__ == "__main__":  # pragma: no cover
     print("=========================================")

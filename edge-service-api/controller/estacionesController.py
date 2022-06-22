@@ -1,6 +1,5 @@
-from models.model import Estacion, EstacionSchema
+from models.model import Estacion, EstacionSchema, CargadorSchema
 from utils.db import db
-from math import radians, cos, sin, asin, sqrt
 
 
 def get_all_estaciones():
@@ -17,7 +16,7 @@ def get_estacion_by_id(id):
     return None
 
 
-def get_estacion_by_coor(lat_str=0, long_str=0, ratio=0):
+def get_estacion_by_coor(lat_str=0, long_str=0):
     lat = float(lat_str)
     long = float(long_str)
     lista_estaciones = {}
@@ -28,11 +27,11 @@ def get_estacion_by_coor(lat_str=0, long_str=0, ratio=0):
         for i in range(len(coor)):
             tupla = [coor[i][0], coor[i][1], coor[i][2]]
             points.append(tupla)
-        lista_order = get_ordered_list(points, lat, long, ratio)
-        print("hola")
-        for i in lista_order:
-            print(i)
-        for i in range(len(lista_order)):
+        lista_order = get_ordered_list(points, lat, long)
+        valor = 5
+        if len(lista_order) < 5:
+            valor = len(lista_order)
+        for i in range(valor):
             i = Estacion.query.filter(Estacion.id_estacion == coor[i][2]).one_or_none()  # TODO: esto esta bien?
             est_obj = EstacionSchema().dump(i)
             if est_obj:
@@ -40,26 +39,6 @@ def get_estacion_by_coor(lat_str=0, long_str=0, ratio=0):
     return lista_estaciones
 
 
-def get_ordered_list(points, x, y, ratio):
+def get_ordered_list(points, x, y):
     points.sort(key=lambda p: (p[0] - x)**2 + (p[1] - y)**2)
-    points_ratio = []
-    for point in points:
-        print(point)
-        distance = haversine(x, y, point[0], point[1])
-        print(distance)
-        if int(ratio) >= distance:
-            points_ratio.append(point)
-        else:
-            break
-    return points_ratio
-
-
-def haversine(lat1, lon1, lat2, lon2):
-    R = 6372.8
-    dLat = radians(lat2 - lat1)
-    dLon = radians(lon2 - lon1)
-    lat1 = radians(lat1)
-    lat2 = radians(lat2)
-    a = sin(dLat/2)**2 + cos(lat1)*cos(lat2)*sin(dLon/2)**2
-    c = 2*asin(sqrt(a))
-    return R * c
+    return points
