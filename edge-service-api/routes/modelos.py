@@ -1,6 +1,5 @@
 import controller.modelosController as control
 from utils import errors
-from datetime import datetime
 from flask import Blueprint, jsonify, request
 
 modelos = Blueprint('modelos', __name__)

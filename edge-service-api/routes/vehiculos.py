@@ -1,6 +1,5 @@
 import controller.vehiculosController as control
 from utils import errors
-from datetime import datetime
 from flask import Blueprint, jsonify, request
 from utils.utils import token_required
 
@@ -16,7 +15,7 @@ def get_all_vehiculos(current_usuario):
         return jsonify(respuesta)
     else:
         return jsonify({"error": "User not authorized."}), 401
-    
+
 
 # to do
 @vehiculos.route('/vehiculos', methods=['POST'])
@@ -45,9 +44,9 @@ def post_vehiculos(current_usuario):
 @token_required
 # devolver el vehiculo con matricula solo si esta relacionado con su token
 def get_vehiculos_by_matricula(current_usuario, matricula):
-    if current_usuario:    
+    if current_usuario:
         respuesta = control.get_vehiculo_by_matricula(current_usuario, matricula)
-        if respuesta != None:
+        if respuesta:
             return jsonify(respuesta), 200
         else:
             return jsonify({"error": "Vehiculo not found or Vehicle is not yours."}), 404

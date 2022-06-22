@@ -1,14 +1,12 @@
 from utils.db import db
 from models.model import Vehiculo, VehiculoSchema
-from models.model import Cliente
-from models.model import Reserva
 from models.model import Modelo, ModeloSchema
+
 
 def get_all_vehiculos():
     i = Vehiculo.query.all()
     if i:
         return VehiculoSchema(many=True).dump(i)
-        
     return None
 
 

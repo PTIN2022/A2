@@ -1,11 +1,11 @@
 from utils.db import db
 from models.model import Modelo, ModeloSchema
 
+
 def get_all_modelos():
     i = Modelo.query.all()
     if i:
         return ModeloSchema(many=True).dump(i)
-        
     return None
 
 
