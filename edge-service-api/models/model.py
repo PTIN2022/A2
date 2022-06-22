@@ -183,7 +183,7 @@ class Usuari_t(db.Model):
     foto = db.Column(db.String(300), nullable=False)
     telefono = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(60), nullable=False)
-    password = db.Column(db.String(60), nullable=False)
+    password = db.Column(db.String(300), nullable=False)
     type = db.Column(db.String(50))
 
     mensajes = db.relationship("Mensaje",  backref="usuari_t")
