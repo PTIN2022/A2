@@ -2,7 +2,7 @@ from utils.db import db
 from datetime import datetime
 import random
 
-from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
+from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo, Promociones, PromocionesSchema
 
 
 def get_all_reservas():
@@ -39,7 +39,7 @@ def get_reservas_dni(dni):
     return res
 
 
-def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI):
+def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI, id_promo=None):
     cliente = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
     if not cliente:
         return None
@@ -48,6 +48,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
     cargador_encontrado = False
     cl = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
     vh = Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none()
+    pro = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
     if not cl or not vh:
         return None
     if i:
@@ -67,10 +68,17 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                             cargador_ocupado = True
 
                 if not cargador_ocupado:
-                    i = Reserva(
+                    if pro:
+                        print(pro)
+                        i = Reserva(
+                        fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, True, tarifa,
+                        asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari, pro.id_promo
+                        )
+                    else:
+                        i = Reserva(
                         fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, True, tarifa,
                         asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari
-                    )
+                        )
                     db.session.add(i)
                     db.session.commit()
                     cargador_encontrado = True

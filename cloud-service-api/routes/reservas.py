@@ -15,8 +15,10 @@ def get_reservas():
 @reservas.route('/reservas', methods=['POST'])
 def post_reservas():
     try:
-        print(request.json)
+        id_promo = None
         estacion = request.json["id_estacion"]
+        if "id_promo" in request.json:
+            id_promo = request.json["id_promo"]
         fecha_inicio = request.json["fecha_inicio"]  # Dia y hora
         fecha_final = request.json["fecha_final"]
         fecha_final_str = datetime.strptime(fecha_final, '%d-%m-%Y %H:%M')
@@ -30,7 +32,7 @@ def post_reservas():
         precio_carga_actual = request.json["precio_carga_actual"]
         estado_pago = request.json["estado_pago"]
         # TODO: comprobar fecha final es mayor fecha inicial
-        id = control.post_reserva(estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI)
+        id = control.post_reserva(estacion, matricula, tarifa, asistida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado_pago, fecha_inicio_str, fecha_final_str, DNI, id_promo)
         respuesta = control.get_reservas_id(id)
         return jsonify(respuesta)
 

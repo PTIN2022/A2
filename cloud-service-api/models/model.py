@@ -111,8 +111,9 @@ class Reserva(db.Model):
     id_vehiculo = db.Column(db.String(25), db.ForeignKey(
         "vehiculo.matricula"), nullable=False)
     id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
-
+    id_promo = db.Column(db.Integer, db.ForeignKey('promociones.id_promo'), nullable=False)
     avisos = db.relationship("Aviso", backref="reserva")
+    
 
     def __init__(self, fecha_entrada, fecha_salida, porcentaje_carga, precio_carga_completa, precio_carga_actual, estado, tarifa, asistida, estado_pago, id_cargador, id_vehiculo, id_cliente):
         self.fecha_entrada = fecha_entrada
