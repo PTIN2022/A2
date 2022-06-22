@@ -1,5 +1,4 @@
 from utils.db import db
-# from utils.utils import strtobool
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 

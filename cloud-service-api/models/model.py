@@ -1,7 +1,7 @@
 from utils.db import db
-from utils.utils import strtobool
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+
 
 class Averia(db.Model):
 
@@ -174,8 +174,6 @@ class Ticket(db.Model):
         self.id_cliente = id_cliente
 
 
-
-
 class Usuari_t(db.Model):
     id_usuari = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(60), nullable=False)
@@ -302,9 +300,11 @@ class ClienteSchema(SQLAlchemyAutoSchema):
         model = Cliente
         exclude = ('password',)
 
+
 class TicketSchema(SQLAlchemyAutoSchema):
     class Meta:
         fields = ('id_ticket', 'fecha', 'asunto', 'estado', 'mensaje', 'id_cliente')
+
 
 class Modelo(db.Model):
     modelo = db.Column(db.String(100), nullable=False, primary_key=True)
@@ -424,6 +424,22 @@ class Estacion(db.Model):
 class EstacionSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Estacion
+
+
+# https://stackoverflow.com/questions/42248342/yes-no-prompt-in-python3-using-strtobool
+def strtobool(val):
+    """Convert a string representation of truth to true (1) or false (0).
+    True values are 'y', 'yes', 't', 'true', 'on', and '1'; false values
+    are 'n', 'no', 'f', 'false', 'off', and '0'.  Raises ValueError if
+    'val' is anything else.
+    """
+    val = val.lower()
+    if val in ('y', 'yes', 't', 'true', 'on', '1', 'activa', 'activo'):
+        return True
+    elif val in ('n', 'no', 'f', 'false', 'off', '0', 'desactiva', 'inactiva', 'inactivo'):
+        return False
+    else:
+        raise ValueError("invalid truth value %r" % (val,))
 
 
 class Promociones(db.Model):

@@ -16,9 +16,9 @@ def get_reservas_id(id):
     if i:
         j = Cargador.query.filter(Cargador.id_cargador == i.id_cargador).one_or_none()
     if j:
-        valor=j.estacion_id
+        valor = j.estacion_id
     else:
-        valor=None
+        valor = None
     return ReservaSchema().dump(i), valor
 
 
@@ -86,7 +86,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
         return {"error": "Cargador for this station not available. "}
 
 
-def put_reserva_by_id(id, matricula = None, tarifa = None, asistida = None, porcentaje_carga = None, precio_carga_completa = None, precio_carga_actual = None, estado_pago = None, fecha_inicio_str = None, fecha_final_str = None):
+def put_reserva_by_id(id, matricula=None, tarifa=None, asistida=None, porcentaje_carga=None, precio_carga_completa=None, precio_carga_actual=None, estado_pago=None, fecha_inicio_str=None, fecha_final_str=None):
     i = Reserva.query.filter(Reserva.id_reserva == id).one_or_none()
     if i:
         if matricula:

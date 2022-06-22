@@ -17,6 +17,7 @@ def get_estacion_by_id(id):
 
     return None
 
+
 def put_estacion_by_id(id, latitud=None, longitud=None, capacidad=None, direccion=None, estado=None, telefono=None, potencia_contratada=None, potencia_usada=None, potencia_actual=None, zona=None):
     i = Estacion.query.filter(Estacion.id_estacion == id).one_or_none()
     if i:

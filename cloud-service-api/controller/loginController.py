@@ -4,7 +4,7 @@ from flask import current_app as app
 from datetime import datetime, timedelta
 from utils.utils import encrypt_password
 from models.model import Trabajador
-from datetime import datetime
+
 
 def expire_date(minutes):
     now = datetime.utcnow()
