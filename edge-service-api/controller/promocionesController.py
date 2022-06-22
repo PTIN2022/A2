@@ -71,12 +71,15 @@ def get_promo_estado(estado):
 
 
 def get_promo_estaciones():
-    p = Estacion.query.all()
-    if p:
-        Lista_estaciones = EstacionSchema(many=True).dump(p)
-        for estacion in Lista_estaciones:
+    lista_estaciones = Estacion.query.all()
+    if lista_estaciones:
+        estacion_with_promos = []
+        for estacion in lista_estaciones:
+            estacion_dict = EstacionSchema().dump(estacion)
             promociones = PromocionesSchema(many=True).dump(estacion.promociones)
-        return schema
+            estacion_dict["promociones"] = promociones 
+            estacion_with_promos.append(estacion_dict)
+        return estacion_with_promos 
     return None
 
 
@@ -87,5 +90,6 @@ def get_promo_estacion(id_electrolinera):
     if p:
         schema = EstacionSchema().dump(p)
         pschema = PromocionesSchema(many=True).dump(p.promociones)
+        schema["promociones"] = pschema
         return schema
     return None
