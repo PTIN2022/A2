@@ -464,3 +464,18 @@ class Promociones(db.Model):
 class PromocionesSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Promociones
+
+
+class Cupon(db.Model):
+    cupon = db.Column(db.String(20), nullable=False, primary_key=True)
+    id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
+    estado = db.Column(db.String(30), nullable=False)
+
+    def __init__(self, cupon, id_cliente, estado="Activa"):
+        self.cupon = cupon
+        self.id_cliente = id_cliente
+        self.estado = estado
+
+class CuponSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Cupon
