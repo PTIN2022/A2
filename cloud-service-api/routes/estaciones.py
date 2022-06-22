@@ -34,6 +34,7 @@ def get_estacion_by_id(current_trabajador, id):
     else:
         return jsonify({"error": "User not authorized."}), 401
 
+
 @estaciones.route('/estaciones/<id>', methods=["PUT"])
 @token_required
 def put_estacion_by_id(current_trabajador, id):
@@ -68,13 +69,14 @@ def put_estacion_by_id(current_trabajador, id):
             potencia_actual = request.json["potencia_actual"]
         if "zona" in request.json:
             zona = request.json["zona"]
-        respuesta= control.put_estacion_by_id(int(id), latitud, longitud, capacidad, direccion, estado, telefono, potencia_contratada, potencia_usada, potencia_actual, zona)
+        respuesta = control.put_estacion_by_id(int(id), latitud, longitud, capacidad, direccion, estado, telefono, potencia_contratada, potencia_usada, potencia_actual, zona)
         if respuesta:
             return jsonify(respuesta), 200
         else:
             return jsonify({"error": "Estacion not found"}), 404
     else:
         return jsonify({"error": "User not authorized."}), 401
+
 
 @estaciones.route('/estaciones/<id>/<id_plaza>', methods=["DELETE"])
 @token_required

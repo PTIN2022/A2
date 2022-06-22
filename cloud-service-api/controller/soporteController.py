@@ -4,7 +4,6 @@ from models.model import ClienteSchema, Ticket, TicketSchema, Mensaje, MensajeSc
 
 def get_all_soporte():
     i = Ticket.query.all()
-    varlist=['fecha', 'asunto', 'mensaje', 'estado', 'id_cliente']
     return TicketSchema(many=True).dump(i)
 
 
@@ -38,6 +37,7 @@ def post_soporte_by_ticket(mensaje, fecha, ticket_id, id_user):
         return MensajeSchema().dump(s)
     else:
         return None
+
 
 def put_soporte_by_ticket(ticket_id, estado=None):
     soporte = Ticket.query.filter(Ticket.id_ticket == ticket_id).one_or_none()

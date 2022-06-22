@@ -1066,8 +1066,564 @@ paths:
                   value: >-
                     {"error": "Client not found."}
 
-#######################################################################################################
+#######################################################################################################`
 #########################################################################################
+  
+  /soporte:
+    get:
+        summary: (NOT USE ME, ONLY FOR CHECKS) Obtiene una lista de peticiones que se han hecho al servicio técnico
+        tags: 
+        - Soporte tecnico
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Peticion a soporte:
+                    value: {
+                            "Mensajes": [
+                            ],
+                            "asunto": "App no me va",
+                            "estado": En curso,
+                            "fecha": "2022-05-26T16:52:37.020462",
+                            "id_ticket": 1,
+                            "mensaje": "Problema con la aplicación movil"
+                          }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+  # Creacion de una ayuda o ticket al soporte tecnico
+    post:
+      summary: Publica una petición a soporte tecnico
+      tags:
+        - Soporte tecnico
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - descripcion
+                - estado
+                - cliente
+                - asunto
+              properties:
+                descripcion:
+                  type: string
+                asunto:
+                  type: string
+                cliente: 
+                  type: integer
+            example:
+              asunto: "App no me va"
+              descripcion: "Problema con la aplicación movil"
+              
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: {
+                            "Mensajes": [
+                            ],
+                            "asunto": "App no me va",
+                            "estado": En curso,
+                            "fecha": "2022-05-26T16:52:37.020462",
+                            "id_ticket": 1,
+                            "mensaje": "Problema con la aplicación movil"
+                          }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+
+#Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
+  /soporte/{ticket_id}:
+    get:
+      summary: Encontrar el ticket/la peticion de soporte del usuario
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+               Consultando petición a soporte tecnico:
+                  value: {
+                          "Mensajes": [
+                            {
+                              "contenido": "aloha",
+                              "date": "2022-05-26T16:52:40.062432",
+                              "id_mensaje": 1
+                            }
+                          ],
+                          "asunto": "App no me va",
+                          "estado": En curso,
+                          "fecha": "2022-05-26T16:52:37.020462",
+                          "id_ticket": 1,
+                          "mensaje": "Problema con la aplicación movil"
+                        }
+        '404':
+          description: Ticket no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Ticket not found."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+    post:
+      summary: El usuario en concreto pueda generar un mensaje para un ticket
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - mensaje
+              properties:
+                mensaje:
+                  type: string
+              example:
+                mensaje: "no se que me esta contando"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar petición a soporte tecnico:
+                  value: {
+                          "Mensajes": [
+                            {
+                              "contenido": "aloha",
+                              "date": "2022-05-26T16:52:40.062432",
+                              "id_mensaje": 1
+                            }
+                          ],
+                          "asunto": "App no me va",
+                          "estado": En curso,
+                          "fecha": "2022-05-26T16:52:37.020462",
+                          "id_ticket": 1,
+                          "mensaje": "Problema con la aplicación movil"
+                        }
+        '400':
+          description: Ticket incorrecto
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Ticket not valid."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+        '404':
+          description: Ticket no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Ticket not found."}'
+
+  # Eliminacion del ticket o peticion al soporte tecnico
+    delete:
+      summary: Eliminar un ticket/una peticion del soporte del usuario
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Ticket correcto
+          content:
+            application/json:
+              examples:
+                Eliminando una petición a soporte tecnico:
+                  value: |-
+                    {
+                      "msg": "Ticket deleted succesfully."
+                    }
+        '400':
+          description: Ticket incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Ticket not valid."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+        '404':
+          description: Ticket no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" : "Ticket not found."}'
+        '410':
+          description: Ticket ya eliminado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Ticket have been deleted."}'
+                  
+  /soporte/byuser:
+    get:
+      summary: Obtiene los tickets que ha generado un usuario en el soporte
+      tags: 
+      - Soporte tecnico
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Trabajador:
+                  value:  
+                    {
+                      "Tickets": [
+                        {
+                          "asunto": "App no me va",
+                          "estado": En curso,
+                          "fecha": "2022-05-26T16:52:37.020462",
+                          "id_ticket": 1,
+                          "mensaje": "Problema con la aplicación movil"
+                        }
+                      ],
+                      "apellido": "garcia",
+                      "dni": "245363Y",
+                      "email": "meh@gmail.com",
+                      "foto": "foto_chula",
+                      "id_usuari": 1,
+                      "nombre": "sergi",
+                      "password": "mehmeh123",
+                      "telefono": 4674387249,
+                      "type": "cliente",
+                      "username": "sergi.ib",
+                      "vehiculos": []
+                    }
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not authorized."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >- 
+                    {"error": "User not found."}
+                  
+    
+  /soporte/delete_missage/{ticket_id}/{msg_id}:
+    delete:
+      summary: Elimina un mensaje de una peticion
+      tags:
+        - Soporte tecnico
+      parameters:
+      - in: path
+        name: ticket_id
+        required: true
+        schema: 
+          type: integer
+      - in: path
+        name: msg_id
+        required: true
+        schema: 
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Eliminado mensaje:
+                  value: |-
+                    {
+                      "msg": "Message deleted succesfully"
+                    }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Message not valid"}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+        '404':
+          description: Peticion no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" : "Message not found."}'
+        '410':
+          description: Peticion ya eliminada
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Message have been deleted."}'
+
+#########################################################################################
+#########################################################################################
+  
+  /avisos:
+    get:
+        summary: (NOT USE ME, ONLY FOR CHECKS) Obtiene una lista de todos los avisos
+        tags: 
+        - Avisos
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Peticion a aviso:
+                    value: {
+                            "Mensajes": [
+                            ],
+                            "asunto": "App no me va",
+                            "estado": En curso,
+                            "fecha": "2022-05-26T16:52:37.020462",
+                            "id_ticket": 1,
+                            "mensaje": "Problema con la aplicación movil"
+                          }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+    post:
+      summary: Publica un aviso dado una reserva 
+      tags:
+        - Avisos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id_reserva
+                - tipo
+                - texto
+              properties:
+                id_reserva:
+                  type: integer
+                tipo:
+                  type: string
+                texto: 
+                  type: integer
+            example:
+              id_reserva: 1
+              tipo: "Bateria llena."
+              texto: "Tiene la betería llena."
+              
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar aviso:
+                  value: {
+                            "Mensajes": [
+                            ],
+                            "asunto": "App no me va",
+                            "estado": En curso,
+                            "fecha": "2022-05-26T16:52:37.020462",
+                            "id_ticket": 1,
+                            "mensaje": "Problema con la aplicación movil"
+                          }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+
+  /avisos/byreserva/{id_reserva}:
+    get:
+      summary: Encontrar los avisos dado una reserva
+      tags:
+        - Avisos
+      parameters:
+      - in: path
+        name: id_reserva
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+               Consultando petición a aviso:
+                  value: {
+                          "Mensajes": [
+                            {
+                              "contenido": "aloha",
+                              "date": "2022-05-26T16:52:40.062432",
+                              "id_mensaje": 1
+                            }
+                          ],
+                          "asunto": "App no me va",
+                          "estado": En curso,
+                          "fecha": "2022-05-26T16:52:37.020462",
+                          "id_ticket": 1,
+                          "mensaje": "Problema con la aplicación movil"
+                        }
+        '404':
+          description: Aviso no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Aviso not exist or there is not any aviso for that reserva and user."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+  /avisos/{id_aviso}:
+    delete:
+      summary: Elimina un aviso
+      tags:
+        - Avisos
+      parameters:
+      - in: path
+        name: id_aviso
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Aviso correcto
+          content:
+            application/json:
+              examples:
+                Eliminando una petición de Avisos:
+                  value: |-
+                    {
+                      "msg": "Aviso deleted succesfully."
+                    }
+        '400':
+          description: Aviso incorrecto
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Aviso not exist or aviso is not for the user"}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+        '404':
+          description: Aviso no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" : "Aviso not found."}'
+        '410':
+          description: Aviso ya eliminado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Aviso have been deleted."}'
+                  
+##########################################################################################
   /login:
     post:
       summary: Login en el sistema

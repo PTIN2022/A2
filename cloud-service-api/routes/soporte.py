@@ -17,7 +17,6 @@ def post_soporte():
     try:
         fecha = datetime.now()
         descripcion = request.json["descripcion"]
-        estado = request.json["estado"]
         id_cliente = request.json["cliente"]
         asunto = request.json["asunto"]
         ticket_id = control.post_soporte(descripcion, fecha, id_cliente, asunto)
@@ -40,6 +39,7 @@ def get_soporte_ticket_id(ticket_id):
     else:
         return jsonify({"error": "Ticket not found."}), 404
 
+
 @soporte.route('/soporte/<ticket_id>', methods=['PUT'])
 def put_soporte_ticket_id(ticket_id):
     estado = None
@@ -52,7 +52,6 @@ def put_soporte_ticket_id(ticket_id):
         return jsonify(respuesta), 200
     else:
         return jsonify({"error": "Ticket not found."}), 404
-
 
 
 @soporte.route('/soporte/<ticket_id>', methods=["DELETE"])

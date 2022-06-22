@@ -57,8 +57,6 @@ def post_reservas(current_trabajador):
         return jsonify({"error": "User not authorized."}), 401
 
 
-
-
 @reservas.route('/reservas/<id>', methods=["GET"])
 @token_required
 def get_reserva_by_id(current_trabajador, id):
@@ -122,6 +120,7 @@ def put_reserva_by_id(current_trabajador, id):
             return jsonify(errors.malformed_error()), 400
     else:
         return jsonify({"error": "User not authorized."}), 401
+
 
 @reservas.route('/reservas/estacion/<id_estacion>', methods=["GET"])
 @token_required
