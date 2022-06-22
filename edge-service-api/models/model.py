@@ -279,7 +279,7 @@ class Cliente(Usuari_t):
         {},
     )
 
-    saldo = db.Column(db.Float, nullable=False)
+    saldo = db.Column(db.FLOAT, nullable=False)
     avisos = db.relationship("Aviso", backref="aviso")
     reservas = db.relationship("Reserva", backref="reserva", cascade="delete, merge, save-update")
     ticket = db.relationship("Ticket", backref="ticket")
