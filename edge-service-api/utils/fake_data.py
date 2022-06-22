@@ -8,6 +8,7 @@ from models.model import Estacion, Cliente, Trabajador, Promociones, \
     Cargador, Modelo, Consumo, Horas, Vehiculo, Reserva
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from utils.utils import encrypt_password
 
 
 def fakedata():
@@ -28,6 +29,7 @@ def fakedata():
         '+34762487248',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Activa'
         )
     db.session.add(e)
     e2 = Estacion(  # , t.id_trabajador
@@ -43,6 +45,7 @@ def fakedata():
         '+34762854712',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Activa'
         )
     db.session.add(e2)
     e3 = Estacion(  # , t.id_trabajador
@@ -58,6 +61,7 @@ def fakedata():
         '+34785123478',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Activa'
         )
     db.session.add(e3)
     e4 = Estacion(  # , t.id_trabajador
@@ -73,6 +77,7 @@ def fakedata():
         '+34745821523',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Activa'
         )
     db.session.add(e4)
     e5 = Estacion(  # , t.id_trabajador
@@ -88,6 +93,7 @@ def fakedata():
         '+34797458744',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Activa'
         )
     db.session.add(e5)
     e6 = Estacion(  # , t.id_trabajador
@@ -103,6 +109,7 @@ def fakedata():
         '+34768220011',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Activa'
         )
     db.session.add(e6)
     e7 = Estacion(  # , t.id_trabajador
@@ -118,6 +125,7 @@ def fakedata():
         '+34798544552',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Dañada'
         )
     db.session.add(e7)
     e8 = Estacion(  # , t.id_trabajador
@@ -133,6 +141,7 @@ def fakedata():
         '+34768855471',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
+        'Inactiva'
         )
     db.session.add(e8)
     db.session.commit()
@@ -146,9 +155,22 @@ def fakedata():
         e7,
         e8,
         ]
-
-    # ### CLIENTE
     clientes = []
+    ce = Cliente(
+        "mario",
+        "hola",
+        "prueba@gmail.com",
+        "123319N",
+        "url",
+        189237389,
+        "mariuski",
+        encrypt_password("1"),
+        )
+    db.session.add(ce)
+    clientes.append(ce)
+
+    db.session.commit()
+    # ### CLIENTE
     for i in range(100):
         letras = [
             'A',
@@ -195,7 +217,7 @@ def fakedata():
             foto,
             telefono,
             username,
-            password,
+            encrypt_password(password),
             )
         db.session.add(ce)
         clientes.append(ce)

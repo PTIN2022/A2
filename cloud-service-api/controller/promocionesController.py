@@ -1,6 +1,5 @@
-from models.model import Promociones, PromocionesSchema
+from models.model import Promociones, PromocionesSchema, strtobool
 from utils.db import db
-from utils.utils import strtobool
 from datetime import datetime
 
 

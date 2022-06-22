@@ -1,5 +1,5 @@
 from utils.db import db
-from models.model import Averia, AveriaSchema
+from models.model import Averia, AveriaSchema, Estacion
 
 
 def get_all_incidencias():
@@ -18,10 +18,15 @@ def get_incidencias_estacion(estacion):
 
 
 def post_incidencia(estacion, fecha, descripcion, estado=False):
-    i = Averia(fecha, estado, descripcion, estacion)
-    db.session.add(i)
-    db.session.commit()
-    return i.id_averia
+    est = Estacion.query.filter(Estacion.nombre_est == estacion).one_or_none()
+    if est:
+        est.estado = "Dañada"
+        i = Averia(fecha, estado, descripcion, estacion)
+        db.session.add(i)
+        db.session.commit()
+        return i.id_averia
+    else:
+        return None
 
 
 def remove_incidencia(id):
