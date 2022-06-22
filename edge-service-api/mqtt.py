@@ -104,11 +104,11 @@ def process_punto_carga(id_carga, id_matricula):
     # Tenemos el vehículo con la matrícula 
     # Si existe ese vehículo por cada reserva que tiene el vehículo comprobamos
     # Si la reserva de ese vehículo está en el cargador que le toca:
-    if v:
+    if v and c:
         for reserva in v.reservas:
             if reserva.id_cargador ==  id_carga:
             
-                c.id_cargador = id_carga
+                c.estado = "ocupado"
     
     else:
         print("Vehículo no encontrado")
