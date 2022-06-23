@@ -845,12 +845,14 @@ paths:
                       type: string
 
                   example:
-                    name: "Pere"
-                    lastname: "Roca"
-                    telf: "622554433"
+                    nombre: "Pere"
+                    apellido: "Roca"
+                    DNI: "123781N"
+                    telefono: 622554433
                     email: "pere.roca@boss.com"
-                    rol: "Dueño"
-                    password: "proca"
+                    username: "perealoca"
+                    password: "1"
+                    foto: "a"
         responses:
           '200':
             description: Peticion correcta
