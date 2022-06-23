@@ -1,3 +1,4 @@
+from xml.etree.ElementInclude import include
 from utils.db import db
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
@@ -297,6 +298,7 @@ class Transaccion(db.Model):
 class TransaccionSchema(SQLAlchemyAutoSchema):
     # estacion= fields.Nested(EstacionSchema)
     class Meta:
+        include_fk = True
         model = Transaccion
 
 
@@ -511,5 +513,3 @@ class Cupon(db.Model):
 class CuponSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Cupon
-
-

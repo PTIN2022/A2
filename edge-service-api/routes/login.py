@@ -25,6 +25,7 @@ def post_login():
         print(e)
         return jsonify(errors.malformed_error()), 400
 
+
 @logout.route('/logout', methods=['GET'])
 @token_required
 def get_logout(current_usuario):

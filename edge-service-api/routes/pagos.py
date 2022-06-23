@@ -1,7 +1,6 @@
 import controller.pagosController as control
 from flask import Blueprint, jsonify, request
 from utils.utils import token_required
-from datetime import datetime
 
 pagos = Blueprint('pagos', __name__)
 
@@ -29,6 +28,7 @@ def get_transacciones_by_clientes(current_usuario):
     else:
         return jsonify({"error": "User not authorized."}), 401
 
+
 @pagos.route('/transacciones/cliente/<id_reserva>', methods=['POST'])
 @token_required
 def post_transacciones_by_reservas(current_usuario, id_reserva):
@@ -53,6 +53,7 @@ def post_transacciones_by_reservas(current_usuario, id_reserva):
             return jsonify({"error": "Reserva not found or Reserva is not for User."}), 404
     else:
         return jsonify({"error": "User not authorized."}), 401
+
 
 @pagos.route('/saldo/cliente', methods=['GET'])
 @token_required

@@ -15,6 +15,7 @@ def get_avisos(current_usuario):
     else:
         return jsonify({"error": "User not authorized."}), 401
 
+
 @avisos.route('/avisos/byuser', methods=['GET'])
 @token_required
 def get_avisos_by_user(current_usuario):
@@ -79,6 +80,7 @@ def delete_aviso(current_usuario, id_aviso):
             return jsonify({"error": "Aviso not exist or aviso is not for the user "}), 404
     else:
         return jsonify({"error": "User not authorized."}), 401
+
 
 @avisos.route('/avisos/<id_aviso>', methods=['PUT'])
 @token_required
