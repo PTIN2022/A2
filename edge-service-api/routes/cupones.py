@@ -1,4 +1,3 @@
-#import controller.cuponesController as control
 from flask import Blueprint, jsonify, request
 from utils.utils import token_required
 from controller.cuponesController import get_cupones_user, add_cupon_user, set_cupon_estado, check_cupon_user
