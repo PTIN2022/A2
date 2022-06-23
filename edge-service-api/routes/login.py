@@ -12,10 +12,10 @@ def post_login():
     username = request.form.to_dict()["email"]
     password = request.form.to_dict()["password"]
 
-    encoded_jwt = control.post_login(username, password)
+    encoded_jwt, id_cliente = control.post_login(username, password)
 
     if encoded_jwt:
-        return jsonify({'token': encoded_jwt}), 200
+        return jsonify({'token': encoded_jwt, 'id_cliente': id_cliente}), 200
     else:
         return jsonify({'error': 'Invalid credentials'}), 400
 
