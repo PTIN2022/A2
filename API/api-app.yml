@@ -158,8 +158,6 @@ paths:
                 Error al meter reserva:
                   value: >-
                     {"error": "Malformed request syntax."}
-
-
   /reservas/estacion/{id_estacion}:
     # pedimos una lista de reservas por una estacion dada
     get:
@@ -389,7 +387,6 @@ paths:
                   error:
                     value: >-
                         {"error": "User not authenticated."}
-
           '404':
             description: Not found
             content:
@@ -398,7 +395,6 @@ paths:
                   error:
                     value: >-
                         {"error": "Reserva not found."}
-
       #borrar reserva
       delete:
         summary: Elimina reserva por ID
@@ -436,7 +432,6 @@ paths:
                   error:
                     value: >-
                       {"error": "Reserva not found."
-
 #########################################################################################
 
 
@@ -757,7 +752,6 @@ paths:
                   error:
                     value: >-
                       {"error": "Station not found."}
-
 # clientes
   /clientes:
     # pedimos una lista de las incidencias
@@ -814,7 +808,7 @@ paths:
         requestBody:
             required: true
             content:
-              application/json:
+              multipart/form-data:
                 schema:
                   type: object
                   required:
@@ -845,14 +839,12 @@ paths:
                       type: string
 
                   example:
-                    nombre: "Pere"
-                    apellido: "Roca"
-                    DNI: "123781N"
-                    telefono: 622554433
+                    name: "Pere"
+                    lastname: "Roca"
+                    telf: "622554433"
                     email: "pere.roca@boss.com"
-                    username: "perealoca"
-                    password: "1"
-                    foto: "a"
+                    rol: "Dueño"
+                    password: "proca"
         responses:
           '200':
             description: Peticion correcta
@@ -1067,7 +1059,6 @@ paths:
                 error:
                   value: >-
                     {"error": "Client not found."}
-
 #######################################################################################################`
 #########################################################################################
   
@@ -1158,7 +1149,6 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
-
 #Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
   /soporte/{ticket_id}:
     get:
@@ -1220,7 +1210,7 @@ paths:
       requestBody:
         required: true
         content:
-         application/json:
+          multipart/form-data:
             schema:
               type: object
               required:
@@ -1525,7 +1515,6 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
-
   /avisos/byreserva/{id_reserva}:
     get:
       summary: Encontrar los avisos dado una reserva
@@ -1625,278 +1614,409 @@ paths:
                 error:
                   value: '{"error": "Aviso have been deleted."}'
 
-#######################################################################################################
-# vehiculos
-  /vehiculos:
+##########################################################################################
+
+  /promociones:
+    # pedimos una lista de promociones
     get:
-      summary: Obtiene todos los vehiculos de todos los clientes
+      summary: Obtiene una lista de promociones
       tags:
-        - Vehiculos
-      responses:
-          '200':
-            description: Peticion correcta
-            content:
-              application/json:
-                examples:
-                  Con vehiculos:
-                    value:
-                          [
-                            {
-                              "matricula": "1111PRV",
-                              "porcentaje_bat": 55,
-                            },
-                            {
-                              "matricula": "1515PVR",
-                              "porcentaje_bat": 10,
-                            }
-                          ]
-                  Sin vehiculos:
-                    value: '[]'
-          '400':
-            description: Peticion incorrecta
-            content:
-              application/json:
-                examples:
-                  Error al meter reserva:
-                    value: >-
-                      {"error": "Malformed request syntax."}
-    # añadimos un nuevo vehiculo
-    post:
-      summary: Inserta un nuevo vehiculo
-      tags:
-      - Vehiculos
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                  - matricula
-                  - modelo
-                  - porcentaje_bat
-              properties:
-                matricula:
-                  type: string
-                modelo:
-                  type: string
-                porcentaje_bat:
-                  type: integer
-              example:
-                matricula: "6493CZL"
-                modelo: "Golf"
-                porcentaje_bat: 15
+      - Promociones
       responses:
         '200':
           description: Peticion correcta
           content:
             application/json:
               examples:
-                Meter vehiculo:
-                  value:  >-
+                Con promociones:
+                  value: >-
+                    [
                       {
-                        "matricula": "1111PRV",
-                        "id_cliente": "1"
-                        "capacidad": "21321",
-                        "marca": "Toyota",
-                        "modelo": "Celica",
-                        "potencia_carga": True,
-                        "porcentaje_bat": 55,
+                        "descripcion": "20% de descuento en la electrolinera de Vilanova!",
+                        "descuento": 20,
+                        "estado": true,
+                        "fecha_inicio": "2022-04-18T11:00:00",
+                        "fecha_fin": "2022-04-18T21:00:00",
+                        "cantidad_usados": 500,
+                        "id_promo": 1
+                      },
+                      {
+                        "descripcion": "20% de descuento en la electrolinera de Barcelona!",
+                        "descuento": 15,
+                        "estado": false,
+                        "fecha_inicio": "2022-04-18T17:00:00",
+                        "fecha_fin": "2022-04-18T22:00:00",
+                        "cantidad_usados": 500,
+                        "id_promo": 2
+                      },
+                      {
+                        "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                        "descuento": 25,
+                        "estado": true,
+                        "fecha_inicio": "2022-04-18T10:00:00",
+                        "fecha_fin": "2022-04-18T19:00:00",
+                        "cantidad_usados": 500,
+                        "id_promo": 3
                       }
+                    ]
+                Sin promociones:
+                  value: '[]'
+    post:
+      summary: Inserta un nueva promocion
+      tags:
+      - Promociones
+      requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                required:
+                  - descripcion
+                  - descuento
+                  - estado
+                  - fecha_inicio
+                  - fecha_fin
+                properties:
+                  descuento:
+                    type: integer
+                  fecha_inicio:
+                    type: string
+                  fecha_fin:
+                    type: string
+                  descripcion:
+                    type: string
+                  estado:
+                    type: boolean
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar nueva promocion:
+                  value: >-
+                    {
+                      "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                      "descuento": 25,
+                      "estado": true,
+                      "fecha_inicio": "2022-04-18T10:00:00",
+                      "fecha_fin": "2022-04-18T19:00:00",
+                      "id_promo": 3
+                    }
         '400':
           description: Peticion incorrecta
           content:
             application/json:
               examples:
-                Error al meter vehiculo:
-                  value: >-
-                    {"error": "Malformed request syntax."}
-
-  /vehiculos/{matricula}:
-        # pedimos unvehiculo dada su matricula
-        get:
-          summary: Obtiene un vehiculo dada su matricula
-          tags:
-            - Vehiculos
-          parameters:
-            - in: path
-              name: matricula
-              required: true
+                Mala formada peticion:
+                  value: {"error": "Malformed request syntax."}
+        '403':
+          description: Denied access
+          content:
+            application/json:
+              examples:
+                Usuario no autorizado:
+                  value: {"error": "Denied access"}
+  /promociones/{id_promocion}:
+    # pedimos una reserva, dado su id
+      get:
+        summary: Obtiene una promocion en funcion de su id promocion
+        tags:
+          - Promociones
+        parameters:
+          - in: path
+            name: id_promocion
+            required: true
+            schema:
+              type: integer
+        responses:
+          '200':
+            description: Devolvemos la promocion de su id correspodiente
+            content:
+              application/json:
+                examples:
+                  Promociones:
+                    value:  >-
+                      {"id_promo":1,"descuento":10,"cantidad_cupones":100,"cantidad_usados":20,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"Por la ignauracion de la electrolinera"}
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Mala formada peticion:
+                    value: {"error": "Malformed request syntax."}
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  Usuario no auntenticado:
+                    value: {"error": "User not authenticated."}
+          '403':
+            description: Acceso no autorizado
+            content:
+              application/json:
+                examples:
+                  Acceso denegado:
+                    value: {"error": "Denied access"}
+          '404':
+            description: Not found
+            content:
+              application/json:
+                examples:
+                  Promocion no encontrado: 
+                    value: {"error": "Promociones not found."}
+      # modificar una promocion dado su id
+      put:
+        summary: Modifica una promocion
+        tags:
+          - Promociones
+        parameters:
+          - in: path
+            name: id_promocion
+            required: true
+            schema:
+              type: integer
+        requestBody:
+          required: true
+          content:
+            multipart/form-data:
               schema:
-                type: string
-          responses:
+                type: object
+                properties:
+                  estado:
+                    type: boolean
+                  descuento:
+                    type: integer
+                  fecha_inicio:
+                    type: string
+                  fecha_fin:
+                    type: string
+                  descripcion:
+                    type: string
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Trabajador actualizado:
+                    value: >-
+                        {
+                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                          "descuento": 25,
+                          "estado": true,
+                          "fecha_inicio": "2022-04-18T10:00:00",
+                          "fecha_fin": "2022-04-18T19:00:00",
+                          "id_promo": 3
+                        }
+          '400':
+              description: Peticion incorrecta
+              content:
+                application/json:
+                  examples:
+                    Peticion mal formateada:
+                      value: {"error": "Malformed request syntax."}
+          '403':
+              description: Denied access
+              content:
+                application/json:
+                  examples:
+                    Usuario no identificado:
+                      value: {"error": "User not authenticated."}
+          '404':
+              description: Not Found
+              content:
+                application/json:
+                  examples:
+                    Promocion no encontrada:
+                      value: {"error": "Promocion not found."}
+      delete:
+        summary: Eliminar una promcion dado su id
+        tags:
+          - Promociones
+        parameters:
+          - in: path
+            name: id_promocion
+            required: true
+            schema:
+              type: integer
+        responses:
             '200':
-              description: Retorna el vehiculo correctamente
+              description: Peticion correcta
               content:
                 application/json:
                   examples:
-                    Vehiculo existe:
-                      value:  >-
-                          {
-                            "matricula": "1515PVR",
-                            "id_cliente": "2"
-                            "capacidad": "21321",
-                            "marca": "Nissan",
-                            "modelo": "Skyline",
-                            "potencia_carga": False,
-                            "porcentaje_bat": 10,
-                          }
-                    Vehiculo no existe:
-                      value: '[]'
-            '401':
-              description: Not login
+                    Promocion:
+                      value: {"msg": "Promocion deleted succesfully"}
+            '400':
+              description: Peticion incorrecta
               content:
                 application/json:
                   examples:
-                    error:
-                      value: >-
-                          {"error": "User not authenticated."}
-
-            '404':
-              description: Not found
+                    Peticion mal formateada:
+                      value: {"error": "Malformed request syntax."}
+            '403':
+              description: Denied access
               content:
                 application/json:
                   examples:
-                    error:
-                      value: >-
-                          {"error": "Vehicle not found."}
-        # borramos vehiculo
-        delete: 
-          summary: Elimina vehiculo dada matricula
-          tags:
-            - Vehiculos
-          parameters:
-            - in: path
-              name: matricula
-              required: true
-              schema:
-                type: string
-          responses:
-            '200':
-              description: Eliminado vehiculo /delete
-              content:
-                application/json:
-                  examples:
-                    Vehiculo encontrado:
-                      value: "{\"msg\": \"Data deleted correctly.\"}"
-                    Vehiculo no encontrado:
-                      value: '[]'
-            '401':
-              description: Not login
-              content:
-                application/json:
-                  examples:
-                    error:
-                      value: >-
-                        {"error": "User not authenticated."}
+                    Usuario no identificado:
+                      value: {"error": "User not authenticated."}
             '404':
               description: Not Found
               content:
                 application/json:
                   examples:
                     error:
-                      value: >-
-                        {"error": "Vehiculo not found."}
-          # editar un vehiculo
-        put:
-            summary: Modificar vehiculo
-            tags:
-            - Vehiculos
-            requestBody:
-              required: true
+                      value: {"error": "Promocion not found."}
+            '410':
+              description: Peticion correcta
               content:
                 application/json:
-                  schema:
-                    type: object
-                    required:
-                      - matricula
-                    properties:
-                      matricula:
-                        type: string
-                      porcentaje_bat:
-                        type: integer
-                    example:
-                      matricula: "1515PVR"
-                      porcentaje_bat: 10
-            parameters:
-            - in: path
-              name: matricula
-              required: true
-              schema:
-                type: string
-            responses:
-              #respuesta correcta
-              '200':
-                description: Vehiculo actualizado
-                content:
-                  application/json:
-                    examples:
-                      Incidencia actualizada:
-                        value: >-
-                            {
-                              "matricula": "1515PVR",
-                              "porcentaje_bat": 10
-                            }
-              '400':
-                description: Peticion incorrecta
-                content:
-                  application/json:
-                    examples:
-                      Error al modificar vehiculo:
-                        value: >-
-                          {"error": "Malformed request syntax."}
-              '404':
-                description: Not Found
-                content:
-                  application/json:
-                    examples:
-                      error:
-                        value: >-
-                          {"error": "vehiculo not found."}
+                  examples:
+                    Promocion:
+                      value: {"msg": "Promocion deleted succesfully"}
+  /promociones/{estado}:
+    # pedimos una lista de promociones dado su estado (activa/inactiva)
+    get:
+      summary: Obtiene información una lista de promociones de ese estado
+      tags:
+      - Promociones
+      parameters:
+      - in: path
+        name: estado
+        required: true
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Con promociones activas:
+                  value: >-
+                      [
+                        {
+                          "descripcion": "20% de descuento en la electrolinera de Vilanova!",
+                          "descuento": 20,
+                          "estado": true,
+                          "fecha_inicio": "2022-04-18T11:00:00",
+                          "fecha_fin": "2022-04-18T21:00:00",
+                          "id_promo": 1
+                        },
+                        {
+                          "descripcion": "20% de descuento en la electrolinera de Sitges!",
+                          "descuento": 25,
+                          "estado": true,
+                          "fecha_inicio": "2022-04-18T10:00:00",
+                          "fecha_fin": "2022-04-18T19:00:00",
+                          "id_promo": 3
+                        }
+                      ]
+                Sin promociones activas:
+                  value: >-
+                      [
+                        {
+                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
+                          "descuento": 15,
+                          "estado": false,
+                          "fecha_inicio": "2022-04-18T17:00:00",
+                          "fecha_fin": "2022-04-18T22:00:00",
+                          "id_promo": 2
+                        }
+                      ]
+                Sin promociones:
+                  value: '[]'
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter incidencia:
+                  value: {"error": "Malformed request syntax."}
+        '403':
+          description: Denied access
+          content:
+            application/json:
+              examples:
+                Usuario no identificado:
+                  value: {"error": "User not authenticated."}
+  /promociones/estaciones:
+    # pedimos una reserva, dado su id
+      get:
+        summary: Obtiene una lista de promociones en funcion de su id estaciones
+        tags:
+          - Promociones
+        responses:
+          '200':
+            description: Por defecto sacamos una lista de promociones de cada estacion
+            content:
+              application/json:
+                examples:
+                  Promociones:
+                    value:  >-
+                      [{"id_estacion" : 2,"Nombre_est": "e-Barcelo","latitud" : "260º 23' 45''","longitud": "255º 23' 45''","capacidad": "64 plazas","direccion": "C/ Victor i Balaguer 5","potencia_contratada" : "6 Mwh","zona": "EB2","ocupacion_actual": "vacia","potencia_usada": "5.288 Mwh","telefono": "93555228866","ciudad": "Barcelona","pais": "España","promociones": [{"id_promo":1,"descuento":10,"cantidad_cupones":100,"cantidad_usados":20,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"Por la ignauracion de la electrolinera"},{"id_promo":2,"descuento":11,"cantidad_cupones":75,"cantidad_usados":2,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"La promocion se consigue mediante por sorteo"}]},{"id_estacion" : 1,"Nombre_est": "ElectroVilanova","latitud" : "233º 23' 45''","longitud": "233º 23' 45''","capacidad": "64 plazas","direccion": "C/ Victor i Balaguer 5","potencia_contratada" : "3 Mwh","zona": "VB1","ocupacion_actual": "alta","potencia_usada": "2.5 Mwh","telefono": "93555228866","ciudad": "Vilanova i la Geltru","pais": "España","promociones": [{"id_promo":1,"descuento":10,"cantidad_cupones":100,"cantidad_usados":20,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"Por la ignauracion de la electrolinera"},{"id_promo":2,"descuento":11,"cantidad_cupones":75,"cantidad_usados":2,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"La promocion se consigue mediante por sorteo"}]},{"id_estacion" : 3,"Nombre_est": "Electrolinera industrial Vilanova","latitud" : "233º 25' 59''","longitud": "233º 23' 45''","capacidad": "64 plazas","direccion": "Av./ Eduard Toldrà 5","potencia_contratada" : "3 Mwh","zona": "VB1","ocupacion_actual": "alta","potencia_usada": "2.5 Mwh","telefono": "93555228866","ciudad": "Vilanova i la Geltru","pais": "España","promociones": [{"id_promo":1,"descuento":10,"cantidad_cupones":100,"cantidad_usados":20,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"Por la ignauracion de la electrolinera"},{"id_promo":2,"descuento":11,"cantidad_cupones":75,"cantidad_usados":2,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"La promocion se consigue mediante por sorteo"}]}]
+                  No_promociones:
+                    value: '[]'
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
+          '404':
+            description: Not found
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "Promociones not found."}
+  /promociones/estaciones/{id_estacion}:
+  # pedimos una reserva, dado su id
+    get:
+      summary: Obtiene una lista de promociones en funcion de su id estaciones
+      tags:
+        - Promociones
+      parameters:
+        - in: path
+          name: id_estacion
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Por defecto sacamos una lista de promociones
+          content:
+            application/json:
+              examples:
+                Promociones:
+                  value:  >-
+                    {"id_estacion" : 1,"Nombre_est": "ElectroVilanova","latitud" : "233º 23' 45''","longitud": "233º 23' 45''","capacidad": "64 plazas","direccion": "C/ Victor i Balaguer 5","potencia_contratada" : "3 Mwh","zona": "VB1","ocupacion_actual": "alta","potencia_usada": "2.5 Mwh","telefono": "93555228866","ciudad": "Vilanova i la Geltru","pais": "España","promociones": [{"id_promo":1,"descuento":10,"cantidad_cupones":100,"cantidad_usados":20,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"Por la ignauracion de la electrolinera"},{"id_promo":2,"descuento":11,"cantidad_cupones":75,"cantidad_usados":2,"fecha_inicio":"2022-05-14","fecha_fin":"2022-06-18","estado":true,"descripcion":"La promocion se consigue mediante por sorteo"}]}
+                No_promociones:
+                  value: '[]'
+        '401':
+          description: Not login
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "User not authenticated."}
+        '404':
+          description: Not found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                      {"error": "Promociones not found."}
 
-  /vehiculos/cliente:
-        # pedimos un vehiculo , dado su cliente
-        get:
-          summary: Obtiene un vehiculo dado el id cliente.
-          tags:
-            - Vehiculos
-          responses:
-            '200':
-              description: Retorna el vehiculo correctamente
-              content:
-                application/json:
-                  examples:
-                    Vehiculo existe:
-                      value:  >-
-                          {
-                            "matricula": "1515PVR",
-                            "id_cliente": "2"
-                            "capacidad": "21321",
-                            "marca": "Nissan",
-                            "modelo": "Skyline",
-                            "potencia_carga": False,
-                            "porcentaje_bat": 10,
-                          }
-                    Vehiculo no existe:
-                      value: '[]'
-            '401':
-              description: Not login
-              content:
-                application/json:
-                  examples:
-                    error:
-                      value: >-
-                          {"error": "User not authenticated."}
-
-            '404':
-              description: Not found
-              content:
-                application/json:
-                  examples:
-                    error:
-                      value: >-
-                          {"error": "Vehicle not found."}
-                          
 ##########################################################################################
   /login:
     post:
@@ -1906,7 +2026,7 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
               required:
@@ -1919,8 +2039,8 @@ paths:
                   type: string
 
               example:
-                email: "prueba@gmail.com"
-                password: "1"
+                email: "meh@meh.com"
+                password: "supersegura"
       responses:
         '200':
           description: Peticion correcta
