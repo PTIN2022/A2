@@ -16,14 +16,9 @@ def get_promo_id(id_promo):
 
 def post_promociones(descuento, fecha_inicio_post, fecha_fin_post, estado, descripcion):
     try:
-        # Pasamos a datetime las fechas
-        if estado == 'true':
-            estado = True
-        else:
-            estado = False
         fecha_inicio = datetime.strptime(fecha_inicio_post, '%Y-%m-%dT%H:%M:%S')
         fecha_fin = datetime.strptime(fecha_fin_post, '%Y-%m-%dT%H:%M:%S')
-        p = Promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
+        p = Promociones(descuento, fecha_inicio, fecha_fin, strtobool(estado), descripcion)
         db.session.add(p)
         db.session.commit()
         return PromocionesSchema().dump(p)
@@ -32,10 +27,9 @@ def post_promociones(descuento, fecha_inicio_post, fecha_fin_post, estado, descr
     return None
 
 
-def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=None, estado=False, descripcion=None):
+def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=None, estado=False, descripcion=None, id_estacion=0):
     try:
-        p = get_promo_id(id_promo)
-        p = Promociones(p["descuento"], p["fecha_inicio"], p["fecha_fin"], p["estado"], p["descripcion"])
+        p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
         if p:
             if descuento:
                 p.descuento = descuento
@@ -47,10 +41,10 @@ def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=No
                 p.estado = strtobool(estado)
             if descripcion:
                 p.descripcion = descripcion
+            if id_estacion != 0:
+                p.estaciones = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
             db.session.commit()
             return PromocionesSchema().dump(p)
-    except (KeyError):
-        return post_promociones(descuento, fecha_inicio, fecha_fin, estado, descripcion)
     except (ValueError):
         return None
     return None

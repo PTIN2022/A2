@@ -4,7 +4,6 @@ import jwt
 from functools import wraps
 from flask import jsonify, request
 from flask import current_app as app
-from models.model import Cliente
 
 
 def token_required(f):
@@ -44,7 +43,7 @@ def strtobool(val):
     are 'n', 'no', 'f', 'false', 'off', and '0'.  Raises ValueError if
     'val' is anything else.
     """
-    val = val.lower()
+    val = str(val).lower()
     if val in ('y', 'yes', 't', 'true', 'on', '1', 'activa', 'activo'):
         return True
     elif val in ('n', 'no', 'f', 'false', 'off', '0', 'desactiva', 'inactiva', 'inactivo'):
