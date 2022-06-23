@@ -558,7 +558,7 @@ paths:
                       {"error": "User not authenticated."}
   /estaciones/{id}:
       get:
-        summary: Obtiene informacion de una estacion y sus surtidores
+        summary: Obtiene informacion de una estacion y sus surtidores, junto a su promocion activa
         tags:
         - Estaciones
         parameters:
@@ -599,6 +599,15 @@ paths:
                                 "posicion": 13
                               }
                             ],
+                            "Promoción activa": {
+                              "cantidad_usados": 28,
+                              "descripcion": "CZM0MGO7GWYOVDM1BAWVXCJRG1DM41QK7EP3382S53BRMV22JK0Z125D89298JVDBG5KVEIOX8WSO5C1CU8JBIGHDKTBQ26FH5IXFBNUAICDYO3SH79ZTQI744MTMPYN6IY6AYVSQM5MOKNC8FJQGS5UK0MQ9P7ABFB1KQOIQ0Y7KANAL0YBWKMKPLLMBQQ6MW1YYY6Y3LA151NHKIJYR1HDV3Z38MWB7TJU1IH7E11QM7N8XKA42C17L9",
+                              "descuento": 19,
+                              "estado": true,
+                              "fecha_fin": "2022-06-20T08:00:07",
+                              "fecha_inicio": "2021-08-03T09:44:44",
+                              "id_promo": 8
+                            },
                             "ciudad": "España",
                             "direccion": "mi casa",
                             "id_estacion": 1,
