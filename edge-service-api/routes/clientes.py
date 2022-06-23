@@ -1,5 +1,6 @@
 import controller.clienteController as control
 from flask import Blueprint, jsonify, request
+from utils import errors
 from utils.utils import token_required
 from models.model import Cliente
 clientes = Blueprint('clientes', __name__)
@@ -46,19 +47,26 @@ def get_clientes_id(current_usuario, id):
 
 @clientes.route('/clientes', methods=['POST'])
 def post_cliente():
-    nombre = request.form.to_dict()["nombre"]
-    apellido = request.form.to_dict()["apellido"]
-    email = request.form.to_dict()["email"]
-    DNI = request.form.to_dict()["DNI"]
-    client_exist = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
-    if client_exist:
-        return jsonify({"error": "Cliente already exist."}), 400
-    foto = request.form.to_dict()["foto"]
-    telefono = request.form.to_dict()["telefono"]
-    username = request.form.to_dict()["username"]
-    password = request.form.to_dict()["password"]
-    c = control.post_cliente(nombre, apellido, email, DNI, foto, telefono, username, password)
-    return jsonify(c)
+    try:
+        nombre = request.json["nombre"]
+        apellido = request.json["apellido"]
+        email = request.json["email"]
+        DNI = request.json["DNI"]
+        client_exist = Cliente.query.filter(Cliente.dni == DNI).one_or_none()
+        if client_exist:
+            return jsonify({"error": "Cliente already exist."}), 400
+        foto = request.json["foto"]
+        telefono = request.json["telefono"]
+        username = request.json["username"]
+        password = request.json["password"]
+        c = control.post_cliente(nombre, apellido, email, DNI, foto, telefono, username, password)
+        return jsonify(c)
+    except ValueError as e:
+        print(e)
+        return jsonify(errors.malformed_error()), 400
+    except KeyError as e:
+        print(e)
+        return jsonify(errors.malformed_error()), 400
 
 
 @clientes.route('/clientes/bydni/<DNI>', methods=["DELETE"])

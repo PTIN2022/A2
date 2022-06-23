@@ -814,7 +814,7 @@ paths:
         requestBody:
             required: true
             content:
-              multipart/form-data:
+              application/json:
                 schema:
                   type: object
                   required:
@@ -1218,7 +1218,7 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+         application/json:
             schema:
               type: object
               required:
@@ -1852,18 +1852,12 @@ paths:
                         value: >-
                           {"error": "vehiculo not found."}
 
-  /vehiculos/cliente/{id_cliente}:
+  /vehiculos/cliente:
         # pedimos un vehiculo , dado su cliente
         get:
           summary: Obtiene un vehiculo dado el id cliente.
           tags:
             - Vehiculos
-          parameters:
-            - in: path
-              name: id_cliente
-              required: true
-              schema:
-                type: integer
           responses:
             '200':
               description: Retorna el vehiculo correctamente
@@ -1910,7 +1904,7 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               required:
@@ -1923,8 +1917,8 @@ paths:
                   type: string
 
               example:
-                email: "meh@meh.com"
-                password: "supersegura"
+                email: "prueba@gmail.com"
+                password: "1"
       responses:
         '200':
           description: Peticion correcta

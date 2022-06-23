@@ -1,5 +1,5 @@
 import controller.loginController as control
-
+from utils import errors
 from flask import Blueprint, jsonify, request
 from utils.utils import token_required
 
@@ -9,16 +9,21 @@ logout = Blueprint('logout', __name__)
 
 @login.route('/login', methods=['POST'])
 def post_login():
-    username = request.form.to_dict()["email"]
-    password = request.form.to_dict()["password"]
+    try:
+        username = request.json["email"]
+        password = request.json["password"]
+        encoded_jwt, id_cliente = control.post_login(username, password)
 
-    encoded_jwt, id_cliente = control.post_login(username, password)
-
-    if encoded_jwt:
-        return jsonify({'token': encoded_jwt, 'id_cliente': id_cliente}), 200
-    else:
-        return jsonify({'error': 'Invalid credentials'}), 400
-
+        if encoded_jwt:
+            return jsonify({'token': encoded_jwt, 'id_cliente': id_cliente}), 200
+        else:
+            return jsonify({'error': 'Invalid credentials'}), 400
+    except ValueError as e:
+        print(e)
+        return jsonify(errors.malformed_error()), 400
+    except KeyError as e:
+        print(e)
+        return jsonify(errors.malformed_error()), 400
 
 @logout.route('/logout', methods=['GET'])
 @token_required
