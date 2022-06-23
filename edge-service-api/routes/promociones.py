@@ -61,54 +61,36 @@ def modify_promocion(id_promocion):
         return jsonify({"error": "Promocion not found."}), 404
 
 
-<<<<<<< HEAD
-@promociones.route('/promociones/<id_promo>', methods=["DELETE"])
-def deleted_promocion(id_promo):
-    deleted = control.delete_promocion(id_promo)
-=======
 @promociones.route('/promociones/<id_promocion>', methods=["DELETE"])
 def deleted_promocion(id_promocion):
     deleted = control.delete_promocion(id_promocion)
->>>>>>> 2022-5-14-xavier-app-promociones
     if deleted:
         return jsonify({"msg": "Promocion deleted succesfully"}), 200
     else:
         return jsonify({"error": "Promocion not found."}), 404
 
 
-@promociones.route('/promociones/<estado>', methods=['GET'])
+@promociones.route('/promociones/estado/<estado>', methods=['GET'])
 def get_promo_by_estado(estado):
     respuesta = control.get_promo_estado(estado)
-<<<<<<< HEAD
-=======
-    print(respuesta)
->>>>>>> 2022-5-14-xavier-app-promociones
     if respuesta:
         return jsonify(respuesta), 200
     else:
         return jsonify({"error": "Malformed request syntax."}), 400
 
 
-# NO usar aun
-<<<<<<< HEAD
-@promociones.route('/promociones/estaciones/<id_electrolinera>', methods=['GET'])
-def get_promo_by_electrolinera(id_electrolinera):
-    respuesta = control.get_promo_estacion(id_electrolinera)
-=======
-@promociones.route('/promociones/estaciones/', methods=['GET'])
+@promociones.route('/promociones/estaciones', methods=['GET'])
 def get_promo_by_electrolineras():
     respuesta = control.get_promo_estaciones()
-    print("JSON -> "+str(type(respuesta)))
     if respuesta:
         return jsonify(respuesta), 200
     else:
         return jsonify({"error": "Malformed request syntax."}), 400
 
 
-@promociones.route('/promociones/{estaciones}', methods=['GET'])
-def get_promo_by_electrolinera(estaciones):
-    respuesta = control.get_promo_estacion(estaciones)
->>>>>>> 2022-5-14-xavier-app-promociones
+@promociones.route('/promociones/estaciones/<id_estacion>', methods=['GET'])
+def get_promo_by_electrolinera(id_estacion):
+    respuesta = control.get_promo_estacion(id_estacion)
     if respuesta:
         return jsonify(respuesta), 200
     else:
