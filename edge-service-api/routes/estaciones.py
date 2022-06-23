@@ -6,13 +6,9 @@ estaciones = Blueprint('estaciones', __name__)
 
 
 @estaciones.route('/estaciones', methods=['GET'])
-@token_required
-def get_estaciones(current_usuario):
-    if current_usuario:
-        respuesta = control.get_all_estaciones()
-        return jsonify(respuesta)
-    else:
-        return jsonify({"error": "User not authorized."}), 401
+def get_estaciones():
+    respuesta = control.get_all_estaciones()
+    return jsonify(respuesta)
 
 
 @estaciones.route('/estaciones/<id>', methods=["GET"])
