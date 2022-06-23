@@ -1,4 +1,3 @@
-from xml.etree.ElementInclude import include
 from utils.db import db
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
