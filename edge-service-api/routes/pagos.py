@@ -1,4 +1,4 @@
-import controller.pagosController as pagos
+import controller.pagosController as control
 from flask import Blueprint, jsonify, request
 from utils.utils import token_required
 from datetime import datetime
@@ -21,11 +21,11 @@ def get_all_transacciones(current_usuario):
 def get_transacciones_by_clientes(current_usuario):
     # necesitamos id_reserva
     if current_usuario:
-        respuesta = control.get_transacciones_by_clientes(current_usuario.id_cliente, id_reserva)
+        respuesta = control.get_transacciones_by_clientes(current_usuario)
         if respuesta:
             return jsonify(respuesta), 200
         else:
-            return jsonify({"error": "Error unexpected. May client doesn't exist. "}), 404
+            return jsonify({"error": "Error unexpected. May Reserva doesn't exist. "}), 404
     else:
         return jsonify({"error": "User not authorized."}), 401
 
@@ -44,9 +44,11 @@ def post_transacciones_by_reservas(current_usuario, id_reserva):
         else:
             return jsonify({"error": "Malformed request, needed texto."}), 400
 
-        respuesta = control.post_transacciones_by_reservas(current_usuario.id_cliente, importe, tipo, id_reserva)
+        respuesta = control.post_transacciones_by_reservas(current_usuario, importe, tipo, id_reserva)
         if respuesta:
             return jsonify(respuesta), 200
+        elif respuesta == 0:
+            return jsonify({"error": "Already exist a transaction done between the client and reserva. "}), 402
         else:
             return jsonify({"error": "Reserva not found or Reserva is not for User."}), 404
     else:

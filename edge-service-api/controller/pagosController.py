@@ -1,5 +1,5 @@
 from utils.db import db
-from models.model import Transaccion, Cliente
+from models.model import Transaccion, Cliente, Reserva, TransaccionSchema
 
 
 def get_all_transacciones():
@@ -7,19 +7,23 @@ def get_all_transacciones():
     return TransaccionSchema(many=True).dump(i)
 
 
-def post_transacciones_by_reservas(id_cliente, importe, tipo, id_reserva):
-    i = Reserva.query.filter(Reserva.id_reserva == id_reserva, Reserva.id_cliente == id_cliente).one_or_none()
+def post_transacciones_by_reservas(cliente, importe, tipo, id_reserva):
+    i = Reserva.query.filter(Reserva.id_reserva == id_reserva, Reserva.id_cliente == cliente.id_cliente).one_or_none()
     if i:
-        t = Transaccion(importe, tipo, id_cliente, id_reserva)
-        db.session.add(t)
-        db.session.commit()
-        return TransaccionSchema().dump(t)
+        t = Transaccion.query.filter(Transaccion.id_cliente == cliente.id_cliente, Transaccion.id_reserva == id_reserva).one_or_none()
+        if not t:
+            t = Transaccion(importe, tipo, cliente.id_cliente, id_reserva)
+            cliente.transacciones.append(t)
+            db.session.add(t)
+            db.session.commit()
+            return TransaccionSchema().dump(t)
+        return 0
     return None
 
 
-def get_transacciones_by_clientes(id_cliente):
-    i = Cliente.query.filter(Cliente.id_cliente == id_cliente).one_or_none()
-    if i:
-        return TransaccionSchema(many=True).dump(i.transacciones)
+def get_transacciones_by_clientes(cliente):
+    if cliente:
+        print(cliente.transacciones)
+        return TransaccionSchema(many=True).dump(cliente.transacciones)
     else:
         return None
