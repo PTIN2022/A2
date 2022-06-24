@@ -312,7 +312,7 @@ class Cliente(Usuari_t):
     reservas = db.relationship("Reserva", backref="reserva", cascade="delete, merge, save-update")
     ticket = db.relationship("Ticket", backref="ticket")
     transacciones = db.relationship("Transaccion", backref="transaccion", cascade="delete, merge, save-update")
-    
+
     vehiculos = db.relationship('Vehiculo', secondary=vehiculo_cliente, lazy='subquery', backref=db.backref('Cliente', lazy=True))
 
     __mapper_args__ = {
@@ -502,7 +502,7 @@ class Cupon(db.Model):
     id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
     estado = db.Column(db.String(30), nullable=False)
 
-    def __init__(self, cupon, id_cliente, estado="Activa"):
+    def __init__(self, cupon, id_cliente, estado="usable"):
         self.cupon = cupon
         self.id_cliente = id_cliente
         self.estado = estado

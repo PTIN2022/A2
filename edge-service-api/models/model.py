@@ -503,7 +503,7 @@ class Cupon(db.Model):
     id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
     estado = db.Column(db.String(30), nullable=False)
 
-    def __init__(self, cupon, id_cliente, estado="Activa"):
+    def __init__(self, cupon, id_cliente, estado="usable"):
         self.cupon = cupon
         self.id_cliente = id_cliente
         self.estado = estado
