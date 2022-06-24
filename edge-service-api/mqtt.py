@@ -79,13 +79,13 @@ def process_battery(bateria, id_matricula):
         print("Vehículo no encontrado")
 
 
-def process_carga_final(id_carga, consum, id_matricula):
+def process_carga_final(id_carga, kwh, id_matricula):
     print("---------------------------------")
     print("Tratando consumo final del vehículo")
     c = Consumo.query.filter(Consumo.id_cargador == id_carga).one_or_none()
     v = Vehiculo.query.filter(Vehiculo.matricula == id_matricula).one_or_none()
     if c and v:
-        c.potencia_consumida = consum
+        c.potencia_consumida = kwh
         db.session.commit()
         print(c.potencia_consumida)
         # TODO: subir al cloud
@@ -138,8 +138,8 @@ def process_msg(topic, raw_payload):
 
     elif topic == "gesys/edge/puntoCarga/consumo":
         # Expected: {"idPuntoCarga": 2, "kwh": 432,"matricula":"34543FGC"}
-        if "idPuntoCarga" in payload and "consum" in payload and "matricula" in payload:
-            process_carga_final(payload["idPuntoCarga"], payload["consum"], payload["matricula"])
+        if "idPuntoCarga" in payload and "kwh" in payload and "matricula" in payload:
+            process_carga_final(payload["idPuntoCarga"], payload["kwh"], payload["matricula"])
 
     elif topic == "gesys/edge/puntoCarga/vehiculo":
         # Expected: {"idPuntoCarga": 2, "matricula":"34543FGC"}
