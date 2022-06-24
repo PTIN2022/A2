@@ -11,9 +11,12 @@ logout = Blueprint('logout', __name__)
 def post_login():
     email = request.form.to_dict()["email"]
     password = request.form.to_dict()["password"]
-    encoded_jwt = control.post_login(email, password)
-    if encoded_jwt:
-        return jsonify({'token': encoded_jwt}), 200
+    trabajador = control.post_login(email, password)
+    print(type(trabajador))
+    print(trabajador)
+
+    if trabajador:
+        return jsonify(trabajador), 200
     else:
         return jsonify({'error': 'Invalid credendtials'}), 400
 
