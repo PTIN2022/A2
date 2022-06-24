@@ -245,6 +245,7 @@ class Trabajador(Usuari_t):
 class TrabajadorSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Trabajador
+        include_fk = True
         exclude = ('password',)
 
 
