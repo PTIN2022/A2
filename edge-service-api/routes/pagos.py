@@ -79,7 +79,6 @@ def put_saldo_by_cliente(current_usuario):
                 current_usuario.saldo -= saldo
             db.session.commit()
             return ({"saldo": current_usuario.saldo}), 200
-        
         except ValueError as e:
             print(e)
             return jsonify(errors.malformed_error()), 400
