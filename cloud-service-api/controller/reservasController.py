@@ -74,6 +74,14 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                             cargador_ocupado = True
 
                 if not cargador_ocupado:
+                    for pro in p:
+                        #if promo.estado == 'activa'
+                        if pro.estado == True:
+                            desc = pro.descuento/100
+                            desc = precio_carga_completa*desc
+                            precio_carga_completa -= desc
+                            precio_carga_actual -= desc
+                            break
                     i = Reserva(
                         fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, True, tarifa,
                         asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari
