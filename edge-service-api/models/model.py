@@ -301,6 +301,31 @@ class TransaccionSchema(SQLAlchemyAutoSchema):
         model = Transaccion
 
 
+class Historial(db.Model):
+    fecha = db.Column(db.DateTime, nullable=False)
+    type = db.Column(db.String(20), nullable=False)
+    id_cliente = db.Column(db.Integer, db.ForeignKey(
+        "cliente.id_usuari"), nullable=False)
+   
+    __table_args__ = (
+        db.PrimaryKeyConstraint(fecha,id_cliente),
+        {},
+    )
+    saldo = db.Column(db.FLOAT, nullable=False)
+
+
+    def __init__(self, fecha, id_cliente, saldo, tipo):
+        self.fecha = fecha
+        self.id_cliente = id_cliente
+        self.saldo = saldo
+        self.type = tipo
+
+
+class HistorialSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Historial
+
+
 class Cliente(Usuari_t):
     id_cliente = db.Column('id_usuari', db.ForeignKey('usuari_t.id_usuari'), nullable=False, primary_key=True)
     __table_args__ = (
@@ -312,6 +337,7 @@ class Cliente(Usuari_t):
     avisos = db.relationship("Aviso", backref="aviso")
     reservas = db.relationship("Reserva", backref="reserva", cascade="delete, merge, save-update")
     transacciones = db.relationship("Transaccion", backref="transaccion", cascade="delete, merge, save-update")
+    historial = db.relationship("Historial",  backref="historial")
     ticket = db.relationship("Ticket", backref="ticket")
 
     vehiculos = db.relationship('Vehiculo', secondary=vehiculo_cliente, lazy='subquery', backref=db.backref('Cliente', lazy=True))

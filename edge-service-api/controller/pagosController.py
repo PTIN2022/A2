@@ -1,6 +1,6 @@
 from utils.db import db
-from models.model import Transaccion, Reserva, TransaccionSchema
-
+from models.model import Transaccion, Reserva, TransaccionSchema, Historial
+from datetime import datetime
 
 def get_all_transacciones():
     i = Transaccion.query.all()
@@ -23,7 +23,20 @@ def post_transacciones_by_reservas(cliente, importe, tipo, id_reserva):
 
 def get_transacciones_by_clientes(cliente):
     if cliente:
-        print(cliente.transacciones)
         return TransaccionSchema(many=True).dump(cliente.transacciones)
     else:
         return None
+
+def put_saldo_and_create_historial(cliente, type, saldo):
+    if str(type) == "add":
+        cliente.saldo += saldo
+    elif cliente.saldo >= saldo:
+        cliente.saldo -= saldo
+    else:
+        return False
+    db.session.commit()
+    h = Historial(datetime.now(),cliente.id_cliente, cliente.saldo, type)
+    cliente.historial.append(h)
+    db.session.add(h)
+    db.session.commit()
+    return True

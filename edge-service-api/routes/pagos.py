@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify, request
 from utils.utils import token_required
 from utils import errors
 from utils.db import db
+from models.model import HistorialSchema
 
 pagos = Blueprint('pagos', __name__)
 
@@ -73,17 +74,25 @@ def put_saldo_by_cliente(current_usuario):
         try:
             type = request.json["type"]
             saldo = request.json["saldo"]  # Dia y hora
-            if str(type) == "add":
-                current_usuario.saldo += saldo
+            respuesta = control.put_saldo_and_create_historial(current_usuario, type, saldo)
+            if respuesta:
+                return ({"saldo": current_usuario.saldo}), 200
             else:
-                current_usuario.saldo -= saldo
-            db.session.commit()
-            return ({"saldo": current_usuario.saldo}), 200
+                return ({"error": "The client does not have the necessary balance"}), 400
         except ValueError as e:
             print(e)
             return jsonify(errors.malformed_error()), 400
         except KeyError as e:
             print(e)
             return jsonify(errors.malformed_error()), 400
+    else:
+        return jsonify({"error": "User not authorized."}), 401
+
+
+@pagos.route('/historial', methods=['GET'])
+@token_required
+def get_historial_clientes(current_usuario):
+    if current_usuario:
+        return jsonify(HistorialSchema(many=True).dump(current_usuario.historial)), 200
     else:
         return jsonify({"error": "User not authorized."}), 401
