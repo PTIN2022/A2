@@ -1,6 +1,8 @@
 import controller.pagosController as control
 from flask import Blueprint, jsonify, request
 from utils.utils import token_required
+from utils import errors
+from utils.db import db
 
 pagos = Blueprint('pagos', __name__)
 
@@ -55,10 +57,35 @@ def post_transacciones_by_reservas(current_usuario, id_reserva):
         return jsonify({"error": "User not authorized."}), 401
 
 
-@pagos.route('/saldo/cliente', methods=['GET'])
+@pagos.route('/saldo', methods=['GET'])
 @token_required
 def get_saldo_by_cliente(current_usuario):
     if current_usuario:
         return ({"saldo": current_usuario.saldo}), 200
     else:
         return jsonify({"error": "User not authorized."}), 401
+
+
+@pagos.route('/saldo', methods=['PUT'])
+@token_required
+def put_saldo_by_cliente(current_usuario):
+    if current_usuario:
+        try:
+            type = request.json["type"]
+            saldo = request.json["saldo"]  # Dia y hora
+            if str(type) == "add":
+                current_usuario.saldo += saldo
+            else:
+                current_usuario.saldo -= saldo
+            db.session.commit()
+            return ({"saldo": current_usuario.saldo}), 200
+        
+        except ValueError as e:
+            print(e)
+            return jsonify(errors.malformed_error()), 400
+        except KeyError as e:
+            print(e)
+            return jsonify(errors.malformed_error()), 400
+    else:
+        return jsonify({"error": "User not authorized."}), 401
+

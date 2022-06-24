@@ -2105,7 +2105,7 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
-  /saldo/cliente:
+  /saldo:
     get:
       summary: Obtiene el saldo por un cliente
       tags:
@@ -2128,6 +2128,54 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+    put:
+      summary: Modifica el saldo del cliente
+      tags:
+        - Transacciones
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - saldo
+              properties:
+                type:
+                  type: string
+                saldo: 
+                  type: number
+            example:
+              type: "add/minus"
+              saldo: 12.7
+              
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar saldo:
+                  value: {
+                            "saldo": 20
+                          }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+
 ##########################################################################################
   /login:
     post:
