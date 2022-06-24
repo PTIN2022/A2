@@ -1,4 +1,3 @@
-from operator import mod
 from utils.db import db
 from models.model import Vehiculo, VehiculoSchema
 from models.model import Modelo, ModeloSchema
@@ -50,7 +49,6 @@ def get_vehiculo_by_idcliente(cliente):
             vehiculo["modelo"].append(ModeloSchema().dump(mod))
             aux.append(vehiculo)
 
-        Vehiculo_dict = VehiculoSchema(many=True).dump(v)
         return aux
 
     return None
