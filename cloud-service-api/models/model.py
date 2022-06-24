@@ -312,7 +312,6 @@ class Cliente(Usuari_t):
     reservas = db.relationship("Reserva", backref="reserva", cascade="delete, merge, save-update")
     ticket = db.relationship("Ticket", backref="ticket")
     transacciones = db.relationship("Transaccion", backref="transaccion", cascade="delete, merge, save-update")
-
     vehiculos = db.relationship('Vehiculo', secondary=vehiculo_cliente, lazy='subquery', backref=db.backref('Cliente', lazy=True))
 
     __mapper_args__ = {
