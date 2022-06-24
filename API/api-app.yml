@@ -1534,6 +1534,47 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+  /avisos/byuser:
+    get:
+      summary: Encontrar los avisos para el cliente (token)
+      tags:
+        - Avisos
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+               Consultando petición a aviso:
+                  value: {
+                          "Mensajes": [
+                            {
+                              "contenido": "aloha",
+                              "date": "2022-05-26T16:52:40.062432",
+                              "id_mensaje": 1
+                            }
+                          ],
+                          "asunto": "App no me va",
+                          "estado": En curso,
+                          "fecha": "2022-05-26T16:52:37.020462",
+                          "id_ticket": 1,
+                          "mensaje": "Problema con la aplicación movil"
+                        }
+        '404':
+          description: Aviso no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Aviso not exist or there is not any aviso for that reserva and user."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
 
   /avisos/byreserva/{id_reserva}:
     get:
@@ -1583,6 +1624,61 @@ paths:
                     value: >- 
                       {"error": "User not authorized."}
   /avisos/{id_aviso}:
+    put:
+      summary: Publica un aviso dado una reserva 
+      tags:
+        - Avisos
+      parameters:
+      - in: path
+        name: id_aviso
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - estado
+              properties:
+                tipo:
+                  type: string
+            example:
+              estado: "Leido"
+              
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar aviso:
+                  value: {
+                            "Mensajes": [
+                            ],
+                            "asunto": "App no me va",
+                            "estado": En curso,
+                            "fecha": "2022-05-26T16:52:37.020462",
+                            "id_ticket": 1,
+                            "mensaje": "Problema con la aplicación movil"
+                          }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
     delete:
       summary: Elimina un aviso
       tags:
@@ -1906,6 +2002,191 @@ paths:
                       value: >-
                           {"error": "Vehicle not found."}
                           
+##########################################################################################
+#########################################################################################
+  
+  /transacciones:
+    get:
+        summary: (NOT USE ME, ONLY FOR CHECKS) Obtiene una lista de todos las transacciones
+        tags: 
+        - Transacciones
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Peticion a transaccion:
+                    value: {
+                            "hola": "hola"
+                          }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+  
+  /transacciones/cliente/{id_reserva}:
+    post:
+      summary: Publica una transaccion dado una reserva 
+      tags:
+        - Transacciones
+      parameters:
+        - in: path
+          name: id_reserva
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - tipo
+                - importe
+              properties:
+                tipo:
+                  type: string
+                importe: 
+                  type: number
+            example:
+              tipo: "Pagado."
+              importe: 12.7
+              
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar transaccion:
+                  value: {
+                            "tipo": 12.7,
+                            "importe": "Pagado",
+                          }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '404':
+          description: Transaccion no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Transaccion not exist or there is not any Transaccion for that user or reserva."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+
+  /transacciones/cliente:
+    get:
+      summary: Obtener transacciones por un cliente
+      tags:
+        - Transacciones
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+               Consultando petición a transacciones:
+                  value: {
+                            "tipo": 12.7,
+                            "importe": "Pagado",
+                          }
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+  /saldo:
+    get:
+      summary: Obtiene el saldo por un cliente
+      tags:
+        - Transacciones
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+               Consultando petición a transacciones:
+                  value: {
+                            "saldo": 20
+                          }
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+    put:
+      summary: Modifica el saldo del cliente
+      tags:
+        - Transacciones
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - saldo
+              properties:
+                type:
+                  type: string
+                saldo: 
+                  type: number
+            example:
+              type: "add/minus"
+              saldo: 12.7
+              
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar saldo:
+                  value: {
+                            "saldo": 20
+                          }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+
 ##########################################################################################
   /login:
     post:
