@@ -88,4 +88,3 @@ def put_saldo_by_cliente(current_usuario):
             return jsonify(errors.malformed_error()), 400
     else:
         return jsonify({"error": "User not authorized."}), 401
-
