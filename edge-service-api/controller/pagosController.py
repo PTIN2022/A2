@@ -2,6 +2,7 @@ from utils.db import db
 from models.model import Transaccion, Reserva, TransaccionSchema, Historial
 from datetime import datetime
 
+
 def get_all_transacciones():
     i = Transaccion.query.all()
     return TransaccionSchema(many=True).dump(i)
@@ -27,6 +28,7 @@ def get_transacciones_by_clientes(cliente):
     else:
         return None
 
+
 def put_saldo_and_create_historial(cliente, type, saldo):
     if str(type) == "add":
         cliente.saldo += saldo
@@ -35,7 +37,7 @@ def put_saldo_and_create_historial(cliente, type, saldo):
     else:
         return False
     db.session.commit()
-    h = Historial(datetime.now(),cliente.id_cliente, cliente.saldo, type)
+    h = Historial(datetime.now(), cliente.id_cliente, cliente.saldo, type)
     cliente.historial.append(h)
     db.session.add(h)
     db.session.commit()

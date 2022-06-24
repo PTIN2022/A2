@@ -2,7 +2,6 @@ import controller.pagosController as control
 from flask import Blueprint, jsonify, request
 from utils.utils import token_required
 from utils import errors
-from utils.db import db
 from models.model import HistorialSchema
 
 pagos = Blueprint('pagos', __name__)

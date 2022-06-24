@@ -306,13 +306,11 @@ class Historial(db.Model):
     type = db.Column(db.String(20), nullable=False)
     id_cliente = db.Column(db.Integer, db.ForeignKey(
         "cliente.id_usuari"), nullable=False)
-   
     __table_args__ = (
-        db.PrimaryKeyConstraint(fecha,id_cliente),
+        db.PrimaryKeyConstraint(fecha, id_cliente),
         {},
     )
     saldo = db.Column(db.FLOAT, nullable=False)
-
 
     def __init__(self, fecha, id_cliente, saldo, tipo):
         self.fecha = fecha

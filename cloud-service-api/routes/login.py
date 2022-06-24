@@ -12,9 +12,6 @@ def post_login():
     email = request.form.to_dict()["email"]
     password = request.form.to_dict()["password"]
     trabajador = control.post_login(email, password)
-    print(type(trabajador))
-    print(trabajador)
-
     if trabajador:
         return jsonify(trabajador), 200
     else:
