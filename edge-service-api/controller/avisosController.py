@@ -10,7 +10,7 @@ def get_all_avisos():
 def post_avisos(id_cliente, id_reserva, tipo, texto, fecha):
     i = Reserva.query.filter(Reserva.id_reserva == id_reserva, Reserva.id_cliente == id_cliente).one_or_none()
     if i:
-        a = Aviso(tipo, texto, fecha, id_reserva, id_cliente)
+        a = Aviso(tipo, texto, fecha, id_reserva, id_cliente, "No leido")
         db.session.add(a)
         db.session.commit()
         return AvisoSchema().dump(a)
@@ -31,5 +31,23 @@ def delete_aviso(id_cliente, id_aviso):
         db.session.delete(a)
         db.session.commit()
         return True
+    else:
+        return None
+
+
+def get_avisos_by_user(cliente):
+    if cliente:
+        print(cliente.avisos)
+        return AvisoSchema(many=True).dump(cliente.avisos)
+    else:
+        return None
+
+
+def modify_aviso(id_cliente, id_aviso, estado):
+    a = Aviso.query.filter(Aviso.id_aviso == id_aviso, Aviso.id_cliente == id_cliente).one_or_none()
+    if a:
+        a.estado = estado
+        db.session.commit()
+        return AvisoSchema().dump(a)
     else:
         return None
