@@ -27,8 +27,6 @@ def get_promo_id(current_trabajador, id_promo):
             return jsonify({"error": "Promocion not found."}), 404
     else:
         return jsonify({"error": "User not authorized."}), 401
-    else:
-        return jsonify({"error": "User not authorized."}), 401
 
 
 @promociones.route('/promociones/estado/<estado>', methods=['GET'])
