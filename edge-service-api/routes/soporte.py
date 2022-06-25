@@ -73,7 +73,7 @@ def delete_soporte_ticket_id(current_usuario, ticket_id):
 def post_soporte_by_ticket(current_usuario, ticket_id):
     if current_usuario:
         try:
-            mensaje = request.form.to_dict()["mensaje"]
+            mensaje = request.json["mensaje"]
             resultado = control.post_soporte_by_ticket(mensaje, datetime.now(), ticket_id, current_usuario.id_cliente)
             if resultado == 0:
                 return jsonify({"error": "Ticket not found or Ticket is not from the user."}), 400

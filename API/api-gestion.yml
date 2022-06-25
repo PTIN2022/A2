@@ -2749,6 +2749,44 @@ paths:
               examples:
                 error:
                   value: {"error": "Something went wrong."}
+  /token:
+      get:
+        summary: "Obtiene la info dado un token"
+        tags:
+        - Autenticacion
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Success Login: 
+                    value: >-
+                      {
+                        "apellido": "Manresa",
+                        "cargo": "administrador",
+                        "dni": "a111111111",
+                        "email": "tugmail@adas",
+                        "estado": "Activo",
+                        "foto": "asda",
+                        "id_estacion": 8,
+                        "id_trabajador": 102,
+                        "id_usuari": 102,
+                        "nombre": "Alfredo",
+                        "question": "Amigo de la infancia?",
+                        "telefono": "041966283",
+                        "type": "trabajador",
+                        "ultimo_acceso": "2020-07-29T00:17:45",
+                        "username": "alfredo"
+                      }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                        {"error": "User not authenticated."}
   
 components:
   securitySchemes:

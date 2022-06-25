@@ -1,4 +1,4 @@
-from models.model import Estacion, EstacionSchema, CargadorSchema
+from models.model import Estacion, EstacionSchema, CargadorSchema, PromocionesSchema
 from utils.db import db
 from math import radians, cos, sin, asin, sqrt
 
@@ -13,6 +13,11 @@ def get_estacion_by_id(id):
     if i:
         estacion_dict = EstacionSchema().dump(i)
         estacion_dict["Cargadores"] = CargadorSchema(many=True).dump(i.cargadores)
+        estacion_dict["Promoción activa"] = []
+        if i.promociones:
+            for promocion in i.promociones:
+                if promocion.estado:
+                    estacion_dict["Promoción activa"] = PromocionesSchema().dump(promocion)
         return estacion_dict
     return None
 
@@ -29,7 +34,6 @@ def get_estacion_by_coor(lat_str=0, long_str=0, ratio=0):
             tupla = [coor[i][0], coor[i][1], coor[i][2]]
             points.append(tupla)
         lista_order = get_ordered_list(points, lat, long, ratio)
-        print("hola")
         for i in lista_order:
             print(i)
         for i in range(len(lista_order)):
