@@ -1,6 +1,6 @@
 from utils.db import db
 from models.model import Cliente, ClienteSchema
-
+from utils.utils import encrypt_password
 
 def get_all_clientes():
     c = Cliente.query.all()
@@ -18,6 +18,7 @@ def get_cliente_dni(DNI):
 
 
 def post_cliente(nombre, apellido, email, DNI, foto, telefono, username, password):
+    password = encrypt_password(password)
     c = Cliente(nombre, apellido, email, DNI, foto, telefono, username, password)
     db.session.add(c)
     db.session.commit()
@@ -40,3 +41,59 @@ def delete_cliente_id(id):
         db.session.commit()
         return True
     return False
+
+
+def modify_cliente_dni(dni, nombre, apellido, email, dni_change, foto, telefono, username, password, saldo):
+    t = Cliente.query.filter(Cliente.dni == dni).one_or_none()
+    if t:
+        if nombre:
+            t.nombre = nombre
+        if apellido:
+            t.apellido = apellido
+        if email:
+            t.email = email
+        if dni_change:
+            t.dni = dni_change
+        if foto:
+            t.foto = foto
+        if telefono:
+            t.telefono = telefono
+        if username:
+            t.username = username
+        if password:
+            password = encrypt_password(password)
+            t.password = password
+        if saldo:
+            t.saldo = saldo
+        db.session.commit()
+        return ClienteSchema().dump(t)
+
+    return None
+
+
+def modify_cliente_id(id, nombre, apellido, email, dni_change, foto, telefono, username, password, saldo):
+    t = Cliente.query.filter(Cliente.id_cliente == id).one_or_none()
+    if t:
+        if nombre:
+            t.nombre = nombre
+        if apellido:
+            t.apellido = apellido
+        if email:
+            t.email = email
+        if dni_change:
+            t.dni = dni_change
+        if foto:
+            t.foto = foto
+        if telefono:
+            t.telefono = telefono
+        if username:
+            t.username = username
+        if password:
+            password = encrypt_password(password)
+            t.password = password
+        if saldo:
+            t.saldo = saldo
+        db.session.commit()
+        return ClienteSchema().dump(t)
+
+    return None
