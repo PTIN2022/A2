@@ -553,7 +553,7 @@ paths:
                       {"error": "User not authenticated."}
   /estaciones/{id}:
       get:
-        summary: Obtiene informacion de una estacion y sus surtidores
+        summary: Obtiene informacion de una estacion y sus surtidores, junto a su promocion activa
         tags:
         - Estaciones
         parameters:
@@ -594,6 +594,15 @@ paths:
                                 "posicion": 13
                               }
                             ],
+                            "Promoción activa": {
+                              "cantidad_usados": 28,
+                              "descripcion": "CZM0MGO7GWYOVDM1BAWVXCJRG1DM41QK7EP3382S53BRMV22JK0Z125D89298JVDBG5KVEIOX8WSO5C1CU8JBIGHDKTBQ26FH5IXFBNUAICDYO3SH79ZTQI744MTMPYN6IY6AYVSQM5MOKNC8FJQGS5UK0MQ9P7ABFB1KQOIQ0Y7KANAL0YBWKMKPLLMBQQ6MW1YYY6Y3LA151NHKIJYR1HDV3Z38MWB7TJU1IH7E11QM7N8XKA42C17L9",
+                              "descuento": 19,
+                              "estado": true,
+                              "fecha_fin": "2022-06-20T08:00:07",
+                              "fecha_inicio": "2021-08-03T09:44:44",
+                              "id_promo": 8
+                            },
                             "ciudad": "España",
                             "direccion": "mi casa",
                             "id_estacion": 1,
@@ -808,7 +817,7 @@ paths:
         requestBody:
             required: true
             content:
-              multipart/form-data:
+              application/json:
                 schema:
                   type: object
                   required:
@@ -839,12 +848,14 @@ paths:
                       type: string
 
                   example:
-                    name: "Pere"
-                    lastname: "Roca"
-                    telf: "622554433"
+                    nombre: "Pere"
+                    apellido: "Roca"
+                    DNI: "123781N"
+                    telefono: 622554433
                     email: "pere.roca@boss.com"
-                    rol: "Dueño"
-                    password: "proca"
+                    username: "perealoca"
+                    password: "1"
+                    foto: "a"
         responses:
           '200':
             description: Peticion correcta
@@ -1210,7 +1221,7 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+         application/json:
             schema:
               type: object
               required:
@@ -1515,6 +1526,47 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+  /avisos/byuser:
+    get:
+      summary: Encontrar los avisos para el cliente (token)
+      tags:
+        - Avisos
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+               Consultando petición a aviso:
+                  value: {
+                          "Mensajes": [
+                            {
+                              "contenido": "aloha",
+                              "date": "2022-05-26T16:52:40.062432",
+                              "id_mensaje": 1
+                            }
+                          ],
+                          "asunto": "App no me va",
+                          "estado": En curso,
+                          "fecha": "2022-05-26T16:52:37.020462",
+                          "id_ticket": 1,
+                          "mensaje": "Problema con la aplicación movil"
+                        }
+        '404':
+          description: Aviso no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Aviso not exist or there is not any aviso for that reserva and user."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
   /avisos/byreserva/{id_reserva}:
     get:
       summary: Encontrar los avisos dado una reserva
@@ -1563,6 +1615,61 @@ paths:
                     value: >- 
                       {"error": "User not authorized."}
   /avisos/{id_aviso}:
+    put:
+      summary: Publica un aviso dado una reserva 
+      tags:
+        - Avisos
+      parameters:
+      - in: path
+        name: id_aviso
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - estado
+              properties:
+                tipo:
+                  type: string
+            example:
+              estado: "Leido"
+              
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar aviso:
+                  value: {
+                            "Mensajes": [
+                            ],
+                            "asunto": "App no me va",
+                            "estado": En curso,
+                            "fecha": "2022-05-26T16:52:37.020462",
+                            "id_ticket": 1,
+                            "mensaje": "Problema con la aplicación movil"
+                          }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
     delete:
       summary: Elimina un aviso
       tags:
@@ -1613,6 +1720,546 @@ paths:
               examples:
                 error:
                   value: '{"error": "Aviso have been deleted."}'
+
+#######################################################################################################
+# modelos
+  /modelos:
+    get:
+      summary: Obtiene todos los modelos del sistema
+      tags:
+        - Modelos
+      responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Con modelos:
+                    value:
+                          [
+                            {
+                              "modelo": "Celica",
+                              "marca": "Toyota",
+                              "potencia_carga": True,
+                              "capacidad": "2",
+                            },
+                            {
+                              "modelo": "Altea",
+                              "marca": "Seat",
+                              "potencia_carga": False,
+                              "capacidad": "6",
+                            }
+                          ]
+                  Sin modelos:
+                    value: '[]'
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter reserva:
+                    value: >-
+                      {"error": "Malformed request syntax."}
+    # añadimos un nuevo modelo
+    post:
+      summary: Inserta un nuevo modelo
+      tags:
+      - Modelos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                  - modelo
+                  - marca
+                  - potencia_carga
+                  - capacidad
+              properties:
+                modelo:
+                  type: string
+                marca:
+                  type: string
+                potencia_carga:
+                  type: boolean
+                capacidad:
+                  type: integer
+              example:
+                modelo: "Altea"
+                marca: "Seat"
+                potencia_carga: true
+                capacidad: 6
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Meter modelo:
+                  value:  >-
+                      {
+                        "modelo": "Celica",
+                        "marca": "Toyota",
+                        "potencia_carga": True,
+                        "capacidad": "2",
+                      }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter modelo:
+                  value: >-
+                    {"error": "Malformed request syntax."}
+#######################################################################################################
+# vehiculos
+  /vehiculos:
+    get:
+      summary: Obtiene todos los vehiculos de todos los clientes
+      tags:
+        - Vehiculos
+      responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Con vehiculos:
+                    value:
+                          [
+                            {
+                              "matricula": "1111PRV",
+                              "porcentaje_bat": 55,
+                            },
+                            {
+                              "matricula": "1515PVR",
+                              "porcentaje_bat": 10,
+                            }
+                          ]
+                  Sin vehiculos:
+                    value: '[]'
+          '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter reserva:
+                    value: >-
+                      {"error": "Malformed request syntax."}
+    # añadimos un nuevo vehiculo
+    post:
+      summary: Inserta un nuevo vehiculo
+      tags:
+      - Vehiculos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                  - matricula
+                  - modelo
+                  - porcentaje_bat
+              properties:
+                matricula:
+                  type: string
+                modelo:
+                  type: string
+                porcentaje_bat:
+                  type: integer
+              example:
+                matricula: "6493CZL"
+                modelo: "Golf"
+                porcentaje_bat: 15
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Meter vehiculo:
+                  value:  >-
+                      {
+                        "matricula": "1111PRV",
+                        "id_cliente": "1"
+                        "capacidad": "21321",
+                        "marca": "Toyota",
+                        "modelo": "Celica",
+                        "potencia_carga": True,
+                        "porcentaje_bat": 55,
+                      }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter vehiculo:
+                  value: >-
+                    {"error": "Malformed request syntax."}
+  /vehiculos/{matricula}:
+        # pedimos unvehiculo dada su matricula
+        get:
+          summary: Obtiene un vehiculo dada su matricula
+          tags:
+            - Vehiculos
+          parameters:
+            - in: path
+              name: matricula
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: Retorna el vehiculo correctamente
+              content:
+                application/json:
+                  examples:
+                    Vehiculo existe:
+                      value:  >-
+                          {
+                            "matricula": "1515PVR",
+                            "id_cliente": "2"
+                            "capacidad": "21321",
+                            "marca": "Nissan",
+                            "modelo": "Skyline",
+                            "potencia_carga": False,
+                            "porcentaje_bat": 10,
+                          }
+                    Vehiculo no existe:
+                      value: '[]'
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "User not authenticated."}
+            '404':
+              description: Not found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "Vehicle not found."}
+        # borramos vehiculo
+        delete: 
+          summary: Elimina vehiculo dada matricula
+          tags:
+            - Vehiculos
+          parameters:
+            - in: path
+              name: matricula
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: Eliminado vehiculo /delete
+              content:
+                application/json:
+                  examples:
+                    Vehiculo encontrado:
+                      value: "{\"msg\": \"Data deleted correctly.\"}"
+                    Vehiculo no encontrado:
+                      value: '[]'
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "User not authenticated."}
+            '404':
+              description: Not Found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "Vehiculo not found."}
+          # editar un vehiculo
+        put:
+            summary: Modificar vehiculo
+            tags:
+            - Vehiculos
+            requestBody:
+              required: true
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    required:
+                      - matricula
+                    properties:
+                      porcentaje_bat:
+                        type: integer
+                    example:
+                      porcentaje_bat: 10
+            parameters:
+            - in: path
+              name: matricula
+              required: true
+              schema:
+                type: string
+            responses:
+              #respuesta correcta
+              '200':
+                description: Vehiculo actualizado
+                content:
+                  application/json:
+                    examples:
+                      Incidencia actualizada:
+                        value: >-
+                            {
+                              "matricula": "1515PVR",
+                              "porcentaje_bat": 10
+                            }
+              '400':
+                description: Peticion incorrecta
+                content:
+                  application/json:
+                    examples:
+                      Error al modificar vehiculo:
+                        value: >-
+                          {"error": "Malformed request syntax."}
+              '404':
+                description: Not Found
+                content:
+                  application/json:
+                    examples:
+                      error:
+                        value: >-
+                          {"error": "vehiculo not found."}
+  /vehiculos/cliente:
+        # pedimos un vehiculo , dado su cliente
+        get:
+          summary: Obtiene un vehiculo dado el id cliente.
+          tags:
+            - Vehiculos
+          responses:
+            '200':
+              description: Retorna el vehiculo correctamente
+              content:
+                application/json:
+                  examples:
+                    Vehiculo existe:
+                      value:  >-
+                          {
+                            "matricula": "1515PVR",
+                            "id_cliente": "2"
+                            "capacidad": "21321",
+                            "marca": "Nissan",
+                            "modelo": "Skyline",
+                            "potencia_carga": False,
+                            "porcentaje_bat": 10,
+                          }
+                    Vehiculo no existe:
+                      value: '[]'
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "User not authenticated."}
+            '404':
+              description: Not found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "Vehicle not found."}
+                          
+##########################################################################################
+#########################################################################################
+  
+  /transacciones:
+    get:
+        summary: (NOT USE ME, ONLY FOR CHECKS) Obtiene una lista de todos las transacciones
+        tags: 
+        - Transacciones
+        responses:
+          '200':
+            description: Peticion correcta
+            content:
+              application/json:
+                examples:
+                  Peticion a transaccion:
+                    value: {
+                            "hola": "hola"
+                          }
+          '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+  
+  /transacciones/cliente/{id_reserva}:
+    post:
+      summary: Publica una transaccion dado una reserva 
+      tags:
+        - Transacciones
+      parameters:
+        - in: path
+          name: id_reserva
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - tipo
+                - importe
+              properties:
+                tipo:
+                  type: string
+                importe: 
+                  type: number
+            example:
+              tipo: "Pagado."
+              importe: 12.7
+              
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar transaccion:
+                  value: {
+                            "tipo": 12.7,
+                            "importe": "Pagado",
+                          }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '404':
+          description: Transaccion no encontrado
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error": "Transaccion not exist or there is not any Transaccion for that user or reserva."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+  /transacciones/cliente:
+    get:
+      summary: Obtener transacciones por un cliente
+      tags:
+        - Transacciones
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+               Consultando petición a transacciones:
+                  value: {
+                            "tipo": 12.7,
+                            "importe": "Pagado",
+                          }
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+  /saldo:
+    get:
+      summary: Obtiene el saldo por un cliente
+      tags:
+        - Transacciones
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+               Consultando petición a transacciones:
+                  value: {
+                            "saldo": 20
+                          }
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
+    put:
+      summary: Modifica el saldo del cliente
+      tags:
+        - Transacciones
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - saldo
+              properties:
+                type:
+                  type: string
+                saldo: 
+                  type: number
+            example:
+              type: "add/minus"
+              saldo: 12.7
+              
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Insertar saldo:
+                  value: {
+                            "saldo": 20
+                          }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                error:
+                  value: '{"error" :"Malformed request syntax."}'
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
 
 ##########################################################################################
 
