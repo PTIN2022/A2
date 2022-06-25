@@ -30,6 +30,7 @@ def get_logout(current_trabajador):
     else:
         return jsonify({'error': 'User not authorized'}), 400
 
+
 @logout.route('/token', methods=['GET'])
 @token_required
 def get_info(current_trabajador):
