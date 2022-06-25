@@ -2717,7 +2717,22 @@ paths:
                 Success Login: 
                   value: >-
                     {
-                      "token": "tokencito.jwt"
+                        "apellido": "Manresa",
+                        "cargo": "administrador",
+                        "dni": "a111111111",
+                        "email": "tugmail@adas",
+                        "estado": "Activo",
+                        "foto": "asda",
+                        "id_estacion": 2,
+                        "id_trabajador": 102,
+                        "id_usuari": 102,
+                        "nombre": "Alfredo",
+                        "question": "Amigo de la infancia?",
+                        "telefono": "081910955",
+                        "token": "token",
+                        "type": "trabajador",
+                        "ultimo_acceso": "2021-01-30T10:42:35",
+                        "username": "alfredo"
                     }
         '400':
           description: Peticion incorrecta

@@ -1821,7 +1821,6 @@ paths:
                 Error al meter modelo:
                   value: >-
                     {"error": "Malformed request syntax."}
-
 #######################################################################################################
 # vehiculos
   /vehiculos:
@@ -2008,9 +2007,12 @@ paths:
                     required:
                       - matricula
                     properties:
+                      matricula:
+                        type: string
                       porcentaje_bat:
                         type: integer
                     example:
+                      matricula: "1515PVR"
                       porcentaje_bat: 10
             parameters:
             - in: path
@@ -2081,6 +2083,7 @@ paths:
                     error:
                       value: >-
                           {"error": "User not authenticated."}
+
             '404':
               description: Not found
               content:
@@ -2106,7 +2109,8 @@ paths:
                 examples:
                   Peticion a transaccion:
                     value: {
-                            "hola": "hola"
+                            "tipo": "Pagado",
+                            "importe": 12.7
                           }
           '401':
             description: Not login
@@ -2154,8 +2158,8 @@ paths:
               examples:
                 Insertar transaccion:
                   value: {
-                            "tipo": 12.7,
-                            "importe": "Pagado",
+                            "tipo": "Pagado",
+                            "importe": 12.7
                           }
         '400':
           description: Peticion incorrecta
@@ -2193,8 +2197,8 @@ paths:
               examples:
                Consultando petición a transacciones:
                   value: {
-                            "tipo": 12.7,
-                            "importe": "Pagado",
+                            "tipo": "Pagado",
+                            "importe": 12.7
                           }
         '401':
             description: Not login
@@ -2274,7 +2278,29 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
-
+  /historial:
+    get:
+      summary: Obtiene el historial por un cliente
+      tags:
+        - Transacciones
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+               Consultando petición a transacciones:
+                  value: {
+                            "saldo": 20
+                          }
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
 ##########################################################################################
   /login:
     post:
@@ -2308,7 +2334,16 @@ paths:
                 Success Login: 
                   value: >-
                     {
-                      "token": "tokencito.jwt"
+                        "apellido": "Manresa",
+                        "dni": "a111111111",
+                        "email": "tugmail@adas",
+                        "foto": "asda",
+                        "id_usuari": 102,
+                        "id_cliente": 1,
+                        "nombre": "Alfredo",
+                        "telefono": "081910955",
+                        "token": "token",
+                        "username": "alfredo"
                     }
         '400':
           description: Peticion incorrecta
