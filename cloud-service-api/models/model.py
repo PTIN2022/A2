@@ -431,13 +431,6 @@ class ConsumoSchema(SQLAlchemyAutoSchema):
         model = Consumo
 
 
-promocion_estacion = db.Table(
-    'promocion-stacion',
-    db.Column('id_estacion', db.ForeignKey('estacion.id_estacion'), nullable=False),
-    db.Column('id_promo', db.ForeignKey('promociones.id_promo'), nullable=False)
-)
-
-
 class Estacion(db.Model):
     id_estacion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     nombre_est = db.Column(db.String(20), nullable=False, unique=True)  # unico
@@ -502,22 +495,40 @@ class Promociones(db.Model):
     cantidad_usados = db.Column(db.Integer, nullable=False)
     fecha_inicio = db.Column(db.DateTime, nullable=False)
     fecha_fin = db.Column(db.DateTime, nullable=False)
-    estado = db.Column(db.Boolean, nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
-    estaciones = db.relationship("Estacion", secondary=promocion_estacion, lazy='subquery', backref=db.backref('promociones', lazy=True))
 
-    def __init__(self, descuento, fecha_inicio, fecha_fin, estado, descripcion, cantidad_usados=0):
+    
+    def __init__(self, descuento, cantidad_usados, fecha_inicio, fecha_fin, descripcion):
         self.descuento = descuento
         self.cantidad_usados = cantidad_usados
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
-        self.estado = strtobool(estado)
         self.descripcion = descripcion
 
 
 class PromocionesSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Promociones
+
+
+class PromocionEstacion(db.Model):
+    id_estacion = db.Column('id_estacion', db.ForeignKey('estacion.id_estacion'), nullable=False)
+    id_promo = db.Column('id_promo', db.ForeignKey('promociones.id_promo'), nullable=False)
+    __table_args__ = (
+        db.PrimaryKeyConstraint(id_estacion, id_promo),
+        {},
+    )
+    estado = db.Column(db.String(30), nullable=False)
+
+    def __init__(self, id_estacion, id_promo, estado):
+        self.id_estacion = id_estacion
+        self.id_promo = id_promo
+        self.estado = estado
+
+
+class PromocionEstacionSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = PromocionEstacion
 
 
 class Cupon(db.Model):

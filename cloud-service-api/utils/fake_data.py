@@ -4,7 +4,7 @@ import string
 import random
 from faker import Faker
 from utils.db import db
-from models.model import Estacion, Cliente, Trabajador, Promociones, \
+from models.model import Estacion, Cliente, Trabajador, Promociones, PromocionEstacion, \
     Cargador, Modelo, Consumo, Horas, Vehiculo, Reserva
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -366,19 +366,10 @@ def fakedata():
         cantidad_usados = random.randint(0, 300)
         fecha_inicio = fake.date_time_between(start_date='-2y', end_date='now')
         fecha_fin = fake.date_time_between(start_date='-2y', end_date='now')
-        e = ['activa', 'desactiva']
-        estado = random.choice(e)
         descripcion = str(''.join(random.choices(string.ascii_uppercase
                           + string.digits, k=250)))
 
-        p = Promociones(
-            descuento,
-            fecha_inicio,
-            fecha_fin,
-            estado,
-            descripcion,
-            cantidad_usados,
-            )
+        p = Promociones(descuento, 0, fecha_inicio, fecha_fin, descripcion)
         db.session.add(p)
         promociones.append(p)
     db.session.commit()
@@ -389,9 +380,10 @@ def fakedata():
         estacion = random.choice(estacioness)
         promo = random.choice(promociones)
 
-        promo.estaciones.append(estacion)
+        relation = PromocionEstacion(estacion.id_estacion, promo.id_promo, 'inactiva')
+        db.session.add(relation)
+        db.session.commit()
 
-    db.session.commit()
 
     # ###Cargadores
 
