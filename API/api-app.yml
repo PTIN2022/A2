@@ -2673,7 +2673,7 @@ paths:
       requestBody:
         required: true
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               required:
@@ -2686,8 +2686,8 @@ paths:
                   type: string
 
               example:
-                email: "meh@meh.com"
-                password: "supersegura"
+                email: "prueba@gmail.com"
+                password: "1"
       responses:
         '200':
           description: Peticion correcta
