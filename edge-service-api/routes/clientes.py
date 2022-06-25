@@ -96,6 +96,7 @@ def deleted_cliente_id(current_usuario, id):
         return jsonify({"error": "User not authorized."}), 401
 # habra que hacer error 401
 
+
 @clientes.route('/clientes', methods=["PUT"])
 @token_required
 def modify_cliente(current_usuario):
