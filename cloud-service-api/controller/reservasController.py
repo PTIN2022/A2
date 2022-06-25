@@ -2,7 +2,7 @@ from utils.db import db
 from datetime import datetime
 import random
 
-from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo, Cargador
+from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo, Cargador, Promociones
 
 
 def get_all_reservas():
@@ -74,6 +74,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                             cargador_ocupado = True
 
                 if not cargador_ocupado:
+                    p = None
                     p = Promociones.query.all()
                     for pro in p:
                         if i in pro.estaciones and pro.estado:  # if i in pro.estaciones and pro.estado == 'activa'
