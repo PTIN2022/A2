@@ -74,9 +74,9 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                             cargador_ocupado = True
 
                 if not cargador_ocupado:
+                    p = Promociones.query.all()
                     for pro in p:
-                        #if promo.estado == 'activa'
-                        if pro.estado == True:
+                        if i in pro.estaciones and pro.estado:  # if i in pro.estaciones and pro.estado == 'activa'
                             desc = pro.descuento/100
                             desc = precio_carga_completa*desc
                             precio_carga_completa -= desc
