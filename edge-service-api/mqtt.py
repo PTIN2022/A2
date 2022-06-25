@@ -86,6 +86,7 @@ def process_carga_final(id_carga, kwh, id_matricula):
     v = Vehiculo.query.filter(Vehiculo.matricula == id_matricula).one_or_none()
     if c and v:
         c.potencia_consumida = kwh
+        c.estado = "libre"
         db.session.commit()
         print(c.potencia_consumida)
         # TODO: subir al cloud
@@ -105,6 +106,7 @@ def process_punto_carga(id_carga, id_matricula):
         for reserva in v.reservas:
             if reserva.id_cargador == id_carga:
                 c.estado = "ocupado"
+                publish.single("gesys/edge/puntoCarga/{}".format(id_carga), payload=c.id_cargador, qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
     else:
         print("Vehículo no encontrado")
 
