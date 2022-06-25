@@ -1567,6 +1567,7 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+
   /avisos/byreserva/{id_reserva}:
     get:
       summary: Encontrar los avisos dado una reserva
@@ -1812,6 +1813,7 @@ paths:
                 Error al meter modelo:
                   value: >-
                     {"error": "Malformed request syntax."}
+
 #######################################################################################################
 # vehiculos
   /vehiculos:
@@ -2166,6 +2168,7 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+
   /transacciones/cliente:
     get:
       summary: Obtener transacciones por un cliente
@@ -2665,6 +2668,7 @@ paths:
                       {"error": "Promociones not found."}
 
 ##########################################################################################
+
   /login:
     post:
       summary: Login en el sistema

@@ -16,6 +16,16 @@ def get_avisos(current_usuario):
         return jsonify({"error": "User not authorized."}), 401
 
 
+@avisos.route('/avisos/byuser', methods=['GET'])
+@token_required
+def get_avisos_by_user(current_usuario):
+    if current_usuario:
+        respuesta = control.get_avisos_by_user(current_usuario)
+        return jsonify(respuesta)
+    else:
+        return jsonify({"error": "User not authorized."}), 401
+
+
 @avisos.route('/avisos', methods=['POST'])
 @token_required
 def post_avisos(current_usuario):
@@ -66,6 +76,23 @@ def delete_aviso(current_usuario, id_aviso):
         respuesta = control.delete_aviso(current_usuario.id_cliente, id_aviso)
         if respuesta:
             return jsonify({"error": "Aviso deleted succesfully. "}), 200
+        else:
+            return jsonify({"error": "Aviso not exist or aviso is not for the user "}), 404
+    else:
+        return jsonify({"error": "User not authorized."}), 401
+
+
+@avisos.route('/avisos/<id_aviso>', methods=['PUT'])
+@token_required
+def modify_aviso(current_usuario, id_aviso):
+    if current_usuario:
+        if request.json["estado"]:
+            estado = request.json["estado"]
+        else:
+            return jsonify({"error": "Malformed request, needed estado."}), 400
+        respuesta = control.modify_aviso(current_usuario.id_cliente, id_aviso, estado)
+        if respuesta:
+            return jsonify(respuesta), 200
         else:
             return jsonify({"error": "Aviso not exist or aviso is not for the user "}), 404
     else:

@@ -34,16 +34,17 @@ class Aviso(db.Model):
     tipo = db.Column(db.String(20), nullable=False)
     texto = db.Column(db.String(300), nullable=False)
     hora = db.Column(db.DateTime, nullable=False)
-
+    estado = db.Column(db.String(30), nullable=False)
     id_reserva = db.Column(db.Integer, db.ForeignKey("reserva.id_reserva"), nullable=False)
     id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
 
-    def __init__(self, tipo, texto, hora, id_reserva, id_cliente):
+    def __init__(self, tipo, texto, hora, id_reserva, id_cliente, estado):
         self.tipo = tipo
         self.texto = texto
         self.hora = hora
         self.id_reserva = id_reserva
         self.id_cliente = id_cliente
+        self.estado = estado
 
 
 class AvisoSchema(SQLAlchemyAutoSchema):
@@ -272,6 +273,34 @@ class VehiculoSchema(SQLAlchemyAutoSchema):
         model = Vehiculo
 
 
+class Transaccion(db.Model):
+    id_transaccion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
+    importe = db.Column(db.FLOAT, nullable=False)
+    tipo = db.Column(db.String(20), nullable=False)
+
+    id_reserva = db.Column(db.Integer, db.ForeignKey(
+        "reserva.id_reserva"), nullable=False)
+    id_cliente = db.Column(db.Integer, db.ForeignKey(
+        "cliente.id_usuari"), nullable=False)
+    __table_args__ = (
+        db.UniqueConstraint(id_reserva, id_cliente),
+        {},
+    )
+
+    def __init__(self, importe, tipo, id_reserva, id_cliente):  # need
+        self.importe = importe
+        self.tipo = tipo
+        self.id_reserva = id_reserva
+        self.id_cliente = id_cliente
+
+
+class TransaccionSchema(SQLAlchemyAutoSchema):
+    # estacion= fields.Nested(EstacionSchema)
+    class Meta:
+        include_fk = True
+        model = Transaccion
+
+
 class Cliente(Usuari_t):
     id_cliente = db.Column('id_usuari', db.ForeignKey('usuari_t.id_usuari'), nullable=False, primary_key=True)
     __table_args__ = (
@@ -282,6 +311,7 @@ class Cliente(Usuari_t):
     saldo = db.Column(db.FLOAT, nullable=False)
     avisos = db.relationship("Aviso", backref="aviso")
     reservas = db.relationship("Reserva", backref="reserva", cascade="delete, merge, save-update")
+    transacciones = db.relationship("Transaccion", backref="transaccion", cascade="delete, merge, save-update")
     ticket = db.relationship("Ticket", backref="ticket")
 
     vehiculos = db.relationship('Vehiculo', secondary=vehiculo_cliente, lazy='subquery', backref=db.backref('Cliente', lazy=True))
@@ -473,7 +503,7 @@ class Cupon(db.Model):
     id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
     estado = db.Column(db.String(30), nullable=False)
 
-    def __init__(self, cupon, id_cliente, estado="Activa"):
+    def __init__(self, cupon, id_cliente, estado="usable"):
         self.cupon = cupon
         self.id_cliente = id_cliente
         self.estado = estado
@@ -482,30 +512,3 @@ class Cupon(db.Model):
 class CuponSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Cupon
-
-
-class Transaccion(db.Model):
-    id_transaccion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    importe = db.Column(db.FLOAT, nullable=False)
-    tipo = db.Column(db.String(20), nullable=False)
-
-    id_reserva = db.Column(db.Integer, db.ForeignKey(
-        "reserva.id_reserva"), nullable=False)
-    id_cliente = db.Column(db.Integer, db.ForeignKey(
-        "cliente.id_usuari"), nullable=False)
-    __table_args__ = (
-        db.UniqueConstraint(id_reserva, id_cliente),
-        {},
-    )
-
-    def __init__(self, importe, tipo, id_reserva, id_cliente):  # need
-        self.importe = importe
-        self.tipo = tipo
-        self.id_reserva = id_reserva
-        self.id_cliente = id_cliente
-
-
-class TransaccionSchema(SQLAlchemyAutoSchema):
-    # estacion= fields.Nested(EstacionSchema)
-    class Meta:
-        model = Transaccion
