@@ -17,6 +17,7 @@ from routes.cupones import cupones
 from routes.pagos import pagos
 from routes.modelos import modelos
 from routes.vehiculos import vehiculos
+from routes.promociones import promociones
 
 insert = bool(os.getenv('INSERT_FAKER', False))
 
@@ -70,6 +71,7 @@ def handle_mqtt_message(client, userdata, message):
 
 
 app.register_blueprint(reservas, url_prefix="/api")
+app.register_blueprint(promociones, url_prefix="/api")
 app.register_blueprint(estaciones, url_prefix="/api")
 app.register_blueprint(clientes, url_prefix="/api")
 app.register_blueprint(login, url_prefix='/api')

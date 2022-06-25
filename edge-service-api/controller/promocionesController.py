@@ -1,7 +1,7 @@
 from datetime import datetime
 from models.model import Promociones, PromocionesSchema, Estacion, EstacionSchema
 from utils.db import db
-from utils.utils import strtobool
+from models.model import strtobool
 
 
 def get_all_promociones():
@@ -38,7 +38,7 @@ def modify_promociones(id_promo, descuento=None, fecha_inicio=None, fecha_fin=No
             if fecha_fin:
                 p.fecha_fin = datetime.strptime(fecha_fin, '%Y-%m-%dT%H:%M:%S')
             if estado:
-                p.estado = strtobool(estado)
+                p.estado = strtobool(str(estado))
             if descripcion:
                 p.descripcion = descripcion
             if id_estacion != 0:
