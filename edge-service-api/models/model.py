@@ -50,6 +50,7 @@ class Aviso(db.Model):
 class AvisoSchema(SQLAlchemyAutoSchema):
     #  estacion =  fields.Nested(EstacionSchema)
     class Meta:
+        include_fk = True
         model = Aviso
 
 
