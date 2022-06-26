@@ -107,7 +107,6 @@ def modify_promocion(current_trabajador, id_promo):
         fecha_fin = None
         descripcion = None
         cantidad_usados = None
-        
         if "id_estacion" in request.json:
             i = control.Estacion.query.filter(control.Estacion.id_estacion == request.json["id_estacion"]).one_or_none()
             if i:

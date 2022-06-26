@@ -497,7 +497,6 @@ class Promociones(db.Model):
     fecha_fin = db.Column(db.DateTime, nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
 
-    
     def __init__(self, descuento, cantidad_usados, fecha_inicio, fecha_fin, descripcion):
         self.descuento = descuento
         self.cantidad_usados = cantidad_usados

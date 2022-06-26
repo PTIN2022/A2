@@ -1,5 +1,5 @@
 
-from models.model import Promociones, PromocionesSchema, PromocionEstacion, PromocionEstacionSchema, Estacion, EstacionSchema
+from models.model import Promociones, PromocionesSchema, PromocionEstacion
 from utils.db import db
 from datetime import datetime
 
@@ -32,7 +32,7 @@ def get_promo_estacion(id_estacion):
     result = []
     relation = PromocionEstacion.query.filter(PromocionEstacion.id_estacion == id_estacion)
     for i in relation:
-        if not i.id_promo in result:
+        if i.id_promo not in result:
             promos.append(i.id_promo)
     for promo in promos:
         p = Promociones.query.filter(Promociones.id_promo == promo)
@@ -46,7 +46,7 @@ def get_promo_estaciones(id_promo):
         result = []
         relation = PromocionEstacion.query.filter(PromocionEstacion.id_promo == p.id_promo)
         for i in relation:
-            if not i.id_estacion in result:
+            if i.id_estacion not in result:
                 result.append(i.id_estacion)
         return result
     else:
@@ -96,13 +96,13 @@ def modify_promociones(id_promo, id_estacion=None, descuento=None, fecha_inicio=
 def modify_estado(id_promo, id_estacion):
     relation = PromocionEstacion.query.filter(PromocionEstacion.id_promo == id_promo, PromocionEstacion.id_estacion == id_estacion).one_or_none()
     if relation:
-            promos = PromocionEstacion.query.filter(PromocionEstacion.id_estacion == id_estacion)
-            for i in promos:
-                i.estado = 'inactiva'
-                db.session.commit()
-            relation.estado = 'activa'
+        promos = PromocionEstacion.query.filter(PromocionEstacion.id_estacion == id_estacion)
+        for i in promos:
+            i.estado = 'inactiva'
             db.session.commit()
-            return True
+        relation.estado = 'activa'
+        db.session.commit()
+        return True
     else:
         return None
 

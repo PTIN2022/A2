@@ -363,7 +363,6 @@ def fakedata():
     promociones = []
     for i in range(10):
         descuento = random.randint(0, 100)
-        cantidad_usados = random.randint(0, 300)
         fecha_inicio = fake.date_time_between(start_date='-2y', end_date='now')
         fecha_fin = fake.date_time_between(start_date='-2y', end_date='now')
         descripcion = str(''.join(random.choices(string.ascii_uppercase
@@ -384,9 +383,7 @@ def fakedata():
         db.session.add(relation)
         db.session.commit()
 
-
     # ###Cargadores
-
     cargadores = []
     for i in estacioness:
         for j in range(32):
