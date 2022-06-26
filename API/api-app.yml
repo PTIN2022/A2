@@ -2168,6 +2168,187 @@ paths:
                           {"error": "Vehicle not found."}
                           
 ##########################################################################################
+  /cupones:
+        get:
+          summary: Obtiene los cupones para el usuario
+          tags:
+            - Cupones
+          responses:
+            '200':
+              description: Devuelve los cupones del cliente
+              content:
+                application/json:
+                  examples:
+                    Lista cupones:
+                      value:  >-
+                          {
+                            "cupon": 1,
+                            "descuento": 20,
+                            "estado": "Usable"
+                          }
+                    No tiene cupones:
+                      value: '[]'
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "User not authenticated."}
+  /cupones/{id_user}:
+    post:
+      summary: Modificar vehiculo
+      tags:
+      - Cupones
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - estado
+                - descuento
+              properties:
+                estado:
+                  type: string
+                descuento:
+                  type: integer
+              example:
+                descuento: 20
+                estado: "No usable/usable"
+      parameters:
+      - in: path
+        name: id_user
+        required: true
+        schema:
+          type: integer
+      responses:
+        #respuesta correcta
+        '200':
+          description: Cupon creado
+          content:
+            application/json:
+              examples:
+                Cupon creado:
+                  value:  >-
+                      {
+                        "cupon": 1,
+                        "descuento": 20,
+                        "estado": "Usable"
+                      }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al crear Cupon:
+                  value: >-
+                    {"error": "Malformed request syntax."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Cliente not found."}
+  /cupones/{id_cupon}:
+        # borramos vehiculo
+        get: 
+          summary: Obtiene la info de un cupon
+          tags:
+            - Cupones
+          parameters:
+            - in: path
+              name: id_cupon
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: Devuelve los cupones del cliente
+              content:
+                application/json:
+                  examples:
+                    Cupones:
+                      value:  >-
+                          {
+                            "cupon": 1,
+                            "descuento": 20,
+                            "estado": "Usable"
+                          }
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "User not authenticated."}
+            '404':
+              description: Not Found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "Cupon not found."}
+        put:
+            summary: Modificar vehiculo
+            tags:
+            - Cupones
+            requestBody:
+              required: true
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    required:
+                      - estado
+                    properties:
+                      estado:
+                        type: string
+                    example:
+                      estado: "No usable/usable"
+            parameters:
+            - in: path
+              name: id_cupon
+              required: true
+              schema:
+                type: string
+            responses:
+              #respuesta correcta
+              '200':
+                description: Cupon actualizado
+                content:
+                  application/json:
+                    examples:
+                      Cupon actualizado:
+                        value:  >-
+                            {
+                              "cupon": 1,
+                              "descuento": 20,
+                              "estado": "No usable"
+                            }
+              '400':
+                description: Peticion incorrecta
+                content:
+                  application/json:
+                    examples:
+                      Error al modificar Cupon:
+                        value: >-
+                          {"error": "Malformed request syntax."}
+              '404':
+                description: Not Found
+                content:
+                  application/json:
+                    examples:
+                      error:
+                        value: >-
+                          {"error": "Cupon not found."}
+
 #########################################################################################
   
   /transacciones:
