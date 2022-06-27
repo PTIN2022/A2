@@ -129,7 +129,8 @@ def process_punto_carga(id_carga, id_matricula):
         if reserva.id_vehiculo == id_matricula:
             if (reserva.fecha_entrada - timedelta(minutes=5)) < ahora < reserva.fecha_salida:
                 cargador.estado = "ocupado"
-                publish.single("gesys/edge/puntoCarga/{}".format(id_carga), payload=cargador.id_cargador, qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
+                payload = {"idPuntoCarga": cargador.id_cargador, "cargaLimiteCoche": reserva.procetnaje_carga}
+                publish.single("gesys/edge/puntoCarga/{}".format(id_carga), payload=payload, qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
 
     print("El cargador {}, no tiene ninguna reserva, pero el coche {} esta ocupando la plaza. Llamando a la grua...".format(id_carga, id_matricula))
 
