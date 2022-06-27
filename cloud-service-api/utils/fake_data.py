@@ -4,7 +4,7 @@ import string
 import random
 from faker import Faker
 from utils.db import db
-from models.model import Estacion, Cliente, Trabajador, Promociones, \
+from models.model import Estacion, Cliente, Trabajador, Promociones, PromocionEstacion, \
     Cargador, Modelo, Consumo, Horas, Vehiculo, Reserva, Cupon, Transaccion, Historial
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
