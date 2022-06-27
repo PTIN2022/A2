@@ -25,13 +25,15 @@ def post_cupones(id_user):
 
 @cupones.route('/cupones/<id_cupon>', methods=['PUT'])
 @token_required
-def set_estado(id_cupon):
-    estado = request.json["estado"]  # Dia y hora
-    c = set_cupon_estado(id_cupon, estado)
-    if "error" in c:
-        return jsonify(c), 404
-
-    return jsonify(c), 200
+def set_estado(current_usuario, id_cupon):
+    if current_usuario:
+        estado = request.json["estado"]  # Dia y hora
+        c = set_cupon_estado(id_cupon, estado)
+        if "error" in c:
+            return jsonify(c), 404
+        return jsonify(c), 200
+    else:
+        return jsonify({"error": "User not authorized."}), 401
 
 
 @cupones.route('/cupones/<id_cupon>', methods=['GET'])
