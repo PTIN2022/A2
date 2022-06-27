@@ -4,11 +4,14 @@ import string
 import random
 from faker import Faker
 from utils.db import db
-from models.model import Estacion, Cliente, Trabajador, Promociones, PromocionEstacion, \
+from models.model import Estacion, Cliente, Trabajador, Promociones, \
     Cargador, Modelo, Consumo, Horas, Vehiculo, Reserva, Cupon, Transaccion, Historial
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from utils.utils import encrypt_password
+import requests
+from random import choices
+from random import randint
 
 
 def fakedata():
@@ -22,10 +25,10 @@ def fakedata():
         1.727072,
         32,
         "Rambla de L'exposicio",
-        20,
+        230,
         'Zona industrial',
         1,
-        130,
+        150,
         '+34762487248',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
@@ -38,10 +41,10 @@ def fakedata():
         1.730369,
         32,
         'Rambla de A',
-        20,
+        220,
         'Zona mayonesa',
         15,
-        130,
+        110,
         '+34762854712',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
@@ -54,10 +57,10 @@ def fakedata():
         1.737627,
         32,
         'A veces',
-        20,
+        120,
         'Zona M de motomami',
         8,
-        130,
+        70,
         '+34785123478',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
@@ -70,10 +73,10 @@ def fakedata():
         1.728166,
         32,
         'Rambla de Shrek',
-        20,
+        300,
         'Zona memes de baki',
         1,
-        130,
+        20,
         '+34745821523',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
@@ -86,10 +89,10 @@ def fakedata():
         1.721478,
         32,
         'Casoplon del coletas',
-        20,
+        30,
         'Zona SEAX',
         14,
-        130,
+        15,
         '+34797458744',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
@@ -102,10 +105,10 @@ def fakedata():
         1.718915,
         32,
         'Casa de ibai',
-        20,
+        45,
         'Zona el bicho',
         20,
-        130,
+        32,
         '+34768220011',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
@@ -118,10 +121,10 @@ def fakedata():
         1.710113,
         32,
         'Rambla de Redes Multimedia',
-        20,
+        278,
         'Zona XAMU',
         26,
-        130,
+        190,
         '+34798544552',
         'Vilanova i la geltru',
         'Espa\xc3\xb1a',
@@ -134,7 +137,7 @@ def fakedata():
         1.709477,
         32,
         'Bar pepin',
-        20,
+        200,
         'Zona vip',
         32,
         130,
@@ -155,9 +158,22 @@ def fakedata():
         e7,
         e8,
         ]
-
-    # ### CLIENTE
     clientes = []
+    ce = Cliente(
+        "mario",
+        "hola",
+        "prueba@gmail.com",
+        "123319N",
+        "url",
+        189237389,
+        "mariuski",
+        encrypt_password("1"),
+        )
+    db.session.add(ce)
+    clientes.append(ce)
+
+    db.session.commit()
+    # ### CLIENTE
     for i in range(100):
         letras = [
             'A',
@@ -293,7 +309,6 @@ def fakedata():
     trabajadores.append(tr)
     db.session.commit()
     for i in range(100):
-
         letras = [
             'A',
             'B',
@@ -321,23 +336,25 @@ def fakedata():
             ]
         num = '{:08}'.format(random.randrange(1, 10 ** 8))
         dni = num + random.choice(letras)
-
         nombre = fake.first_name()
         apellido = fake.last_name()
         email = fake.free_email()
-
         foto = requests.get("https://100k-faces.glitch.me/random-image%22").url
         telefono = '{:09}'.format(random.randrange(1, 10 ** 8))
         username = nombre + num
         password = apellido + num
-
         cargos = ['administrador', 'encargado', 'trabajador']
         estados = ['Activo', 'Inactivo']
-        cargo = random.choice(cargos)
         estado = random.choice(estados)
         estacion = random.choice(estacioness)
+        cargo = random.choice(cargos)
+        if estado == 'Activo':
+            for worker in trabajadores:
+                if worker.cargo == 'administrador' and worker.id_estacion == estacion.id_estacion:
+                    cargo = 'trabajador'
+                elif worker.cargo == 'encargado' and worker.id_estacion == estacion.id_estacion:
+                    cargo = 'trabajador'
         ultimo_acceso = fake.date_time_between(start_date='-2y', end_date='now')
-
         tr = Trabajador(
             nombre,
             apellido,
@@ -357,8 +374,6 @@ def fakedata():
         trabajadores.append(tr)
 
         db.session.commit()
-
-    # ### PROMOCIONES
 
     # ### PROMOCIONES
 
