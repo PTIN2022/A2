@@ -13,6 +13,7 @@ import requests
 from random import choices
 from random import randint
 
+
 def fakedata():
     fake = Faker()
 
@@ -308,7 +309,6 @@ def fakedata():
     trabajadores.append(tr)
     db.session.commit()
     for i in range(100):
-
         letras = [
             'A',
             'B',
@@ -336,16 +336,13 @@ def fakedata():
             ]
         num = '{:08}'.format(random.randrange(1, 10 ** 8))
         dni = num + random.choice(letras)
-
         nombre = fake.first_name()
         apellido = fake.last_name()
         email = fake.free_email()
-
         foto = requests.get("https://100k-faces.glitch.me/random-image%22").url
         telefono = '{:09}'.format(random.randrange(1, 10 ** 8))
         username = nombre + num
         password = apellido + num
-
         cargos = ['administrador', 'encargado', 'trabajador']
         estados = ['Activo', 'Inactivo']
         estado = random.choice(estados)
@@ -354,12 +351,10 @@ def fakedata():
         if estado == 'Activo':
             for worker in trabajadores:
                 if worker.cargo == 'administrador' and worker.id_estacion == estacion.id_estacion:
-                    cargos = 'trabajador'
+                    cargo = 'trabajador'
                 elif worker.cargo == 'encargado' and worker.id_estacion == estacion.id_estacion:
-                    cargos = 'trabajador'   
-
+                    cargo = 'trabajador'
         ultimo_acceso = fake.date_time_between(start_date='-2y', end_date='now')
-
         tr = Trabajador(
             nombre,
             apellido,
@@ -415,9 +410,9 @@ def fakedata():
 
     db.session.commit()
 
-    ### cupones:
+    # ### cupones:
     for c in clientes:
-        estado = choices(['Usado' ,'No usado'], [0.8, 0.2])
+        estado = choices(['Usado', 'No usado'], [0.8, 0.2])
         letras = [
             'A',
             'B',
@@ -456,9 +451,9 @@ def fakedata():
         for j in range(32):
             tiposs = ['Carga Normal', 'Carga R\xc3\xa1pida']
             if valor > 0:
-                estado = choices(['ocupado' ,'libre'], [0.8, 0.2])
+                estado = choices(['ocupado', 'libre'], [0.8, 0.2])
                 if estado == 'ocupado':
-                    valor-=1
+                    valor -= 1
             elif valor == 0:
                 estado = 'libre'
             posicion = j
@@ -633,7 +628,7 @@ def fakedata():
 
     db.session.commit()
 
-    #### Historial
+    # ### Historial
 
     for c in clientes:
         veces = random.randint(0,10)
@@ -650,4 +645,3 @@ def fakedata():
             db.session.add(h1)
 
     db.session.commit()
-
