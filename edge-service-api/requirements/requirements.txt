@@ -15,3 +15,4 @@ random2
 mysqlclient
 pyjwt
 flask-cors
+requests
