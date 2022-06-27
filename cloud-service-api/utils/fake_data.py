@@ -490,7 +490,7 @@ def fakedata():
         for h in horas:
             hora = h.id
             if h.id < datetime.today():
-                potencia_consumida = randint(0,est.potencia_contratada)
+                potencia_consumida = randint(0, est.potencia_contratada)
                 potencia_maxima = est.potencia_contratada
 
                 co1 = Consumo(cargador, hora, potencia_consumida,
@@ -631,11 +631,11 @@ def fakedata():
     # ### Historial
 
     for c in clientes:
-        veces = random.randint(0,10)
+        veces = random.randint(0, 10)
         for _ in range(veces):
             fecha = fake.date_time_between(start_date='-2y', end_date='now')
             saldo = random.randint(0, 100)
-            type = choices(['minus' ,'add'], [0.5, 0.5])
+            type = choices(['minus', 'add'], [0.5, 0.5])
             if type == 'minus':
                 saldo = saldo * (-1)
                 if c.saldo < saldo:
