@@ -1,6 +1,7 @@
 import controller.promocionesController as control
 
 from flask import Blueprint, jsonify, request
+from models.model import Estacion
 from utils.utils import token_required
 
 promociones = Blueprint('promociones', __name__)
@@ -61,7 +62,7 @@ def get_estacion_by_promo(current_trabajador, id_promo):
 @token_required
 def get_promo_by_estacion(current_trabajador, id_estacion):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado":
-        i = control.Estacion.query.filter(control.Estacion.id_estacion == id_estacion).one_or_none()
+        i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
         if i:
             respuesta = control.get_promo_estacion(id_estacion)
             if respuesta:
@@ -81,7 +82,7 @@ def post_promocion(current_trabajador):
         estaciones = request.json["id_estaciones"]
         estaciones = estaciones.split("-")
         for estacion in estaciones:
-            if not control.Estacion.query.filter(control.Estacion.id_estacion == estacion).one_or_none():
+            if not Estacion.query.filter(Estacion.id_estacion == estacion).one_or_none():
                 return jsonify({"error": "Estacion not found."}), 404
         descuento = request.json["descuento"]
         fecha_inicio = request.json["fecha_inicio"]
@@ -108,7 +109,7 @@ def modify_promocion(current_trabajador, id_promo):
         descripcion = None
         cantidad_usados = None
         if "id_estacion" in request.json:
-            i = control.Estacion.query.filter(control.Estacion.id_estacion == request.json["id_estacion"]).one_or_none()
+            i = Estacion.query.filter(Estacion.id_estacion == request.json["id_estacion"]).one_or_none()
             if i:
                 id_estacion = request.json["id_estacion"]
             else:
@@ -138,7 +139,7 @@ def modify_promocion(current_trabajador, id_promo):
 @token_required
 def modificar_estado(current_trabajador, id_promo, id_estacion):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado":
-        i = control.Estacion.query.filter(control.Estacion.id_estacion == id_estacion).one_or_none()
+        i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
         if not i:
             return jsonify({"error": "Estacion not found."}), 404
         if not control.Promociones.query.filter(control.Promociones.id_promo == id_promo).one_or_none():
@@ -169,7 +170,7 @@ def deleted_promocion(current_trabajador, id_promo):
 @token_required
 def deleted_estacion_from_promocion(current_trabajador, id_promo, id_estacion):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado":
-        i = control.Estacion.query.filter(control.Estacion.id_estacion == id_estacion).one_or_none()
+        i = Estacion.query.filter(Estacion.id_estacion == id_estacion).one_or_none()
         if not i:
             return jsonify({"error": "Estacion not found."}), 404
         if not control.Promociones.query.filter(control.Promociones.id_promo == id_promo).one_or_none():
