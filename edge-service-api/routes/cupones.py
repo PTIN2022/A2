@@ -15,7 +15,8 @@ def get_cupones(current_usuario):
 @cupones.route('/cupones/<id_user>', methods=['POST'])
 def post_cupones(id_user):
     cupon = request.json["cupon"]  # Dia y hora
-    c = add_cupon_user(cupon, id_user)
+    descuento = request.json["descuento"]
+    c = add_cupon_user(descuento, cupon, id_user)
     if "error" in c:
         return jsonify(c), 404
 
