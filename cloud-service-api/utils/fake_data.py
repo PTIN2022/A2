@@ -440,7 +440,8 @@ def fakedata():
         ]
         num = '{:05}'.format(random.randrange(1, 10 ** 8))
         cupon = random.choice(letras) + num + random.choice(letras) + random.choice(letras)
-        cup = Cupon(cupon, c.id_cliente, estado[0])
+        valor = random.randint(15, 30)
+        cup = Cupon(valor, cupon, c.id_cliente, estado[0])
         db.session.add(cup)
     db.session.commit()
     # ###Cargadores
