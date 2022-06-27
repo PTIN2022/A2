@@ -15,16 +15,16 @@ def get_promo_id(id_promo):
 
 
 def get_promo_estado(estado):
-    promos = []
-    result = []
+    promos = {}
     relation = PromocionEstacion.query.filter(PromocionEstacion.estado == estado)
     for i in relation:
+        element = []
+        element.append(int(i.id_estacion))
         if not int(i.id_promo) in promos:
-            promos.append(int(i.id_promo))
-    for promo in promos:
-        p = Promociones.query.filter(Promociones.id_promo == promo)
-        result.append(PromocionesSchema(many=True).dump(p))
-    return result
+            promos[int(i.id_promo)] = element
+        else:
+            promos[int(i.id_promo)] += element
+    return promos
 
 
 def get_promo_estacion(id_estacion):
