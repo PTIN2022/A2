@@ -73,25 +73,25 @@ def modify_trabajador(current_trabajador, dni):
         question = None
         id_estacion = None
 
-        if "nombre," in request.form.to_dict():
-            nombre = request.form.to_dict()["nombre,"]
-        if "apellido" in request.form.to_dict():
-            apellido = request.form.to_dict()["apellido"]
+        if "name" in request.form.to_dict():
+            nombre = request.form.to_dict()["name"]
+        if "lastname" in request.form.to_dict():
+            apellido = request.form.to_dict()["lastname"]
         if "email" in request.form.to_dict():
             email = request.form.to_dict()["email"]
         if "dni" in request.form.to_dict():
             dni_change = request.form.to_dict()["dni"]
-        if "picture" in request.form.to_dict():
+        if "profileImage" in request.form.to_dict():
             foto = "https://this-person-does-not-exist.com/img/avatar-754c5f55152107173073b232e864e6b.jpg"
-        if "telefono" in request.form.to_dict():
-            telefono = request.form.to_dict()["telefono"]
+        if "telf" in request.form.to_dict():
+            telefono = request.form.to_dict()["telf"]
         if "username" in request.form.to_dict():
             username = request.form.to_dict()["username"]
         if "password" in request.form.to_dict():
             password = request.form.to_dict()["password"]
-        if "cargo" in request.form.to_dict():
+        if "rol" in request.form.to_dict():
             if current_trabajador.cargo == "administrador":
-                cargo = request.form.to_dict()["cargo"]
+                cargo = request.form.to_dict()["rol"]
             else:
                 return jsonify({"error": "User not authorized."}), 401
         if "estado" in request.form.to_dict():

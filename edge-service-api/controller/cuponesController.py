@@ -7,14 +7,14 @@ def get_cupones_user(id_user):
     return CuponSchema(many=True).dump(cupon_list)
 
 
-def add_cupon_user(cupon, id_user):
+def add_cupon_user(descuento, cupon, id_user):
     c = Cupon.query.filter(Cupon.cupon == cupon).one_or_none()
     if c:
         return {"error": "Este cupon ya existe. Usa otro nombre."}
 
     u = Cliente.query.filter(Cliente.id_usuari == id_user)
     if u:
-        c = Cupon(cupon, id_user)
+        c = Cupon(descuento, cupon, id_user)
         db.session.add(c)
         db.session.commit()
         return CuponSchema().dump(c)
