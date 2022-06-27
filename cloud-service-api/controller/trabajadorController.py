@@ -19,13 +19,13 @@ def post_trabajador(nombre, apellido, email, dni, foto, telefono, username, pass
         password = encrypt_password(password)
         t = Trabajador.query.filter(Trabajador.dni == dni).one_or_none()
         if t:
-            return None
+            return {"error": "Trabajador already exists."} 
         t = Trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, last_access, question, e.id_estacion)
         db.session.add(t)
         db.session.commit()
         return TrabajadorSchema().dump(t)
 
-    return None
+    return {"error": "Estacion does not exists."}
 
 
 # habra que mojararlo (last_access, picture...)
