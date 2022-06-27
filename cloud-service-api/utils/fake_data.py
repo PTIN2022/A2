@@ -5,7 +5,7 @@ import random
 from faker import Faker
 from utils.db import db
 from models.model import Estacion, Cliente, Trabajador, Promociones, PromocionEstacion, \
-    Cargador, Modelo, Consumo, Horas, Vehiculo, Reserva
+    Cargador, Modelo, Consumo, Horas, Vehiculo, Reserva, Cupon, Transaccion, Historial
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from utils.utils import encrypt_password
@@ -191,7 +191,7 @@ def fakedata():
         apellido = fake.last_name()
         email = fake.free_email()
 
-        foto = fake.name()
+        foto = requests.get("https://100k-faces.glitch.me/random-image%22").url
         telefono = '{:09}'.format(random.randrange(1, 10 ** 8))
         username = nombre + num
         password = apellido + num
@@ -326,7 +326,7 @@ def fakedata():
         apellido = fake.last_name()
         email = fake.free_email()
 
-        foto = fake.name()
+        foto = requests.get("https://100k-faces.glitch.me/random-image%22").url
         telefono = '{:09}'.format(random.randrange(1, 10 ** 8))
         username = nombre + num
         password = apellido + num
@@ -360,6 +360,8 @@ def fakedata():
 
     # ### PROMOCIONES
 
+    # ### PROMOCIONES
+
     promociones = []
     for i in range(10):
         descuento = random.randint(0, 100)
@@ -383,18 +385,57 @@ def fakedata():
         db.session.add(relation)
         db.session.commit()
 
+    # ### cupones:
+    for c in clientes:
+        estado = choices(['Usado', 'No usado'], [0.8, 0.2])
+        letras = [
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+            'F',
+            'G',
+            'H',
+            'J',
+            'K',
+            'L',
+            'M',
+            'N',
+            'P',
+            'Q',
+            'R',
+            'S',
+            'T',
+            'V',
+            'W',
+            'X',
+            'Y',
+            'Z',
+        ]
+        num = '{:05}'.format(random.randrange(1, 10 ** 8))
+        cupon = random.choice(letras) + num + random.choice(letras) + random.choice(letras)
+        valor = random.randint(15, 30)
+        cup = Cupon(valor, cupon, c.id_cliente, estado[0])
+        db.session.add(cup)
+    db.session.commit()
     # ###Cargadores
+
     cargadores = []
     for i in estacioness:
+        valor = i.ocupation_actual
         for j in range(32):
-            estadoss = ['ocupado', 'libre']
             tiposs = ['Carga Normal', 'Carga R\xc3\xa1pida']
-            estado = random.choice(estadoss)
+            if valor > 0:
+                estado = choices(['ocupado', 'libre'], [0.8, 0.2])
+                if estado == 'ocupado':
+                    valor -= 1
+            elif valor == 0:
+                estado = 'libre'
             posicion = j
             tipo = random.choice(tiposs)
             sta = i.id_estacion
-
-            carg = Cargador(estado, posicion, tipo, sta)
+            carg = Cargador(estado[0], posicion, tipo, sta)
             db.session.add(carg)
             cargadores.append(carg)
 
@@ -420,11 +461,13 @@ def fakedata():
     consumos = []
     for c in cargadores:
         cargador = c.id_cargador
+        estacion = c.estacion_id
+        est = Estacion.query.filter(Estacion.id_estacion == estacion).one_or_none()
         for h in horas:
             hora = h.id
             if h.id < datetime.today():
-                potencia_consumida = fake.random_int(min=0, max=100)
-                potencia_maxima = fake.random_int(min=0, max=100)
+                potencia_consumida = randint(0, est.potencia_contratada)
+                potencia_maxima = est.potencia_contratada
 
                 co1 = Consumo(cargador, hora, potencia_consumida,
                               potencia_maxima)
@@ -438,16 +481,16 @@ def fakedata():
     # ###Modelos
 
     model_list = [
-        '500e Cabrio el\xc3\xa9ctrico',
-        'Taycan el\xc3\xa9ctrico',
-        'e-tron GT el\xc3\xa9ctrico',
-        'Leaf el\xc3\xa9ctrico',
-        'Ioniq el\xc3\xa9ctrico',
-        'i3 el\xc3\xa9ctrico',
-        'ID.3 el\xc3\xa9ctrico',
-        '2 el\xc3\xa9ctrico',
-        'UX300e el\xc3\xa9ctrico',
-        'EV6 el\xc3\xa9ctrico',
+        '500e Cabrio electrico',
+        'Taycan electrico',
+        'e-tron GT electrico',
+        'Leaf electrico',
+        'Ioniq electrico',
+        'i3 electrico',
+        'ID.3 electrico',
+        '2 electrico',
+        'UX300e electrico',
+        'EV6 electrico',
         ]
 
     mod = Modelo(model_list[0], 'Fiat', False, 42)
@@ -521,13 +564,16 @@ def fakedata():
 
     # ## RESERVAS
     reservas = []
-    for i in range(5):
-
+    for i in range(20):
+        id_cargador = random.choice(cargadores).id_cargador
+        vehiculo = random.choice(vehiculos)
+        c = random.choice(clientes)
+        id_cliente = c.id_cliente
         fecha_entrada = fake.date_time_between(start_date='-2y', end_date='now')
         fecha_salida = fake.date_time_between(start_date='-2y', end_date='now')
 
-        procetnaje_carga = fake.random_int(min=0, max=100)
-
+        procetnaje_carga = randint(vehiculo.procentaje_bat, 100)
+        id_vehiculo = vehiculo.matricula
         precio_carga_completa = round(random.uniform(1.0, 100.0), 3)
         precio_carga_actual = round(random.uniform(1.0, 100.0), 3)
 
@@ -535,11 +581,6 @@ def fakedata():
         tarifa = round(random.uniform(1.0, 100.0), 3)
         asistida = fake.pybool()
         estado_pago = fake.pybool()
-
-        id_cargador = random.choice(cargadores).id_cargador
-        id_vehiculo = random.choice(vehiculos).matricula
-        id_cliente = random.choice(clientes).id_cliente
-
         r1 = Reserva(
             fecha_entrada,
             fecha_salida,
@@ -556,5 +597,27 @@ def fakedata():
             )
         db.session.add(r1)
         reservas.append(r1)
+        if estado_pago:
+            t1 = Transaccion(precio_carga_completa, "Pagado", i, id_cliente)
+            c.transacciones.append(t1)
+            db.session.add(t1)
+
+    db.session.commit()
+
+    # ### Historial
+
+    for c in clientes:
+        veces = random.randint(0, 10)
+        for _ in range(veces):
+            fecha = fake.date_time_between(start_date='-2y', end_date='now')
+            saldo = random.randint(0, 100)
+            type = choices(['minus', 'add'], [0.5, 0.5])
+            if type == 'minus':
+                saldo = saldo * (-1)
+                if c.saldo < saldo:
+                    type = 'add'
+                    saldo = saldo * (-1)
+            h1 = Historial(fecha, c.id_cliente, saldo, type[0])
+            db.session.add(h1)
 
     db.session.commit()
