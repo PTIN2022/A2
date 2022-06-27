@@ -4,7 +4,7 @@ import string
 import random
 from faker import Faker
 from utils.db import db
-from models.model import Estacion, Cliente, Trabajador, Promociones, \
+from models.model import Estacion, Cliente, Trabajador, Promociones, PromocionEstacion, \
     Cargador, Modelo, Consumo, Horas, Vehiculo, Reserva, Cupon, Transaccion, Historial
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -380,21 +380,13 @@ def fakedata():
     promociones = []
     for i in range(10):
         descuento = random.randint(0, 100)
-        cantidad_usados = random.randint(0, 300)
         fecha_inicio = fake.date_time_between(start_date='-2y', end_date='now')
         fecha_fin = fake.date_time_between(start_date='-2y', end_date='now')
         estado = 'inactiva'
         descripcion = str(''.join(random.choices(string.ascii_uppercase
                           + string.digits, k=250)))
 
-        p = Promociones(
-            descuento,
-            fecha_inicio,
-            fecha_fin,
-            estado,
-            descripcion,
-            cantidad_usados,
-            )
+        p = Promociones(descuento, 0, fecha_inicio, fecha_fin, descripcion)
         db.session.add(p)
         promociones.append(p)
     db.session.commit()
@@ -403,11 +395,43 @@ def fakedata():
     for i in range(15):
         estacion = random.choice(estacioness)
         promo = random.choice(promociones)
-        for promos in estacion.promociones:
-            promos.estado = False
-        promo.estado = True
-        promo.estaciones.append(estacion)
+        relation = PromocionEstacion(estacion.id_estacion, promo.id_promo, 'inactiva')
+        db.session.add(relation)
+        db.session.commit()
 
+    # ### cupones:
+    for c in clientes:
+        estado = choices(['Usado', 'No usado'], [0.8, 0.2])
+        letras = [
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+            'F',
+            'G',
+            'H',
+            'J',
+            'K',
+            'L',
+            'M',
+            'N',
+            'P',
+            'Q',
+            'R',
+            'S',
+            'T',
+            'V',
+            'W',
+            'X',
+            'Y',
+            'Z',
+        ]
+        num = '{:05}'.format(random.randrange(1, 10 ** 8))
+        cupon = random.choice(letras) + num + random.choice(letras) + random.choice(letras)
+        valor = random.randint(15, 30)
+        cup = Cupon(valor, cupon, c.id_cliente, estado[0])
+        db.session.add(cup)
     db.session.commit()
 
     # ### cupones:
