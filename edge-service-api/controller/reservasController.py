@@ -1,5 +1,6 @@
 import random
 
+import os
 import json
 from utils.db import db
 from datetime import datetime
@@ -77,7 +78,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                     )
                     db.session.add(i)
                     db.session.commit()
-                    publish.single("gesys/cloud/reservas", json.dumps(ReservaSchema().dump(i)), hostname="192.168.80.236", port=42069, qos=2)
+                    publish.single("gesys/cloud/reservas", json.dumps(ReservaSchema().dump(i)), hostname=os.getenv('MQTT_LOCAL_CLOUD_URL', 'test.mosquitto.org'), port=os.getenv('MQTT_LOCAL_CLOUD_PORT', 1883), qos=2)
                     cargador_encontrado = True
                     return i.id_reserva
 
