@@ -1,5 +1,5 @@
 
-from models.model import Promociones, PromocionesSchema, PromocionEstacion
+from models.model import Promociones, PromocionesSchema, PromocionEstacion, Estacion
 from utils.db import db
 from datetime import datetime
 
