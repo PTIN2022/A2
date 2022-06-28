@@ -34,23 +34,21 @@ class Aviso(db.Model):
     tipo = db.Column(db.String(20), nullable=False)
     texto = db.Column(db.String(300), nullable=False)
     hora = db.Column(db.DateTime, nullable=False)
-    estado = db.Column(db.String(30), nullable=False)
+
     id_reserva = db.Column(db.Integer, db.ForeignKey("reserva.id_reserva"), nullable=False)
     id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
 
-    def __init__(self, tipo, texto, hora, id_reserva, id_cliente, estado):
+    def __init__(self, tipo, texto, hora, id_reserva, id_cliente):
         self.tipo = tipo
         self.texto = texto
         self.hora = hora
         self.id_reserva = id_reserva
         self.id_cliente = id_cliente
-        self.estado = estado
 
 
 class AvisoSchema(SQLAlchemyAutoSchema):
     #  estacion =  fields.Nested(EstacionSchema)
     class Meta:
-        include_fk = True
         model = Aviso
 
 
@@ -184,7 +182,7 @@ class Usuari_t(db.Model):
     dni = db.Column(db.String(15), nullable=False, unique=True)
     foto = db.Column(db.String(300), nullable=False)
     telefono = db.Column(db.String(50), nullable=False)
-    username = db.Column(db.String(60), nullable=False)
+    username = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(300), nullable=False)
     type = db.Column(db.String(50))
 
@@ -247,6 +245,7 @@ class Trabajador(Usuari_t):
 class TrabajadorSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Trabajador
+        include_fk = True
         exclude = ('password',)
 
 
@@ -255,23 +254,6 @@ vehiculo_cliente = db.Table(
     db.Column('matricula', db.ForeignKey('vehiculo.matricula'), nullable=False, primary_key=True),
     db.Column('id_cliente', db.ForeignKey('cliente.id_usuari'), nullable=False, primary_key=True)
 )
-
-
-class Vehiculo(db.Model):
-    matricula = db.Column(db.String(25), nullable=False, primary_key=True)
-    procentaje_bat = db.Column(db.Integer, nullable=False)
-    reservas = db.relationship("Reserva",  backref="vehiculo")
-    modelos = db.Column(db.String(100), db.ForeignKey("modelo.modelo"), nullable=False)
-
-    def __init__(self, matricula, procentaje_bat, modelos):
-        self.matricula = matricula
-        self.procentaje_bat = procentaje_bat
-        self.modelos = modelos
-
-
-class VehiculoSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Vehiculo
 
 
 class Transaccion(db.Model):
@@ -298,7 +280,6 @@ class Transaccion(db.Model):
 class TransaccionSchema(SQLAlchemyAutoSchema):
     # estacion= fields.Nested(EstacionSchema)
     class Meta:
-        include_fk = True
         model = Transaccion
 
 
@@ -325,6 +306,23 @@ class HistorialSchema(SQLAlchemyAutoSchema):
         model = Historial
 
 
+class Vehiculo(db.Model):
+    matricula = db.Column(db.String(25), nullable=False, primary_key=True)
+    procentaje_bat = db.Column(db.Integer, nullable=False)
+    reservas = db.relationship("Reserva",  backref="vehiculo")
+    modelos = db.Column(db.String(100), db.ForeignKey("modelo.modelo"), nullable=False)
+
+    def __init__(self, matricula, procentaje_bat, modelos):
+        self.matricula = matricula
+        self.procentaje_bat = procentaje_bat
+        self.modelos = modelos
+
+
+class VehiculoSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Vehiculo
+
+
 class Cliente(Usuari_t):
     id_cliente = db.Column('id_usuari', db.ForeignKey('usuari_t.id_usuari'), nullable=False, primary_key=True)
     __table_args__ = (
@@ -335,10 +333,9 @@ class Cliente(Usuari_t):
     saldo = db.Column(db.FLOAT, nullable=False)
     avisos = db.relationship("Aviso", backref="aviso")
     reservas = db.relationship("Reserva", backref="reserva", cascade="delete, merge, save-update")
-    transacciones = db.relationship("Transaccion", backref="transaccion", cascade="delete, merge, save-update")
-    historial = db.relationship("Historial",  backref="historial")
     ticket = db.relationship("Ticket", backref="ticket")
-
+    historial = db.relationship("Historial",  backref="historial")
+    transacciones = db.relationship("Transaccion", backref="transaccion", cascade="delete, merge, save-update")
     vehiculos = db.relationship('Vehiculo', secondary=vehiculo_cliente, lazy='subquery', backref=db.backref('Cliente', lazy=True))
 
     __mapper_args__ = {
@@ -432,13 +429,6 @@ class ConsumoSchema(SQLAlchemyAutoSchema):
     class Meta:
         include_fk = True
         model = Consumo
-
-
-promocion_estacion = db.Table(
-    'promocion-stacion',
-    db.Column('id_estacion', db.ForeignKey('estacion.id_estacion'), nullable=False),
-    db.Column('id_promo', db.ForeignKey('promociones.id_promo'), nullable=False)
-)
 
 
 class Estacion(db.Model):

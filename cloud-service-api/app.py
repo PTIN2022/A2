@@ -4,7 +4,7 @@ import json
 
 
 from utils.db import db
-from utils.fake_data import fakedata
+from utils.fake_data_static import fakedata
 from flask import Flask
 from flask_cors import CORS
 from flask_mqtt import Mqtt
