@@ -1,4 +1,4 @@
-from models.model import Estacion, EstacionSchema, CargadorSchema, PromocionesSchema
+from models.model import Estacion, EstacionSchema, CargadorSchema, PromocionesSchema, PromocionEstacion, Promociones
 from utils.db import db
 from math import radians, cos, sin, asin, sqrt
 
@@ -14,10 +14,10 @@ def get_estacion_by_id(id):
         estacion_dict = EstacionSchema().dump(i)
         estacion_dict["Cargadores"] = CargadorSchema(many=True).dump(i.cargadores)
         estacion_dict["Promoción activa"] = []
-        if i.promociones:
-            for promocion in i.promociones:
-                if promocion.estado:
-                    estacion_dict["Promoción activa"] = PromocionesSchema().dump(promocion)
+        relation = PromocionEstacion.query.filter(PromocionEstacion.id_estacion == id)
+        for j in relation:
+            if j.estado:
+                estacion_dict["Promoción activa"] = PromocionesSchema().dump(p)
         return estacion_dict
     return None
 
