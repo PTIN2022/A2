@@ -396,11 +396,11 @@ def fakedata():
         print("Creando promos-estacion interrelación")
         estacion = random.choice(estacioness)
         promo = random.choice(promociones)
-        p = PromocionEstacion.filter(PromocionEstacion.id_estacion == estacion.id_estacion, PromocionEstacion.id_promo == promo.id_promo).one_or_none()
+        p = PromocionEstacion.query.filter(PromocionEstacion.id_estacion == estacion.id_estacion, PromocionEstacion.id_promo == promo.id_promo).one_or_none()
         while p:
             estacion = random.choice(estacioness)
             promo = random.choice(promociones)
-            p = PromocionEstacion.filter(PromocionEstacion.id_estacion == estacion.id_estacion, PromocionEstacion.id_promo == promo.id_promo).one_or_none()
+            p = PromocionEstacion.query.filter(PromocionEstacion.id_estacion == estacion.id_estacion, PromocionEstacion.id_promo == promo.id_promo).one_or_none()
         relation = PromocionEstacion(estacion.id_estacion, promo.id_promo, 'inactiva')
         db.session.add(relation)
         db.session.commit()
