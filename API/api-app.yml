@@ -1421,29 +1421,29 @@ paths:
             application/json:
               examples:
                 Hay tickets para el usuario:
-                  value: >-
-                    {
-                      "Tickets": [
-                        {
-                          "asunto": "App no me va",
-                          "estado": En curso,
-                          "fecha": "2022-05-26T16:52:37.020462",
-                          "id_ticket": 1,
-                          "mensaje": "Problema con la aplicación movil"
-                        }
-                      ],
-                      "apellido": "garcia",
-                      "dni": "245363Y",
-                      "email": "meh@gmail.com",
-                      "foto": "foto_chula",
-                      "id_usuari": 1,
-                      "nombre": "sergi",
-                      "password": "mehmeh123",
-                      "telefono": 4674387249,
-                      "type": "cliente",
-                      "username": "sergi.ib",
-                      "vehiculos": []
-                    }
+                  value:
+                        [
+                          "Tickets": [
+                            {
+                              "asunto": "App no me va",
+                              "estado": En curso,
+                              "fecha": "2022-05-26T16:52:37.020462",
+                              "id_ticket": 1,
+                              "mensaje": "Problema con la aplicación movil"
+                            }
+                          ],
+                          "apellido": "garcia",
+                          "dni": "245363Y",
+                          "email": "meh@gmail.com",
+                          "foto": "foto_chula",
+                          "id_usuari": 1,
+                          "nombre": "sergi",
+                          "password": "mehmeh123",
+                          "telefono": 4674387249,
+                          "type": "cliente",
+                          "username": "sergi.ib",
+                          "vehiculos": []
+                        ]
                 No hay tickets para el user:
                   value: '[]'
         '401':
@@ -1486,7 +1486,7 @@ paths:
             application/json:
               examples:
                 Eliminado mensaje:
-                  value: |-
+                  value: >-
                     {
                       "msg": "Message deleted succesfully"
                     }
@@ -1535,7 +1535,7 @@ paths:
               application/json:
                 examples:
                   Hay avisos:
-                    value: >-
+                    value:
                           {
                             "Mensajes": [
                             ],
@@ -1588,16 +1588,16 @@ paths:
             application/json:
               examples:
                 Insertar nuevo aviso:
-                  value: >-
-                          {
-                            "Mensajes": [
-                            ],
-                            "asunto": "App no me va",
-                            "estado": En curso,
-                            "fecha": "2022-05-26T16:52:37.020462",
-                            "id_ticket": 1,
-                            "mensaje": "Problema con la aplicación movil"
-                          }
+                  value:
+                        {
+                          "Mensajes": [
+                          ],
+                          "asunto": "App no me va",
+                          "estado": En curso,
+                          "fecha": "2022-05-26T16:52:37.020462",
+                          "id_ticket": 1,
+                          "mensaje": "Problema con la aplicación movil"
+                        }
         '400':
           description: Peticion incorrecta
           content:
@@ -1626,7 +1626,7 @@ paths:
             application/json:
               examples:
                 Cliente tiene avisos:
-                  value: >- 
+                  value:
                         {
                           "Mensajes": [
                             {
@@ -1677,7 +1677,7 @@ paths:
             application/json:
               examples:
                 Hay avisos para reserva:
-                  value: >- 
+                  value:
                         {
                           "Mensajes": [
                             {
@@ -1742,7 +1742,7 @@ paths:
             application/json:
               examples:
                 Aviso modificado:
-                  value: >-
+                  value:
                           {
                             "Mensajes": [
                             ],
@@ -1833,7 +1833,7 @@ paths:
               application/json:
                 examples:
                   Con modelos:
-                    value: >-
+                    value:
                           [
                             {
                               "modelo": "Celica",
@@ -1895,7 +1895,7 @@ paths:
             application/json:
               examples:
                 Mete modelo:
-                  value: >-
+                  value:
                       {
                         "modelo": "Celica",
                         "marca": "Toyota",
@@ -1924,7 +1924,7 @@ paths:
               application/json:
                 examples:
                   Con vehiculos:
-                    value: >-
+                    value:
                           [
                             {
                               "matricula": "1111PRV",
@@ -1978,10 +1978,10 @@ paths:
             application/json:
               examples:
                 Meter vehiculo:
-                  value: >-
+                  value:
                       {
                         "matricula": "1111PRV",
-                        "id_cliente": "1"
+                        "id_cliente": "1",
                         "capacidad": "21321",
                         "marca": "Toyota",
                         "modelo": "Celica",
@@ -2016,10 +2016,10 @@ paths:
                 application/json:
                   examples:
                     Vehiculo existe:
-                      value:  >-
+                      value:
                           {
                             "matricula": "1515PVR",
-                            "id_cliente": "2"
+                            "id_cliente": "2",
                             "capacidad": "21321",
                             "marca": "Nissan",
                             "modelo": "Skyline",
@@ -2145,10 +2145,10 @@ paths:
                 application/json:
                   examples:
                     Hay vehiculos:
-                      value: >-
+                      value:
                           {
                             "matricula": "1515PVR",
-                            "id_cliente": "2"
+                            "id_cliente": "2",
                             "capacidad": "21321",
                             "marca": "Nissan",
                             "modelo": "Skyline",
@@ -2372,12 +2372,24 @@ paths:
                 content:
                   application/json:
                     examples:
-                      PeHay transacciones:
+                      Hay transacciones:
                         value: >-
-                            {
-                              "tipo": "Pagado",
-                              "importe": 12.7
-                            }
+                            [
+                              {
+                                "id_cliente": 1,
+                                "id_reserva": 1,
+                                "id_transaccion": 1,
+                                "importe": 13.7,
+                                "tipo": "Pagado."
+                              },
+                              {
+                                "id_cliente": 1,
+                                "id_reserva": 6,
+                                "id_transaccion": 2,
+                                "importe": 13.7,
+                                "tipo": "Pagado."
+                              }
+                            ]
               '401':
                 description: Not login
                 content:
@@ -2463,10 +2475,22 @@ paths:
                   examples:
                     Cliente tiene transacciones:
                         value: >-
-                                {
-                                  "tipo": "Pagado",
-                                  "importe": 12.7
-                                }
+                            [
+                              {
+                                "id_cliente": 1,
+                                "id_reserva": 1,
+                                "id_transaccion": 1,
+                                "importe": 13.7,
+                                "tipo": "Pagado."
+                              },
+                              {
+                                "id_cliente": 1,
+                                "id_reserva": 6,
+                                "id_transaccion": 2,
+                                "importe": 13.7,
+                                "tipo": "Pagado."
+                              }
+                            ]
                     Cliente no tiene transacciones:
                         value: '[]'
             '401':
@@ -2564,18 +2588,18 @@ paths:
               examples:
                Hay historial cliente:
                   value: >-
-                          {
-                            {
-                              "fecha": "2022-06-24T16:12:55.673476",
-                              "saldo": 45.400000000000006,
-                              "type": "add"
-                            },
-                            {
-                              "fecha": "2022-06-24T16:18:34.198199",
-                              "saldo": 48.10000000000001,
-                              "type": "minus"
-                            },
-                          }
+                            [
+                              {
+                                "fecha": "2022-06-24T16:12:55.673476",
+                                "saldo": 45.400000000000006,
+                                "type": "add"
+                              },
+                              {
+                                "fecha": "2022-06-24T16:18:34.198199",
+                                "saldo": 48.10000000000001,
+                                "type": "minus"
+                              }
+                            ]
         '401':
             description: Not login
             content:
