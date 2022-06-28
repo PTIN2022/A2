@@ -159,9 +159,9 @@ class SesionesSchema(SQLAlchemyAutoSchema):
 class Ticket(db.Model):
     id_ticket = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     fecha = db.Column(db.DateTime, nullable=False)
-    asunto = db.Column(db.String(30), nullable=False)
+    asunto = db.Column(db.String(300), nullable=False)
     estado = db.Column(db.String(30), nullable=False)
-    mensaje = db.Column(db.String(300), nullable=False)
+    mensaje = db.Column(db.String(900), nullable=False)
 
     id_cliente = db.Column('id_cliente', db.ForeignKey('cliente.id_usuari'), nullable=False)
     mensajes = db.relationship("Mensaje",  backref="ticket")
@@ -182,7 +182,7 @@ class Usuari_t(db.Model):
     dni = db.Column(db.String(15), nullable=False, unique=True)
     foto = db.Column(db.String(300), nullable=False)
     telefono = db.Column(db.String(50), nullable=False)
-    username = db.Column(db.String(60), nullable=False)
+    username = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(300), nullable=False)
     type = db.Column(db.String(50))
 
@@ -283,6 +283,29 @@ class TransaccionSchema(SQLAlchemyAutoSchema):
         model = Transaccion
 
 
+class Historial(db.Model):
+    fecha = db.Column(db.DateTime, nullable=False)
+    type = db.Column(db.String(20), nullable=False)
+    id_cliente = db.Column(db.Integer, db.ForeignKey(
+        "cliente.id_usuari"), nullable=False)
+    __table_args__ = (
+        db.PrimaryKeyConstraint(fecha, id_cliente),
+        {},
+    )
+    saldo = db.Column(db.FLOAT, nullable=False)
+
+    def __init__(self, fecha, id_cliente, saldo, tipo):
+        self.fecha = fecha
+        self.id_cliente = id_cliente
+        self.saldo = saldo
+        self.type = tipo
+
+
+class HistorialSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Historial
+
+
 class Vehiculo(db.Model):
     matricula = db.Column(db.String(25), nullable=False, primary_key=True)
     procentaje_bat = db.Column(db.Integer, nullable=False)
@@ -311,6 +334,7 @@ class Cliente(Usuari_t):
     avisos = db.relationship("Aviso", backref="aviso")
     reservas = db.relationship("Reserva", backref="reserva", cascade="delete, merge, save-update")
     ticket = db.relationship("Ticket", backref="ticket")
+    historial = db.relationship("Historial",  backref="historial")
     transacciones = db.relationship("Transaccion", backref="transaccion", cascade="delete, merge, save-update")
     vehiculos = db.relationship('Vehiculo', secondary=vehiculo_cliente, lazy='subquery', backref=db.backref('Cliente', lazy=True))
 
@@ -407,13 +431,6 @@ class ConsumoSchema(SQLAlchemyAutoSchema):
         model = Consumo
 
 
-promocion_estacion = db.Table(
-    'promocion-stacion',
-    db.Column('id_estacion', db.ForeignKey('estacion.id_estacion'), nullable=False),
-    db.Column('id_promo', db.ForeignKey('promociones.id_promo'), nullable=False)
-)
-
-
 class Estacion(db.Model):
     id_estacion = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     nombre_est = db.Column(db.String(20), nullable=False, unique=True)  # unico
@@ -478,16 +495,13 @@ class Promociones(db.Model):
     cantidad_usados = db.Column(db.Integer, nullable=False)
     fecha_inicio = db.Column(db.DateTime, nullable=False)
     fecha_fin = db.Column(db.DateTime, nullable=False)
-    estado = db.Column(db.Boolean, nullable=False)
     descripcion = db.Column(db.String(300), nullable=False)
-    estaciones = db.relationship("Estacion", secondary=promocion_estacion, lazy='subquery', backref=db.backref('promociones', lazy=True))
 
-    def __init__(self, descuento, fecha_inicio, fecha_fin, estado, descripcion, cantidad_usados=0):
+    def __init__(self, descuento, cantidad_usados, fecha_inicio, fecha_fin, descripcion):
         self.descuento = descuento
         self.cantidad_usados = cantidad_usados
         self.fecha_inicio = fecha_inicio
         self.fecha_fin = fecha_fin
-        self.estado = strtobool(estado)
         self.descripcion = descripcion
 
 
@@ -496,15 +510,37 @@ class PromocionesSchema(SQLAlchemyAutoSchema):
         model = Promociones
 
 
+class PromocionEstacion(db.Model):
+    id_estacion = db.Column('id_estacion', db.ForeignKey('estacion.id_estacion'), nullable=False)
+    id_promo = db.Column('id_promo', db.ForeignKey('promociones.id_promo'), nullable=False)
+    __table_args__ = (
+        db.PrimaryKeyConstraint(id_estacion, id_promo),
+        {},
+    )
+    estado = db.Column(db.Boolean, nullable=False)
+
+    def __init__(self, id_estacion, id_promo, estado):
+        self.id_estacion = id_estacion
+        self.id_promo = id_promo
+        self.estado = strtobool(estado)
+
+
+class PromocionEstacionSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = PromocionEstacion
+
+
 class Cupon(db.Model):
     cupon = db.Column(db.String(20), nullable=False, primary_key=True)
     id_cliente = db.Column(db.Integer, db.ForeignKey("cliente.id_usuari"), nullable=False)
     estado = db.Column(db.String(30), nullable=False)
+    descuento = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, cupon, id_cliente, estado="usable"):
+    def __init__(self, descuento, cupon, id_cliente, estado="usable"):
         self.cupon = cupon
         self.id_cliente = id_cliente
         self.estado = estado
+        self.descuento = descuento
 
 
 class CuponSchema(SQLAlchemyAutoSchema):

@@ -2,7 +2,7 @@ from utils.db import db
 from datetime import datetime
 import random
 
-from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo, Cargador
+from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo, Cargador, PromocionEstacion, Promociones
 
 
 def get_all_reservas():
@@ -74,6 +74,13 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                             cargador_ocupado = True
 
                 if not cargador_ocupado:
+                    relation = PromocionEstacion.query.filter(PromocionEstacion.id_estacion == id_estacion, PromocionEstacion.estado == 'activa').one_or_none()
+                    if relation:
+                        pro = Promociones.query.filter(Promociones.id_promo == relation.id_promo).one_or_none()
+                        desc = pro.descuento/100
+                        desc = precio_carga_completa*desc
+                        precio_carga_completa -= desc
+                        precio_carga_actual -= desc
                     i = Reserva(
                         fecha_inicio_str, fecha_final_str, porcentaje_carga, precio_carga_completa, precio_carga_actual, True, tarifa,
                         asistida, estado_pago, cargador.id_cargador, matricula, cl.id_usuari

@@ -87,4 +87,85 @@ def deleted_cliente_id(current_trabajador, id):
             return jsonify({"error": "cliente not found."}), 404
     else:
         return jsonify({"error": "User not authorized."}), 401
-# habra que hacer error 401
+
+
+@clientes.route('/clientes/bydni/<DNI>', methods=["PUT"])
+@token_required
+def modify_cliente_dni(current_trabajador, DNI):
+    if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
+        nombre = None
+        apellido = None
+        email = None
+        dni_change = None
+        foto = None
+        telefono = None
+        username = None
+        password = None
+        saldo = None
+
+        if "name" in request.form.to_dict():
+            nombre = request.form.to_dict()["name"]
+        if "lastname" in request.form.to_dict():
+            apellido = request.form.to_dict()["lastname"]
+        if "email" in request.form.to_dict():
+            email = request.form.to_dict()["email"]
+        if "dni" in request.form.to_dict():
+            dni_change = request.form.to_dict()["dni"]
+        if "picture" in request.form.to_dict():
+            foto = request.form.to_dict()["picture"]
+        if "telf" in request.form.to_dict():
+            telefono = request.form.to_dict()["telf"]
+        if "username" in request.form.to_dict():
+            username = request.form.to_dict()["username"]
+        if "password" in request.form.to_dict():
+            password = request.form.to_dict()["password"]
+        if "saldo" in request.form.to_dict() and current_trabajador.cargo == "administrador":
+            saldo = request.form.to_dict()["saldo"]
+        respuesta = control.modify_cliente_dni(DNI, nombre, apellido, email, dni_change, foto, telefono, username, password, saldo)
+        if respuesta:
+            return jsonify(respuesta), 200
+        else:
+            return jsonify({"error": "cliente not found."}), 404
+    else:
+        return jsonify({"error": "User not authorized."}), 401
+
+
+@clientes.route('/clientes/<id>', methods=["PUT"])
+@token_required
+def modify_cliente_id(current_trabajador, id):
+    if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado" or current_trabajador.cargo == "trabajador":
+        nombre = None
+        apellido = None
+        email = None
+        dni_change = None
+        foto = None
+        telefono = None
+        username = None
+        password = None
+        saldo = None
+
+        if "name" in request.form.to_dict():
+            nombre = request.form.to_dict()["name"]
+        if "lastname" in request.form.to_dict():
+            apellido = request.form.to_dict()["lastname"]
+        if "email" in request.form.to_dict():
+            email = request.form.to_dict()["email"]
+        if "dni" in request.form.to_dict():
+            dni_change = request.form.to_dict()["dni"]
+        if "picture" in request.form.to_dict():
+            foto = request.form.to_dict()["picture"]
+        if "telf" in request.form.to_dict():
+            telefono = request.form.to_dict()["telf"]
+        if "username" in request.form.to_dict():
+            username = request.form.to_dict()["username"]
+        if "password" in request.form.to_dict():
+            password = request.form.to_dict()["password"]
+        if "saldo" in request.form.to_dict() and current_trabajador.cargo == "administrador":
+            saldo = request.form.to_dict()["saldo"]
+        respuesta = control.modify_cliente_id(id, nombre, apellido, email, dni_change, foto, telefono, username, password, saldo)
+        if respuesta:
+            return jsonify(respuesta), 200
+        else:
+            return jsonify({"error": "cliente not found."}), 404
+    else:
+        return jsonify({"error": "User not authorized."}), 401

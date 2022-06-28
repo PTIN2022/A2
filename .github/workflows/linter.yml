@@ -21,4 +21,4 @@ jobs:
           
       - name: Lint with flake8
         run: |
-          flake8 --statistics --max-line-length=250
+          flake8 --statistics --max-line-length=250 --ignore=./edge-service-api/controller/estacionesController.py ./cloud-service-api/controller/estacionesController.py

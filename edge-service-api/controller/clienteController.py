@@ -43,3 +43,29 @@ def delete_cliente_id(id):
         db.session.commit()
         return True
     return False
+
+
+def modify_cliente(dni, nombre, apellido, email, foto, telefono, username, password, saldo):
+    t = Cliente.query.filter(Cliente.dni == dni).one_or_none()
+    if t:
+        if nombre:
+            t.nombre = nombre
+        if apellido:
+            t.apellido = apellido
+        if email:
+            t.email = email
+        if foto:
+            t.foto = foto
+        if telefono:
+            t.telefono = telefono
+        if username:
+            t.username = username
+        if password:
+            password = encrypt_password(password)
+            t.password = password
+        if saldo:
+            t.saldo = saldo
+        db.session.commit()
+        return ClienteSchema().dump(t)
+
+    return None

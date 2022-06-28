@@ -8,7 +8,7 @@ from mqtt import process_msg
 from routes.reservas import reservas
 from routes.estaciones import estaciones
 from routes.clientes import clientes
-from utils.fake_data import fakedata
+from utils.fake_data_static import fakedata
 from multiprocessing import Lock
 from routes.login import login, logout
 from routes.soporte import soporte

@@ -95,3 +95,40 @@ def deleted_cliente_id(current_usuario, id):
     else:
         return jsonify({"error": "User not authorized."}), 401
 # habra que hacer error 401
+
+
+@clientes.route('/clientes', methods=["PUT"])
+@token_required
+def modify_cliente(current_usuario):
+    if current_usuario:
+        nombre = None
+        apellido = None
+        email = None
+        foto = None
+        telefono = None
+        username = None
+        password = None
+        saldo = None
+        if request.json["nombre"]:
+            nombre = request.json["nombre"]
+        if request.json["apellido"]:
+            apellido = request.json["apellido"]
+        if request.json["email"]:
+            email = request.json["email"]
+        if request.json["foto"]:
+            foto = request.json["foto"]
+        if request.json["telefono"]:
+            telefono = request.json["telefono"]
+        if request.json["username"]:
+            username = request.json["username"]
+        if request.json["password"]:
+            password = request.json["password"]
+        if request.json["saldo"]:
+            saldo = request.json["saldo"]
+        respuesta = control.modify_cliente(current_usuario.dni, nombre, apellido, email, foto, telefono, username, password, saldo)
+        if respuesta:
+            return jsonify(respuesta), 200
+        else:
+            return jsonify({"error": "Cliente not found."}), 404
+    else:
+        return jsonify({"error": "User not authorized."}), 401

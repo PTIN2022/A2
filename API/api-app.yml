@@ -898,6 +898,80 @@ paths:
                     error:
                       value: >-
                         {"error": "User not authorized."}
+      # modificar trabajador de la lista de trabajadores
+    put:
+      summary: Permite modificar parámetros de un cliente (FUNCIONA CON TOKEEEEEN)
+      tags:
+        - Clientes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                apellido:
+                  type: string
+                email:
+                  type: string
+                foto:
+                  type: string
+                telefono:
+                  type: integer
+                username:
+                  type: string
+                password:
+                  type: string
+                saldo:
+                  type: number
+              example:
+                nombre: "Pere"
+                apellido: "Roca"
+                telefono: 1231412
+                email: "pere.roca@boss.com"
+                username: "periko"
+                password: "proca"
+                saldo: 10.0
+                foto: "url here"
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Cliente actualizado:
+                  value:
+                    [
+                      {
+                        "id_cliente": 1,
+                        # tipo ??????????
+                        "nombre": "Pablo",
+                        "apellido": "Escobar",
+                        "email": "pablo@gmail.com",
+                        "DNI": "23769543B",
+                        "foto": "http://?????????/clientes/pablo.png",
+                        "telefono": "643876101",
+                        "username": "xXpabloXx",
+                        "saldo": 20
+                      }
+                    ]
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al meter Cliente:
+                  value: {"error": "Malformed request syntax."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: {"error": "Cliente not found."}
+
   /clientes/{id}:
     # pedimos un cliente dado su id
     get:
@@ -1821,7 +1895,6 @@ paths:
                 Error al meter modelo:
                   value: >-
                     {"error": "Malformed request syntax."}
-
 #######################################################################################################
 # vehiculos
   /vehiculos:
@@ -2008,9 +2081,12 @@ paths:
                     required:
                       - matricula
                     properties:
+                      matricula:
+                        type: string
                       porcentaje_bat:
                         type: integer
                     example:
+                      matricula: "1515PVR"
                       porcentaje_bat: 10
             parameters:
             - in: path
@@ -2081,6 +2157,7 @@ paths:
                     error:
                       value: >-
                           {"error": "User not authenticated."}
+
             '404':
               description: Not found
               content:
@@ -2091,6 +2168,187 @@ paths:
                           {"error": "Vehicle not found."}
                           
 ##########################################################################################
+  /cupones:
+        get:
+          summary: Obtiene los cupones para el usuario
+          tags:
+            - Cupones
+          responses:
+            '200':
+              description: Devuelve los cupones del cliente
+              content:
+                application/json:
+                  examples:
+                    Lista cupones:
+                      value:  >-
+                          {
+                            "cupon": 1,
+                            "descuento": 20,
+                            "estado": "Usable"
+                          }
+                    No tiene cupones:
+                      value: '[]'
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "User not authenticated."}
+  /cupones/{id_user}:
+    post:
+      summary: Modificar vehiculo
+      tags:
+      - Cupones
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - estado
+                - descuento
+              properties:
+                estado:
+                  type: string
+                descuento:
+                  type: integer
+              example:
+                descuento: 20
+                estado: "No usable/usable"
+      parameters:
+      - in: path
+        name: id_user
+        required: true
+        schema:
+          type: integer
+      responses:
+        #respuesta correcta
+        '200':
+          description: Cupon creado
+          content:
+            application/json:
+              examples:
+                Cupon creado:
+                  value:  >-
+                      {
+                        "cupon": 1,
+                        "descuento": 20,
+                        "estado": "Usable"
+                      }
+        '400':
+          description: Peticion incorrecta
+          content:
+            application/json:
+              examples:
+                Error al crear Cupon:
+                  value: >-
+                    {"error": "Malformed request syntax."}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              examples:
+                error:
+                  value: >-
+                    {"error": "Cliente not found."}
+  /cupones/{id_cupon}:
+        # borramos vehiculo
+        get: 
+          summary: Obtiene la info de un cupon
+          tags:
+            - Cupones
+          parameters:
+            - in: path
+              name: id_cupon
+              required: true
+              schema:
+                type: string
+          responses:
+            '200':
+              description: Devuelve los cupones del cliente
+              content:
+                application/json:
+                  examples:
+                    Cupones:
+                      value:  >-
+                          {
+                            "cupon": 1,
+                            "descuento": 20,
+                            "estado": "Usable"
+                          }
+            '401':
+              description: Not login
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                          {"error": "User not authenticated."}
+            '404':
+              description: Not Found
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: >-
+                        {"error": "Cupon not found."}
+        put:
+            summary: Modificar vehiculo
+            tags:
+            - Cupones
+            requestBody:
+              required: true
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    required:
+                      - estado
+                    properties:
+                      estado:
+                        type: string
+                    example:
+                      estado: "No usable/usable"
+            parameters:
+            - in: path
+              name: id_cupon
+              required: true
+              schema:
+                type: string
+            responses:
+              #respuesta correcta
+              '200':
+                description: Cupon actualizado
+                content:
+                  application/json:
+                    examples:
+                      Cupon actualizado:
+                        value:  >-
+                            {
+                              "cupon": 1,
+                              "descuento": 20,
+                              "estado": "No usable"
+                            }
+              '400':
+                description: Peticion incorrecta
+                content:
+                  application/json:
+                    examples:
+                      Error al modificar Cupon:
+                        value: >-
+                          {"error": "Malformed request syntax."}
+              '404':
+                description: Not Found
+                content:
+                  application/json:
+                    examples:
+                      error:
+                        value: >-
+                          {"error": "Cupon not found."}
+
 #########################################################################################
   
   /transacciones:
@@ -2106,7 +2364,8 @@ paths:
                 examples:
                   Peticion a transaccion:
                     value: {
-                            "hola": "hola"
+                            "tipo": "Pagado",
+                            "importe": 12.7
                           }
           '401':
             description: Not login
@@ -2154,8 +2413,8 @@ paths:
               examples:
                 Insertar transaccion:
                   value: {
-                            "tipo": 12.7,
-                            "importe": "Pagado",
+                            "tipo": "Pagado",
+                            "importe": 12.7
                           }
         '400':
           description: Peticion incorrecta
@@ -2193,8 +2452,8 @@ paths:
               examples:
                Consultando petición a transacciones:
                   value: {
-                            "tipo": 12.7,
-                            "importe": "Pagado",
+                            "tipo": "Pagado",
+                            "importe": 12.7
                           }
         '401':
             description: Not login
@@ -2274,7 +2533,29 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
-
+  /historial:
+    get:
+      summary: Obtiene el historial por un cliente
+      tags:
+        - Transacciones
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+               Consultando petición a transacciones:
+                  value: {
+                            "saldo": 20
+                          }
+        '401':
+            description: Not login
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >- 
+                      {"error": "User not authorized."}
 ##########################################################################################
   /login:
     post:
@@ -2308,7 +2589,16 @@ paths:
                 Success Login: 
                   value: >-
                     {
-                      "token": "tokencito.jwt"
+                        "apellido": "Manresa",
+                        "dni": "a111111111",
+                        "email": "tugmail@adas",
+                        "foto": "asda",
+                        "id_usuari": 102,
+                        "id_cliente": 1,
+                        "nombre": "Alfredo",
+                        "telefono": "081910955",
+                        "token": "token",
+                        "username": "alfredo"
                     }
         '400':
           description: Peticion incorrecta
