@@ -393,11 +393,18 @@ def fakedata():
 
     # ### PromocionEstacion
     for i in range(15):
+        print("Creando promos-estacion interrelación")
         estacion = random.choice(estacioness)
         promo = random.choice(promociones)
+        p = PromocionEstacion.filter(PromocionEstacion.id_estacion == estacion.id_estacion, PromocionEstacion.id_promo == promo.id_promo).one_or_none()
+        while p:
+            estacion = random.choice(estacioness)
+            promo = random.choice(promociones)
+            p = PromocionEstacion.filter(PromocionEstacion.id_estacion == estacion.id_estacion, PromocionEstacion.id_promo == promo.id_promo).one_or_none()
         relation = PromocionEstacion(estacion.id_estacion, promo.id_promo, 'inactiva')
         db.session.add(relation)
         db.session.commit()
+    print("Creado :)")
 
     # ### cupones:
     for c in clientes:
@@ -647,7 +654,7 @@ def fakedata():
         db.session.add(r1)
         reservas.append(r1)
         if estado_pago:
-            t1 = Transaccion(precio_carga_completa, "Pagado", i, id_cliente)
+            t1 = Transaccion(precio_carga_completa, "Pagado", i+1, id_cliente)
             c.transacciones.append(t1)
             db.session.add(t1)
 

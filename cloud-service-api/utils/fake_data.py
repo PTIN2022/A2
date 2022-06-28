@@ -647,7 +647,7 @@ def fakedata():
         db.session.add(r1)
         reservas.append(r1)
         if estado_pago:
-            t1 = Transaccion(precio_carga_completa, "Pagado", i, id_cliente)
+            t1 = Transaccion(precio_carga_completa, "Pagado", i+1, id_cliente)
             c.transacciones.append(t1)
             db.session.add(t1)
 
