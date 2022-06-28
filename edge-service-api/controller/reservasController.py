@@ -91,5 +91,6 @@ def remove_reserva(id):
     if i:
         db.session.delete(i)
         db.session.commit()
+        send_to_cloud("gesys/cloud/clientes/edit", {"id_reserva": id})
         return True
     return False
