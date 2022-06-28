@@ -10,6 +10,7 @@ from flask_cors import CORS
 from flask_mqtt import Mqtt
 from datetime import datetime
 from multiprocessing import Lock
+from mqtt import process_msg
 
 from models.model import Reserva
 from routes.trabajador import trabajador
