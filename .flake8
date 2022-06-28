@@ -1,3 +1,3 @@
 [flake8]
-exclude = __pycache__,.venv
+exclude = __pycache__,.venv,cloud-service-api/utils/fake_data_static.py,edge-service-api/utils/fake_data_static.py
 max-line-length = 250

@@ -159,9 +159,9 @@ class SesionesSchema(SQLAlchemyAutoSchema):
 class Ticket(db.Model):
     id_ticket = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     fecha = db.Column(db.DateTime, nullable=False)
-    asunto = db.Column(db.String(30), nullable=False)
+    asunto = db.Column(db.String(300), nullable=False)
     estado = db.Column(db.String(30), nullable=False)
-    mensaje = db.Column(db.String(300), nullable=False)
+    mensaje = db.Column(db.String(900), nullable=False)
 
     id_cliente = db.Column('id_cliente', db.ForeignKey('cliente.id_usuari'), nullable=False)
     mensajes = db.relationship("Mensaje",  backref="ticket")
@@ -182,7 +182,7 @@ class Usuari_t(db.Model):
     dni = db.Column(db.String(15), nullable=False, unique=True)
     foto = db.Column(db.String(300), nullable=False)
     telefono = db.Column(db.String(50), nullable=False)
-    username = db.Column(db.String(60), nullable=False)
+    username = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(300), nullable=False)
     type = db.Column(db.String(50))
 

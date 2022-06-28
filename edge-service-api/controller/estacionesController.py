@@ -1,4 +1,4 @@
-from models.model import Estacion, EstacionSchema, CargadorSchema, PromocionesSchema, PromocionEstacion, Promociones
+from models.model import Estacion, EstacionSchema, CargadorSchema, PromocionesSchema, PromocionEstacion
 from utils.db import db
 from math import radians, cos, sin, asin, sqrt
 
@@ -17,7 +17,7 @@ def get_estacion_by_id(id):
         relation = PromocionEstacion.query.filter(PromocionEstacion.id_estacion == id)
         for j in relation:
             if j.estado:
-                estacion_dict["Promoción activa"] = PromocionesSchema().dump(p)
+                estacion_dict["Promoción activa"] = PromocionesSchema().dump(j)
         return estacion_dict
     return None
 

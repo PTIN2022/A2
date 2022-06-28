@@ -3,6 +3,7 @@ import controller.promocionesController as control
 from flask import Blueprint, jsonify, request
 from models.model import Estacion
 from utils.utils import token_required
+from models.model import Promociones
 
 promociones = Blueprint('promociones', __name__)
 
@@ -47,7 +48,7 @@ def get_promo_by_estado(current_trabajador, estado):
 @token_required
 def get_estacion_by_promo(current_trabajador, id_promo):
     if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado":
-        if not control.Promociones.query.filter(control.Promociones.id_promo == id_promo).one_or_none():
+        if not Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none():
             return jsonify({"error": "Promocion not found."}), 404
         respuesta = control.get_promo_estaciones(id_promo)
         if respuesta:
