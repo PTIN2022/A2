@@ -70,7 +70,7 @@ paths:
                     value: >-
                       {"error": "Malformed request syntax."}
                       
-    # mandamos/resolvemos 1 reserva]
+    # Introducimos una nueva reserva al sistema
     post:
       summary: Inserta una nueva reserva
       tags:
@@ -161,9 +161,9 @@ paths:
 
 
   /reservas/estacion/{id_estacion}:
-    # pedimos una lista de reservas por una estacion dada
+    # pedimos una lista de reservas dada una estacion
     get:
-      summary: Obtiene una lista de reservas para una estacion dada obtiene solo las reservas desde ahora al futuro
+      summary: Obtiene una lista de reservas futuras dada una estacion.
       tags:
       - Reservas
       parameters:
@@ -174,7 +174,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Obtiene un lista de reservas por estacion desde la fecha actual al futuro
+          description: Obtiene un lista de reservas futuras por estacion
           content:
             application/json:
               examples:
@@ -223,9 +223,9 @@ paths:
                   value: >-
                     {"error": "User not authenticated."}
   /reservas/bydni/{dni}:
-    # pedimos una lista de reservas por un dni dado
+    # pedimos una lista de reservas dado un dni
     get:
-      summary: Obtiene una lista de reservas para un dni dado
+      summary: Obtiene una lista de reservas dado un dni
       tags:
       - Reservas
       parameters:
@@ -236,7 +236,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Obtiene un lista de reservas
+          description: Obtiene la lista de reservas por dni
           content:
             application/json:
               examples:
@@ -285,9 +285,9 @@ paths:
                   value: >-
                     {"error": "User not authenticated."}
   /reservas/bymatricula/{matricula}:
-    # pedimos una lista de reservas por una matriculña dada
+    # pedimos una lista de reservas dada una matricula
     get:
-      summary: Obtiene una lista de reservas para una matricula dada
+      summary: Obtiene una lista de reservas dada una matricula
       tags:
       - Reservas
       parameters:
@@ -298,7 +298,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Obtiene un lista de reservas
+          description: Obtiene la lista de reservas por matricula
           content:
             application/json:
               examples:
@@ -347,7 +347,7 @@ paths:
                   value: >-
                     {"error": "User not authenticated."}
   /reservas/{id}:
-      # pedimos una reserva, dado su id
+      # pedimos una reserva dado su id
       get:
         summary: Obtiene una reserva por un id dado
         tags:
@@ -360,7 +360,7 @@ paths:
               type: integer
         responses:
           '200':
-            description: Default error sample response
+            description: Obtiene la reserva con id dado
             content:
               application/json:
                 examples:
@@ -401,7 +401,7 @@ paths:
 
       #borrar reserva
       delete:
-        summary: Elimina reserva por ID
+        summary: Elimina reserva por su ID
         tags:
           - Reservas
         parameters:
@@ -412,12 +412,12 @@ paths:
               type: integer
         responses:
           '200':
-            description: Eliminado delete
+            description: Reserva eliminada correctamente
             content:
               application/json:
                 examples:
                   Reservas:
-                    value: {"msg": "Data deleted correctly."}
+                    value: {"msg": "Reserva deleted correctly."}
                   Reserva no encontrada:
                     value: '[]'
           '401':
@@ -443,12 +443,12 @@ paths:
   /estaciones:
       # pedimos una lista de las estaciones
       get:
-        summary: Obtiene una lista de estaciones
+        summary: Obtiene una lista de todas las estaciones
         tags:
         - Estaciones
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> obtiene lista de todas las estaciones
             content:
               application/json:
                 examples:
@@ -569,11 +569,11 @@ paths:
             type: integer
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> estacion concreta + info sus surtidores
             content:
               application/json:
                 examples:
-                  estacion:
+                  Hay estacion:
                     value: >-
                           {
                             "capacidad": 32,
@@ -637,10 +637,10 @@ paths:
                   error:
                     value: >-
                       {"error": "Station not found."}
-#borrar incidencia
+#obtiene estacion mas cercana a coordenadas dadas
   /estaciones/coor/{lat}/{long}/{ratio}:
       get:
-        summary: Obtiene las estaciones más cercanas por las coordenadas que se le pasen en la URI
+        summary: Obtiene las estaciones más cercanas a las coordenadas dadas
         tags:
         - Estaciones
         parameters:
@@ -665,7 +665,7 @@ paths:
             content:
               application/json:
                 examples:
-                  estacion:
+                  Hay una estacion:
                     value: >-
                         {
                           "Estaciones": [
@@ -769,14 +769,14 @@ paths:
 
 # clientes
   /clientes:
-    # pedimos una lista de las incidencias
+    # pedimos una lista de los clientes
     get:
-      summary: Obtiene una lista de clientes
+      summary: Obtiene una lista de todos los clientes
       tags:
       - Clientes
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> Obtiene lista con los clientes
           content:
             application/json:
               examples:
@@ -816,6 +816,7 @@ paths:
                 error:
                   value: >-
                     {"error": "User not authenticated."}
+    #metemos un nuevo cliente
     post:
         summary: Inserta un nuevo cliente
         tags:
@@ -864,7 +865,7 @@ paths:
                     foto: "a"
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> cliente nuevo introducido
             content:
               application/json:
                 examples:
@@ -887,7 +888,7 @@ paths:
               content:
                 application/json:
                   examples:
-                    Error al meter incidencia:
+                    Error al meter cliente:
                       value: {"error": "Malformed request syntax."}
 
           '401':
@@ -937,7 +938,7 @@ paths:
                 foto: "url here"
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> se modifica el cliente
           content:
             application/json:
               examples:
@@ -986,7 +987,7 @@ paths:
             type: integer
       responses:
         '200':
-          description: Default error sample response
+          description: Peticion correcta -> obtiene el cliente con su id
           content:
             application/json:
               examples:
@@ -1036,13 +1037,13 @@ paths:
             type: integer
       responses:
         '200':
-          description: Cliente eliminado delete
+          description: Peticion correcta -> Cliente eliminado
           content:
             application/json:
               examples:
-                Incidencias:
+                Cliente encontrado:
                   value: "{\"msg\": \"Client deleted correctly.\"}"
-                Incidencia no encontrada:
+                Cliente no encontrado:
                   value: '[]'
         '401':
           description: Not login
@@ -1075,7 +1076,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Default error sample response
+          description: Peticion correcta -> obtiene cliente por DNI
           content:
             application/json:
               examples:
@@ -1084,7 +1085,6 @@ paths:
                       [
                         {
                           "id_cliente": 1,
-                          # tipo ??????????
                           "nombre": "Pablo",
                           "apellido": "Escobar",
                           "email": "pablo@gmail.com",
@@ -1113,7 +1113,6 @@ paths:
                   value: >-
                       {"error": "Client not found."}
   #borrar cliente
-  
     delete:
       summary: Elimina cliente por id
       tags:
@@ -1126,13 +1125,13 @@ paths:
             type: string
       responses:
         '200':
-          description: Cliente eliminado delete
+          description: Peticion correcta -> Cliente eliminado delete
           content:
             application/json:
               examples:
-                Incidencias:
+                Cliente encontrado:
                   value: "{\"msg\": \"Client deleted correctly.\"}"
-                Incidencia no encontrada:
+                Cliente no encontrado:
                   value: '[]'
         '401':
           description: Not login
@@ -1151,9 +1150,9 @@ paths:
                   value: >-
                     {"error": "Client not found."}
 
-#######################################################################################################`
-#########################################################################################
-  
+#######################################################################################################
+
+  # lista peticiones a soporte tecnico
   /soporte:
     get:
         summary: (NOT USE ME, ONLY FOR CHECKS) Obtiene una lista de peticiones que se han hecho al servicio técnico
@@ -1161,11 +1160,11 @@ paths:
         - Soporte tecnico
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> obtiene lista de peticiones
             content:
               application/json:
                 examples:
-                  Peticion a soporte:
+                  Hay Peticion a soporte:
                     value: {
                             "Mensajes": [
                             ],
@@ -1212,11 +1211,11 @@ paths:
               
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> nueva peticion publicada
           content:
             application/json:
               examples:
-                Insertar petición a soporte tecnico:
+                Insertar petición correctamente:
                   value: {
                             "Mensajes": [
                             ],
@@ -1245,7 +1244,7 @@ paths:
 #Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
   /soporte/{ticket_id}:
     get:
-      summary: Encontrar el ticket/la peticion de soporte del usuario
+      summary: Encontrar el ticket/la peticion dado su id
       tags:
         - Soporte tecnico
       parameters:
@@ -1256,11 +1255,11 @@ paths:
           type: integer
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> retorna ticket/peticion con id
           content:
             application/json:
               examples:
-               Consultando petición a soporte tecnico:
+               Existe peticion/ticket:
                   value: {
                           "Mensajes": [
                             {
@@ -1290,6 +1289,7 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+    # User genera ticket ¡
     post:
       summary: El usuario en concreto pueda generar un mensaje para un ticket
       tags:
@@ -1315,11 +1315,11 @@ paths:
                 mensaje: "no se que me esta contando"
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> ticket generado correctamente
           content:
             application/json:
               examples:
-                Insertar petición a soporte tecnico:
+                Insertar petición correctamente:
                   value: {
                           "Mensajes": [
                             {
@@ -1359,7 +1359,7 @@ paths:
 
   # Eliminacion del ticket o peticion al soporte tecnico
     delete:
-      summary: Eliminar un ticket/una peticion del soporte del usuario
+      summary: Eliminar un ticket/una peticion del soporte del usuario dado su id
       tags:
         - Soporte tecnico
       parameters:
@@ -1370,17 +1370,17 @@ paths:
           type: integer
       responses:
         '200':
-          description: Ticket correcto
+          description: Peticion correcta -> ticket encontrado i eliminado
           content:
             application/json:
               examples:
-                Eliminando una petición a soporte tecnico:
-                  value: |-
+                Eliminando correctamente:
+                  value: >-
                     {
                       "msg": "Ticket deleted succesfully."
                     }
         '400':
-          description: Ticket incorrecta
+          description: Ticket incorrecte
           content:
             application/json:
               examples:
@@ -1408,7 +1408,7 @@ paths:
               examples:
                 error:
                   value: '{"error": "Ticket have been deleted."}'
-                  
+  # Obtiene tickets por usuario
   /soporte/byuser:
     get:
       summary: Obtiene los tickets que ha generado un usuario en el soporte
@@ -1416,12 +1416,12 @@ paths:
       - Soporte tecnico
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> obtiene tickets del usuario concreto
           content:
             application/json:
               examples:
-                Trabajador:
-                  value:  
+                Hay tickets para el usuario:
+                  value: >-
                     {
                       "Tickets": [
                         {
@@ -1444,6 +1444,8 @@ paths:
                       "username": "sergi.ib",
                       "vehiculos": []
                     }
+                No hay tickets para el user:
+                  value: '[]'
         '401':
           description: Not login
           content:
@@ -1460,11 +1462,10 @@ paths:
                 error:
                   value: >- 
                     {"error": "User not found."}
-                  
-    
+  # eliminar mensaje
   /soporte/delete_missage/{ticket_id}/{msg_id}:
     delete:
-      summary: Elimina un mensaje de una peticion
+      summary: Elimina un mensaje de una peticion dado su id
       tags:
         - Soporte tecnico
       parameters:
@@ -1480,7 +1481,7 @@ paths:
           type: integer
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> mensaje se elimina
           content:
             application/json:
               examples:
@@ -1505,14 +1506,14 @@ paths:
                     value: >- 
                       {"error": "User not authorized."}
         '404':
-          description: Peticion no encontrado
+          description: Mensaje no encontrado
           content:
             application/json:
               examples:
                 error:
                   value: '{"error" : "Message not found."}'
         '410':
-          description: Peticion ya eliminada
+          description: Mensaje ya eliminado
           content:
             application/json:
               examples:
@@ -1520,8 +1521,8 @@ paths:
                   value: '{"error": "Message have been deleted."}'
 
 #########################################################################################
-#########################################################################################
-  
+
+# Obtiene avisos
   /avisos:
     get:
         summary: (NOT USE ME, ONLY FOR CHECKS) Obtiene una lista de todos los avisos
@@ -1529,12 +1530,13 @@ paths:
         - Avisos
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> obtiene la lista de avisos
             content:
               application/json:
                 examples:
-                  Peticion a aviso:
-                    value: {
+                  Hay avisos:
+                    value: >-
+                          {
                             "Mensajes": [
                             ],
                             "asunto": "App no me va",
@@ -1543,6 +1545,8 @@ paths:
                             "id_ticket": 1,
                             "mensaje": "Problema con la aplicación movil"
                           }
+                  No hay avisos:
+                    value: '[]'
           '401':
             description: Not login
             content:
@@ -1551,8 +1555,9 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+    # Nuevo aviso
     post:
-      summary: Publica un aviso dado una reserva 
+      summary: Publica un nuevo aviso dada una reserva 
       tags:
         - Avisos
       requestBody:
@@ -1576,15 +1581,15 @@ paths:
               id_reserva: 1
               tipo: "Bateria llena."
               texto: "Tiene la betería llena."
-              
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> aviso publicado
           content:
             application/json:
               examples:
-                Insertar aviso:
-                  value: {
+                Insertar nuevo aviso:
+                  value: >-
+                          {
                             "Mensajes": [
                             ],
                             "asunto": "App no me va",
@@ -1608,19 +1613,21 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+  # avisos para un usuario
   /avisos/byuser:
     get:
-      summary: Encontrar los avisos para el cliente (token)
+      summary: Encontrar los avisos para el cliente (por token)
       tags:
         - Avisos
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> obtiene lista avisos del cliente
           content:
             application/json:
               examples:
-               Consultando petición a aviso:
-                  value: {
+                Cliente tiene avisos:
+                  value: >- 
+                        {
                           "Mensajes": [
                             {
                               "contenido": "aloha",
@@ -1634,6 +1641,8 @@ paths:
                           "id_ticket": 1,
                           "mensaje": "Problema con la aplicación movil"
                         }
+                Cliente no tiene avisos:
+                  value: '[]'
         '404':
           description: Aviso no encontrado
           content:
@@ -1649,10 +1658,10 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
-
+  # Avisos por reserva
   /avisos/byreserva/{id_reserva}:
     get:
-      summary: Encontrar los avisos dado una reserva
+      summary: Encontrar los avisos dada una reserva
       tags:
         - Avisos
       parameters:
@@ -1663,12 +1672,13 @@ paths:
           type: integer
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> obtiene lista avisos por reserva
           content:
             application/json:
               examples:
-               Consultando petición a aviso:
-                  value: {
+                Hay avisos para reserva:
+                  value: >- 
+                        {
                           "Mensajes": [
                             {
                               "contenido": "aloha",
@@ -1682,6 +1692,8 @@ paths:
                           "id_ticket": 1,
                           "mensaje": "Problema con la aplicación movil"
                         }
+                No hay avisos para reserva:
+                  value: '[]'
         '404':
           description: Aviso no encontrado
           content:
@@ -1697,9 +1709,10 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+  # Avisos por id
   /avisos/{id_aviso}:
     put:
-      summary: Publica un aviso dado una reserva 
+      summary: Modifica un aviso dado su id
       tags:
         - Avisos
       parameters:
@@ -1724,12 +1737,13 @@ paths:
               
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> aviso modificado
           content:
             application/json:
               examples:
-                Insertar aviso:
-                  value: {
+                Aviso modificado:
+                  value: >-
+                          {
                             "Mensajes": [
                             ],
                             "asunto": "App no me va",
@@ -1753,8 +1767,9 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+    # Borrar aviso
     delete:
-      summary: Elimina un aviso
+      summary: Elimina un aviso dado su id
       tags:
         - Avisos
       parameters:
@@ -1765,12 +1780,12 @@ paths:
           type: integer
       responses:
         '200':
-          description: Aviso correcto
+          description: Peticion correcta -> Aviso eliminado
           content:
             application/json:
               examples:
-                Eliminando una petición de Avisos:
-                  value: |-
+                Eliminando un aviso:
+                  value: >-
                     {
                       "msg": "Aviso deleted succesfully."
                     }
@@ -1808,17 +1823,17 @@ paths:
 # modelos
   /modelos:
     get:
-      summary: Obtiene todos los modelos del sistema
+      summary: Obtiene todos los modelos(vehiculos) del sistema
       tags:
         - Modelos
       responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> obtiene lista de vehiculos
             content:
               application/json:
                 examples:
                   Con modelos:
-                    value:
+                    value: >-
                           [
                             {
                               "modelo": "Celica",
@@ -1875,12 +1890,12 @@ paths:
                 capacidad: 6
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> nuevo modelo insertado
           content:
             application/json:
               examples:
-                Meter modelo:
-                  value:  >-
+                Mete modelo:
+                  value: >-
                       {
                         "modelo": "Celica",
                         "marca": "Toyota",
@@ -1904,12 +1919,12 @@ paths:
         - Vehiculos
       responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> obtiene lista de todos los vehiculos
             content:
               application/json:
                 examples:
                   Con vehiculos:
-                    value:
+                    value: >-
                           [
                             {
                               "matricula": "1111PRV",
@@ -1927,7 +1942,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter reserva:
+                  Error al obtener vehiculos:
                     value: >-
                       {"error": "Malformed request syntax."}
     # añadimos un nuevo vehiculo
@@ -1958,12 +1973,12 @@ paths:
                 porcentaje_bat: 15
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> nuevo vehiculo insertado
           content:
             application/json:
               examples:
                 Meter vehiculo:
-                  value:  >-
+                  value: >-
                       {
                         "matricula": "1111PRV",
                         "id_cliente": "1"
@@ -1996,7 +2011,7 @@ paths:
                 type: string
           responses:
             '200':
-              description: Retorna el vehiculo correctamente
+              description: Peticion correcta -> Obtiene vehiculo con matricula
               content:
                 application/json:
                   examples:
@@ -2011,8 +2026,6 @@ paths:
                             "potencia_carga": False,
                             "porcentaje_bat": 10,
                           }
-                    Vehiculo no existe:
-                      value: '[]'
             '401':
               description: Not login
               content:
@@ -2021,7 +2034,6 @@ paths:
                     error:
                       value: >-
                           {"error": "User not authenticated."}
-
             '404':
               description: Not found
               content:
@@ -2043,14 +2055,12 @@ paths:
                 type: string
           responses:
             '200':
-              description: Eliminado vehiculo /delete
+              description: Peticion correcta -> Vehiculo con matricula eliminado
               content:
                 application/json:
                   examples:
                     Vehiculo encontrado:
                       value: "{\"msg\": \"Data deleted correctly.\"}"
-                    Vehiculo no encontrado:
-                      value: '[]'
             '401':
               description: Not login
               content:
@@ -2069,7 +2079,7 @@ paths:
                         {"error": "Vehiculo not found."}
           # editar un vehiculo
         put:
-            summary: Modificar vehiculo
+            summary: Modifica vehiculo
             tags:
             - Vehiculos
             requestBody:
@@ -2095,13 +2105,12 @@ paths:
               schema:
                 type: string
             responses:
-              #respuesta correcta
               '200':
-                description: Vehiculo actualizado
+                description: Peticion correcta -> Vehiculo modificado
                 content:
                   application/json:
                     examples:
-                      Incidencia actualizada:
+                      Vehiculo modificado:
                         value: >-
                             {
                               "matricula": "1515PVR",
@@ -2123,11 +2132,10 @@ paths:
                       error:
                         value: >-
                           {"error": "vehiculo not found."}
-
   /vehiculos/cliente:
-        # pedimos un vehiculo , dado su cliente
+        # pedimos vehiculos de un cliente
         get:
-          summary: Obtiene un vehiculo dado el id cliente.
+          summary: Obtiene vehiculos dado el id cliente.
           tags:
             - Vehiculos
           responses:
@@ -2136,8 +2144,8 @@ paths:
               content:
                 application/json:
                   examples:
-                    Vehiculo existe:
-                      value:  >-
+                    Hay vehiculos:
+                      value: >-
                           {
                             "matricula": "1515PVR",
                             "id_cliente": "2"
@@ -2147,7 +2155,7 @@ paths:
                             "potencia_carga": False,
                             "porcentaje_bat": 10,
                           }
-                    Vehiculo no existe:
+                    No hay vehiculos:
                       value: '[]'
             '401':
               description: Not login
@@ -2157,7 +2165,6 @@ paths:
                     error:
                       value: >-
                           {"error": "User not authenticated."}
-
             '404':
               description: Not found
               content:
@@ -2168,6 +2175,8 @@ paths:
                           {"error": "Vehicle not found."}
                           
 ##########################################################################################
+
+# Obtiene cupones del user
   /cupones:
         get:
           summary: Obtiene los cupones para el usuario
@@ -2175,12 +2184,12 @@ paths:
             - Cupones
           responses:
             '200':
-              description: Devuelve los cupones del cliente
+              description: Peticion correcta -> Devuelve los cupones del cliente
               content:
                 application/json:
                   examples:
-                    Lista cupones:
-                      value:  >-
+                    Tiene cupones:
+                      value: >-
                           {
                             "cupon": 1,
                             "descuento": 20,
@@ -2196,9 +2205,10 @@ paths:
                     error:
                       value: >-
                           {"error": "User not authenticated."}
+  # Inserta cupones
   /cupones/{id_user}:
     post:
-      summary: Modificar vehiculo
+      summary: Añade cupones
       tags:
       - Cupones
       requestBody:
@@ -2225,14 +2235,13 @@ paths:
         schema:
           type: integer
       responses:
-        #respuesta correcta
         '200':
-          description: Cupon creado
+          description: Peticion correcta -> Cupon creado
           content:
             application/json:
               examples:
                 Cupon creado:
-                  value:  >-
+                  value: >-
                       {
                         "cupon": 1,
                         "descuento": 20,
@@ -2255,9 +2264,9 @@ paths:
                   value: >-
                     {"error": "Cliente not found."}
   /cupones/{id_cupon}:
-        # borramos vehiculo
+        # obtiene cupon por id
         get: 
-          summary: Obtiene la info de un cupon
+          summary: Obtiene la info de un cupon por id para un usuario
           tags:
             - Cupones
           parameters:
@@ -2268,12 +2277,12 @@ paths:
                 type: string
           responses:
             '200':
-              description: Devuelve los cupones del cliente
+              description: Devuelve cupon
               content:
                 application/json:
                   examples:
                     Cupones:
-                      value:  >-
+                      value: >-
                           {
                             "cupon": 1,
                             "descuento": 20,
@@ -2295,8 +2304,9 @@ paths:
                     error:
                       value: >-
                         {"error": "Cupon not found."}
+        # modifica cupones
         put:
-            summary: Modificar vehiculo
+            summary: Modificar cupon
             tags:
             - Cupones
             requestBody:
@@ -2319,14 +2329,13 @@ paths:
               schema:
                 type: string
             responses:
-              #respuesta correcta
               '200':
-                description: Cupon actualizado
+                description: Peticion correcta -> Cupon modificado
                 content:
                   application/json:
                     examples:
-                      Cupon actualizado:
-                        value:  >-
+                      Cupon modificado:
+                        value: >-
                             {
                               "cupon": 1,
                               "descuento": 20,
@@ -2351,118 +2360,124 @@ paths:
 
 #########################################################################################
   
+  # obtiene todas las transacciones
   /transacciones:
-    get:
-        summary: (NOT USE ME, ONLY FOR CHECKS) Obtiene una lista de todos las transacciones
-        tags: 
-        - Transacciones
-        responses:
-          '200':
-            description: Peticion correcta
-            content:
-              application/json:
-                examples:
-                  Peticion a transaccion:
-                    value: {
-                            "tipo": "Pagado",
-                            "importe": 12.7
-                          }
-          '401':
-            description: Not login
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >- 
-                      {"error": "User not authorized."}
-  
+        get:
+            summary: (NOT USE ME, ONLY FOR CHECKS) Obtiene una lista de todas las transacciones
+            tags: 
+            - Transacciones
+            responses:
+              '200':
+                description: Peticion correcta -> obtiene lista transacciones
+                content:
+                  application/json:
+                    examples:
+                      PeHay transacciones:
+                        value: >-
+                            {
+                              "tipo": "Pagado",
+                              "importe": 12.7
+                            }
+              '401':
+                description: Not login
+                content:
+                  application/json:
+                    examples:
+                      error:
+                        value: >- 
+                          {"error": "User not authorized."}
+  # Transacciones por reserva
   /transacciones/cliente/{id_reserva}:
-    post:
-      summary: Publica una transaccion dado una reserva 
-      tags:
-        - Transacciones
-      parameters:
-        - in: path
-          name: id_reserva
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - tipo
-                - importe
-              properties:
-                tipo:
-                  type: string
-                importe: 
-                  type: number
-            example:
-              tipo: "Pagado."
-              importe: 12.7
-              
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-                Insertar transaccion:
-                  value: {
+        post:
+          summary: Publica una transaccion dada una reserva 
+          tags:
+            - Transacciones
+          parameters:
+            - in: path
+              name: id_reserva
+              required: true
+              schema:
+                type: integer
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  required:
+                    - tipo
+                    - importe
+                  properties:
+                    tipo:
+                      type: string
+                    importe: 
+                      type: number
+                example:
+                  tipo: "Pagado."
+                  importe: 12.7
+          responses:
+            '200':
+              description: Peticion correcta
+              content:
+                application/json:
+                  examples:
+                    Inserta transaccion:
+                      value: >-
+                          {
                             "tipo": "Pagado",
                             "importe": 12.7
                           }
-        '400':
-          description: Peticion incorrecta
-          content:
-            application/json:
-              examples:
-                error:
-                  value: '{"error" :"Malformed request syntax."}'
-        '404':
-          description: Transaccion no encontrado
-          content:
-            application/json:
-              examples:
-                error:
-                  value: '{"error": "Transaccion not exist or there is not any Transaccion for that user or reserva."}'
-        '401':
-            description: Not login
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >- 
-                      {"error": "User not authorized."}
-
+            '400':
+              description: Peticion incorrecta
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: '{"error" :"Malformed request syntax."}'
+            '404':
+              description: Transaccion no encontrado
+              content:
+                application/json:
+                  examples:
+                    error:
+                      value: '{"error": "Transaccion not exist or there is not any Transaccion for that user or reserva."}'
+            '401':
+                description: Not login
+                content:
+                  application/json:
+                    examples:
+                      error:
+                        value: >- 
+                          {"error": "User not authorized."}
+  # transacciones para cliente
   /transacciones/cliente:
-    get:
-      summary: Obtener transacciones por un cliente
-      tags:
-        - Transacciones
-      responses:
-        '200':
-          description: Peticion correcta
-          content:
-            application/json:
-              examples:
-               Consultando petición a transacciones:
-                  value: {
-                            "tipo": "Pagado",
-                            "importe": 12.7
-                          }
-        '401':
-            description: Not login
-            content:
-              application/json:
-                examples:
-                  error:
-                    value: >- 
-                      {"error": "User not authorized."}
+        get:
+          summary: Obtener transacciones por un cliente
+          tags:
+            - Transacciones
+          responses:
+            '200':
+              description: Peticion correcta -> obtiene lista transacciones cliente
+              content:
+                application/json:
+                  examples:
+                    Cliente tiene transacciones:
+                        value: >-
+                                {
+                                  "tipo": "Pagado",
+                                  "importe": 12.7
+                                }
+                    Cliente no tiene transacciones:
+                        value: '[]'
+            '401':
+                description: Not login
+                content:
+                  application/json:
+                    examples:
+                      error:
+                        value: >- 
+                          {"error": "User not authorized."}
+  # saldo cliente
   /saldo:
     get:
       summary: Obtiene el saldo por un cliente
@@ -2470,12 +2485,13 @@ paths:
         - Transacciones
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> obtiene el saldo de cliente
           content:
             application/json:
               examples:
                Consultando petición a transacciones:
-                  value: {
+                  value: >-
+                          {
                             "saldo": 20
                           }
         '401':
@@ -2486,6 +2502,7 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+    # modifica saldo
     put:
       summary: Modifica el saldo del cliente
       tags:
@@ -2507,15 +2524,15 @@ paths:
             example:
               type: "add/minus"
               saldo: 12.7
-              
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> saldo modificado
           content:
             application/json:
               examples:
-                Insertar saldo:
-                  value: {
+                Modificar saldo:
+                  value: >-
+                          {
                             "saldo": 20
                           }
         '400':
@@ -2533,6 +2550,7 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
+  # historial cliente
   /historial:
     get:
       summary: Obtiene el historial por un cliente
@@ -2540,13 +2558,23 @@ paths:
         - Transacciones
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> obtiene historial de cliente
           content:
             application/json:
               examples:
-               Consultando petición a transacciones:
-                  value: {
-                            "saldo": 20
+               Hay historial cliente:
+                  value: >-
+                          {
+                            {
+                              "fecha": "2022-06-24T16:12:55.673476",
+                              "saldo": 45.400000000000006,
+                              "type": "add"
+                            },
+                            {
+                              "fecha": "2022-06-24T16:18:34.198199",
+                              "saldo": 48.10000000000001,
+                              "type": "minus"
+                            },
                           }
         '401':
             description: Not login
@@ -2557,6 +2585,7 @@ paths:
                     value: >- 
                       {"error": "User not authorized."}
 ##########################################################################################
+# hace login
   /login:
     post:
       summary: Login en el sistema
@@ -2582,23 +2611,32 @@ paths:
                 password: "1"
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> login realizado
           content:
             application/json:
               examples:
                 Success Login: 
                   value: >-
                     {
-                        "apellido": "Manresa",
-                        "dni": "a111111111",
-                        "email": "tugmail@adas",
-                        "foto": "asda",
-                        "id_usuari": 102,
-                        "id_cliente": 1,
-                        "nombre": "Alfredo",
-                        "telefono": "081910955",
-                        "token": "token",
-                        "username": "alfredo"
+                      "cliente": {
+                        "apellido": "hola",
+                        "dni": "123319N",
+                        "email": "prueba@gmail.com",
+                        "foto": "url",
+                        "id_usuari": 1,
+                        "nombre": "mario",
+                        "saldo": 48.10000000000001,
+                        "telefono": "189237389",
+                        "type": "cliente",
+                        "username": "mariuski",
+                        "vehiculos": [
+                          {
+                            "matricula": "4L41L5G",
+                            "procentaje_bat": 39
+                          }
+                        ]
+                      },
+                      "token": "blablabla"
                     }
         '400':
           description: Peticion incorrecta
@@ -2614,7 +2652,7 @@ paths:
       - Autenticacion
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> hace logout
           content:
             application/json:
               examples:
