@@ -1,4 +1,5 @@
 from utils.db import db
+from utils.mqtt_utils import send_to_cloud
 from models.model import ClienteSchema, Ticket, TicketSchema, Mensaje, MensajeSchema, Cliente
 
 
@@ -13,6 +14,7 @@ def post_soporte(descripcion, fecha, id_cliente, asunto):
         s = Ticket(fecha, asunto, descripcion, "Pendiente", c.id_cliente)
         db.session.add(s)
         db.session.commit()
+        send_to_cloud("gesys/cloud/soporte/add", TicketSchema().dump(s))
         return s.id_ticket
     return {"error": "Cliente not exist. "}
 
@@ -23,6 +25,7 @@ def post_soporte_by_ticket(mensaje, fecha, ticket_id, id_user):
         s = Mensaje(mensaje, fecha, id_user, ticket_id)
         db.session.add(s)
         db.session.commit()
+        send_to_cloud("gesys/cloud/soporte/response", MensajeSchema().dump(s))
         return MensajeSchema().dump(s)
     else:
         return 0

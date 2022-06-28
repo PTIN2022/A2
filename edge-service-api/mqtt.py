@@ -3,6 +3,7 @@ import json
 import paho.mqtt.publish as publish
 
 from utils.db import db
+from utils.mqtt_utils import send_to_cloud
 from models.model import Estacion, Cargador, Vehiculo, Consumo, CargadorSchema
 from datetime import datetime, timedelta
 
@@ -39,7 +40,7 @@ def process_camera_event(matricula, id_estacio):
     else:
         print("Estacion no encontrada...")
 
-    print("Reserva no encontrada mandando no abrir barrera...")  # TODO: useless?
+    print("Reserva no encontrada mandando no abrir barrera...")
     publish.single("gesys/estaciones/{}/camara".format(id_estacio),
                    payload="0", qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
     print("SEND: CERRAR")
@@ -53,7 +54,6 @@ def process_averias(id_carga, num_averia):
         c.estado = AVERIAS[num_averia]
         db.session.commit()
         print(c.estado)
-        # TODO: subir al cloud
 
     else:
         print("Cargador no encontrado")
@@ -74,7 +74,6 @@ def process_battery(bateria, id_matricula):
                     print("Porcentaje bateria: {}={}%".format(m.matricula, m.procentaje_bat))
                     db.session.commit()
                     return
-                    # TODO: subir al cloud
         print("Reserva para este vehiculo no encontrada")
     else:
         print("Vehículo no encontrado")
@@ -96,18 +95,17 @@ def process_carga_final(id_carga, kwh, id_matricula):
 
     c = Consumo.query.filter(Consumo.id_cargador == id_carga, Consumo.id_horas == date).one_or_none()
     if not c:
-        e = Estacion.query.filter(Estacion.id_estacion==cargador.estacion_id).one_or_none()
+        e = Estacion.query.filter(Estacion.id_estacion == cargador.estacion_id).one_or_none()
         c = Consumo(id_carga, date, 0, e.potencia_contratada)
         db.session.add(c)
         print("Consumo no encontrado.... Creandolo...")
         db.session.commit()
 
-    potencia_anterior=c.potencia_consumida
+    potencia_anterior = c.potencia_consumida
     c.potencia_consumida = c.potencia_consumida+kwh
     c.estado = "libre"
     db.session.commit()
     print("Registrando consumo del cargador: {} -- Potencia consumida anterior: {} -- Potencia consumida={}".format(c.id_cargador, potencia_anterior, c.potencia_consumida))
-    # TODO: subir al cloud
 
 
 def process_punto_carga(id_carga, id_matricula):
@@ -127,10 +125,11 @@ def process_punto_carga(id_carga, id_matricula):
     # y  
     ahora = datetime.today()
     for reserva in cargador.reservas:
-        if reserva.id_vehiculo == matricula:
+        if reserva.id_vehiculo == id_matricula:
             if (reserva.fecha_entrada - timedelta(minutes=5)) < ahora < reserva.fecha_salida:
-                c.estado = "ocupado"
-                publish.single("gesys/edge/puntoCarga/{}".format(id_carga), payload=c.id_cargador, qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
+                cargador.estado = "ocupado"
+                send_to_cloud("gesys/cloud/puntoCarga", {"ocupado": True, "cargador_id": cargador.id_cargador})
+                publish.single("gesys/edge/puntoCarga/{}".format(id_carga), payload=cargador.id_cargador, qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
 
     print("El cargador {}, no tiene ninguna reserva, pero el coche {} esta ocupando la plaza. Llamando a la grua...".format(id_carga, id_matricula))
 
@@ -156,6 +155,7 @@ def process_msg(topic, raw_payload):
         # Expected: {"idPuntoCarga": 2, "averia": 0}
         if "idPuntoCarga" in payload and "averia" in payload:
             process_averias(payload["idPuntoCarga"], payload["averia"])
+            send_to_cloud("gesys/cloud/puntoCarga/averia", payload)
 
     elif topic == "gesys/edge/vehiculo":
         # Expected: {"battery": 0, "matricula":"34543FGC"}
@@ -163,9 +163,10 @@ def process_msg(topic, raw_payload):
             process_battery(payload["battery"], payload["matricula"])
 
     elif topic == "gesys/edge/puntoCarga/consumo":
-        # Expected: {"idPuntoCarga": 2, "kwh": 432,"matricula":"34543FGC"}
+        # Expected: {"idPuntoCarga": 2, "kwh": 432, "matricula":"34543FGC"}
         if "idPuntoCarga" in payload and "kwh" in payload and "matricula" in payload:
             process_carga_final(payload["idPuntoCarga"], payload["kwh"], payload["matricula"])
+            send_to_cloud("gesys/cloud/puntoCarga/consumo", payload)
 
     elif topic == "gesys/edge/puntoCarga/vehiculo":
         # Expected: {"idPuntoCarga": 2, "matricula":"34543FGC"}

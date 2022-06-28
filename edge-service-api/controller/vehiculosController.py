@@ -1,6 +1,7 @@
 from utils.db import db
 from models.model import Vehiculo, VehiculoSchema
 from models.model import Modelo, ModeloSchema
+from utils.mqtt_utils import send_to_cloud
 
 
 def get_all_vehiculos():
@@ -26,16 +27,23 @@ def get_vehiculo_by_matricula(cliente, matricula):
 def post_vehiculo(cliente, matricula, modelo, porcentaje_bat):
     mod = Modelo.query.filter(Modelo.modelo == modelo).one_or_none()
     if mod:
-        v = Vehiculo(matricula, porcentaje_bat, modelo)
-        cliente.vehiculos.append(v)
-        db.session.add(v)
-        db.session.commit()
-        vehiculo = VehiculoSchema().dump(v)
-        vehiculo["modelo"] = []
-        vehiculo["modelo"].append(ModeloSchema().dump(mod))
-        return vehiculo
+        if Vehiculo.query.filter(Vehiculo.matricula == matricula).one_or_none() is None:
+            v = Vehiculo(matricula, porcentaje_bat, modelo)
+            cliente.vehiculos.append(v)
+            db.session.add(v)
+            db.session.commit()
+            vehiculo = VehiculoSchema().dump(v)
+            vehiculo["modelo"] = []
+            vehiculo["modelo"].append(ModeloSchema().dump(mod))
 
-    return None
+            payload = VehiculoSchema().dump(v)
+            payload["cliente"] = cliente.dni
+            payload["modelo"] = modelo
+            send_to_cloud("gesys/cloud/clientes/vehiculo", payload)
+            return vehiculo
+        return {"error": "vehiculo ya existente"}
+
+    return {"error": "modelo inexistente"}
 
 
 def get_vehiculo_by_idcliente(cliente):

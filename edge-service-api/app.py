@@ -54,19 +54,13 @@ app.config['MQTT_PASSWORD'] = os.getenv('MQTT_PASSWORD', '')  # set the password
 app.config['MQTT_KEEPALIVE'] = int(os.getenv('MQTT_KEEPALIVE', "5"))  # set the time interval for sending a ping to the broker to 5 seconds
 app.config['MQTT_TLS_ENABLED'] = os.getenv('MQTT_TLS_ENABLED', False)  # set TLS to disabled for testing purposes
 
-mqtt = Mqtt(app)
-mqtt.subscribe('gesys/edge/#')
-
-
-@mqtt.on_connect()
-def handle_connect(client, userdata, flags, rc):
-    mqtt.subscribe('gesys/edge/#')
-
-
-@mqtt.on_message()
-def handle_mqtt_message(client, userdata, message):
-    with app.app_context():
-        process_msg(message.topic, message.payload.decode())
+print(app.config["SQLALCHEMY_DATABASE_URI"])
+print("IOT BROKER")
+print(app.config["MQTT_BROKER_URL"])
+print(app.config["MQTT_BROKER_PORT"])
+print("CLOUD BROKER")
+print(os.getenv('MQTT_LOCAL_CLOUD_URL', 'test.mosquitto.org'))
+print(os.getenv('MQTT_LOCAL_CLOUD_PORT', 1883))
 
 
 app.register_blueprint(reservas, url_prefix="/api")
@@ -91,6 +85,19 @@ try:
 finally:
     lock.release()
 
+mqtt = Mqtt(app)
+mqtt.subscribe('gesys/edge/#')
+
+
+@mqtt.on_connect()
+def handle_connect(client, userdata, flags, rc):
+    mqtt.subscribe('gesys/edge/#')
+
+
+@mqtt.on_message()
+def handle_mqtt_message(client, userdata, message):
+    with app.app_context():
+        process_msg(message.topic, message.payload.decode())
 
 if __name__ == "__main__":  # pragma: no cover
     print("=========================================")

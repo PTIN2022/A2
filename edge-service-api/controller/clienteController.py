@@ -1,7 +1,7 @@
 from utils.db import db
 from models.model import Cliente, ClienteSchema
 from utils.utils import encrypt_password
-
+from utils.mqtt_utils import send_to_cloud
 
 def get_all_clientes():
     c = Cliente.query.all()
@@ -23,6 +23,7 @@ def post_cliente(nombre, apellido, email, DNI, foto, telefono, username, passwor
     c = Cliente(nombre, apellido, email, DNI, foto, telefono, username, password)
     db.session.add(c)
     db.session.commit()
+    send_to_cloud("gesys/cloud/clientes", ClienteSchema().dump(c))
     return ClienteSchema().dump(c)
 
 

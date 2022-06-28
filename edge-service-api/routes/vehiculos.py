@@ -28,8 +28,8 @@ def post_vehiculos(current_usuario):
             modelo = request.json["modelo"]
             porcentaje_bat = request.json["porcentaje_bat"]
             respuesta = control.post_vehiculo(current_usuario, matricula, modelo, porcentaje_bat)
-            if not respuesta:
-                return ({"error": "Modelo not found. "}), 404
+            if "error" in respuesta:
+                return jsonify(respuesta), 404
 
             return jsonify(respuesta)
         except ValueError:

@@ -8,6 +8,7 @@ from utils.fake_data import fakedata
 from flask import Flask
 from flask_cors import CORS
 from flask_mqtt import Mqtt
+from mqtt import process_msg
 from datetime import datetime
 from multiprocessing import Lock
 
@@ -38,6 +39,7 @@ def init_db():
 
 app = Flask(__name__)
 CORS(app)
+lock = Lock()
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///test.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False  # TODO: review
@@ -57,6 +59,9 @@ app.config['SALT'] = '\xd2\x1f\xca\x0c\xc5\xe6:)\xa9\xeb<\x07j\r\xb6\xef\xda$\xb
 app.config["EXPIRE_TOKEN_TIME"] = 2*60  # mins
 
 print(app.config["SQLALCHEMY_DATABASE_URI"])
+print("CLOUD BROKER")
+print(app.config["MQTT_BROKER_URL"])
+print(app.config["MQTT_BROKER_PORT"])
 
 app.register_blueprint(incidencias, url_prefix='/api')
 app.register_blueprint(estaciones, url_prefix='/api')
@@ -69,7 +74,15 @@ app.register_blueprint(estadisticas, url_prefix='/api')
 app.register_blueprint(login, url_prefix='/api')
 app.register_blueprint(logout, url_prefix='/api')
 
-lock = Lock()
+# if os.path.exists("./test.db"):
+#     os.remove("./test.db")
+
+lock.acquire()
+try:
+    init_db()
+finally:
+    lock.release()
+
 mqtt = Mqtt(app)
 mqtt.subscribe('gesys/cloud/#')
 
@@ -81,31 +94,8 @@ def handle_connect(client, userdata, flags, rc):
 
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
-    data = dict(
-        topic=message.topic,
-        payload=message.payload.decode()
-    )
-    print(data["payload"])
     with app.app_context():
-        data = json.loads(data["payload"])
-        ini = datetime.strptime(data["fecha_entrada"], '%Y-%m-%dT%H:%M:%S')
-        fin = datetime.strptime(data["fecha_salida"], '%Y-%m-%dT%H:%M:%S')
-        r = Reserva(ini, fin, data["procetnaje_carga"], data["precio_carga_completa"], data["precio_carga_actual"], data["estado"], data["tarifa"], data["asistida"], data["estado_pago"], data["id_cargador"], data["id_vehiculo"], data["id_cliente"])
-        db.session.add(r)
-        db.session.commit()
-
-#     # TODO: pasarlo a otro fichero
-
-
-# if os.path.exists("./test.db"):
-#     os.remove("./test.db")
-
-
-lock.acquire()
-try:
-    init_db()
-finally:
-    lock.release()
+        process_msg(message.topic, message.payload.decode())
 
 
 if __name__ == "__main__":  # pragma: no cover

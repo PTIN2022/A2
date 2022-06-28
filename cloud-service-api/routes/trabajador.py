@@ -50,6 +50,9 @@ def post_trabajador(current_trabajador):
         last_access = datetime.fromtimestamp(0)
 
         t = control.post_trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, last_access, question, id_estacion)
+        if "error" in t:
+            return jsonify(t), 404
+
         return jsonify(t)
     else:
         return jsonify({"error": "User not authorized."}), 401
