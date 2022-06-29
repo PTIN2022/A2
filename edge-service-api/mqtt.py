@@ -254,7 +254,7 @@ def process_msg(topic, raw_payload):
         if "msg_id" in payload:
             process_remove_ticket_msg(payload)
 
-    if topic == "gesys/edge/reservas":
+    elif topic == "gesys/edge/reservas":
         needed_keys = ["fecha_entrada", "id_cargador", "procetnaje_carga",
                        "precio_carga_completa", "estado", "precio_carga_actual",
                        "id_cliente", "id_reserva", "asistida", "fecha_salida",
@@ -264,7 +264,7 @@ def process_msg(topic, raw_payload):
         else:
             print("Reserva no tiene los expected keys")
     
-    if topic == "gesys/edge/reservas/edit":
+    elif topic == "gesys/edge/reservas/edit":
         needed_keys = ["fecha_entrada", "id_cargador", "procetnaje_carga",
                        "precio_carga_completa", "estado", "precio_carga_actual",
                        "id_cliente", "id_reserva", "asistida", "fecha_salida",
