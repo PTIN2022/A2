@@ -140,7 +140,7 @@ def process_reserva_event(data):
     print("Reserva registrada.")
     
 def process_reserva_edit_event(data):
-    r = Reserva.query.filter(Reserva.id_reserva == payload["id_reserva"]).one_or_none()
+    r = Reserva.query.filter(Reserva.id_reserva == data["id_reserva"]).one_or_none()
     if r:
         r.fecha_entrada = data["fecha_entrada"]
         r.id_cargador = data["id_cargador"]
