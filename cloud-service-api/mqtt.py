@@ -82,7 +82,7 @@ def process_add_ticket_event(payload):
 
 
 def process_responder_ticket_event(payload):
-    s = Mensaje(payload["contenido"], datetime.strptime(payload["date"], "%Y-%m-%dT%H:%M:%S.%f"), payload["id_usuari"], payload["id_ticket"])
+    s = Mensaje(payload["contenido"], datetime.strptime(payload["date"], "%Y-%m-%dT%H:%M:%S"), payload["id_usuari"], payload["id_ticket"])
     db.session.add(s)
     db.session.commit()
     print("Mensaje creado")
