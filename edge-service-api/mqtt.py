@@ -180,13 +180,18 @@ def process_punto_carga(id_carga, id_matricula):
 
     # Tenemos el vehículo con la matrícula
     ahora = datetime.today()
-    for reserva in cargador.reservas:
-        if reserva.id_vehiculo == id_matricula:
-            if (reserva.fecha_entrada - timedelta(minutes=5)) < ahora < reserva.fecha_salida:
+    for reserva in v.reservas:
+        if (reserva.fecha_entrada - timedelta(minutes=5)) < ahora < reserva.fecha_salida:
+            if reserva.id_cargador == id_carga:
+                print("Cargador ocupado por el coche que tenia la reserva")
                 cargador.estado = "ocupado"
-                payload = {"idPuntoCarga": cargador.id_cargador, "cargaLimiteCoche": reserva.procetnaje_carga}
-                publish.single("gesys/edge/puntoCarga/{}".format(id_carga), payload=json.dumps(payload), qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
                 send_to_cloud("gesys/cloud/puntoCarga", {"ocupado": True, "cargador_id": cargador.id_cargador})
+            else:
+                print("Cargador ocupado por un coche sin reserva, (GRUA?)")
+
+            payload = {"idPuntoCarga": reserva.id_cargador, "cargaLimiteCoche": reserva.procetnaje_carga}
+            publish.single("gesys/edge/puntoCarga/{}".format(id_carga), payload=json.dumps(payload), qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
+            return
 
     print("El cargador {}, no tiene ninguna reserva, pero el coche {} esta ocupando la plaza. Llamando a la grua...".format(id_carga, id_matricula))
 
