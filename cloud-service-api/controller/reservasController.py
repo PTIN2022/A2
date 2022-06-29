@@ -2,6 +2,7 @@ from utils.db import db
 from datetime import datetime
 import random
 
+from utils.mqtt_utils import send_to_edge
 from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo, Cargador, PromocionEstacion, Promociones
 
 
@@ -87,6 +88,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                     )
                     db.session.add(i)
                     db.session.commit()
+                    send_to_edge("gesys/edge/reservas", ReservaSchema().dump(i))
                     cargador_encontrado = True
                     return i.id_reserva
     if not cargador_encontrado:
@@ -115,6 +117,7 @@ def put_reserva_by_id(id, matricula=None, tarifa=None, asistida=None, porcentaje
         if fecha_final_str:
             i.fecha_salida = fecha_final_str
         db.session.commit()
+        send_to_edge("gesys/edge/reservas/edit", ReservaSchema().dump(i))
         return ReservaSchema().dump(i)
     return None
 

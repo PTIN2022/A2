@@ -1,10 +1,8 @@
 import random
 
-import os
-import json
 from utils.db import db
 from datetime import datetime
-import paho.mqtt.publish as publish
+from utils.mqtt_utils import send_to_cloud
 from models.model import Reserva, ReservaSchema, Estacion, Cliente, Vehiculo
 
 
@@ -78,7 +76,7 @@ def post_reserva(id_estacion, matricula, tarifa, asistida, porcentaje_carga, pre
                     )
                     db.session.add(i)
                     db.session.commit()
-                    publish.single("gesys/cloud/reservas", json.dumps(ReservaSchema().dump(i)), hostname=os.getenv('MQTT_LOCAL_CLOUD_URL', 'test.mosquitto.org'), port=int(os.getenv('MQTT_LOCAL_CLOUD_PORT', 1883)), qos=2)
+                    send_to_cloud("gesys/cloud/reservas", ReservaSchema().dump(i))
                     cargador_encontrado = True
                     return i.id_reserva
 
@@ -91,5 +89,6 @@ def remove_reserva(id):
     if i:
         db.session.delete(i)
         db.session.commit()
+        send_to_cloud("gesys/cloud/reservas/remove", {"id_reserva": id})
         return True
     return False

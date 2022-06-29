@@ -1,4 +1,5 @@
 from utils.db import db
+from utils.mqtt_utils import send_to_edge
 from models.model import ClienteSchema, Ticket, TicketSchema, Mensaje, MensajeSchema, Cliente
 
 
@@ -13,6 +14,7 @@ def post_soporte(descripcion, fecha, id_cliente, asunto):
         s = Ticket(fecha, asunto, descripcion, "Pendiente", c.id_cliente)
         db.session.add(s)
         db.session.commit()
+        send_to_edge("gesys/edge/soporte/add", TicketSchema().dump(s))
         return s.id_ticket
     return None
 
@@ -34,6 +36,7 @@ def post_soporte_by_ticket(mensaje, fecha, ticket_id, id_user):
         s = Mensaje(mensaje, fecha, id_user, ticket_id)
         db.session.add(s)
         db.session.commit()
+        send_to_edge("gesys/edge/soporte/response", MensajeSchema().dump(s))
         return MensajeSchema().dump(s)
     else:
         return None
@@ -44,6 +47,7 @@ def put_soporte_by_ticket(ticket_id, estado=None):
     if soporte:
         if estado:
             soporte.estado = estado
+            send_to_edge("gesys/edge/soporte/status", {"estado": estado, "id_ticket": ticket_id})
         db.session.commit()
         return TicketSchema().dump(soporte)
     else:
@@ -65,6 +69,7 @@ def delete_soporte_ticket_id(ticket_id):
     if s:
         db.session.delete(s)
         db.session.commit()
+        send_to_edge("gesys/edge/soporte/remove", {"ticket_id": ticket_id})
         return True
     return False
 
@@ -74,5 +79,6 @@ def delete_message_by_user(msg_id):
     if s:
         db.session.delete(s)
         db.session.commit()
+        send_to_edge("gesys/edge/soporte/message/remove", {"msg_id": msg_id})
         return True
     return False
