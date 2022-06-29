@@ -95,6 +95,9 @@ def process_battery(bateria, id_matricula):
                     payload = {"battery": reserva.procetnaje_carga}
                     publish.single("gesys/vehiculo/{}/cargaMaxima".format(id_matricula), payload=json.dumps(payload), qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
                     print("Porcentaje bateria: {}={}%".format(m.matricula, m.procentaje_bat))
+
+                    payload = {"battery": bateria}
+                    publish.single("gesys/vehiculo/{}".format(id_matricula), payload=json.dumps(payload), qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
                     db.session.commit()
                     return
         print("Reserva para este vehiculo no encontrada")
