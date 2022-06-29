@@ -26,7 +26,7 @@ def post_trabajador(nombre, apellido, email, dni, foto, telefono, username, pass
         db.session.commit()
         tv = TrabajadorSchema().dump(t)
         tv["password"] = t.password
-        tv["id_estacion"] = id_estacion
+        tv["id_estacion"] = e.id_estacion
         send_to_edge("gesys/edge/trabajador", tv)
         return TrabajadorSchema().dump(t)
 
