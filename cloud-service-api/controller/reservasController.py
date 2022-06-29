@@ -127,5 +127,6 @@ def remove_reserva(id):
     if i:
         db.session.delete(i)
         db.session.commit()
+        send_to_edge("gesys/edge/reservas/remove", {"id_reserva": id})
         return True
     return False
