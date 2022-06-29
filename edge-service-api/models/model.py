@@ -159,9 +159,9 @@ class SesionesSchema(SQLAlchemyAutoSchema):
 class Ticket(db.Model):
     id_ticket = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     fecha = db.Column(db.DateTime, nullable=False)
-    asunto = db.Column(db.String(30), nullable=False)
+    asunto = db.Column(db.String(300), nullable=False)
     estado = db.Column(db.String(30), nullable=False)
-    mensaje = db.Column(db.String(300), nullable=False)
+    mensaje = db.Column(db.String(900), nullable=False))
 
     id_cliente = db.Column('id_cliente', db.ForeignKey('cliente.id_usuari'), nullable=False)
     mensajes = db.relationship("Mensaje",  backref="ticket")
