@@ -20,6 +20,7 @@ def get_reservas(current_usuario):
 @reservas.route('/reservas', methods=['POST'])
 @token_required
 def post_reservas(current_usuario):
+    print(request.json)
     if current_usuario:
         try:
             print(request.json)
@@ -43,7 +44,7 @@ def post_reservas(current_usuario):
                 return jsonify(reserva), 406
             else:
                 respuesta = control.get_reservas_id(reserva)
-            return jsonify(respuesta)
+                return jsonify(respuesta)
 
         except ValueError as e:
             print(e)
