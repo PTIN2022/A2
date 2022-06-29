@@ -14,7 +14,7 @@ AVERIAS = {
 
 
 def process_remove_cliente(data):
-    c = Cliente.query.filter(Cliente.id_cliente == data["dni"]).one_or_none()
+    c = Cliente.query.filter(Cliente.dni == data["dni"]).one_or_none()
     if c:
         db.session.delete(c)
         db.session.commit()
@@ -60,10 +60,9 @@ def process_add_vehiculo_event(data):
     db.session.commit()
 
     print("Vehiculo añadido")
-    c = Cliente.query.filter(Cliente.id_cliente == data["cliente"]).one_or_none()
+    c = Cliente.query.filter(Cliente.dni == data["cliente"]).one_or_none()
     if c:
         c.vehiculos.append(v)
-
         print("Vehiculo assignado")
 
 
@@ -83,7 +82,7 @@ def process_add_ticket_event(payload):
 
 
 def process_responder_ticket_event(payload):
-    s = Mensaje(payload["contenido"], payload["date"], payload["id_usuari"], payload["id_ticket"])
+    s = Mensaje(payload["contenido"], datetime.strptime(payload["date"], "%Y-%m-%dT%H:%M:%S.%f"), payload["id_usuari"], payload["id_ticket"])
     db.session.add(s)
     db.session.commit()
     print("Mensaje creado")

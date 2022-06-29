@@ -1,5 +1,6 @@
 from utils.db import db
 from utils.utils import encrypt_password
+from utils.mqtt_utils import send_to_edge
 from models.model import Trabajador, TrabajadorSchema, Estacion
 
 
@@ -23,6 +24,10 @@ def post_trabajador(nombre, apellido, email, dni, foto, telefono, username, pass
         t = Trabajador(nombre, apellido, email, dni, foto, telefono, username, password, cargo, estado, last_access, question, e.id_estacion)
         db.session.add(t)
         db.session.commit()
+        tv = TrabajadorSchema().dump(t)
+        tv["password"] = t.password
+        tv["id_estacion"] = id_estacion
+        send_to_edge("gesys/edge/trabajador", tv)
         return TrabajadorSchema().dump(t)
 
     return {"error": "Estacion does not exists."}
