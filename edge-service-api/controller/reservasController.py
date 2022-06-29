@@ -1,7 +1,5 @@
 import random
 
-import os
-import json
 from utils.db import db
 from datetime import datetime
 from utils.mqtt_utils import send_to_cloud

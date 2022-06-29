@@ -1,6 +1,5 @@
 import os
 import time
-import json
 
 
 from utils.db import db
@@ -9,10 +8,8 @@ from flask import Flask
 from flask_cors import CORS
 from flask_mqtt import Mqtt
 from mqtt import process_msg
-from datetime import datetime
 from multiprocessing import Lock
 
-from models.model import Reserva
 from routes.trabajador import trabajador
 from routes.soporte import soporte
 from routes.estaciones import estaciones

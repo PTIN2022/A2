@@ -99,6 +99,7 @@ def handle_mqtt_message(client, userdata, message):
     with app.app_context():
         process_msg(message.topic, message.payload.decode())
 
+
 if __name__ == "__main__":  # pragma: no cover
     print("=========================================")
     print("Test me on: http://ptin2022.github.io/A2/")

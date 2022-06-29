@@ -3,6 +3,7 @@ from models.model import Cliente, ClienteSchema
 from utils.utils import encrypt_password
 from utils.mqtt_utils import send_to_cloud
 
+
 def get_all_clientes():
     c = Cliente.query.all()
     return ClienteSchema(many=True).dump(c)
