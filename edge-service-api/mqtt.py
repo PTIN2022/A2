@@ -144,7 +144,7 @@ def process_reserva_edit_event(data):
     if r:
         r.fecha_entrada = data["fecha_entrada"]
         r.id_cargador = data["id_cargador"]
-        r.porcentaje_carga = data["porcentaje_carga"]
+        r.procetnaje_carga = data["procetnaje_carga"]
         r.precio_carga_completa = data["precio_carga_completa"]
         r.estado = data["estado"]
         r.precio_carga_actual = data["precio_carga_actual"]
