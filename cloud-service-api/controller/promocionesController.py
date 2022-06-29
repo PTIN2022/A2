@@ -53,6 +53,32 @@ def get_promo_estaciones(id_promo):
         return None
 
 
+def get_promo_estaciones_activa(id_promo):
+    p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
+    if p:
+        result = []
+        relation = PromocionEstacion.query.filter(PromocionEstacion.id_promo == p.id_promo, PromocionEstacion.estado == "activa")
+        for i in relation:
+            if i.id_estacion not in result:
+                result.append(i.id_estacion)
+        return result
+    else:
+        return None
+
+
+def get_promo_estaciones_inactiva(id_promo):
+    p = Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none()
+    if p:
+        result = []
+        relation = PromocionEstacion.query.filter(PromocionEstacion.id_promo == p.id_promo, PromocionEstacion.estado == "inactiva")
+        for i in relation:
+            if i.id_estacion not in result:
+                result.append(i.id_estacion)
+        return result
+    else:
+        return None
+
+
 def post_promociones(estaciones, descuento, fecha_inicio, fecha_fin, descripcion):
     # Pasamos a datetime las fechas y creamos promo
     fecha_inicio = datetime.strptime(fecha_inicio, '%Y-%m-%dT%H:%M:%S')

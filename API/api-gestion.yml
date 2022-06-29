@@ -2807,6 +2807,90 @@ paths:
                   error:
                     value: >-
                       {"error": "User not authenticated."}
+
+  /promociones/{id_promo}/estacion/activa:
+    # devuelve las estaciones a las que pertence una promocion
+    get:
+      summary: Devuelve el id de las estaciones a las que pertence una promocion activa
+      tags:
+      - Promociones
+      parameters:
+      - in: path
+        name: id_promo
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Pertence a estacion:
+                  value: >-
+                    {
+                      "Estacion": [
+                        3
+                      ]
+                    }
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter promo:
+                    value: {"error": "Malformed request syntax."}
+        '401':
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+
+  /promociones/{id_promo}/estacion/inactiva:
+    # devuelve las estaciones a las que pertence una promocion
+    get:
+      summary: Devuelve el id de las estaciones a las que pertence una promocion inactiva
+      tags:
+      - Promociones
+      parameters:
+      - in: path
+        name: id_promo
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Peticion correcta
+          content:
+            application/json:
+              examples:
+                Pertence a estacion:
+                  value: >-
+                    {
+                      "Estacion": [
+                        1,
+                        2,
+                      ]
+                    }
+        '400':
+            description: Peticion incorrecta
+            content:
+              application/json:
+                examples:
+                  Error al meter promo:
+                    value: {"error": "Malformed request syntax."}
+        '401':
+            description: Denied access
+            content:
+              application/json:
+                examples:
+                  error:
+                    value: >-
+                      {"error": "User not authenticated."}
+
   /promociones/{id_promo}/{id_estacion}/activar:
     put:
     # modificar una promocion dado su id, tambien sirve para añadir estacion

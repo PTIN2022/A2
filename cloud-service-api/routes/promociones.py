@@ -59,6 +59,36 @@ def get_estacion_by_promo(current_trabajador, id_promo):
         return jsonify({"error": "User not authorized."}), 401
 
 
+@promociones.route('/promociones/<id_promo>/estacion/activa', methods=['GET'])
+@token_required
+def get_estacion_by_promo_activa(current_trabajador, id_promo):
+    if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado":
+        if not Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none():
+            return jsonify({"error": "Promocion not found."}), 404
+        respuesta = control.get_promo_estaciones_activa(id_promo)
+        if respuesta:
+            return jsonify(Estacion=respuesta), 200
+        else:
+            return jsonify({"error": "Estaciones not found for this promo."}), 404
+    else:
+        return jsonify({"error": "User not authorized."}), 401
+
+
+@promociones.route('/promociones/<id_promo>/estacion/inactiva', methods=['GET'])
+@token_required
+def get_estacion_by_promo_inactiva(current_trabajador, id_promo):
+    if current_trabajador.cargo == "administrador" or current_trabajador.cargo == "encargado":
+        if not Promociones.query.filter(Promociones.id_promo == id_promo).one_or_none():
+            return jsonify({"error": "Promocion not found."}), 404
+        respuesta = control.get_promo_estaciones_inactiva(id_promo)
+        if respuesta:
+            return jsonify(Estacion=respuesta), 200
+        else:
+            return jsonify({"error": "Estaciones not found for this promo."}), 404
+    else:
+        return jsonify({"error": "User not authorized."}), 401
+
+
 @promociones.route('/promociones/estacion/<id_estacion>', methods=['GET'])
 @token_required
 def get_promo_by_estacion(current_trabajador, id_estacion):
