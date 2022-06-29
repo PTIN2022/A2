@@ -4,7 +4,7 @@ import paho.mqtt.publish as publish
 
 from utils.db import db
 from utils.mqtt_utils import send_to_cloud
-from models.model import Estacion, Cargador, Vehiculo, Consumo, Mensaje, Ticket, Reserva
+from models.model import Estacion, Cargador, Vehiculo, Consumo, Mensaje, Ticket, Reserva, Trabajador
 from datetime import datetime, timedelta
 
 
@@ -174,6 +174,15 @@ def process_punto_carga(id_carga, id_matricula):
     print("El cargador {}, no tiene ninguna reserva, pero el coche {} esta ocupando la plaza. Llamando a la grua...".format(id_carga, id_matricula))
 
 
+def process_new_trabajador(payload):
+    t = Trabajador(payload["nombre"], payload["apellido"], payload["email"], payload["dni"], payload["foto"], payload["telefono"], payload["username"], payload["password"],
+                   payload["cargo"], payload["estado"], datetime.strptime(payload["ultimo_acceso"], "%Y-%m-%dT%H:%M:%S"), payload["question"], payload["id_estacion"])
+
+    db.session.add(t)
+    db.session.commit()
+    print("Trabajador añadido")
+
+
 def process_msg(topic, raw_payload):
     print("=================================")
     print("TOPIC: {}".format(topic))
@@ -241,6 +250,16 @@ def process_msg(topic, raw_payload):
     elif topic == "gesys/edge/reservas/remove":
         if "id_reserva" in payload:
             process_remove_reserva(payload)
+
+    elif topic == "gesys/edge/trabajador":
+        needed_keys = ['apellido', 'id_trabajador', 'id_usuari',
+                       'foto', 'id_estacion', 'telefono', 'email',
+                       'nombre', 'question', 'type', 'dni', 'ultimo_acceso',
+                       'cargo', 'estado', 'username', 'password', "id_estacion"]
+        if all(key in payload for key in needed_keys):
+            process_new_trabajador(payload)
+        else:
+            print("Trabajador no tiene los expected keys")
     else:
         print("Mensaje recibido, pero nunca fue tratado...")
 
