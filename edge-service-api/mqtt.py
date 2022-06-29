@@ -92,7 +92,7 @@ def process_battery(bateria, id_matricula):
             if reserva.id_vehiculo == id_matricula:
                 if (reserva.fecha_entrada - timedelta(minutes=5)) < ahora < reserva.fecha_salida:
                     m.procentaje_bat = bateria
-                    payload = {"battery": m.procentaje_bat}
+                    payload = {"battery": reserva.procetnaje_carga}
                     publish.single("gesys/vehiculo/{}/cargaMaxima".format(id_matricula), payload=json.dumps(payload), qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
                     print("Porcentaje bateria: {}={}%".format(m.matricula, m.procentaje_bat))
                     db.session.commit()
