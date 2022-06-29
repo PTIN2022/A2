@@ -188,7 +188,7 @@ def process_punto_carga(id_carga, id_matricula):
             if reserva.id_cargador == id_carga:
                 print("Cargador ocupado por el coche que tenia la reserva")
                 cargador.estado = "ocupado"
-                send_to_cloud("gesys/cloud/puntoCarga", {"ocupado": True, "cargador_id": cargador.id_cargador})
+                send_to_cloud("gesys/cloud/puntoCarga/estado", {"ocupado": True, "cargador_id": cargador.id_cargador})
             else:
                 print("Cargador ocupado por un coche sin reserva, (GRUA?)")
 
@@ -240,6 +240,7 @@ def process_msg(topic, raw_payload):
         # Expected: {"idPuntoCarga": 2, "kwh": 432, "matricula":"34543FGC"}
         if "idPuntoCarga" in payload and "kwh" in payload and "matricula" in payload:
             process_carga_final(payload["idPuntoCarga"], payload["kwh"], payload["matricula"])
+            send_to_cloud("gesys/cloud/puntoCarga/estado", {"ocupado": False, "cargador_id": payload["idPuntoCarga"]})
             send_to_cloud("gesys/cloud/puntoCarga/consumo", payload)
 
     elif topic == "gesys/edge/puntoCarga/vehiculo":
