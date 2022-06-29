@@ -97,13 +97,13 @@ def put_reserva_by_id(id, matricula=None, tarifa=None, asistida=None, porcentaje
     i = Reserva.query.filter(Reserva.id_reserva == id).one_or_none()
     if i:
         if matricula:
-            i.matricula = matricula
+            i.id_vehiculo = matricula
         if tarifa:
             i.tarifa = tarifa
         if asistida:
             i.asistida = asistida
         if porcentaje_carga:
-            i.porcentaje_carga = porcentaje_carga
+            i.procetnaje_carga = porcentaje_carga
         if precio_carga_completa:
             i.precio_carga_completa = precio_carga_completa
         if precio_carga_actual:
@@ -111,9 +111,9 @@ def put_reserva_by_id(id, matricula=None, tarifa=None, asistida=None, porcentaje
         if estado_pago:
             i.estado_pago = estado_pago
         if fecha_inicio_str:
-            i.fecha_inicio_str = fecha_inicio_str
+            i.fecha_entrada = fecha_inicio_str
         if fecha_final_str:
-            i.fecha_final_str = fecha_final_str
+            i.fecha_salida = fecha_final_str
         db.session.commit()
         return ReservaSchema().dump(i)
     return None
