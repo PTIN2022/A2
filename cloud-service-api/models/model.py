@@ -517,12 +517,12 @@ class PromocionEstacion(db.Model):
         db.PrimaryKeyConstraint(id_estacion, id_promo),
         {},
     )
-    estado = db.Column(db.Boolean, nullable=False)
+    estado = db.Column(db.String(30), nullable=False)
 
     def __init__(self, id_estacion, id_promo, estado):
         self.id_estacion = id_estacion
         self.id_promo = id_promo
-        self.estado = strtobool(estado)
+        self.estado = estado
 
 
 class PromocionEstacionSchema(SQLAlchemyAutoSchema):
