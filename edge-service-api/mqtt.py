@@ -148,7 +148,7 @@ def process_reserva_edit_event(data):
         r.precio_carga_completa = data["precio_carga_completa"]
         r.estado = data["estado"]
         r.precio_carga_actual = data["precio_carga_actual"]
-        r.assistida = data["assistida"]
+        r.asistida = data["asistida"]
         r.fecha_salida = data["fecha_salida"]
         r.id_vehiculo = data["id_vehiculo"]
         r.tarifa = data["tarifa"]
