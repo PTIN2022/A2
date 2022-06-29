@@ -12,6 +12,8 @@ services:
         PYTHONUNBUFFERED: 1
         MQTT_BROKER_URL: $MQTT_BROKER_URL
         MQTT_BROKER_PORT: $MQTT_BROKER_PORT
+        MQTT_LOCAL_EDGE_URL: $MQTT_LOCAL_EDGE_URL
+        MQTT_LOCAL_EDGE_PORT: $MQTT_LOCAL_EDGE_PORT
     restart: unless-stopped
 
   front:

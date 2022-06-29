@@ -67,6 +67,7 @@ def delete_vehiculo_matr(matricula):
     if i:
         db.session.delete(i)
         db.session.commit()
+        send_to_cloud("gesys/cloud/clientes/vehiculo/remove", {"matricula": matricula})
         return True
     return False
 
@@ -77,5 +78,6 @@ def modify_vehiculo(cliente, matricula, porcentaje_bat):
         if porcentaje_bat:
             i.procentaje_bat = porcentaje_bat
         db.session.commit()
+        send_to_cloud("gesys/cloud/clientes/vehiculo/edit", VehiculoSchema().dump(i))
         return VehiculoSchema().dump(i)
     return None

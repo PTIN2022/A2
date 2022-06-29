@@ -55,6 +55,7 @@ def delete_soporte_ticket_id(id_user, ticket_id):
     if s:
         db.session.delete(s)
         db.session.commit()
+        send_to_cloud("gesys/cloud/soporte/remove", {"ticket_id": ticket_id})
         return True
     return False
 
@@ -64,5 +65,6 @@ def delete_message_by_user(id_cliente, id_ticket, msg_id):
     if s:
         db.session.delete(s)
         db.session.commit()
+        send_to_cloud("gesys/cloud/soporte/message/remove", {"msg_id": msg_id})
         return True
     return False

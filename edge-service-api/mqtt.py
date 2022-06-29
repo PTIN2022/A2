@@ -4,7 +4,7 @@ import paho.mqtt.publish as publish
 
 from utils.db import db
 from utils.mqtt_utils import send_to_cloud
-from models.model import Estacion, Cargador, Vehiculo, Consumo, CargadorSchema
+from models.model import Estacion, Cargador, Vehiculo, Consumo, CargadorSchema, Mensaje, Ticket, Reserva
 from datetime import datetime, timedelta
 
 
@@ -20,6 +20,29 @@ AVERIAS = {
     3: "pantalla",
     4: "circuito interno"
 }
+
+
+def process_responder_ticket_event(payload):
+    s = Mensaje(payload["contenido"], payload["date"], payload["id_usuari"], payload["id_ticket"])
+    db.session.add(s)
+    db.session.commit()
+    print("Mensaje creado")
+
+
+def process_remove_ticket(payload):
+    s = Ticket.query.filter(Ticket.id_ticket == payload["ticket_id"]).one_or_none()
+    if s:
+        db.session.delete(s)
+        db.session.commit()
+        print("Ticket Eliminado")
+
+
+def process_remove_ticket_msg(payload):
+    s = Mensaje.query.filter(Mensaje.id_mensaje == payload["msg_id"]).one_or_none()
+    if s:
+        db.session.delete(s)
+        db.session.commit()
+        print("Mensaje eliminado")
 
 
 def process_camera_event(matricula, id_estacio):
@@ -108,6 +131,23 @@ def process_carga_final(id_carga, kwh, id_matricula):
     print("Registrando consumo del cargador: {} -- Potencia consumida anterior: {} -- Potencia consumida={}".format(c.id_cargador, potencia_anterior, c.potencia_consumida))
 
 
+def process_reserva_event(data):
+    ini = datetime.strptime(data["fecha_entrada"], '%Y-%m-%dT%H:%M:%S')
+    fin = datetime.strptime(data["fecha_salida"], '%Y-%m-%dT%H:%M:%S')
+    r = Reserva(ini, fin, data["procetnaje_carga"], data["precio_carga_completa"], data["precio_carga_actual"], data["estado"], data["tarifa"], data["asistida"], data["estado_pago"], data["id_cargador"], data["id_vehiculo"], data["id_cliente"])
+    db.session.add(r)
+    db.session.commit()
+    print("Reserva registrada.")
+
+
+def process_remove_reserva(payload):
+    i = Reserva.query.filter(Reserva.id_reserva == payload["id_reserva"]).one_or_none()
+    if i:
+        db.session.delete(i)
+        db.session.commit()
+        print("Reserva eliminada")
+
+
 def process_punto_carga(id_carga, id_matricula):
     print("---------------------------------")
     print("Comprobando que el vehículo está en el cargador adecuado")
@@ -173,6 +213,34 @@ def process_msg(topic, raw_payload):
         if "idPuntoCarga" in payload and "matricula" in payload:
             process_punto_carga(payload["idPuntoCarga"], payload["matricula"])
 
+    elif topic == "gesys/edge/soporte/response":
+        needed_keys = ['id_usuari', 'contenido', 'id_mensaje', 'date', 'id_ticket']
+        if all(key in payload for key in needed_keys):
+            process_responder_ticket_event(payload)
+        else:
+            print("MSG ticket no tiene los expected keys")
+
+    elif topic == "gesys/edge/soporte/remove":
+        if "ticket_id" in payload:
+            process_remove_ticket(payload)
+
+    elif topic == "gesys/edge/soporte/message/remove":
+        if "msg_id" in payload:
+            process_remove_ticket_msg(payload)
+
+    if topic == "gesys/edge/reservas":
+        needed_keys = ["fecha_entrada", "id_cargador", "procetnaje_carga",
+                       "precio_carga_completa", "estado","precio_carga_actual",
+                       "id_cliente","id_reserva","asistida","fecha_salida",
+                       "id_vehiculo","tarifa","estado_pago"]
+        if all(key in payload for key in needed_keys):
+            process_reserva_event(payload)
+        else:
+            print("Reserva no tiene los expected keys")
+
+    elif topic == "gesys/edge/reservas/remove":
+        if "id_reserva" in payload:
+            process_remove_reserva(payload)
     else:
         print("Mensaje recibido, pero nunca fue tratado...")
 
