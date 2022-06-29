@@ -117,6 +117,7 @@ def put_reserva_by_id(id, matricula=None, tarifa=None, asistida=None, porcentaje
         if fecha_final_str:
             i.fecha_final_str = fecha_final_str
         db.session.commit()
+        send_to_edge("gesys/edge/reservas/edit", ReservaSchema().dump(i))
         return ReservaSchema().dump(i)
     return None
 

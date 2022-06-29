@@ -212,7 +212,7 @@ def process_msg(topic, raw_payload):
             print(payload.keys())
             print("Cliente no tiene los expected keys")
 
-    elif topic == "gesys/cloud/clientes":
+    elif topic == "gesys/cloud/clientes/edit":
         needed_keys = ['saldo', 'nombre', 'type', 'dni', 'username', 'vehiculos', 'apellido', 'id_usuari', 'telefono', 'email', 'foto', 'password']
         if all(key in payload for key in needed_keys):
             process_edit_client_event(payload)
