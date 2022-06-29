@@ -2,7 +2,7 @@ import json
 
 from utils.db import db
 from datetime import datetime
-from models.model import Reserva, Cliente, Vehiculo, Ticket, Mensaje, Consumo, Estacion, Cargador
+from models.model import Reserva, Cliente, Vehiculo, Ticket, Mensaje, Consumo, Estacion, Cargador, CargadorSchema
 
 AVERIAS = {
     0: "ok",
@@ -164,10 +164,11 @@ def process_averias(id_carga, num_averia):
 def process_punto_carga_estado(payload):
     c = Cargador.query.filter(Cargador.id_cargador == payload["cargador_id"]).one_or_none()
     if c:
-        if not c.estado:
-            c.estado = "ocupado"
-        else:
-            c.estado = "libre"
+        print("Actualizando estado")
+        c.estado = payload["ocupado"]
+        db.session.commit()
+        print(CargadorSchema().dump(c))
+
 
     e = Estacion.query.filter(Estacion.id_estacion == c.estacion_id).one_or_none()
     total_ocupados = 0
@@ -293,7 +294,7 @@ def process_msg(topic, raw_payload):
         if "ocupado" in payload and "cargador_id" in payload:
             process_punto_carga_estado(payload)
         else:
-            print("vehiculo remove no tiene los expected keys")
+            print("set estado no tiene los expected keys")
     else:
         print("Mensaje recibido, pero nunca fue tratado...")
 
