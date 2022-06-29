@@ -190,7 +190,7 @@ def process_punto_carga(id_carga, id_matricula):
                 print("Cargador ocupado por un coche sin reserva, (GRUA?)")
 
             payload = {"idPuntoCarga": reserva.id_cargador, "cargaLimiteCoche": reserva.procetnaje_carga}
-            publish.single("gesys/edge/puntoCarga/{}".format(id_carga), payload=json.dumps(payload), qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
+            publish.single("gesys/puntoCarga/{}".format(id_carga), payload=json.dumps(payload), qos=QOS, hostname=EDGE_BROKER, port=EDGE_PORT)
             return
 
     print("El cargador {}, no tiene ninguna reserva, pero el coche {} esta ocupando la plaza. Llamando a la grua...".format(id_carga, id_matricula))
