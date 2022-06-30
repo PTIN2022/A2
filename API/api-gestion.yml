@@ -23,7 +23,7 @@ paths:
       - Incidencias
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> devuelve lista incidencias
           content:
             application/json:
               examples:
@@ -96,11 +96,11 @@ paths:
                   descripcion: "El cargador de la planta 2 m plaza 1 no funciona"
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> nueva incidencia insertada
             content:
               application/json:
                 examples:
-                  Meter incidencia:
+                  Mete incidencia:
                     value:  >-
                         {
                           "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
@@ -133,7 +133,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Obtiene un lista de incidencias
+          description: Peticion correcta -> Obtiene un lista de incidencias dada estacion
           content:
             application/json:
               examples:
@@ -181,11 +181,11 @@ paths:
               type: integer
         responses:
           '200':
-            description: Default error sample response
+            description: Peticion correcta -> obtiene la incidencia
             content:
               application/json:
                 examples:
-                  Incidencias:
+                  Hay incidencia:
                     value: >-
                           {
                             "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
@@ -195,8 +195,6 @@ paths:
                             "id_trabajador": null,
                             "name_estacion": "VG1"
                           }
-                  Incidencia no encontrada:
-                    value: '[]'
           '401':
             description: Not login
             content:
@@ -213,7 +211,6 @@ paths:
                   error:
                     value: >-
                         {"error": "Incidencia not found."}
-
       # editar incidencia
       put:
           summary: Modificar incidencia
@@ -255,11 +252,11 @@ paths:
           responses:
             #respuesta correcta
             '200':
-              description: Incidencia actualizada
+              description: Peticion correcta -> Incidencia modificada
               content:
                 application/json:
                   examples:
-                    Incidencia actualizada:
+                    Incidencia modificada:
                       value: >-
                           {
                             "descripcion": "El cargador de la planta 2 m plaza 1 no funciona",
@@ -274,7 +271,7 @@ paths:
               content:
                 application/json:
                   examples:
-                    Error al meter incidencia:
+                    Error al modificar incidencia:
                       value: >-
                         {"error": "Malformed request syntax."}
             '404':
@@ -298,14 +295,12 @@ paths:
               type: integer
         responses:
           '200':
-            description: Eliminado delete
+            description: Peticion correcta -> incidencia eliminada
             content:
               application/json:
                 examples:
                   Incidencias:
                     value: "{\"msg\": \"Data deleted correctly.\"}"
-                  Incidencia no encontrada:
-                    value: '[]'
           '401':
             description: Not login
             content:
@@ -332,11 +327,11 @@ paths:
         - Estaciones
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> obtiene lista estaciones
             content:
               application/json:
                 examples:
-                  Con estaciones:
+                  Hay estaciones:
                     value: >-
                       [
                         {
@@ -360,7 +355,7 @@ paths:
                           "boss": "Pere Roca"
                         }
                       ]
-                  Sin estaciones:
+                  No hay estaciones:
                     value: '[]'
           '401':
             description: Not login
@@ -371,6 +366,7 @@ paths:
                     value: >-
                       {"error": "User not authenticated."}
   /estaciones/{id}:
+      #ontenemos estacion por su id
       get:
         summary: Obtiene informacion de una estacion y sus surtidores
         tags:
@@ -383,7 +379,7 @@ paths:
             type: integer
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> obtiene la estacion + sus surtidores
             content:
               application/json:
                 examples:
@@ -447,6 +443,7 @@ paths:
                     value: >-
                       {"error": "Station not found."}
       put:
+          # modificar estacion
           summary: Modificar estacion
           tags:
           - Estaciones
@@ -499,11 +496,11 @@ paths:
           responses:
             #respuesta correcta
             '200':
-              description: Estación actualizada
+              description: Peticion correcta -> Estación modificada
               content:
                 application/json:
                   examples:
-                    Incidencia actualizada:
+                    Estacion modificada:
                       value: >-
                           {
                             "estacion": "VG3",
@@ -551,7 +548,7 @@ paths:
               content:
                 application/json:
                   examples:
-                    Error al meter estación:
+                    Error al modificar estación:
                       value: >-
                         {"error": "Malformed request syntax."}
             '404':
@@ -562,7 +559,7 @@ paths:
                     error:
                       value: >-
                         {"error": "Estación not found."}
-#borrar incidencia
+#liberar plaza
   /estaciones/{id}/{id_plaza}:
       delete:
         summary: Liberas la plaza ocupada
@@ -581,11 +578,11 @@ paths:
               type: integer
         responses:
           '200':
-            description: Eliminado delete
+            description: Peticion correcta -> Libera plaza
             content:
               application/json:
                 examples:
-                  Estaciones:
+                  Plaza liberada:
                     value: >-
                       {"msg": "Data deleted correctly."}
                   Estaciones no encontrada:
@@ -605,7 +602,7 @@ paths:
                 examples:
                   error:
                     value: >-
-                      {"error": "Incidencia not found."}
+                      {"error": "Plaza not found."}
 #########################################################################################
   /trabajador:
       # pedimos una lista de trabajadores
@@ -615,11 +612,11 @@ paths:
         - Trabajadores
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> obtiene lista trabajador
             content:
               application/json:
                 examples:
-                  Trabajadores:
+                  Hay trabajadores:
                     value: >-
                       [
                         {
@@ -643,7 +640,7 @@ paths:
                             "last_access": 90
                         }
                       ]
-                  Sin trabajadores:
+                  No hay trabajadores:
                     value: '[]'
           '401':
             description: Not login
@@ -653,8 +650,8 @@ paths:
                   error:
                     value: >-
                       {"error": "Trabajador not authorized."}
-
       post:
+        # nuevo trabajador
         summary: Inserta un nuevo trabajador
         tags:
         - Trabajadores
@@ -713,7 +710,7 @@ paths:
                     username: "proca"
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> nuevo trabajador
             content:
               application/json:
                 examples:
@@ -759,7 +756,7 @@ paths:
             type: string
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> obtiene trabajador
             content:
               application/json:
                 examples:
@@ -782,7 +779,7 @@ paths:
                 examples:
                   error:
                     value: >-
-                      {"error": "Trabajdor not authorized."}
+                      {"error": "Trabajador not authorized."}
           '404':
             description: Not Found
             content:
@@ -849,11 +846,11 @@ paths:
                   id_estacion: 1
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> trabajador modificado
             content:
               application/json:
                 examples:
-                  Cliente actualizado:
+                  Trabajador modificado:
                     value: >-
                       {
                         "dni": "60748880S",
@@ -870,7 +867,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter Cliente:
+                  Error al modificar Trabajador:
                     value: {"error": "Malformed request syntax."}
           '404':
             description: Not Found
@@ -879,9 +876,8 @@ paths:
                 examples:
                   error:
                     value: {"error": "Trabajador not found."}
-
-
       delete:
+      # borra trabajador con su id
         summary: Eliminar un trabajador por su ID
         tags:
           - Trabajadores
@@ -893,14 +889,13 @@ paths:
               type: string
         responses:
             '200':
-              description: Peticion correcta
+              description: Peticion correcta -> trabajador eliminado
               content:
                 application/json:
                   examples:
                     Trabajador:
                       value: >-
                         {"msg": "Trabajdor deleted succesfully"}
-
             '401':
               description: Not login
               content:
@@ -918,7 +913,6 @@ paths:
                       value: >-
                         {"error": "Trabajador not found."}
 #########################################################################################
-  
   /soporte:
     get:
         summary: Obtiene una lista de peticiones que se han hecho al servicio técnico
@@ -926,12 +920,12 @@ paths:
         - Soporte tecnico
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> obtiene lista peticiones
             content:
               application/json:
                 examples:
-                  Peticion a soporte:
-                    value: >- 
+                  Hay peticiones:
+                    value:
                         [
                           {
                             "asunto": "App no me va",
@@ -948,7 +942,7 @@ paths:
                             "mensaje": "Problema con la aplicación movil"
                           }
                         ]
-                  Sin peticiones a soporte:
+                  No hay peticiones:
                     value: '[]'
           '401':
             description: Not login
@@ -984,15 +978,14 @@ paths:
               asunto: "App no me va"
               cliente: 1
               descripcion: "Problema con la aplicación movil"
-              
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> introduce peticion
           content:
             application/json:
               examples:
                 Insertar petición a soporte tecnico:
-                  value: >-
+                  value:
                     [
                       {
                         "Mensajes": [],
@@ -1018,11 +1011,10 @@ paths:
                   error:
                     value: >- 
                       {"error": "User not authorized."}
-
 #Cogemos toda informacion sobre los tickes de un usuario que ha pedido ayuda al soporte tecnico
   /soporte/{ticket_id}:
     get:
-      summary: Encontrar el ticket/la peticion de soporte del usuario
+      summary: Encontrar ticket por id
       tags:
         - Soporte tecnico
       parameters:
@@ -1033,12 +1025,13 @@ paths:
           type: integer
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> obtiene ticket con id
           content:
             application/json:
               examples:
-               Consultando petición a soporte tecnico:
-                  value: {
+               Encuntra ticket:
+                  value: 
+                        {
                           "Mensajes": [
                             {
                               "contenido": "aloha",
@@ -1068,7 +1061,7 @@ paths:
                     value: >- 
                       {"error": "User not authorized."}
     post:
-      summary: Dado un usuario (por ahora, luego se asignará con el token) en concreto pueda generar un mensaje para un ticket
+      summary: Generaa un ticket
       tags:
         - Soporte tecnico
       parameters:
@@ -1096,11 +1089,11 @@ paths:
                 cliente: 1
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> genera ticket
           content:
             application/json:
               examples:
-                Insertar petición a soporte tecnico:
+                Nuevo ticket:
                   value: {
                           "Mensajes": [
                             {
@@ -1138,7 +1131,7 @@ paths:
                 error:
                   value: '{"error" :"Ticket not found."}'
     put:
-        summary: Modificar status soporte
+        summary: Modificar ticket
         tags:
         - Soporte tecnico
         requestBody:
@@ -1164,7 +1157,7 @@ paths:
         responses:
           #respuesta correcta
           '200':
-            description: Modificado status soporte
+            description: Peticion correcta -> Modificado ticket
             content:
               application/json:
                 examples:
@@ -1213,12 +1206,12 @@ paths:
           type: integer
       responses:
         '200':
-          description: Ticket correcto
+          description: Peticion correcta -> Ticket eliminado
           content:
             application/json:
               examples:
-                Eliminando una petición a soporte tecnico:
-                  value: |-
+                Eliminando peticion/ticket:
+                  value: >-
                     {
                       "msg": "Ticket deleted succesfully."
                     }
@@ -1265,11 +1258,11 @@ paths:
           type: integer
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> obtiene mensajes
           content:
             application/json:
               examples:
-                Trabajador:
+                Tiene mensajes:
                   value:  
                     {
                       "Tickets": [
@@ -1309,11 +1302,9 @@ paths:
                 error:
                   value: >- 
                     {"error": "User not found."}
-                  
-    
   /soporte/delete_missage/{msg_id}:
     delete:
-      summary: Elimina un mensaje de una peticion
+      summary: Elimina un mensaje
       tags:
         - Soporte tecnico
       parameters:
@@ -1324,7 +1315,7 @@ paths:
           type: integer
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> mensaje eliminado
           content:
             application/json:
               examples:
@@ -1349,14 +1340,14 @@ paths:
                     value: >- 
                       {"error": "User not authorized."}
         '404':
-          description: Peticion no encontrado
+          description: Mensaje no encontrado
           content:
             application/json:
               examples:
                 error:
                   value: '{"error" : "Message not found."}'
         '410':
-          description: Peticion ya eliminada
+          description: Mensaje ya eliminado
           content:
             application/json:
               examples:
@@ -1371,7 +1362,7 @@ paths:
         - Reservas
       responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> lista reservas
             content:
               application/json:
                 examples:
@@ -1414,7 +1405,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter reserva:
+                  Error al obtener reserva:
                     value: >-
                       {"error": "Malformed request syntax."}
                       
@@ -1478,7 +1469,7 @@ paths:
                 estado_pago: True
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> nueva reserva
           content:
             application/json:
               examples:
@@ -1512,7 +1503,7 @@ paths:
   /reservas/estacion/{id_estacion}:
     # pedimos una lista de reservas por una estacion dada
     get:
-      summary: Obtiene una lista de reservas para una estacion dada obtiene solo las reservas desde ahora al futuro
+      summary: Obtiene una lista de reservas para una estacion dada obtiene solo las futuras
       tags:
       - Reservas
       parameters:
@@ -1523,7 +1514,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Obtiene un lista de reservas por estacion desde la fecha actual al futuro
+          description: Peticion correcta ->  Obtiene lista de reservas futuras por estacion
           content:
             application/json:
               examples:
@@ -1585,7 +1576,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Obtiene un lista de reservas
+          description: Peticion correcta -> Obtiene lista de reservas por DNI
           content:
             application/json:
               examples:
@@ -1647,7 +1638,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Obtiene un lista de reservas
+          description: Peticion correcta -> Obtiene lista de reservas por matricula
           content:
             application/json:
               examples:
@@ -1709,11 +1700,11 @@ paths:
               type: integer
         responses:
           '200':
-            description: Default error sample response
+            description: Peticion correcta -> Obtiene reserva por id
             content:
               application/json:
                 examples:
-                  Reservas:
+                  Existe reserva:
                     value:  >-
                           {
                             "asistida": true,
@@ -1738,7 +1729,6 @@ paths:
                   error:
                     value: >-
                         {"error": "User not authenticated."}
-
           '404':
             description: Not found
             content:
@@ -1804,11 +1794,11 @@ paths:
                   estado_pago: True
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> Reserva modificada
             content:
               application/json:
                 examples:
-                  Meter reserva:
+                  Modifica reserva:
                     value:  >-
                         {
                           "asistida": true,
@@ -1830,7 +1820,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter reserva:
+                  Error al modificar reserva:
                     value: >-
                       {"error": "Malformed request syntax."}
         #borrar reserva
@@ -1846,14 +1836,12 @@ paths:
               type: integer
         responses:
           '200':
-            description: Eliminado delete
+            description: Peticion correcta -> Eliminada reserva por id
             content:
               application/json:
                 examples:
-                  Reservas:
+                  Reserva eliminada:
                     value: {"msg": "Data deleted correctly."}
-                  Reserva no encontrada:
-                    value: '[]'
           '401':
             description: Not login
             content:
@@ -1872,14 +1860,14 @@ paths:
                       {"error": "Reserva not found."
 # clientes
   /clientes:
-    # pedimos una lista de las incidencias
+    # pedimos una lista de los clientes
     get:
       summary: Obtiene una lista de clientes
       tags:
       - Clientes
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> obtiene lista clientes
           content:
             application/json:
               examples:
@@ -1908,7 +1896,6 @@ paths:
                             "username": "xXpabloXx",
                           }
                         ]
-
                 Sin clientes:
                   value: '[]'
         '401':
@@ -1965,11 +1952,11 @@ paths:
                     password: "proca"
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> inserta nuevo cliente
             content:
               application/json:
                 examples:
-                  Meter cliente:
+                  Mete cliente:
                     value: [
                       {
                         "id_cliente": 1,
@@ -1988,9 +1975,8 @@ paths:
               content:
                 application/json:
                   examples:
-                    Error al meter incidencia:
+                    Error al meter cliente:
                       value: {"error": "Malformed request syntax."}
-
           '401':
               description: Not login
               content:
@@ -2013,7 +1999,7 @@ paths:
             type: integer
       responses:
         '200':
-          description: Default error sample response
+          description: Peticion correcta -> obtiene cliente por id
           content:
             application/json:
               examples:
@@ -2032,8 +2018,6 @@ paths:
                           "username": "xXpabloXx",
                         },
                       ]
-                Cliente no encontrado:
-                  value: '[]'
         '401':
           description: Not login
           content:
@@ -2063,14 +2047,12 @@ paths:
             type: integer
       responses:
         '200':
-          description: Cliente eliminado delete
+          description: Peticion correcta -> Cliente eliminado por id
           content:
             application/json:
               examples:
                 Cliente existe:
                   value: "{\"msg\": \"Client deleted correctly.\"}"
-                Cliente no encontrada:
-                  value: '[]'
         '401':
           description: Not login
           content:
@@ -2134,11 +2116,11 @@ paths:
                 picture: "url here"
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> Cliente modificado
           content:
             application/json:
               examples:
-                Cliente actualizado:
+                Cliente modificado:
                   value:
                     [
                       {
@@ -2159,7 +2141,7 @@ paths:
           content:
             application/json:
               examples:
-                Error al meter Cliente:
+                Error al modificar Cliente:
                   value: {"error": "Malformed request syntax."}
         '404':
           description: Not Found
@@ -2183,7 +2165,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Default error sample response
+          description: Peticion correcta -> Obtiene cliente por DNI
           content:
             application/json:
               examples:
@@ -2202,8 +2184,6 @@ paths:
                           "username": "xXpabloXx",
                         }
                       ]
-                Cliente no encontrado:
-                  value: '[]'
         '401':
           description: Not login
           content:
@@ -2220,7 +2200,6 @@ paths:
                 error:
                   value: >-
                       {"error": "Client not found."}
-
     put:
       summary: Permite modificar parámetros de un cliente
       tags:
@@ -2268,11 +2247,11 @@ paths:
                 picture: "url here"
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> Modifica cliente
           content:
             application/json:
               examples:
-                Trabajador actualizado:
+                Cliente modificado:
                   value:
                     [
                       {
@@ -2293,7 +2272,7 @@ paths:
           content:
             application/json:
               examples:
-                Error al meter trabajador:
+                Error al modificar cliente:
                   value: {"error": "Malformed request syntax."}
         '404':
           description: Not Found
@@ -2303,7 +2282,7 @@ paths:
                 error:
                   value: {"error": "Cliente not found."}
     delete:
-      summary: Elimina cliente por id
+      summary: Elimina cliente por DNI
       tags:
         - Clientes
       parameters:
@@ -2314,7 +2293,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Cliente eliminado delete
+          description: Peticion correcta -> Cliente eliminado por DNI
           content:
             application/json:
               examples:
@@ -2349,11 +2328,11 @@ paths:
           - Estadisticas
         responses:
           '200':
-            description: Respuesta por defecto buena
+            description: Peticion correcta -> Ontiene lista estadisticas estaciones
             content:
               application/json:
                 examples:
-                  Reservas:
+                  Hay estadisticas:
                     value:  >-
                         [
                           {
@@ -2430,7 +2409,6 @@ paths:
                   error:
                     value: >-
                         {"error": "User not authenticated."}
-
           '404':
             description: Not found
             content:
@@ -2462,11 +2440,11 @@ paths:
                 type: string
           responses:
             '200':
-              description: Respuesta por defecto buena
+              description: Peticion correcta -> Obtiene estadisticas cargadores entre fechas x e y
               content:
                 application/json:
                   examples:
-                    Reservas:
+                    Hay estadisticas:
                       value:  >-
                         [
                           {
@@ -2510,7 +2488,6 @@ paths:
                     error:
                       value: >-
                           {"error": "User not authenticated."}
-  
             '404':
               description: Not found
               content:
@@ -2518,21 +2495,21 @@ paths:
                   examples:
                     error:
                       value: >-
-                          {"error": "Estacion not found."}
+                          {"error": "Cargador not found."}
 #############################################################################
   /promociones:
       # pedimos una lista de promociones
       get:
-        summary: Obtiene una lista de trabajadores
+        summary: Obtiene una lista de promociones
         tags:
         - Promociones
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> obtiene lista promociones
             content:
               application/json:
                 examples:
-                  Promociones:
+                  Hay promociones:
                     value: >-
                       [
                         {
@@ -2560,7 +2537,7 @@ paths:
                           "id_promo": 3
                         }
                       ]
-                  No_promociones:
+                  No hay promociones:
                     value: '[]'
           '401':
             description: Denied access
@@ -2605,7 +2582,7 @@ paths:
                     fecha_fin: "2022-04-18T19:00:00"
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> inserta nueva promocion
             content:
               application/json:
                 examples:
@@ -2638,7 +2615,7 @@ paths:
   /promociones/estado/{estado}:
   # pedimos una lista de promociones dado su estado (activa/inactiva)
     get:
-      summary: Obtiene información de una promocion en caso de que este activa
+      summary: Obtiene lista promociones con x estado
       tags:
       - Promociones
       parameters:
@@ -2649,11 +2626,11 @@ paths:
           type: string
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> obtiene lista promociones con estado indicado
           content:
             application/json:
               examples:
-                Con promociones activas:
+                Con promociones:
                   value: >-
                       [
                         {
@@ -2673,18 +2650,6 @@ paths:
                           "id_promo": 3
                         }
                       ]
-                Sin_promociones_activas:
-                  value: >-
-                      [
-                        {
-                          "cantidad_usados": 30,
-                          "descripcion": "20% de descuento en la electrolinera de Barcelona!",
-                          "descuento": 15,
-                          "fecha_inicio": "2022-04-18T17:00:00",
-                          "fecha_fin": "2022-04-18T22:00:00",
-                          "id_promo": 2
-                        }
-                      ]
                 Sin_promociones:
                   value: '[]'
         '400':
@@ -2692,7 +2657,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter promo:
+                  Error al obtener promo:
                     value: {"error": "Malformed request syntax."}
         '401':
             description: Denied access
@@ -2705,7 +2670,7 @@ paths:
   /promociones/estacion/{id_estacion}:
   # pedimos una lista de promociones dado una estacion
     get:
-      summary: Obtiene una lista de promociones dado una estacion
+      summary: Obtiene una lista de promociones dada una estacion
       tags:
       - Promociones
       parameters:
@@ -2716,7 +2681,7 @@ paths:
           type: integer
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> obtiene lista promos de una estacion
           content:
             application/json:
               examples:
@@ -2779,7 +2744,7 @@ paths:
           type: integer
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> Retorna id estaciones con promo concreta
           content:
             application/json:
               examples:
@@ -2797,7 +2762,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter promo:
+                  Error al obtener estaciones:
                     value: {"error": "Malformed request syntax."}
         '401':
             description: Denied access
@@ -2893,8 +2858,7 @@ paths:
 
   /promociones/{id_promo}/{id_estacion}/activar:
     put:
-    # modificar una promocion dado su id, tambien sirve para añadir estacion
-      summary: Activar una promocion dada una estacion y desactivar las demas
+      summary: Modificar una promocion dada una estacion y desactivar las demas
       tags:
         - Promociones
       parameters:
@@ -2910,7 +2874,7 @@ paths:
             type: integer
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> modifica promocion
           content:
             application/json:
               examples:
@@ -2948,11 +2912,11 @@ paths:
           type: integer
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> obtiene info promocion por id
           content:
             application/json:
               examples:
-                Promo:
+                Hay promo:
                   value: >-
                       {
                         "cantidad_usados": 20,
@@ -2968,7 +2932,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter promo:
+                  Error al obtener promo:
                     value: {"error": "Malformed request syntax."}
         '401':
             description: Denied access
@@ -2986,10 +2950,9 @@ paths:
                 error:
                   value: >-
                     {"error": "Promocion not found."}
-      
     # modificar una promocion dado su id, tambien sirve para añadir estacion
     put:
-      summary: Modificar descripcion,descuento,fechas o cantidad de veces usado / añadir estacion
+      summary: Modificar promocion por id
       tags:
         - Promociones
       parameters:
@@ -3033,11 +2996,11 @@ paths:
                     cantidad_usados: 23
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> Modifica promocion
           content:
             application/json:
               examples:
-                Promo actualizada:
+                Promo modificada:
                   value: >-
                       {
                         "cantidad_usados": 20,
@@ -3052,7 +3015,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter promo:
+                  Error al modificar promo:
                     value: {"error": "Malformed request syntax."}
         '401':
             description: Denied access
@@ -3069,7 +3032,6 @@ paths:
                 examples:
                   error:
                     value: {"error": "Promocion not found."}
-
     delete:
       summary: Eliminar una promcion dado su id
       tags:
@@ -3082,7 +3044,7 @@ paths:
             type: integer
       responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> promocion eliminada por id
             content:
               application/json:
                 examples:
@@ -3094,7 +3056,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter promo:
+                  Error al eliminar promo:
                     value: {"error": "Malformed request syntax."}
           '401':
             description: Denied access
@@ -3114,7 +3076,7 @@ paths:
 
   /promociones/{id_promo}/{id_estacion}:
     delete:
-      summary: Eliminar una promcion dado su id
+      summary: Eliminar una promocion de una estacion dado sus ids
       tags:
         - Promociones
       parameters:
@@ -3130,7 +3092,7 @@ paths:
             type: integer
       responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> elimina promo de estacion
             content:
               application/json:
                 examples:
@@ -3142,7 +3104,7 @@ paths:
             content:
               application/json:
                 examples:
-                  Error al meter promo:
+                  Error al eliminar promo de estacion:
                     value: {"error": "Malformed request syntax."}
           '401':
             description: Denied access
@@ -3184,7 +3146,7 @@ paths:
                 password: "supersegura"
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> realiza login
           content:
             application/json:
               examples:
@@ -3222,7 +3184,7 @@ paths:
       - Autenticacion
       responses:
         '200':
-          description: Peticion correcta
+          description: Peticion correcta -> realiza logout
           content:
             application/json:
               examples:
@@ -3245,7 +3207,7 @@ paths:
         - Autenticacion
         responses:
           '200':
-            description: Peticion correcta
+            description: Peticion correcta -> info cliente con token
             content:
               application/json:
                 examples:
